@@ -4,30 +4,64 @@ from sklearn.metrics import accuracy_score
 
 df = pd.read_csv('data/model_data.csv')
 
-df_model = df.dropna(subset=["home_last5_winrate", "away_last5_winrate"]).copy()
+df_model = df.dropna(subset=["home_last5_winrate",
+                            "away_last5_winrate",
+                            "home_last5_avg_points",
+                            "away_last5_avg_points"
+                            ]).copy()
+
 # Datum wieder als echtes Datum
 df_model["gameDateTimeEst"] = pd.to_datetime(df_model["gameDateTimeEst"])
-
-# Features und Ziel
-X = df_model[["home_last5_winrate", "away_last5_winrate"]]
-y = df_model["home_win"]
+# Differenz der Winraten
+df_model["winrate_diff"] = df_model["home_last5_winrate"] - df_model["away_last5_winrate"]
 
 train = df_model[df_model["gameDateTimeEst"] < "2025-01-01"]
 test = df_model[df_model["gameDateTimeEst"] >= "2025-01-01"]
 
-X_train = train[["home_last5_winrate", "away_last5_winrate"]]
+X_train = train[["home_last5_winrate",
+                 "away_last5_winrate",
+                 "winrate_diff",
+                 "home_last5_avg_points",
+                 "away_last5_avg_points"
+                 ]]
 y_train = train["home_win"]
 
-X_test = test[["home_last5_winrate", "away_last5_winrate"]]
+X_test = test[["home_last5_winrate",
+               "away_last5_winrate",
+               "winrate_diff",
+               "home_last5_avg_points",
+               "away_last5_avg_points"
+               ]]
 y_test = test["home_win"]
 
-model = LogisticRegression()
+model = LogisticRegression(max_iter=1000)
 model.fit(X_train, y_train)
 
 preds = model.predict(X_test)
 probs = model.predict_proba(X_test)[:, 1]
+baseline_preds = [1] * len(y_test)
 
-print(probs[:10])
+#tabelle mit Vorhersagen
+'''
+results = test.copy()
+results["prediction"] = preds
+results["probability"] = probs
+print(results[["gameDateTimeEst", "hometeamName", "awayteamName", "home_win", "prediction", "probability"]].tail(10))
+'''
+
+#tabelle mit Fehlvorhersagen
+'''
+results = test[["gameDateTimeEst", "hometeamName", "awayteamName", "home_win"]].copy()
+results["prediction"] = preds
+results["probability"] = probs
+
+wrong = results[results["home_win"] != results["prediction"]]
+print(wrong.head(20))
+print("Fehlvorhersagen:", len(wrong))
+'''
+
+print("Tesspiele gesamt:", len(test))
+print("Richtige Vorhersagen:", (preds == y_test).sum())
+print("Fehlvorhersagen:", (preds != y_test).sum())
+print("Baseline Accuracy:", accuracy_score(y_test, baseline_preds))
 print("Accuracy:", accuracy_score(y_test, preds))
-print(df_model.head())
-print(len(df_model))
