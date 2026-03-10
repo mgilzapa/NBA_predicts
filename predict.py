@@ -104,17 +104,31 @@ future_valid["predicted_winner"] = future_valid.apply(
     axis=1
 )
 
-tomorrow = pd.Timestamp.today().normalize() + pd.Timedelta(days=1)
+today = pd.Timestamp.today().normalize()
 
-future_tomorrow = future_valid[
-    future_valid["gameDateTimeEst"].dt.normalize() == tomorrow
+future_today = future_valid[
+    future_valid["gameDateTimeEst"].dt.normalize() == today
 ].copy()
 
-print(future_tomorrow[[
+future_today = future_today.sort_values("gameDateTimeEst")
+
+output = future_today[[
     "gameDateTimeEst",
     "hometeamName",
     "awayteamName",
     "predicted_winner",
     "probability_home_win"
-]])
+]]
 
+output = output.sort_values("gameDateTimeEst")
+output["gameDateTimeEst"] = pd.to_datetime(output["gameDateTimeEst"]).dt.strftime("%Y-%m-%d %H:%M:%S")
+output = output.rename(columns={
+    "gameId": "Game ID",
+    "gameDateTimeEst": "Date",
+    "hometeamName": "Home Team",
+    "awayteamName": "Away Team",
+    "predicted_winner": "Predicted Winner"
+})
+
+output.to_excel("data/predictions_today.xlsx", index=False, engine="openpyxl")
+print("Datei gespeichert: data/predictions_today.xlsx")
