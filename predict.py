@@ -129,6 +129,6 @@ output = output.rename(columns={
     "awayteamName": "Away Team",
     "predicted_winner": "Predicted Winner"
 })
-
-output.to_excel("data/predictions_today.xlsx", index=False, engine="openpyxl")
-print("Datei gespeichert: data/predictions_today.xlsx")
+print(output)
+#output.to_excel("data/predictions_today.xlsx", index=False, engine="openpyxl")
+#print("Datei gespeichert: data/predictions_today.xlsx")

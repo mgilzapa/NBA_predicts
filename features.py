@@ -127,13 +127,6 @@ away_points_allowed = team_history[["date", "team", "last5_avg_points_allowed"]]
 df = df.merge(home_points_allowed, on=["gameDateTimeEst", "hometeamName"], how="left")
 df = df.merge(away_points_allowed, on=["gameDateTimeEst", "awayteamName"], how="left")
 
-print(df.columns)
-print(df[[
-    "gameDateTimeEst",
-    "hometeamName",
-    "awayteamName",
-    "home_last5_avg_points",
-    "away_last5_avg_points"
-]].head(10))
 
 df.to_csv("data/model_data.csv", index=False)
+print("Gespeichert: data/model_data.csv")

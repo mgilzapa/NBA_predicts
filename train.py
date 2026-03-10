@@ -23,8 +23,8 @@ df_model["average_points_diff"] = df_model["home_last5_avg_points"] - df_model["
 df_model["average_points_allowed_diff"] = df_model["home_last5_avg_points_allowed"] - df_model["away_last5_avg_points_allowed"]
 df_model["rest_days_diff"] = df_model["home_rest_days"] - df_model["away_rest_days"]
 
-train = df_model[df_model["gameDateTimeEst"] < "2025-01-01"]
-test = df_model[df_model["gameDateTimeEst"] >= "2025-01-01"]
+train = df_model[df_model["gameDateTimeEst"] < "2026-02-24"]
+test = df_model[df_model["gameDateTimeEst"] >= "2026-02-24"]
 
 X_train = train[["home_last5_winrate",
                  "away_last5_winrate",
@@ -99,3 +99,5 @@ print("Richtige Vorhersagen:", (preds == y_test).sum())
 print("Fehlvorhersagen:", (preds != y_test).sum())
 print("Baseline Accuracy:", accuracy_score(y_test, baseline_preds))
 print("Accuracy:", accuracy_score(y_test, preds))
+print("Diff:", accuracy_score(y_test, preds) - accuracy_score(y_test, baseline_preds))
+    
