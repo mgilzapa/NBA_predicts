@@ -2,6 +2,11 @@ import os
 import pandas as pd
 from sklearn.linear_model import LogisticRegression
 
+# Aktuelles Datum in US Eastern Time (zeitzonenfrei)
+eastern_now = pd.Timestamp.now(tz='US/Eastern')
+today_naive = eastern_now.tz_localize(None).normalize()
+yesterday_naive = (eastern_now - pd.Timedelta(days=1)).tz_localize(None).normalize()
+
 # -----------------------------
 # 1. Historische Modelldaten laden und bereinigen
 # -----------------------------
@@ -19,10 +24,8 @@ feature_cols = [
 
 df_model = df.dropna(subset=feature_cols).copy()
 
-# -----------------------------
-# 2. Modell trainieren (Daten bis Ende 2024)
-# -----------------------------
-train = df_model[df_model["gameDateTimeEst"] < "2025-01-01"]
+
+train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
 X_train = train[feature_cols]
 y_train = train["home_win"]
 
@@ -142,7 +145,7 @@ else:
     # -----------------------------
     # Aktuelles Datum in US Eastern Time (Zeitzone der Spieldaten)
     today_us_eastern = pd.Timestamp.now(tz='US/Eastern').tz_localize(None).normalize()
-    future_today = future_valid[(future_valid["gameDateTimeEst"].dt.normalize() == today_us_eastern)].copy()
+    future_today = future_valid[future_valid["gameDateTimeEst"].dt.normalize() == today_naive].copy()
 
     if future_today.empty:
         print("Keine Spiele ab heute gefunden. Zeige stattdessen die nächsten 5 anstehenden Spiele:")
@@ -165,7 +168,7 @@ else:
     output_today = output
 
 yesterday_us_eastern = (pd.Timestamp.now(tz='US/Eastern') - pd.Timedelta(days=1)).tz_localize(None).normalize()
-yesterday_games = df_model[df_model["gameDateTimeEst"].dt.normalize() == yesterday_us_eastern].copy()
+yesterday_games = df_model[df_model["gameDateTimeEst"].dt.normalize() == yesterday_naive].copy()
 
 output_yesterday = pd.DataFrame()
 if not yesterday_games.empty:
@@ -239,12 +242,6 @@ except PermissionError:
 except Exception as e:
     print(f"❌ Fehler beim Schreiben der Excel-Datei: {e}")
 
-# Ausgabe zur Kontrolle (wie gehabt)
-if not output_today.empty:
-    print("\nHeutige Vorhersagen:")
-    print(output_today)
-if not output_yesterday.empty:
-    print("\nGestrige Vorhersagen mit tatsächlichem Ergebnis:")
-    print(output_yesterday)
+
     
     
