@@ -202,7 +202,7 @@ else:
 # -----------------------------
 # 9. Excel-Datei aktualisieren (beide Sheets mit Duplikatsbereinigung)
 # -----------------------------
-excel_file = "predictions_today.xlsx"
+excel_file = "data/predictions.xlsx"
 sheet_today = "predictions_today"
 sheet_yesterday = "yesterday"
 
@@ -235,12 +235,12 @@ try:
     with pd.ExcelWriter(excel_file, engine="openpyxl") as writer:
         combined_today.to_excel(writer, sheet_name=sheet_today, index=False)
         combined_yesterday.to_excel(writer, sheet_name=sheet_yesterday, index=False)
-    print(f"✅ Excel-Datei erfolgreich geschrieben: {excel_file}")
-    print("📋 Vorhandene Sheets:", pd.ExcelFile(excel_file).sheet_names)
+    print(f"OK: Excel-Datei erfolgreich geschrieben: {excel_file}")
+    print("Info: Vorhandene Sheets:", pd.ExcelFile(excel_file).sheet_names)
 except PermissionError:
-    print("❌ Fehler: Die Datei ist möglicherweise geöffnet. Bitte schließen Sie sie und führen Sie das Skript erneut aus.")
+    print("FEHLER: Die Datei ist möglicherweise geöffnet. Bitte schließen Sie sie und führen Sie das Skript erneut aus.")
 except Exception as e:
-    print(f"❌ Fehler beim Schreiben der Excel-Datei: {e}")
+    print(f"FEHLER beim Schreiben der Excel-Datei: {e}")
 
 
     
