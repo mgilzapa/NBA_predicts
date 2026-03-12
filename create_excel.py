@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from predict import output_today, output_yesterday
 
-excel_file = "data/predictions.xlsx"
+excel_file = "predictions.xlsx"
 sheet_today = "predictions_today"
 sheet_yesterday = "yesterday"
 
