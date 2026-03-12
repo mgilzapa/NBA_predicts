@@ -5,3 +5,6 @@ data/Games.csv
 data/LeagueSchedule25-26.csv
 data/model_date.csv
 data/nba_api_games.csv
+data/base_games.csv
+data/model_data.csv
+data/nba_api_games.csv
