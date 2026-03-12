@@ -22,7 +22,8 @@ if __name__ == "__main__":
         "nba_api_test.py",   # Ergebnisse von der API holen
         "tabelle.py",        # Tabelle bereinigen
         "features.py",       # Features hinzufügen
-        "predict.py"         # Vorhersage für heute
+        "predict.py",        # Vorhersage für heute
+        "create_excel.py"    # Excel-Datei aktualisieren
     ]
 
     # Prüfen, ob alle Skripte existieren
