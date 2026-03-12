@@ -1,8 +1,8 @@
 import os
 import pandas as pd
-from src.predict import output_today, output_yesterday
+from predict import output_today, output_yesterday
 
-excel_file = "predictions.xlsx"
+excel_file = "output/predictions.xlsx"
 sheet_today = "predictions_today"
 sheet_yesterday = "yesterday"
 

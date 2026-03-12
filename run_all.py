@@ -19,11 +19,11 @@ def run_script(script_name):
 if __name__ == "__main__":
     # Reihenfolge der Skripte (angepasst an deine tatsächlichen Dateinamen)
     scripts = [
-        "nba_api_test.py",   # Ergebnisse von der API holen
-        "tabelle.py",        # Tabelle bereinigen
-        "features.py",       # Features hinzufügen
-        "predict.py",        # Vorhersage für heute
-        "create_excel.py"    # Excel-Datei aktualisieren
+        "src/nba_api_test.py",   # Ergebnisse von der API holen
+        "src/tabelle.py",        # Tabelle bereinigen
+        "src/features.py",       # Features hinzufügen
+        "src/predict.py",        # Vorhersage für heute
+        "src/create_excel.py"    # Excel-Datei aktualisieren
     ]
 
     # Prüfen, ob alle Skripte existieren
