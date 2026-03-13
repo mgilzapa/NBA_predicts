@@ -155,8 +155,12 @@ else:
 
     # Ausgabe vorbereiten
     output = future_today[[
-        "gameDateTimeEst", "hometeamName", "awayteamName",
-        "predicted_winner", "probability_home_win"
+        "gameDateTimeEst", 
+        "hometeamName", 
+        "awayteamName",
+        "predicted_winner", 
+        "probability_home_win", 
+        "gameId"
     ]].copy()
     output["gameDateTimeEst"] = output["gameDateTimeEst"].dt.strftime("%Y-%m-%d %H:%M:%S")
     output.rename(columns={
@@ -184,9 +188,15 @@ if not yesterday_games.empty:
         axis=1
     )
     output_yesterday = yesterday_games[[
-        "gameDateTimeEst", "hometeamName", "awayteamName",
-        "predicted_winner", "probability_home_win", "actual_winner"
+        "gameDateTimeEst",
+        "hometeamName", 
+        "awayteamName",
+        "predicted_winner", 
+        "probability_home_win", 
+        "actual_winner",
+        "gameId"
     ]].copy()
+
     output_yesterday["gameDateTimeEst"] = output_yesterday["gameDateTimeEst"].dt.strftime("%Y-%m-%d %H:%M:%S")
     output_yesterday.rename(columns={
         "gameDateTimeEst": "Date",

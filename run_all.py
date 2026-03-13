@@ -23,6 +23,7 @@ if __name__ == "__main__":
         "src/tabelle.py",        # Tabelle bereinigen
         "src/features.py",       # Features hinzufügen
         "src/predict.py",        # Vorhersage für heute
+        "src/clean_excel.py",    # Excel-Datei bereinigen
         "src/create_excel.py",   # Excel-Datei aktualisieren
         "src/create_all_predictions.py"  # Alle Vorhersagen aktualisieren
     ]

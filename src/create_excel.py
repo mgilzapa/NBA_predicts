@@ -24,9 +24,19 @@ else:
     combined_today = existing_today
 
 # Gestrige Spiele kombinieren und Duplikate entfernen
+
+# Gestrige Spiele kombinieren und Duplikate entfernen
 if not output_yesterday.empty:
-    combined_yesterday = pd.concat([existing_yesterday, output_yesterday], ignore_index=True)
-    combined_yesterday.drop_duplicates(subset=["Date", "Home Team", "Away Team"], keep="last", inplace=True)
+    # Prüfe ob gameID vorhanden ist
+    if "gameID" in output_yesterday.columns:
+        print(f"Info: gameID-Spalte gefunden mit {output_yesterday['gameID'].nunique()} eindeutigen IDs")
+        combined_yesterday = pd.concat([existing_yesterday, output_yesterday], ignore_index=True)
+        combined_yesterday.drop_duplicates(subset=["gameID"], keep="last", inplace=True)
+    else:
+        print(" Warnung: Keine gameID-Spalte gefunden! Verwende Datum+Teams als Fallback.")
+        print("Vorhandene Spalten:", output_yesterday.columns.tolist())
+        combined_yesterday = pd.concat([existing_yesterday, output_yesterday], ignore_index=True)
+        combined_yesterday.drop_duplicates(subset=["Date", "Home Team", "Away Team"], keep="last", inplace=True)
 else:
     combined_yesterday = existing_yesterday
 
