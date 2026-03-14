@@ -15,7 +15,13 @@ df_model = df.dropna(subset=["home_last5_winrate",
                             "home_last5_avg_points_allowed",
                             "away_last5_avg_points_allowed",
                             "home_is_back_to_back",
-                            "away_is_back_to_back"
+                            "away_is_back_to_back",
+                            "home_opponent_strength",
+                            "away_opponent_strength",
+                            "home_home_winrate",
+                            "away_home_winrate",
+                            "home_away_winrate",
+                            "away_away_winrate"
                             ]).copy()
 
 # Datum wieder als echtes Datum
@@ -49,7 +55,13 @@ future_cols =["home_last5_winrate",
                 "average_points_allowed_diff",
                 "rest_days_diff",
                 "home_is_back_to_back",
-                "away_is_back_to_back"
+                "away_is_back_to_back",
+                "home_opponent_strength",
+                "away_opponent_strength",
+                "home_home_winrate", 
+                "away_home_winrate",
+                "home_away_winrate", 
+                "away_away_winrate"
                  ]
 X_train = train[future_cols]
 y_train = train["home_win"]
