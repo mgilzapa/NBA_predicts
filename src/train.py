@@ -13,7 +13,9 @@ df_model = df.dropna(subset=["home_last5_winrate",
                             "home_rest_days",
                             "away_rest_days",
                             "home_last5_avg_points_allowed",
-                            "away_last5_avg_points_allowed"
+                            "away_last5_avg_points_allowed",
+                            "home_is_back_to_back",
+                            "away_is_back_to_back"
                             ]).copy()
 
 # Datum wieder als echtes Datum
@@ -34,7 +36,7 @@ test = df_model[
     (df_model["gameDateTimeEst"] >= fourteen_days_ago) & 
     (df_model["gameDateTimeEst"] < today_naive)].copy()
 
-X_train = train[["home_last5_winrate",
+future_cols =["home_last5_winrate",
                  "away_last5_winrate",
                  "winrate_diff",
                  "home_last5_avg_points",
@@ -45,27 +47,17 @@ X_train = train[["home_last5_winrate",
                 "away_last5_avg_points_allowed",
                 "average_points_diff",
                 "average_points_allowed_diff",
-                "rest_days_diff"
-                 ]]
+                "rest_days_diff",
+                "home_is_back_to_back",
+                "away_is_back_to_back"
+                 ]
+X_train = train[future_cols]
 y_train = train["home_win"]
 
-X_test = test[["home_last5_winrate",
-               "away_last5_winrate",
-               "winrate_diff",
-               "home_last5_avg_points",
-               "away_last5_avg_points",
-               "home_rest_days",
-               "away_rest_days",
-               "home_last5_avg_points_allowed",
-               "away_last5_avg_points_allowed",
-                "average_points_diff",
-                "average_points_allowed_diff",
-                "rest_days_diff"
-               ]]
+X_test = test[future_cols]
 y_test = test["home_win"]
 
 lr = LogisticRegression(max_iter=1000)
-
 xgb = XGBClassifier(
     n_estimators=300,
     max_depth=4,
@@ -80,16 +72,13 @@ xgb = XGBClassifier(
 lr.fit(X_train, y_train)
 xgb.fit(X_train, y_train)
 
-preds = xgb.predict(X_test)
-probs = xgb.predict_proba(X_test)[:, 1]
+xgb_preds = xgb.predict(X_test)
+xgb_probs = xgb.predict_proba(X_test)[:, 1]
+lr_preds = lr.predict(X_test)
 
 # Baseline (immer Heimteam tippen)
 baseline_preds = np.ones(len(y_test))  # 1 = Heimteam gewinnt
 baseline_acc = accuracy_score(y_test, baseline_preds)
-
-# Vorhersagen für beide Modelle
-lr_preds = lr.predict(X_test)
-xgb_preds = preds  # deine XGBoost-Vorhersagen
 
 # Metriken berechnen
 lr_acc = accuracy_score(y_test, lr_preds)
