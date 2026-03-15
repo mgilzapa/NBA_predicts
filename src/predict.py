@@ -1,35 +1,81 @@
 import os
 import pandas as pd
-from sklearn.linear_model import LogisticRegression
+from xgboost import XGBClassifier
+
+
+# -----------------------------
+# 1. Historische Modelldaten laden und bereinigen
+# -----------------------------
+df = pd.read_csv("data/model_data.csv")
+
+df_model = df.dropna(subset=["home_last5_winrate",
+                            "away_last5_winrate",
+                            "home_last5_avg_points",
+                            "away_last5_avg_points",
+                            "home_rest_days",
+                            "away_rest_days",
+                            "home_last5_avg_points_allowed",
+                            "away_last5_avg_points_allowed",
+                            "home_is_back_to_back",
+                            "away_is_back_to_back",
+                            "home_opponent_strength",
+                            "away_opponent_strength",
+                            "home_home_winrate",
+                            "away_home_winrate",
+                            "home_away_winrate",
+                            "away_away_winrate"
+                            ]).copy()
+
+df_model["gameDateTimeEst"] = pd.to_datetime(df_model["gameDateTimeEst"])
+#df_model = df.dropna(subset=feature_cols).copy()
+df_model["winrate_diff"] = df_model["home_last5_winrate"] - df_model["away_last5_winrate"]
+df_model["average_points_diff"] = df_model["home_last5_avg_points"] - df_model["away_last5_avg_points"]
+df_model["average_points_allowed_diff"] = df_model["home_last5_avg_points_allowed"] - df_model["away_last5_avg_points_allowed"]
+df_model["rest_days_diff"] = df_model["home_rest_days"] - df_model["away_rest_days"]
 
 # Aktuelles Datum in US Eastern Time (zeitzonenfrei)
 eastern_now = pd.Timestamp.now(tz='US/Eastern')
 today_naive = eastern_now.tz_localize(None).normalize()
 yesterday_naive = (eastern_now - pd.Timedelta(days=1)).tz_localize(None).normalize()
 
-# -----------------------------
-# 1. Historische Modelldaten laden und bereinigen
-# -----------------------------
-df = pd.read_csv("data/model_data.csv")
-df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
-
-feature_cols = [
-    "home_last5_winrate",
-    "away_last5_winrate",
-    "home_last5_avg_points",
-    "away_last5_avg_points",
-    "home_last5_avg_points_allowed",
-    "away_last5_avg_points_allowed"
-]
-
-df_model = df.dropna(subset=feature_cols).copy()
-
-
 train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
+
+feature_cols =["home_last5_winrate",
+                 "away_last5_winrate",
+                 "winrate_diff",
+                 "home_last5_avg_points",
+                 "away_last5_avg_points",
+                 "home_rest_days",
+                 "away_rest_days",
+                "home_last5_avg_points_allowed",
+                "away_last5_avg_points_allowed",
+                "average_points_diff",
+                "average_points_allowed_diff",
+                "rest_days_diff",
+                "home_is_back_to_back",
+                "away_is_back_to_back",
+                "home_opponent_strength",
+                "away_opponent_strength",
+                "home_home_winrate", 
+                "away_home_winrate",
+                "home_away_winrate", 
+                "away_away_winrate"
+                 ]
+
+
 X_train = train[feature_cols]
 y_train = train["home_win"]
 
-model = LogisticRegression(max_iter=1000)
+model = XGBClassifier(
+    n_estimators=300,
+    max_depth=4,
+    learning_rate=0.05,
+    subsample=0.8,
+    colsample_bytree=0.8,
+    objective="binary:logistic",
+    eval_metric="logloss",
+    random_state=42
+)
 model.fit(X_train, y_train)
 
 # -----------------------------
@@ -101,7 +147,7 @@ future = future_nba
 # Letzte Werte für Heim-Teams
 home_latest = (
     df_model.sort_values("gameDateTimeEst")
-    .groupby("hometeamName")[['home_last5_winrate', 'home_last5_avg_points', 'home_last5_avg_points_allowed']]
+    .groupby("hometeamName")[['home_last5_winrate', 'home_last5_avg_points', 'home_last5_avg_points_allowed', 'home_rest_days', 'home_is_back_to_back', 'home_opponent_strength', 'home_home_winrate', 'home_away_winrate']]
     .last()
     .reset_index()
 )
@@ -109,7 +155,7 @@ home_latest = (
 # Letzte Werte für Auswärts-Teams
 away_latest = (
     df_model.sort_values("gameDateTimeEst")
-    .groupby("awayteamName")[['away_last5_winrate', 'away_last5_avg_points', 'away_last5_avg_points_allowed']]
+    .groupby("awayteamName")[['away_last5_winrate', 'away_last5_avg_points', 'away_last5_avg_points_allowed', 'away_rest_days', 'away_is_back_to_back', 'away_opponent_strength', 'away_home_winrate', 'away_away_winrate']]
     .last()
     .reset_index()
 )
@@ -119,6 +165,11 @@ away_latest = (
 # -----------------------------
 future = future.merge(home_latest, on="hometeamName", how="left")
 future = future.merge(away_latest, on="awayteamName", how="left")
+
+future["winrate_diff"] = future["home_last5_winrate"] - future["away_last5_winrate"]
+future["average_points_diff"] = future["home_last5_avg_points"] - future["away_last5_avg_points"]
+future["average_points_allowed_diff"] = future["home_last5_avg_points_allowed"] - future["away_last5_avg_points_allowed"]
+future["rest_days_diff"] = future["home_rest_days"] - future["away_rest_days"]
 
 # Prüfen, wie viele vollständige Datensätze wir haben
 complete_mask = future[feature_cols].notna().all(axis=1)
