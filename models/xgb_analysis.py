@@ -1,26 +1,66 @@
 import pandas as pd
-import numpy as np
+import os
 import matplotlib.pyplot as plt
 from sklearn.model_selection import GridSearchCV
 import joblib  # zum Speichern des besten Modells
+from xgboost import XGBClassifier
 
 # ------------------------------------------------------------
 # 1. DATEN LADEN (gleicher Code wie in train.py)
 # ------------------------------------------------------------
-df = pd.read_csv('data/model_data.csv')
+base_dir = os.path.dirname(os.path.dirname(__file__))  # geht zwei Ebenen hoch ins Hauptverzeichnis
+output_dir = os.path.join(base_dir, 'output')
+data_path = os.path.join(base_dir, 'data', 'model_data.csv')
+df = pd.read_csv(data_path)
 
-feature_cols = [
-    "home_last5_winrate", "away_last5_winrate",
-    "home_last5_avg_points", "away_last5_avg_points",
-    "home_rest_days", "away_rest_days",
-    "home_last5_avg_points_allowed", "away_last5_avg_points_allowed",
-    "home_is_back_to_back", "away_is_back_to_back",
-    "home_opponent_strength", "away_opponent_strength",
-    "home_home_winrate", "away_home_winrate",
-    "home_away_winrate", "away_away_winrate",
-    "same_division",
-    "home_last_game_overtime", "away_last_game_overtime"
-]
+# Datum wieder als echtes Datum
+df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
+# Differenz der Winraten
+df["winrate_diff"] = df["home_last5_winrate"] - df["away_last5_winrate"]
+df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_points"]
+df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
+df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
+
+feature_cols =["home_last5_winrate",
+                 "away_last5_winrate",
+                 "winrate_diff",
+                 "home_last5_avg_points",
+                 "away_last5_avg_points",
+                 "home_rest_days",
+                 "away_rest_days",
+                "home_last5_avg_points_allowed",
+                "away_last5_avg_points_allowed",
+                "average_points_diff",
+                "average_points_allowed_diff",
+                "rest_days_diff",
+                "home_is_back_to_back",
+                "away_is_back_to_back",
+                "home_opponent_strength",
+                "away_opponent_strength",
+                "home_home_winrate", 
+                "away_home_winrate",
+                "home_away_winrate", 
+                "away_away_winrate",
+                "winrate_diff",
+                "average_points_diff",
+                "average_points_allowed_diff",
+                "rest_days_diff",
+                "home_last5_pts",
+                "away_last5_pts",
+                "home_last5_reb",
+                "away_last5_reb",
+                "home_last5_ast",
+                "away_last5_ast",
+                "home_last5_min",
+                "away_last5_min",
+                "home_last5_player_count",
+                "away_last5_player_count",
+                "pts_diff_last5",
+                "reb_diff_last5",
+                "ast_diff_last5",
+                "min_diff_last5",
+                "player_count_diff_last5"
+                 ]
 
 # Phase-Spalten hinzufügen falls vorhanden
 phase_cols = [col for col in df.columns if col.startswith("phase_")]
@@ -28,7 +68,7 @@ feature_cols.extend(phase_cols)
 
 # Daten vorbereiten
 df_model = df.dropna(subset=feature_cols).copy()
-df_model["gameDateTimeEst"] = pd.to_datetime(df_model["gameDateTimeEst"])
+
 
 # Train/Test Split
 eastern_now = pd.Timestamp.now(tz='US/Eastern')
@@ -41,10 +81,10 @@ test = df_model[
     (df_model["gameDateTimeEst"] < today_naive)
 ].copy()
 
-X_train = train[feature_cols]
-y_train = train["home_win"]
-X_test = test[feature_cols]
-y_test = test["home_win"]
+X_train = train[feature_cols].values
+y_train = train["home_win"].values
+X_test = test[feature_cols].values
+y_test = test["home_win"].values
 
 print(f"\n📊 Trainingsdaten: {len(train)} Spiele")
 print(f"📊 Testdaten: {len(test)} Spiele")
@@ -54,7 +94,6 @@ print("="*60)
 # ------------------------------------------------------------
 # 2. BESTEHENDES MODELL LADEN ODER TRAINIEREN
 # ------------------------------------------------------------
-from xgboost import XGBClassifier
 
 # Dein aktuelles Modell (mit deinen Parametern)
 xgb_current = XGBClassifier(
@@ -98,8 +137,8 @@ plt.barh(feat_importance.head(15)['feature'], feat_importance.head(15)['importan
 plt.xlabel('Importance')
 plt.title('XGBoost Feature Importance (Top 15)')
 plt.tight_layout()
-plt.savefig('output/feature_importance.png', dpi=150)
-print("\n📸 Plot gespeichert: output/feature_importance.png")
+plt.savefig(os.path.join(output_dir, 'feature_importance.png'), dpi=150)
+print(f"Plot gespeichert: {os.path.join(output_dir, 'feature_importance.png')}")
 
 # ------------------------------------------------------------
 # 4. SCHRITT 2: HYPERPARAMETER-TUNING
