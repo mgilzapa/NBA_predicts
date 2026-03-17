@@ -1,8 +1,15 @@
+import os
 import pandas as pd
 import numpy as np
 
-df = pd.read_csv("data/base_games.csv")
+base_dir = os.path.dirname(os.path.dirname(__file__))
+PLAYER_BOX = os.path.join(base_dir, "data", "player_boxscores.csv")
+
+base_games_path = os.path.join(base_dir, "data", "base_games.csv")
+df = pd.read_csv(base_games_path)
+
 df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
+
 
 # ------------------------------------------------------------
 # BASIS: Heim- und Auswärtsspiele für Team-History
@@ -31,7 +38,7 @@ team_history = pd.concat([home_games, away_games], ignore_index=True)
 team_history = team_history.sort_values(["team", "date"]).reset_index(drop=True)
 
 # ------------------------------------------------------------
-# FEATURE 1: Letzte 5 Spiele Winrate (vorhanden)
+# FEATURE 1: Letzte 5 Spiele Winrate 
 # ------------------------------------------------------------
 team_history["last5_winrate"] = (
     team_history.groupby("team")["win"]
@@ -39,7 +46,7 @@ team_history["last5_winrate"] = (
 )
 
 # ------------------------------------------------------------
-# FEATURE 2: Letzte 5 Spiele Punkte (vorhanden)
+# FEATURE 2: Letzte 5 Spiele Punkte 
 # ------------------------------------------------------------
 team_history["last5_avg_points"] = (
     team_history.groupby("team")["points"]
@@ -52,7 +59,7 @@ team_history["last5_avg_points_allowed"] = (
 )
 
 # ------------------------------------------------------------
-# FEATURE 3: Ruhetage (vorhanden)
+# FEATURE 3: Ruhetage 
 # ------------------------------------------------------------
 team_history["rest_days"] = (
     team_history.groupby("team")["date"]
@@ -62,7 +69,7 @@ team_history["rest_days"] = (
 team_history["is_back_to_back"] = (team_history["rest_days"] == 1).astype(int)
 
 # ------------------------------------------------------------
-# FEATURE 4: Gegner-Stärke (Strength of Schedule) - NEU
+# FEATURE 4: Gegner-Stärke (Strength of Schedule) 
 # ------------------------------------------------------------
 # Winrate der letzten 5 Gegner
 team_history["opponent_last5_winrate"] = (
@@ -71,7 +78,7 @@ team_history["opponent_last5_winrate"] = (
 )
 
 # ------------------------------------------------------------
-# FEATURE 5: Heim/Auswärts getrennte Winrate - NEU
+# FEATURE 5: Heim/Auswärts getrennte Winrate 
 # ------------------------------------------------------------
 # Nur Heimspiele
 team_history["home_winrate"] = (
@@ -92,7 +99,7 @@ team_history["home_winrate"] = team_history.groupby("team")["home_winrate"].ffil
 team_history["away_winrate"] = team_history.groupby("team")["away_winrate"].ffill()
 
 # ------------------------------------------------------------
-# FEATURE 6: Saison-Phase (Spielnummer) - NEU
+# FEATURE 6: Saison-Phase (Spielnummer) 
 # ------------------------------------------------------------
 # Spielnummer pro Team und Saison berechnen
 team_history["season"] = team_history["date"].dt.year
@@ -109,7 +116,7 @@ season_dummies = pd.get_dummies(team_history["season_phase"], prefix="phase")
 team_history = pd.concat([team_history, season_dummies], axis=1)
 
 # ------------------------------------------------------------
-# FEATURE 7: Overtime-Indikator - NEU
+# FEATURE 7: Overtime-Indikator 
 # ------------------------------------------------------------
 # Grober Overtime-Indikator: Summe > 220 Punkte (ca. 110 pro Team)
 df["overtime"] = (df["homeScore"] + df["awayScore"] > 220).astype(int)
@@ -259,6 +266,172 @@ df = df.merge(away_ot, on=["gameDateTimeEst", "awayteamName"], how="left")
 # Division-Feature direkt aus df
 df["same_division"] = (df["home_division"] == df["away_division"]).astype(int)
 
+if os.path.exists(PLAYER_BOX):
+    print("Lade Spieler-Boxscores und berechne Team-Aggregate...")
+    box = pd.read_csv(PLAYER_BOX)
 
-df.to_csv("data/model_data.csv", index=False)
-print("Gespeichert: data/model_data.csv")
+    # Spalten umbenennen, falls nötig (personId -> PLAYER_ID)
+    if 'personId' in box.columns:
+        box.rename(columns={'personId': 'PLAYER_ID'}, inplace=True)
+
+    # Teamname-Mapping (Kurz -> Vollständig)
+    team_name_mapping = {
+        '76ers': 'Philadelphia 76ers',
+        'Bucks': 'Milwaukee Bucks',
+        'Bulls': 'Chicago Bulls',
+        'Cavaliers': 'Cleveland Cavaliers',
+        'Celtics': 'Boston Celtics',
+        'Clippers': 'LA Clippers',
+        'Grizzlies': 'Memphis Grizzlies',
+        'Hawks': 'Atlanta Hawks',
+        'Heat': 'Miami Heat',
+        'Hornets': 'Charlotte Hornets',
+        'Jazz': 'Utah Jazz',
+        'Kings': 'Sacramento Kings',
+        'Knicks': 'New York Knicks',
+        'Lakers': 'Los Angeles Lakers',
+        'Magic': 'Orlando Magic',
+        'Mavericks': 'Dallas Mavericks',
+        'Nets': 'Brooklyn Nets',
+        'Nuggets': 'Denver Nuggets',
+        'Pacers': 'Indiana Pacers',
+        'Pelicans': 'New Orleans Pelicans',
+        'Pistons': 'Detroit Pistons',
+        'Raptors': 'Toronto Raptors',
+        'Rockets': 'Houston Rockets',
+        'Spurs': 'San Antonio Spurs',
+        'Suns': 'Phoenix Suns',
+        'Thunder': 'Oklahoma City Thunder',
+        'Timberwolves': 'Minnesota Timberwolves',
+        'Trail Blazers': 'Portland Trail Blazers',
+        'Warriors': 'Golden State Warriors',
+        'Wizards': 'Washington Wizards'
+    }
+    box['teamNameFull'] = box['teamName'].map(team_name_mapping)
+
+    # Fehlende Teams entfernen
+    box = box.dropna(subset=['teamNameFull'])
+
+    # Minuten parsen (falls als String wie "27:15")
+    if box['minutes'].dtype == 'object':
+        def parse_minutes(m):
+            if isinstance(m, str) and ':' in m:
+                parts = m.split(':')
+                return int(parts[0]) + int(parts[1])/60
+            try:
+                return float(m)
+            except:
+                return 0.0
+        box['MIN'] = box['MIN'].apply(parse_minutes)
+
+    # Aggregierte Team-Statistiken pro Spiel (Summe)
+    stat_cols = ['points', 'reboundsDefensive', 'reboundsOffensive', 'assists', 'steals', 'blocks', 'turnovers', 'minutes']
+    team_game_stats = box.groupby(['GAME_ID', 'teamNameFull'])[stat_cols].sum().reset_index()
+    team_game_stats['player_count'] = box.groupby(['GAME_ID', 'teamNameFull']).size().values
+
+    # Diese Werte an df mergen (Heim und Auswärts)
+    df = df.merge(
+        team_game_stats.add_prefix('home_'),
+        left_on=['gameId', 'hometeamName'],
+        right_on=['home_GAME_ID', 'home_teamNameFull'],
+        how='left'
+    )
+    df = df.merge(
+        team_game_stats.add_prefix('away_'),
+        left_on=['gameId', 'awayteamName'],
+        right_on=['away_GAME_ID', 'away_teamNameFull'],
+        how='left'
+    )
+    # Hilfsspalten entfernen
+    df.drop(columns=['home_GAME_ID', 'home_teamNameFull', 'away_GAME_ID', 'away_teamNameFull'], inplace=True, errors='ignore')
+
+        # Heim-Statistiken
+    home_stats = df[['gameDateTimeEst', 'hometeamName', 
+                    'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 
+                    'home_assists', 'home_minutes', 'home_player_count']].copy()
+
+    # Gesamt-Rebounds berechnen (defensive + offensive)
+    home_stats['home_rebounds'] = home_stats['home_reboundsDefensive'] + home_stats['home_reboundsOffensive']
+
+    # Nur benötigte Spalten behalten und umbenennen
+    home_stats = home_stats[['gameDateTimeEst', 'hometeamName', 'home_points', 'home_rebounds', 'home_assists', 'home_minutes', 'home_player_count']]
+    home_stats.rename(columns={
+        'hometeamName': 'team',
+        'home_points': 'PTS',
+        'home_rebounds': 'REB',
+        'home_assists': 'AST',
+        'home_minutes': 'MIN',
+        'home_player_count': 'player_count'
+    }, inplace=True)
+
+    # Auswärts-Statistiken
+    away_stats = df[['gameDateTimeEst', 'awayteamName', 
+                    'away_points', 'away_reboundsDefensive', 'away_reboundsOffensive', 
+                    'away_assists', 'away_minutes', 'away_player_count']].copy()
+
+    away_stats['away_rebounds'] = away_stats['away_reboundsDefensive'] + away_stats['away_reboundsOffensive']
+
+    away_stats = away_stats[['gameDateTimeEst', 'awayteamName', 'away_points', 'away_rebounds', 'away_assists', 'away_minutes', 'away_player_count']]
+    away_stats.rename(columns={
+        'awayteamName': 'team',
+        'away_points': 'PTS',
+        'away_rebounds': 'REB',
+        'away_assists': 'AST',
+        'away_minutes': 'MIN',
+        'away_player_count': 'player_count'
+    }, inplace=True)
+
+    team_stats_all = pd.concat([home_stats, away_stats], ignore_index=True)
+    team_stats_all.sort_values(['team', 'gameDateTimeEst'], inplace=True)
+    
+
+    metrics = ['PTS', 'REB', 'AST', 'MIN', 'player_count']
+
+    for metric in metrics:
+        if metric in team_stats_all.columns:
+            # Konvertiere zu numeric, setze Fehler auf NaN und fülle NaN mit 0
+            team_stats_all[metric] = pd.to_numeric(team_stats_all[metric], errors='coerce').fillna(0)
+            #print(f"Metrik {metric} konvertiert. Neuer Typ: {team_stats_all[metric].dtype}")
+        else:
+            break
+            #print(f"Warnung: Metrik {metric} nicht in team_stats_all – überspringe.")
+
+    # Gleitende Mittelwerte der letzten 5 Spiele für jede Metrik
+    
+    for metric in metrics:
+        if metric in team_stats_all.columns:
+            col_name = f'last5_{metric.lower()}'
+            team_stats_all[col_name] = (
+                team_stats_all.groupby('team')[metric]
+                .transform(lambda x: x.shift(1).rolling(5, min_periods=1).mean())
+            )
+            #print(f"{col_name} berechnet.")
+
+    # Aufteilen in Heim/Auswärts
+    home_last5 = team_stats_all[['gameDateTimeEst', 'team', 'last5_pts', 'last5_reb', 'last5_ast', 'last5_min', 'last5_player_count']].rename(
+        columns={'team': 'hometeamName', 'last5_pts': 'home_last5_pts', 'last5_reb': 'home_last5_reb',
+                 'last5_ast': 'home_last5_ast', 'last5_min': 'home_last5_min', 'last5_player_count': 'home_last5_player_count'}
+    )
+    away_last5 = team_stats_all[['gameDateTimeEst', 'team', 'last5_pts', 'last5_reb', 'last5_ast', 'last5_min', 'last5_player_count']].rename(
+        columns={'team': 'awayteamName', 'last5_pts': 'away_last5_pts', 'last5_reb': 'away_last5_reb',
+                 'last5_ast': 'away_last5_ast', 'last5_min': 'away_last5_min', 'last5_player_count': 'away_last5_player_count'}
+    )
+
+    df = df.merge(home_last5, on=['gameDateTimeEst', 'hometeamName'], how='left')
+    df = df.merge(away_last5, on=['gameDateTimeEst', 'awayteamName'], how='left')
+
+    # Differenz-Features
+    df['pts_diff_last5'] = df['home_last5_pts'] - df['away_last5_pts']
+    df['reb_diff_last5'] = df['home_last5_reb'] - df['away_last5_reb']
+    df['ast_diff_last5'] = df['home_last5_ast'] - df['away_last5_ast']
+    df['min_diff_last5'] = df['home_last5_min'] - df['away_last5_min']
+    df['player_count_diff_last5'] = df['home_last5_player_count'] - df['away_last5_player_count']
+
+    print("Spieler-Features erfolgreich hinzugefügt.")
+else:
+    print(f"Warnung: {PLAYER_BOX} nicht gefunden – überspringe Spieler-Features.")
+
+
+model_output_path = os.path.join(base_dir, "data", "model_data.csv")
+df.to_csv(model_output_path, index=False)
+print(f"Gespeichert: {model_output_path}")

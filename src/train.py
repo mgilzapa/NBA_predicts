@@ -5,7 +5,7 @@ from sklearn.metrics import accuracy_score
 import numpy as np
 
 df = pd.read_csv('data/model_data.csv')
-
+'''
 df_model = df.dropna(subset=["home_last5_winrate",
                             "away_last5_winrate",
                             "home_last5_avg_points",
@@ -23,26 +23,16 @@ df_model = df.dropna(subset=["home_last5_winrate",
                             "home_away_winrate",
                             "away_away_winrate"
                             ]).copy()
-
+'''
 # Datum wieder als echtes Datum
-df_model["gameDateTimeEst"] = pd.to_datetime(df_model["gameDateTimeEst"])
+df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
 # Differenz der Winraten
-df_model["winrate_diff"] = df_model["home_last5_winrate"] - df_model["away_last5_winrate"]
-df_model["average_points_diff"] = df_model["home_last5_avg_points"] - df_model["away_last5_avg_points"]
-df_model["average_points_allowed_diff"] = df_model["home_last5_avg_points_allowed"] - df_model["away_last5_avg_points_allowed"]
-df_model["rest_days_diff"] = df_model["home_rest_days"] - df_model["away_rest_days"]
+df["winrate_diff"] = df["home_last5_winrate"] - df["away_last5_winrate"]
+df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_points"]
+df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
+df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
 
-# Aktuelles Datum in US Eastern Time (zeitzonenfrei)
-eastern_now = pd.Timestamp.now(tz='US/Eastern')
-today_naive = eastern_now.tz_localize(None).normalize()
-fourteen_days_ago = (eastern_now - pd.Timedelta(days=14)).tz_localize(None).normalize()
-
-train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
-test = df_model[
-    (df_model["gameDateTimeEst"] >= fourteen_days_ago) & 
-    (df_model["gameDateTimeEst"] < today_naive)].copy()
-
-future_cols =["home_last5_winrate",
+feature_cols =["home_last5_winrate",
                  "away_last5_winrate",
                  "winrate_diff",
                  "home_last5_avg_points",
@@ -61,13 +51,45 @@ future_cols =["home_last5_winrate",
                 "home_home_winrate", 
                 "away_home_winrate",
                 "home_away_winrate", 
-                "away_away_winrate"
+                "away_away_winrate",
+                "winrate_diff",
+                "average_points_diff",
+                "average_points_allowed_diff",
+                "rest_days_diff",
+                "home_last5_pts",
+                "away_last5_pts",
+                "home_last5_reb",
+                "away_last5_reb",
+                "home_last5_ast",
+                "away_last5_ast",
+                "home_last5_min",
+                "away_last5_min",
+                "home_last5_player_count",
+                "away_last5_player_count",
+                "pts_diff_last5",
+                "reb_diff_last5",
+                "ast_diff_last5",
+                "min_diff_last5",
+                "player_count_diff_last5"
                  ]
-X_train = train[future_cols]
-y_train = train["home_win"]
 
-X_test = test[future_cols]
-y_test = test["home_win"]
+df_model = df.dropna(subset=feature_cols).copy()
+
+# Aktuelles Datum in US Eastern Time (zeitzonenfrei)
+eastern_now = pd.Timestamp.now(tz='US/Eastern')
+today_naive = eastern_now.tz_localize(None).normalize()
+fourteen_days_ago = (eastern_now - pd.Timedelta(days=14)).tz_localize(None).normalize()
+
+train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
+test = df_model[
+    (df_model["gameDateTimeEst"] >= fourteen_days_ago) & 
+    (df_model["gameDateTimeEst"] < today_naive)].copy()
+
+X_train = train[feature_cols].values
+y_train = train["home_win"].values
+
+X_test = test[feature_cols].values
+y_test = test["home_win"].values
 
 lr = LogisticRegression(max_iter=1000)
 xgb = XGBClassifier(
