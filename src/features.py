@@ -129,7 +129,7 @@ team_history = team_history.merge(
 team_history["last_game_overtime"] = team_history.groupby("team")["overtime"].shift(1)
 
 # ------------------------------------------------------------
-# FEATURE 8: Division/Rivalität - NEU
+# FEATURE 8: Division/Rivalität 
 # ------------------------------------------------------------
 # Team zu Division Mapping (Quelle: NBA)
 divisions = {
