@@ -20,7 +20,7 @@ if __name__ == "__main__":
     # Reihenfolge der Skripte (angepasst an deine tatsächlichen Dateinamen)
     scripts = [
         "src/nba_api_test.py",   # Ergebnisse von der API holen
-        #"src/fetch_player_stats.py",  # Spielerstatistiken holen
+        "src/fetch_player_stats.py",  # Spielerstatistiken holen
         "src/tabelle.py",        # Tabelle bereinigen
         "src/features.py",       # Features hinzufügen
         "src/predict.py",        # Vorhersage für heute

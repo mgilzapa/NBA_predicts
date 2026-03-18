@@ -15,19 +15,9 @@ SLEEP_SECONDS = 1                                # Pause zwischen API-Aufrufen
 
 os.makedirs(os.path.join(base_dir, "data"), exist_ok=True)
 
-# ------------------------------------------------------------
-# Batch-Zeitraum aus Kommandozeile lesen
-# ------------------------------------------------------------
-if len(sys.argv) >= 3:
-    batch_start = pd.to_datetime(sys.argv[1])
-    batch_end = pd.to_datetime(sys.argv[2])
-    print(f"Lade Batch von {batch_start.date()} bis {batch_end.date()}")
-else:
-    print("Fehler: Bitte Start- und Enddatum angeben, z.B. python fetch_player_stats.py 2025-10-01 2025-11-01")
-    sys.exit(1)
-
-# Nur Spiele bis gestern (da zukünftige keine Boxscores haben)
-yesterday = pd.Timestamp.now().normalize() - pd.Timedelta(days=1)
+yesterday = pd.Timestamp(datetime.now().date() - pd.Timedelta(days=1))
+yesterday_date = yesterday.date()
+print(f"Lade Boxscores für Spiele vom: {yesterday_date}")
 
 # ------------------------------------------------------------
 # 1. Bereits verarbeitete gameIds ermitteln
@@ -52,17 +42,12 @@ games['GAME_DATE'] = pd.to_datetime(games['GAME_DATE'])
 games['GAME_ID'] = games['GAME_ID'].astype(str).str.replace(r'\.0$', '', regex=True)
 games['GAME_ID'] = games['GAME_ID'].str.zfill(10)
 
-# Filter: Nur Spiele im Batch-Zeitraum und nicht in der Zukunft
-mask = (games['GAME_DATE'] >= batch_start) & (games['GAME_DATE'] <= batch_end) & (games['GAME_DATE'] <= yesterday)
-games_batch = games.loc[mask].copy()
-
-print(f"Spiele im Batch-Zeitraum: {len(games_batch)}")
-
-to_fetch = games_batch[~games_batch['GAME_ID'].isin(processed_ids)].copy()
-print(f"Zu verarbeitende neue Spiele im Batch: {len(to_fetch)}")
-
+games_yestarday = games[games['GAME_DATE'].dt.date == yesterday_date].copy()
+print(f"Gefundene Spiele gestern: {len(games_yestarday)}")
+to_fetch = games_yestarday[~games_yestarday['GAME_ID'].isin(processed_ids)].copy()
+print(f"Spiele zum Verarbeiten: {len(to_fetch)}")
 if to_fetch.empty:
-    print("Alles aktuell – nichts zu tun.")
+    print("Keine neuen Spiele zum Verarbeiten – Skript wird beendet.")
     exit(0)
 
 # ------------------------------------------------------------
