@@ -1,5 +1,6 @@
 import os
 import pandas as pd
+from nba_api.stats.endpoints import leaguegamelog
 
 def update_all_predictions():
     base_dir = os.path.dirname(os.path.dirname(__file__))
@@ -10,15 +11,15 @@ def update_all_predictions():
         print(f"Quelldatei {source_file} nicht gefunden. Überspringe.")
         return
 
-    # Lade yesterday-Blatt aus der Quelle
+    
     try:
-        df_source = pd.read_excel(source_file, sheet_name="yesterday")
+        df_source = pd.read_excel(source_file, sheet_name="predictions_today")
     except ValueError:
-        print("Blatt 'yesterday' nicht in der Quelldatei vorhanden.")
+        print("Blatt 'predictions_today' nicht in der Quelldatei vorhanden.")
         return
 
     if df_source.empty:
-        print("Keine Einträge im Blatt 'yesterday' gefunden.")
+        print("Keine Einträge im Blatt 'predictions_today' gefunden.")
         return
 
     # Prüfe ob gameID vorhanden ist

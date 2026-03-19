@@ -322,7 +322,7 @@ if os.path.exists(PLAYER_BOX):
                 return float(m)
             except:
                 return 0.0
-        box['MIN'] = box['MIN'].apply(parse_minutes)
+        box['minutes'] = box['minutes'].apply(parse_minutes)
 
     # Aggregierte Team-Statistiken pro Spiel (Summe)
     stat_cols = ['points', 'reboundsDefensive', 'reboundsOffensive', 'assists', 'steals', 'blocks', 'turnovers', 'minutes']

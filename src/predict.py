@@ -1,4 +1,3 @@
-import os
 import pandas as pd
 from xgboost import XGBClassifier
 
@@ -248,7 +247,7 @@ else:
         "predicted_winner": "Predicted Winner"
     }, inplace=True)
     output_today = output
-
+'''
 yesterday_us_eastern = (pd.Timestamp.now(tz='US/Eastern') - pd.Timedelta(days=1)).tz_localize(None).normalize()
 yesterday_games = df_model[df_model["gameDateTimeEst"].dt.normalize() == yesterday_naive].copy()
 
@@ -286,11 +285,11 @@ if not yesterday_games.empty:
     print(f"Gefundene Spiele für gestern: {len(output_yesterday)}")
 else:
     print("Keine Spiele von gestern (US Eastern) gefunden.")
-
-print("Vorhersagen für heute:")
-print(output_today.to_string(index=False))
-print("\nVorhersagen für gestern:")
-print(output_yesterday.to_string(index=False))
+'''
+#print("Vorhersagen für heute:")
+#print(output_today.to_string(index=False))
+#print("\nVorhersagen für gestern:")
+#print(output_yesterday.to_string(index=False))
     
 
 

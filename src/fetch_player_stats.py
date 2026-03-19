@@ -104,7 +104,7 @@ if all_player_rows:
         combined = new_data
 
     combined.drop_duplicates(subset=['GAME_ID', 'PLAYER_ID'], keep='last', inplace=True)
-    combined.to_csv(PLAYER_BOX_CSV, index=False)
+    #combined.to_csv(PLAYER_BOX_CSV, index=False)
     print(f"Gespeichert: {PLAYER_BOX_CSV} mit {len(combined)} Einträgen.")
 else:
     print("Keine neuen Daten hinzugefügt.")
