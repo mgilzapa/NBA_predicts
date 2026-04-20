@@ -58,8 +58,8 @@ feature_cols =["home_last5_winrate",
                 "rest_days_diff",
                 "home_last5_pts",
                 "away_last5_pts",
-                "home_last5_reb",
-                "away_last5_reb",
+                "home_last5_rebounds",
+                "away_last5_rebounds",
                 "home_last5_ast",
                 "away_last5_ast",
                 "home_last5_min",
@@ -212,7 +212,7 @@ future["average_points_allowed_diff"] = future["home_last5_avg_points_allowed"] 
 future["rest_days_diff"] = future["home_rest_days"] - future["away_rest_days"]
 
 future["pts_diff_last5"] = future["home_last5_pts"] - future["away_last5_pts"]
-future["reb_diff_last5"] = future["home_last5_reb"] - future["away_last5_reb"]
+future["reb_diff_last5"] = future["home_last5_rebounds"] - future["away_last5_rebounds"]
 future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
 future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
 future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]

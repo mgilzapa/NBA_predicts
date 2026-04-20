@@ -22,7 +22,7 @@ if __name__ == "__main__":
         "src/nba_api_test.py",   # Ergebnisse von der API holen
         "src/fetch_player_stats.py",  # Spielerstatistiken holen
         "src/tabelle.py",        # Tabelle bereinigen
-        "src/features.py",       # Features hinzufügen
+        "src/feature_engineering.py",       # Features hinzufügen
         "src/predict.py",        # Vorhersage für heute
         "src/clean_excel.py",    # Excel-Datei bereinigen
         "src/create_excel.py",   # Excel-Datei aktualisieren
