@@ -99,7 +99,7 @@ model.fit(X_train, y_train)
 # -----------------------------
 # 3. Zukünftige Spiele laden und auf NBA-Teams beschränken
 # -----------------------------
-future = pd.read_csv("data/LeagueSchedule25_26.csv")
+future = pd.read_csv("data/schedule_round_1.csv")
 
 
 # Spalten vereinheitlichen
@@ -149,15 +149,16 @@ team_name_mapping = {
 if 'Phoenix' in future['hometeamName'].values or 'Phoenix' in future['awayteamName'].values:
     team_name_mapping['Phoenix'] = 'Phoenix Suns'
 
-# Nur Zeilen, bei denen beide Teams im Mapping sind (echte NBA-Spiele)
+# Nur echte NBA-Spiele
 nba_mask = future['hometeamName'].isin(team_name_mapping.keys()) & future['awayteamName'].isin(team_name_mapping.keys())
-future_nba = future.loc[nba_mask].copy()
-print(f"Anzahl NBA-Spiele in Schedule: {len(future_nba)}")
+future = future.loc[nba_mask].copy()
 
-# Teamnamen ersetzen
-future_nba['hometeamName'] = future_nba['hometeamName'].map(team_name_mapping)
-future_nba['awayteamName'] = future_nba['awayteamName'].map(team_name_mapping)
-future = future_nba
+# Teamnamen mappen
+future['hometeamName'] = future['hometeamName'].map(team_name_mapping)
+future['awayteamName'] = future['awayteamName'].map(team_name_mapping)
+
+# Nach Datum sortieren und die nächsten 8 Spiele nehmen
+future = future.sort_values("gameDateTimeEst").head(8).copy()
 
 # -----------------------------
 # 4. Letzte bekannte Team-Features aus Modelldaten extrahieren
@@ -165,24 +166,43 @@ future = future_nba
 home_cols = [col for col in feature_cols if col.startswith('home_')]
 away_cols = [col for col in feature_cols if col.startswith('away_')]
 
-# Letzte Werte für Heim-Teams
+# Home-Features: aus home-Spielen direkt + aus away-Spielen (umbenannt)
+home_as_home = df_model[["gameDateTimeEst", "hometeamName"] + home_cols].rename(
+    columns={"hometeamName": "team_name"}
+)
+away_as_home = df_model[["gameDateTimeEst", "awayteamName"] + away_cols].rename(
+    columns={"awayteamName": "team_name", **{a: h for a, h in zip(away_cols, home_cols)}}
+)
+all_as_home = pd.concat([home_as_home, away_as_home])
 home_latest = (
-    df_model.sort_values("gameDateTimeEst")
-    .groupby("hometeamName")[home_cols]
+    all_as_home.sort_values("gameDateTimeEst")
+    .groupby("team_name")[home_cols]
     .last()
     .reset_index()
+    .rename(columns={"team_name": "hometeamName"})
 )
 
-# Letzte Werte für Auswärts-Teams
+# Away-Features: aus away-Spielen direkt + aus home-Spielen (umbenannt)
+home_as_away = df_model[["gameDateTimeEst", "hometeamName"] + home_cols].rename(
+    columns={"hometeamName": "team_name", **{h: a for h, a in zip(home_cols, away_cols)}}
+)
+away_as_away = df_model[["gameDateTimeEst", "awayteamName"] + away_cols].rename(
+    columns={"awayteamName": "team_name"}
+)
+all_as_away = pd.concat([home_as_away, away_as_away])
 away_latest = (
-    df_model.sort_values("gameDateTimeEst")
-    .groupby("awayteamName")[away_cols]
+    all_as_away.sort_values("gameDateTimeEst")
+    .groupby("team_name")[away_cols]
     .last()
     .reset_index()
+    .rename(columns={"team_name": "awayteamName"})
 )
+
 # -----------------------------
 # 5. Features mit den kommenden Spielen mergen
 # -----------------------------
+future = future.sort_values("gameDateTimeEst").copy()  # kein head(8) hier!
+
 future = future.merge(home_latest, on="hometeamName", how="left")
 future = future.merge(away_latest, on="awayteamName", how="left")
 
@@ -197,14 +217,15 @@ future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
 future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
 future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]
 
+
 # Prüfen, wie viele vollständige Datensätze wir haben
 complete_mask = future[feature_cols].notna().all(axis=1)
 print(f"Anzahl Spiele mit vollständigen Features: {complete_mask.sum()} von {len(future)}")
 
 # -----------------------------
-# 6. Vorhersage für gültige Spiele
+# 6. Vorhersage für die nächsten 8 gültigen Spiele
 # -----------------------------
-future_valid = future.loc[complete_mask].copy()
+future_valid = future.loc[complete_mask].sort_values("gameDateTimeEst").head(8).copy()
 
 if future_valid.empty:
     print("WARNUNG: Keine Spiele mit vollständigen Features – Vorhersage übersprungen.")
@@ -220,12 +241,16 @@ else:
     # -----------------------------
     # 7. Auswahl der relevanten Spiele (ab heute)
     # -----------------------------
-    # Aktuelles Datum in US Eastern Time (Zeitzone der Spieldaten)
-    today_us_eastern = pd.Timestamp.now(tz='US/Eastern').tz_localize(None).normalize()
-    future_today = future_valid[future_valid["gameDateTimeEst"].dt.normalize() == today_naive].copy()
+    eastern_now = pd.Timestamp.now(tz='US/Eastern')
+    today_naive = eastern_now.tz_localize(None).normalize()
+
+    # Nächste 8 anstehende Spiele ab heute (inkl. heute)
+    future_today = future_valid[
+        future_valid["gameDateTimeEst"].dt.normalize() >= today_naive
+    ].sort_values("gameDateTimeEst").head(8).copy()
 
     if future_today.empty:
-        print("Keine Spiele ab heute gefunden. Zeige stattdessen die nächsten 5 anstehenden Spiele:")
+        print("Keine Spiele ab heute gefunden. Zeige die nächsten 5:")
         future_today = future_valid.nsmallest(5, "gameDateTimeEst")
 
     future_today.sort_values("gameDateTimeEst", inplace=True)
@@ -247,49 +272,8 @@ else:
         "predicted_winner": "Predicted Winner"
     }, inplace=True)
     output_today = output
-'''
-yesterday_us_eastern = (pd.Timestamp.now(tz='US/Eastern') - pd.Timedelta(days=1)).tz_localize(None).normalize()
-yesterday_games = df_model[df_model["gameDateTimeEst"].dt.normalize() == yesterday_naive].copy()
 
-output_yesterday = pd.DataFrame()
-if not yesterday_games.empty:
-    X_yesterday = yesterday_games[feature_cols].values
-    yesterday_games["prediction"] = model.predict(X_yesterday)
-    yesterday_games["probability_home_win"] = model.predict_proba(X_yesterday)[:, 1]
-    yesterday_games["predicted_winner"] = yesterday_games.apply(
-        lambda row: row["hometeamName"] if row["prediction"] == 1 else row["awayteamName"],
-        axis=1
-    )
-    yesterday_games["actual_winner"] = yesterday_games.apply(
-        lambda row: row["hometeamName"] if row["home_win"] == 1 else row["awayteamName"],
-        axis=1
-    )
-    output_yesterday = yesterday_games[[
-        "gameDateTimeEst",
-        "hometeamName", 
-        "awayteamName",
-        "predicted_winner", 
-        "probability_home_win", 
-        "actual_winner",
-        "gameId"
-    ]].copy()
 
-    output_yesterday["gameDateTimeEst"] = output_yesterday["gameDateTimeEst"].dt.strftime("%Y-%m-%d %H:%M:%S")
-    output_yesterday.rename(columns={
-        "gameDateTimeEst": "Date",
-        "hometeamName": "Home Team",
-        "awayteamName": "Away Team",
-        "predicted_winner": "Predicted Winner",
-        "actual_winner": "Actual Winner"
-    }, inplace=True)
-    print(f"Gefundene Spiele für gestern: {len(output_yesterday)}")
-else:
-    print("Keine Spiele von gestern (US Eastern) gefunden.")
-'''
-#print("Vorhersagen für heute:")
-#print(output_today.to_string(index=False))
-#print("\nVorhersagen für gestern:")
-#print(output_yesterday.to_string(index=False))
     
 
 

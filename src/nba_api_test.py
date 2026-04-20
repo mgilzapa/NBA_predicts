@@ -90,28 +90,46 @@ def update_nba_games(csv_path="data/nba_api_games.csv"):
         existing_df["GAME_DATE"] = pd.to_datetime(existing_df["GAME_DATE"])
         last_date = existing_df["GAME_DATE"].max()
         print(f"Letztes Spiel in CSV: {last_date.date()}")
-        # Nur Spiele ab dem Tag nach dem letzten Spiel laden (um Überschneidungen zu vermeiden)
-        # Da die API nur saisonweise liefert, holen wir die ganze Saison und filtern später.
+        seasons_to_check = [current_season]
     else:
         existing_df = pd.DataFrame()
         last_date = None
-        # Falls keine CSV existiert, lade alle Seasons ab 2016
-        seasons_to_check = ["2016-17", "2017-18", "2018-19", "2019-20", 
-                            "2020-21", "2021-22", "2022-23", "2023-24", 
-                            "2024-25", "2025-26"]
+        seasons_to_check = [
+            "2016-17", "2017-18", "2018-19", "2019-20",
+            "2020-21", "2021-22", "2022-23", "2023-24",
+            "2024-25", "2025-26"
+        ]
         print("Keine vorhandene CSV gefunden – erstelle neue Datei mit allen Seasons.")
 
     all_new_games = []
 
     for season in seasons_to_check:
         print(f"Lade Saison {season}...")
-        gamelog = leaguegamelog.LeagueGameLog(
-            season=season,
-            season_type_all_star="Regular Season"
-        )
-        df = gamelog.get_data_frames()[0]
-        df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
-        df["is_home"] = df["MATCHUP"].str.contains("vs.").astype(int)
+        
+        season_frames = []
+
+        for season_type in ["Regular Season", "Playoffs"]:
+            print(f"  -> Lade {season_type}")
+            gamelog = leaguegamelog.LeagueGameLog(
+                season=season,
+                season_type_all_star=season_type
+            )
+            df = gamelog.get_data_frames()[0]
+
+            if df.empty:
+                continue
+
+            df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
+            df["is_home"] = df["MATCHUP"].str.contains("vs.").astype(int)
+            df["season_type"] = season_type
+            season_frames.append(df)
+
+            time.sleep(1)
+
+        if not season_frames:
+            continue
+
+        df = pd.concat(season_frames, ignore_index=True)
 
         home_df = df[df["is_home"] == 1].copy()
         away_df = df[df["is_home"] == 0].copy()
@@ -119,34 +137,37 @@ def update_nba_games(csv_path="data/nba_api_games.csv"):
         home_df = home_df.rename(columns={"TEAM_NAME": "hometeamName", "PTS": "homeScore"})
         away_df = away_df.rename(columns={"TEAM_NAME": "awayteamName", "PTS": "awayScore"})
 
-        home_df = home_df[["GAME_ID", "GAME_DATE", "hometeamName", "homeScore"]]
+        home_df = home_df[["GAME_ID", "GAME_DATE", "hometeamName", "homeScore", "season_type"]]
         away_df = away_df[["GAME_ID", "awayteamName", "awayScore"]]
 
         games = home_df.merge(away_df, on="GAME_ID", how="inner")
         games["home_win"] = (games["homeScore"] > games["awayScore"]).astype(int)
         games["season"] = season
 
-        # Falls wir eine bestehende CSV haben, nur Spiele ab dem letzten Datum behalten
         if last_date is not None and season == current_season:
             games = games[games["GAME_DATE"] > last_date].copy()
             if len(games) == 0:
                 print(f"Keine neuen Spiele in Saison {season} seit {last_date.date()}.")
             else:
                 print(f"{len(games)} neue Spiele in Saison {season} gefunden.")
-        all_new_games.append(games)
 
-        time.sleep(1)  # Netzlast reduzieren
+        all_new_games.append(games)
 
     if all_new_games:
         new_games_df = pd.concat(all_new_games, ignore_index=True)
-        # Mit vorhandenen Daten kombinieren
+
         if not existing_df.empty:
             updated_df = pd.concat([existing_df, new_games_df], ignore_index=True)
         else:
             updated_df = new_games_df
 
-        # Sortieren und Duplikate entfernen (sicherheitshalber)
-        updated_df = updated_df.sort_values("GAME_DATE").drop_duplicates(subset=["GAME_ID"]).reset_index(drop=True)
+        updated_df = (
+            updated_df
+            .sort_values("GAME_DATE")
+            .drop_duplicates(subset=["GAME_ID"])
+            .reset_index(drop=True)
+        )
+
         updated_df.to_csv(csv_path, index=False)
         print(f"CSV aktualisiert: {csv_path} | Gesamtanzahl Spiele: {len(updated_df)}")
     else:
