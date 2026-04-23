@@ -1,7 +1,7 @@
 import pandas as pd
 import os
 import matplotlib.pyplot as plt
-from sklearn.model_selection import GridSearchCV
+from sklearn.model_selection import TimeSeriesSplit, GridSearchCV
 import joblib  # zum Speichern des besten Modells
 from xgboost import XGBClassifier
 
@@ -21,46 +21,27 @@ df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_poi
 df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
 df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
 
-feature_cols =["home_last5_winrate",
-                 "away_last5_winrate",
-                 "winrate_diff",
-                 "home_last5_avg_points",
-                 "away_last5_avg_points",
-                 "home_rest_days",
-                 "away_rest_days",
-                "home_last5_avg_points_allowed",
-                "away_last5_avg_points_allowed",
-                "average_points_diff",
-                "average_points_allowed_diff",
-                "rest_days_diff",
-                "home_is_back_to_back",
-                "away_is_back_to_back",
-                "home_opponent_strength",
-                "away_opponent_strength",
-                "home_home_winrate", 
-                "away_home_winrate",
-                "home_away_winrate", 
-                "away_away_winrate",
-                "winrate_diff",
-                "average_points_diff",
-                "average_points_allowed_diff",
-                "rest_days_diff",
-                "home_last5_pts",
-                "away_last5_pts",
-                "home_last5_reb",
-                "away_last5_reb",
-                "home_last5_ast",
-                "away_last5_ast",
-                "home_last5_min",
-                "away_last5_min",
-                "home_last5_player_count",
-                "away_last5_player_count",
-                "pts_diff_last5",
-                "reb_diff_last5",
-                "ast_diff_last5",
-                "min_diff_last5",
-                "player_count_diff_last5"
-                 ]
+feature_cols = [
+    "home_last5_winrate",
+    "away_last5_winrate",
+    "winrate_diff",
+    "home_last5_avg_points",
+    "away_last5_avg_points",
+    "home_rest_days",
+    "away_rest_days",
+    "home_last5_avg_points_allowed",
+    "away_last5_avg_points_allowed",
+    "average_points_diff",
+    "average_points_allowed_diff",
+    "rest_days_diff",
+    "home_is_back_to_back",
+    "away_is_back_to_back",
+    "away_opponent_strength",
+    "home_home_winrate",
+    "away_home_winrate",
+    "home_away_winrate",
+    "away_away_winrate",
+]
 
 # Phase-Spalten hinzufügen falls vorhanden
 phase_cols = [col for col in df.columns if col.startswith("phase_")]
@@ -73,11 +54,11 @@ df_model = df.dropna(subset=feature_cols).copy()
 # Train/Test Split
 eastern_now = pd.Timestamp.now(tz='US/Eastern')
 today_naive = eastern_now.tz_localize(None).normalize()
-fourteen_days_ago = (eastern_now - pd.Timedelta(days=14)).tz_localize(None).normalize()
+test_Set = (eastern_now - pd.Timedelta(days=60)).tz_localize(None).normalize()
 
-train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
+train = df_model[df_model["gameDateTimeEst"] < test_Set].copy()
 test = df_model[
-    (df_model["gameDateTimeEst"] >= fourteen_days_ago) & 
+    (df_model["gameDateTimeEst"] >= test_Set) & 
     (df_model["gameDateTimeEst"] < today_naive)
 ].copy()
 
@@ -97,10 +78,10 @@ print("="*60)
 
 # Dein aktuelles Modell (mit deinen Parametern)
 xgb_current = XGBClassifier(
-    n_estimators=300,
-    max_depth=4,
-    learning_rate=0.05,
-    subsample=0.8,
+    n_estimators=200,
+    max_depth=3,
+    learning_rate=0.03,
+    subsample=0.7,
     colsample_bytree=0.8,
     objective="binary:logistic",
     eval_metric="logloss",
@@ -131,6 +112,9 @@ print("\n📉 WENIGER WICHTIGE FEATURES:")
 for i, row in feat_importance.tail(10).iterrows():
     print(f"   {row['feature']}: {row['importance']:.3f}")
 
+low_importance = feat_importance[feat_importance['importance'] < 0.020]['feature'].tolist()
+print(f"Entfernen: {low_importance}")
+
 # Plot speichern
 plt.figure(figsize=(12, 8))
 plt.barh(feat_importance.head(15)['feature'], feat_importance.head(15)['importance'])
@@ -159,8 +143,9 @@ param_grid = {
 print("\n🔄 Teste verschiedene Parameter...")
 print(f"   {len(param_grid['max_depth']) * len(param_grid['learning_rate']) * len(param_grid['n_estimators']) * len(param_grid['subsample']) * len(param_grid['colsample_bytree'])} Kombinationen")
 
+tscv = TimeSeriesSplit(n_splits=5)
 xgb_tuned = XGBClassifier(objective="binary:logistic", eval_metric="logloss", random_state=42)
-grid = GridSearchCV(xgb_tuned, param_grid, cv=3, scoring='accuracy', verbose=1, n_jobs=-1)
+grid = GridSearchCV(xgb_tuned, param_grid, cv=tscv, scoring='accuracy', verbose=1, n_jobs=-1)
 grid.fit(X_train, y_train)
 
 print(f"\n✅ Beste Parameter: {grid.best_params_}")
@@ -206,7 +191,7 @@ print(team_fehler.sort_values('gesamt', ascending=False).head(10))
 print("\n😲 Überraschende Fehler (hohe Siegwahrscheinlichkeit, aber verloren):")
 ueberraschung = falsche.nlargest(10, 'probability')[['gameDateTimeEst', 'hometeamName', 'awayteamName', 'home_win', 'pred', 'probability']]
 for _, row in ueberraschung.iterrows():
-    winner = row['hometeamName'] if row['home_win'] == 1 else row['awayteamName']
+    winner = row['hometeamName'] if row['pred'] == 1 else row['awayteamName']
     print(f"   {row['gameDateTimeEst'].date()}: {row['hometeamName']} vs {row['awayteamName']}")
     print(f"      Vorhersage: {row['pred']} mit {row['probability']:.1%} -> Tatsächlich: {winner}")
 

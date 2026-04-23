@@ -6,25 +6,6 @@ from xgboost import XGBClassifier
 # 1. Historische Modelldaten laden und bereinigen
 # -----------------------------
 df = pd.read_csv("data/model_data.csv")
-'''
-df_model = df.dropna(subset=["home_last5_winrate",
-                            "away_last5_winrate",
-                            "home_last5_avg_points",
-                            "away_last5_avg_points",
-                            "home_rest_days",
-                            "away_rest_days",
-                            "home_last5_avg_points_allowed",
-                            "away_last5_avg_points_allowed",
-                            "home_is_back_to_back",
-                            "away_is_back_to_back",
-                            "home_opponent_strength",
-                            "away_opponent_strength",
-                            "home_home_winrate",
-                            "away_home_winrate",
-                            "home_away_winrate",
-                            "away_away_winrate"
-                            ]).copy()
-'''
 df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
 #df_model = df.dropna(subset=feature_cols).copy()
 df["winrate_diff"] = df["home_last5_winrate"] - df["away_last5_winrate"]
@@ -32,46 +13,27 @@ df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_poi
 df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
 df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
 
-feature_cols =["home_last5_winrate",
-                 "away_last5_winrate",
-                 "winrate_diff",
-                 "home_last5_avg_points",
-                 "away_last5_avg_points",
-                 "home_rest_days",
-                 "away_rest_days",
-                "home_last5_avg_points_allowed",
-                "away_last5_avg_points_allowed",
-                "average_points_diff",
-                "average_points_allowed_diff",
-                "rest_days_diff",
-                "home_is_back_to_back",
-                "away_is_back_to_back",
-                "home_opponent_strength",
-                "away_opponent_strength",
-                "home_home_winrate", 
-                "away_home_winrate",
-                "home_away_winrate", 
-                "away_away_winrate",
-                "winrate_diff",
-                "average_points_diff",
-                "average_points_allowed_diff",
-                "rest_days_diff",
-                "home_last5_pts",
-                "away_last5_pts",
-                "home_last5_rebounds",
-                "away_last5_rebounds",
-                "home_last5_ast",
-                "away_last5_ast",
-                "home_last5_min",
-                "away_last5_min",
-                "home_last5_player_count",
-                "away_last5_player_count",
-                "pts_diff_last5",
-                "reb_diff_last5",
-                "ast_diff_last5",
-                "min_diff_last5",
-                "player_count_diff_last5"
-                 ]
+feature_cols = [
+    "home_last5_winrate",
+    "away_last5_winrate",
+    "winrate_diff",
+    "home_last5_avg_points",
+    "away_last5_avg_points",
+    "home_rest_days",
+    "away_rest_days",
+    "home_last5_avg_points_allowed",
+    "away_last5_avg_points_allowed",
+    "average_points_diff",
+    "average_points_allowed_diff",
+    "rest_days_diff",
+    "home_is_back_to_back",
+    "away_is_back_to_back",
+    "away_opponent_strength",
+    "home_home_winrate",
+    "away_home_winrate",
+    "home_away_winrate",
+    "away_away_winrate",
+]
 
 df_model = df.dropna(subset=feature_cols).copy()
 
@@ -85,10 +47,10 @@ X_train = train[feature_cols].values
 y_train = train["home_win"].values
 
 model = XGBClassifier(
-    n_estimators=300,
-    max_depth=4,
-    learning_rate=0.05,
-    subsample=0.8,
+    n_estimators=200,
+    max_depth=3,
+    learning_rate=0.03,
+    subsample=0.7,
     colsample_bytree=0.8,
     objective="binary:logistic",
     eval_metric="logloss",
@@ -217,11 +179,11 @@ future["average_points_diff"] = future["home_last5_avg_points"] - future["away_l
 future["average_points_allowed_diff"] = future["home_last5_avg_points_allowed"] - future["away_last5_avg_points_allowed"]
 future["rest_days_diff"] = future["home_rest_days"] - future["away_rest_days"]
 
-future["pts_diff_last5"] = future["home_last5_pts"] - future["away_last5_pts"]
-future["reb_diff_last5"] = future["home_last5_rebounds"] - future["away_last5_rebounds"]
-future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
-future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
-future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]
+#future["pts_diff_last5"] = future["home_last5_pts"] - future["away_last5_pts"]
+#future["reb_diff_last5"] = future["home_last5_rebounds"] - future["away_last5_rebounds"]
+#future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
+#future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
+#future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]
 
 
 # Prüfen, wie viele vollständige Datensätze wir haben
@@ -274,6 +236,7 @@ else:
         "predicted_winner": "Predicted Winner"
     }, inplace=True)
     output_today = output
+
 
 
     
