@@ -101,7 +101,6 @@ model.fit(X_train, y_train)
 # -----------------------------
 future = pd.read_csv("data/schedule_round_1.csv")
 
-
 # Spalten vereinheitlichen
 future.rename(columns={
     "homeTeamName": "hometeamName",
@@ -157,8 +156,15 @@ future = future.loc[nba_mask].copy()
 future['hometeamName'] = future['hometeamName'].map(team_name_mapping)
 future['awayteamName'] = future['awayteamName'].map(team_name_mapping)
 
-# Nach Datum sortieren und die nächsten 8 Spiele nehmen
-future = future.sort_values("gameDateTimeEst").head(8).copy()
+eastern_now = pd.Timestamp.now(tz='US/Eastern')
+today_naive = eastern_now.tz_localize(None).normalize()
+
+future = future[future["gameDateTimeEst"].dt.normalize() == today_naive].copy()
+
+if future.empty:
+    print("Keine Spiele heute gefunden.")
+    exit()
+
 
 # -----------------------------
 # 4. Letzte bekannte Team-Features aus Modelldaten extrahieren
@@ -225,7 +231,7 @@ print(f"Anzahl Spiele mit vollständigen Features: {complete_mask.sum()} von {le
 # -----------------------------
 # 6. Vorhersage für die nächsten 8 gültigen Spiele
 # -----------------------------
-future_valid = future.loc[complete_mask].sort_values("gameDateTimeEst").head(8).copy()
+future_valid = future.loc[complete_mask].sort_values("gameDateTimeEst").copy()
 
 if future_valid.empty:
     print("WARNUNG: Keine Spiele mit vollständigen Features – Vorhersage übersprungen.")
@@ -244,16 +250,12 @@ else:
     eastern_now = pd.Timestamp.now(tz='US/Eastern')
     today_naive = eastern_now.tz_localize(None).normalize()
 
-    # Nächste 8 anstehende Spiele ab heute (inkl. heute)
     future_today = future_valid[
-        future_valid["gameDateTimeEst"].dt.normalize() >= today_naive
-    ].sort_values("gameDateTimeEst").head(8).copy()
+        future_valid["gameDateTimeEst"].dt.normalize() == today_naive  
+    ].sort_values("gameDateTimeEst").copy()
 
     if future_today.empty:
-        print("Keine Spiele ab heute gefunden. Zeige die nächsten 5:")
-        future_today = future_valid.nsmallest(5, "gameDateTimeEst")
-
-    future_today.sort_values("gameDateTimeEst", inplace=True)
+        print("Keine Spiele mit vollständigen Features heute gefunden.")
 
     # Ausgabe vorbereiten
     output = future_today[[

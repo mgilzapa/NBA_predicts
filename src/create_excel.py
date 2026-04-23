@@ -13,7 +13,7 @@ if os.path.exists(excel_file):
         existing_today = pd.read_excel(xls, sheet_today) if sheet_today in sheet_names else pd.DataFrame()
 else:
     existing_today = pd.DataFrame()
-    existing_yesterday = pd.DataFrame()
+    
 
 # Heutige Spiele kombinieren und Duplikate entfernen
 if not output_today.empty:

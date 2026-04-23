@@ -43,9 +43,9 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
     # nba_api_games laden
     df_res = pd.read_csv(nba_games_file)
 
-    # gameId normalisieren (als String ohne .0)
-    df_pred['gameId'] = df_pred['gameId'].astype(str).str.replace(r'\.0$', '', regex=True)
-    df_res['GAME_ID'] = df_res['GAME_ID'].astype(str).str.replace(r'\.0$', '', regex=True)
+    # datum normalisieren
+    df_pred['_date'] = pd.to_datetime(df_pred['Date']).dt.normalize()
+    df_res['_date'] = pd.to_datetime(df_res['GAME_DATE']).dt.normalize()
 
     # Gewinner berechnen (actual_winner)
     df_res['actual_winner'] = df_res.apply(
@@ -53,11 +53,11 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
         axis=1
     )
 
-    # Merge: für jede Zeile in df_pred den actual_winner aus df_res holen
+    # Merge über Datum + Home Team
     merged = df_pred.merge(
-        df_res[['GAME_ID', 'actual_winner']],
-        left_on='gameId',
-        right_on='GAME_ID',
+        df_res[['_date', 'hometeamName', 'actual_winner']],
+        left_on=['_date', 'Home Team'],
+        right_on=['_date', 'hometeamName'],
         how='left'
     )
 
@@ -68,7 +68,7 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
         merged.rename(columns={'actual_winner': 'Actual Winner'}, inplace=True)
 
     # Hilfsspalten entfernen
-    merged.drop(columns=['GAME_ID', 'actual_winner'], inplace=True, errors='ignore')
+    merged.drop(columns=['_date','hometeamName', 'actual_winner'], inplace=True, errors='ignore')
 
     # Speichern
     merged.to_excel(target_file, index=False)

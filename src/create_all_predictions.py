@@ -22,15 +22,12 @@ def update_all_predictions():
         print("Keine Einträge im Blatt 'predictions_today' gefunden.")
         return
 
-    # Prüfe ob gameID vorhanden ist
-    if "gameID" not in df_source.columns:
-        print("Warnung: Keine gameID-Spalte gefunden – verwende Datum+Teams als Fallback.")
-        # Fallback auf Datum+Teams
+    # gameId normalisieren
+    if "gameId" not in df_source.columns:
         df_source["_temp_key"] = df_source["Date"].astype(str) + "|" + df_source["Home Team"] + "|" + df_source["Away Team"]
         key_column = "_temp_key"
     else:
-        # Konvertiere gameID zu String (sicherheitshalber)
-        df_source["gameId"] = df_source["gameId"].astype(str)
+        df_source["gameId"] = df_source["gameId"].astype(str).str.replace(r'\.0$', '', regex=True)
         key_column = "gameId"
 
     # Lade vorhandene Zieldatei, falls existent
@@ -51,14 +48,16 @@ def update_all_predictions():
         combined = df_source
         target_key_column = key_column
 
-    # Duplikate basierend auf gameID (oder Fallback) entfernen
+    # Duplikate entfernen
+    dedup_col = target_key_column if target_key_column in combined.columns else key_column
     before = len(combined)
-    combined.drop_duplicates(subset=[target_key_column if target_key_column in combined.columns else key_column], 
-                            keep="last", inplace=True)
+    combined.drop_duplicates(subset=[dedup_col], keep="last", inplace=True)
     after = len(combined)
-    
     if before > after:
-        print(f" Info: {before - after} Duplikate entfernt.")
+        print(f"Info: {before - after} Duplikate entfernt.")
+
+    # NaN-Zeilen rauswerfen (Zeilen ohne Date/Teams)
+    combined.dropna(subset=["Date", "Home Team", "Away Team"], inplace=True)
 
     # Temporäre Schlüsselspalte entfernen falls vorhanden
     if "_temp_key" in combined.columns:
