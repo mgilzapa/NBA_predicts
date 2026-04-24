@@ -1,6 +1,35 @@
+import json
+import os
+
 import pandas as pd
 from xgboost import XGBClassifier
+from injury_reports import INJURY_OUTPUT, build_player_importance_snapshot, compute_injury_features
 
+output_today = pd.DataFrame()
+BASE_DIR = os.path.dirname(os.path.dirname(__file__))
+SELECTED_FEATURES_PATH = os.path.join(BASE_DIR, "output", "xgb_selected_features.json")
+
+
+def latest_team_snapshot(frame, team_col, role_cols, rename_map=None):
+    team_frame = frame[["gameDateTimeEst", team_col] + role_cols].copy()
+    if rename_map:
+        team_frame = team_frame.rename(columns=rename_map)
+    team_frame = team_frame.rename(columns={team_col: "team_name"})
+    value_cols = [col for col in team_frame.columns if col not in {"gameDateTimeEst", "team_name"}]
+
+    rows = []
+    for team_name, group in team_frame.groupby("team_name", sort=False):
+        group = group.sort_values("gameDateTimeEst")
+        row = {
+            "team_name": team_name,
+            "gameDateTimeEst": group["gameDateTimeEst"].max(),
+        }
+        for col in value_cols:
+            non_null = group[col].dropna()
+            row[col] = non_null.iloc[-1] if not non_null.empty else pd.NA
+        rows.append(row)
+
+    return pd.DataFrame(rows)
 
 # -----------------------------
 # 1. Historische Modelldaten laden und bereinigen
@@ -13,27 +42,107 @@ df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_poi
 df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
 df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
 
-feature_cols = [
-    "home_last5_winrate",
-    "away_last5_winrate",
+default_feature_cols = [
     "winrate_diff",
-    "home_last5_avg_points",
-    "away_last5_avg_points",
-    "home_rest_days",
-    "away_rest_days",
+    "average_points_allowed_diff",
+    "away_last5_winrate",
+    "away_away_winrate",
+    "top3_availability_diff",
+    "away_top5_missing_count",
+    "away_h2h_winrate",
+    "home_h2h_winrate",
+    "missing_top5_importance_diff",
+    "top1_importance_diff",
+    "average_points_diff",
+    "home_top5_missing_count",
     "home_last5_avg_points_allowed",
     "away_last5_avg_points_allowed",
-    "average_points_diff",
-    "average_points_allowed_diff",
-    "rest_days_diff",
-    "home_is_back_to_back",
-    "away_is_back_to_back",
-    "away_opponent_strength",
-    "home_home_winrate",
+    "away_last5_player_count",
+    "home_missing_top5_importance",
+    "home_top3_importance_sum",
+    "away_missing_top3_importance",
+    "away_top5_importance_sum",
     "away_home_winrate",
+    "away_missing_top5_importance",
+    "ast_diff_last5",
+    "top5_availability_diff",
+    "winrate_trend_diff",
+    "rest_days_diff",
+    "away_last5_pts",
+    "home_last_game_close",
+    "missing_top3_importance_diff",
     "home_away_winrate",
-    "away_away_winrate",
+    "home_winrate_trend",
+    "home_rest_days",
+    "away_top3_importance_sum",
+    "away_last5_avg_points",
+    "away_last_game_close",
+    "home_top5_importance_sum",
+    "home_last5_winrate",
+    "home_last5_ast",
+    "home_top1_importance",
+    "away_last5_ast",
+    "home_last5_avg_points",
 ]
+
+selected_feature_cols = default_feature_cols
+model_params = {
+    "n_estimators": 200,
+    "max_depth": 3,
+    "learning_rate": 0.03,
+    "subsample": 0.7,
+    "colsample_bytree": 0.8,
+}
+if os.path.exists(SELECTED_FEATURES_PATH):
+    try:
+        with open(SELECTED_FEATURES_PATH, "r", encoding="utf-8") as f:
+            feature_config = json.load(f)
+        selected_feature_cols = feature_config.get("selected_feature_cols", default_feature_cols)
+        model_params.update(feature_config.get("best_params", {}))
+        print(
+            f"Feature-Auswahl geladen: {len(selected_feature_cols)} Features aus {SELECTED_FEATURES_PATH}"
+        )
+    except Exception as exc:
+        print(f"WARNUNG: Konnte Feature-Auswahl nicht laden, nutze Fallback-Liste: {exc}")
+
+feature_cols = [col for col in selected_feature_cols if col in df.columns]
+derived_feature_dependencies = {
+    "winrate_diff": ["home_last5_winrate", "away_last5_winrate"],
+    "winrate_trend_diff": ["home_winrate_trend", "away_winrate_trend"],
+    "average_points_diff": ["home_last5_avg_points", "away_last5_avg_points"],
+    "average_points_allowed_diff": ["home_last5_avg_points_allowed", "away_last5_avg_points_allowed"],
+    "rest_days_diff": ["home_rest_days", "away_rest_days"],
+    "h2h_winrate_diff": ["home_h2h_winrate", "away_h2h_winrate"],
+    "pts_diff_last5": ["home_last5_pts", "away_last5_pts"],
+    "reb_diff_last5": ["home_last5_rebounds", "away_last5_rebounds"],
+    "ast_diff_last5": ["home_last5_ast", "away_last5_ast"],
+    "min_diff_last5": ["home_last5_min", "away_last5_min"],
+    "player_count_diff_last5": ["home_last5_player_count", "away_last5_player_count"],
+    "playoff_exp_diff": ["home_playoff_exp", "away_playoff_exp"],
+    "top1_importance_diff": ["home_top1_importance", "away_top1_importance"],
+    "missing_top3_importance_diff": ["home_missing_top3_importance", "away_missing_top3_importance"],
+    "missing_top5_importance_diff": ["home_missing_top5_importance", "away_missing_top5_importance"],
+    "top3_availability_diff": ["home_top3_availability_ratio", "away_top3_availability_ratio"],
+    "top5_availability_diff": ["home_top5_availability_ratio", "away_top5_availability_ratio"],
+}
+
+support_feature_cols = feature_cols + [
+    "home_winrate_trend",
+    "away_winrate_trend",
+    "home_rest_days",
+    "away_rest_days",
+    "home_top1_importance",
+    "away_top1_importance",
+    "home_missing_top3_importance",
+    "away_missing_top3_importance",
+    "home_top3_availability_ratio",
+    "away_top3_availability_ratio",
+    "home_top5_availability_ratio",
+    "away_top5_availability_ratio",
+]
+for derived_col in feature_cols:
+    support_feature_cols.extend(derived_feature_dependencies.get(derived_col, []))
+support_feature_cols = list(dict.fromkeys([col for col in support_feature_cols if col in df.columns]))
 
 df_model = df.dropna(subset=feature_cols).copy()
 
@@ -41,17 +150,19 @@ df_model = df.dropna(subset=feature_cols).copy()
 eastern_now = pd.Timestamp.now(tz='US/Eastern')
 today_naive = eastern_now.tz_localize(None).normalize()
 yesterday_naive = (eastern_now - pd.Timedelta(days=1)).tz_localize(None).normalize()
+prediction_date = today_naive
+#prediction_end = pd.Timestamp("2026-04-27")
 
 train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
 X_train = train[feature_cols].values
 y_train = train["home_win"].values
 
 model = XGBClassifier(
-    n_estimators=200,
-    max_depth=3,
-    learning_rate=0.03,
-    subsample=0.7,
-    colsample_bytree=0.8,
+    n_estimators=model_params["n_estimators"],
+    max_depth=model_params["max_depth"],
+    learning_rate=model_params["learning_rate"],
+    subsample=model_params["subsample"],
+    colsample_bytree=model_params["colsample_bytree"],
     objective="binary:logistic",
     eval_metric="logloss",
     random_state=42
@@ -121,8 +232,27 @@ future['awayteamName'] = future['awayteamName'].map(team_name_mapping)
 eastern_now = pd.Timestamp.now(tz='US/Eastern')
 today_naive = eastern_now.tz_localize(None).normalize()
 
-future = future[future["gameDateTimeEst"].dt.normalize() == today_naive].copy()
+#für alle spiele für heute
 
+schedule_dates = pd.DatetimeIndex(future["gameDateTimeEst"].dt.normalize().dropna().unique()).sort_values()
+if len(schedule_dates) > 0 and today_naive not in schedule_dates:
+    future_dates = schedule_dates[schedule_dates >= today_naive]
+    prediction_date = future_dates[0] if len(future_dates) > 0 else schedule_dates[-1]
+    print(
+        f"Hinweis: Keine Spiele fuer {today_naive.date()} im Schedule, nutze {pd.Timestamp(prediction_date).date()}."
+    )
+else:
+    prediction_date = today_naive
+
+future = future[future["gameDateTimeEst"].dt.normalize() == prediction_date].copy()
+
+'''
+#für genaue Date
+future = future[
+    (future["gameDateTimeEst"].dt.normalize() >= prediction_date)
+    & (future["gameDateTimeEst"].dt.normalize() <= prediction_end)
+].copy()
+'''
 if future.empty:
     print("Keine Spiele heute gefunden.")
     exit()
@@ -131,39 +261,27 @@ if future.empty:
 # -----------------------------
 # 4. Letzte bekannte Team-Features aus Modelldaten extrahieren
 # -----------------------------
-home_cols = [col for col in feature_cols if col.startswith('home_')]
-away_cols = [col for col in feature_cols if col.startswith('away_')]
+home_cols = [col for col in support_feature_cols if col.startswith('home_')]
+away_cols = [col for col in support_feature_cols if col.startswith('away_')]
+away_to_home = {col: col.replace("away_", "home_", 1) for col in away_cols}
+home_to_away = {col: col.replace("home_", "away_", 1) for col in home_cols}
 
 # Home-Features: aus home-Spielen direkt + aus away-Spielen (umbenannt)
-home_as_home = df_model[["gameDateTimeEst", "hometeamName"] + home_cols].rename(
-    columns={"hometeamName": "team_name"}
-)
-away_as_home = df_model[["gameDateTimeEst", "awayteamName"] + away_cols].rename(
-    columns={"awayteamName": "team_name", **{a: h for a, h in zip(away_cols, home_cols)}}
-)
-all_as_home = pd.concat([home_as_home, away_as_home])
-home_latest = (
-    all_as_home.sort_values("gameDateTimeEst")
-    .groupby("team_name")[home_cols]
-    .last()
-    .reset_index()
-    .rename(columns={"team_name": "hometeamName"})
+history_source = df[df["gameDateTimeEst"] < today_naive].copy()
+
+home_as_home = latest_team_snapshot(history_source, "hometeamName", home_cols)
+away_as_home = latest_team_snapshot(history_source, "awayteamName", away_cols, away_to_home)
+all_as_home = pd.concat([home_as_home, away_as_home], ignore_index=True)
+home_latest = latest_team_snapshot(all_as_home, "team_name", home_cols).rename(
+    columns={"team_name": "hometeamName", "gameDateTimeEst": "home_feature_asof"}
 )
 
 # Away-Features: aus away-Spielen direkt + aus home-Spielen (umbenannt)
-home_as_away = df_model[["gameDateTimeEst", "hometeamName"] + home_cols].rename(
-    columns={"hometeamName": "team_name", **{h: a for h, a in zip(home_cols, away_cols)}}
-)
-away_as_away = df_model[["gameDateTimeEst", "awayteamName"] + away_cols].rename(
-    columns={"awayteamName": "team_name"}
-)
-all_as_away = pd.concat([home_as_away, away_as_away])
-away_latest = (
-    all_as_away.sort_values("gameDateTimeEst")
-    .groupby("team_name")[away_cols]
-    .last()
-    .reset_index()
-    .rename(columns={"team_name": "awayteamName"})
+home_as_away = latest_team_snapshot(history_source, "hometeamName", home_cols, home_to_away)
+away_as_away = latest_team_snapshot(history_source, "awayteamName", away_cols)
+all_as_away = pd.concat([home_as_away, away_as_away], ignore_index=True)
+away_latest = latest_team_snapshot(all_as_away, "team_name", away_cols).rename(
+    columns={"team_name": "awayteamName", "gameDateTimeEst": "away_feature_asof"}
 )
 
 # -----------------------------
@@ -175,18 +293,155 @@ future = future.merge(home_latest, on="hometeamName", how="left")
 future = future.merge(away_latest, on="awayteamName", how="left")
 
 future["winrate_diff"] = future["home_last5_winrate"] - future["away_last5_winrate"]
+if {"home_winrate_trend", "away_winrate_trend"}.issubset(future.columns):
+    future["winrate_trend_diff"] = future["home_winrate_trend"] - future["away_winrate_trend"]
 future["average_points_diff"] = future["home_last5_avg_points"] - future["away_last5_avg_points"]
 future["average_points_allowed_diff"] = future["home_last5_avg_points_allowed"] - future["away_last5_avg_points_allowed"]
 future["rest_days_diff"] = future["home_rest_days"] - future["away_rest_days"]
+if {"home_h2h_winrate", "away_h2h_winrate"}.issubset(future.columns):
+    future["h2h_winrate_diff"] = future["home_h2h_winrate"] - future["away_h2h_winrate"]
+if {"home_last5_pts", "away_last5_pts"}.issubset(future.columns):
+    future["pts_diff_last5"] = future["home_last5_pts"] - future["away_last5_pts"]
+if {"home_last5_rebounds", "away_last5_rebounds"}.issubset(future.columns):
+    future["reb_diff_last5"] = future["home_last5_rebounds"] - future["away_last5_rebounds"]
+if {"home_last5_ast", "away_last5_ast"}.issubset(future.columns):
+    future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
+if {"home_last5_min", "away_last5_min"}.issubset(future.columns):
+    future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
+if {"home_last5_player_count", "away_last5_player_count"}.issubset(future.columns):
+    future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]
+if {"home_playoff_exp", "away_playoff_exp"}.issubset(future.columns):
+    future["playoff_exp_diff"] = future["home_playoff_exp"] - future["away_playoff_exp"]
+if {"home_top1_importance", "away_top1_importance"}.issubset(future.columns):
+    future["top1_importance_diff"] = future["home_top1_importance"] - future["away_top1_importance"]
+if {"home_missing_top3_importance", "away_missing_top3_importance"}.issubset(future.columns):
+    future["missing_top3_importance_diff"] = (
+        future["home_missing_top3_importance"] - future["away_missing_top3_importance"]
+    )
+if {"home_missing_top5_importance", "away_missing_top5_importance"}.issubset(future.columns):
+    future["missing_top5_importance_diff"] = (
+        future["home_missing_top5_importance"] - future["away_missing_top5_importance"]
+    )
+if {"home_top3_availability_ratio", "away_top3_availability_ratio"}.issubset(future.columns):
+    future["top3_availability_diff"] = (
+        future["home_top3_availability_ratio"] - future["away_top3_availability_ratio"]
+    )
+if {"home_top5_availability_ratio", "away_top5_availability_ratio"}.issubset(future.columns):
+    future["top5_availability_diff"] = (
+        future["home_top5_availability_ratio"] - future["away_top5_availability_ratio"]
+    )
 
-#future["pts_diff_last5"] = future["home_last5_pts"] - future["away_last5_pts"]
-#future["reb_diff_last5"] = future["home_last5_rebounds"] - future["away_last5_rebounds"]
-#future["ast_diff_last5"] = future["home_last5_ast"] - future["away_last5_ast"]
-#future["min_diff_last5"] = future["home_last5_min"] - future["away_last5_min"]
-#future["player_count_diff_last5"] = future["home_last5_player_count"] - future["away_last5_player_count"]
+divisions = {
+    "Boston Celtics": "Atlantic", "Brooklyn Nets": "Atlantic", "New York Knicks": "Atlantic",
+    "Philadelphia 76ers": "Atlantic", "Toronto Raptors": "Atlantic",
+    "Chicago Bulls": "Central", "Cleveland Cavaliers": "Central", "Detroit Pistons": "Central",
+    "Indiana Pacers": "Central", "Milwaukee Bucks": "Central",
+    "Atlanta Hawks": "Southeast", "Charlotte Hornets": "Southeast", "Miami Heat": "Southeast",
+    "Orlando Magic": "Southeast", "Washington Wizards": "Southeast",
+    "Denver Nuggets": "Northwest", "Minnesota Timberwolves": "Northwest",
+    "Oklahoma City Thunder": "Northwest", "Portland Trail Blazers": "Northwest", "Utah Jazz": "Northwest",
+    "Golden State Warriors": "Pacific", "LA Clippers": "Pacific", "Los Angeles Lakers": "Pacific",
+    "Phoenix Suns": "Pacific", "Sacramento Kings": "Pacific",
+    "Dallas Mavericks": "Southwest", "Houston Rockets": "Southwest", "Memphis Grizzlies": "Southwest",
+    "New Orleans Pelicans": "Southwest", "San Antonio Spurs": "Southwest",
+}
+future["same_division"] = (
+    future["hometeamName"].map(divisions) == future["awayteamName"].map(divisions)
+).astype(int)
+future["is_playoff"] = 1
+
+if os.path.exists(INJURY_OUTPUT):
+    try:
+        injuries = pd.read_csv(INJURY_OUTPUT)
+        player_snapshot = build_player_importance_snapshot()
+        injury_features = compute_injury_features(injuries, player_snapshot)
+
+        if not injury_features.empty:
+            home_live = injury_features.rename(columns={
+                "team_name": "hometeamName",
+                "top3_missing_count": "home_top3_missing_count_live",
+                "top5_missing_count": "home_top5_missing_count_live",
+                "missing_top3_importance": "home_missing_top3_importance_live",
+                "missing_top5_importance": "home_missing_top5_importance_live",
+                "top3_availability_ratio": "home_top3_availability_ratio_live",
+                "top5_availability_ratio": "home_top5_availability_ratio_live",
+            })
+            away_live = injury_features.rename(columns={
+                "team_name": "awayteamName",
+                "top3_missing_count": "away_top3_missing_count_live",
+                "top5_missing_count": "away_top5_missing_count_live",
+                "missing_top3_importance": "away_missing_top3_importance_live",
+                "missing_top5_importance": "away_missing_top5_importance_live",
+                "top3_availability_ratio": "away_top3_availability_ratio_live",
+                "top5_availability_ratio": "away_top5_availability_ratio_live",
+            })
+
+            future = future.merge(
+                home_live[[
+                    "hometeamName",
+                    "home_top3_missing_count_live",
+                    "home_top5_missing_count_live",
+                    "home_missing_top3_importance_live",
+                    "home_missing_top5_importance_live",
+                    "home_top3_availability_ratio_live",
+                    "home_top5_availability_ratio_live",
+                ]],
+                on="hometeamName",
+                how="left",
+            )
+            future = future.merge(
+                away_live[[
+                    "awayteamName",
+                    "away_top3_missing_count_live",
+                    "away_top5_missing_count_live",
+                    "away_missing_top3_importance_live",
+                    "away_missing_top5_importance_live",
+                    "away_top3_availability_ratio_live",
+                    "away_top5_availability_ratio_live",
+                ]],
+                on="awayteamName",
+                how="left",
+            )
+
+            override_pairs = [
+                ("home_top3_missing_count", "home_top3_missing_count_live"),
+                ("home_top5_missing_count", "home_top5_missing_count_live"),
+                ("home_missing_top3_importance", "home_missing_top3_importance_live"),
+                ("home_missing_top5_importance", "home_missing_top5_importance_live"),
+                ("home_top3_availability_ratio", "home_top3_availability_ratio_live"),
+                ("home_top5_availability_ratio", "home_top5_availability_ratio_live"),
+                ("away_top3_missing_count", "away_top3_missing_count_live"),
+                ("away_top5_missing_count", "away_top5_missing_count_live"),
+                ("away_missing_top3_importance", "away_missing_top3_importance_live"),
+                ("away_missing_top5_importance", "away_missing_top5_importance_live"),
+                ("away_top3_availability_ratio", "away_top3_availability_ratio_live"),
+                ("away_top5_availability_ratio", "away_top5_availability_ratio_live"),
+            ]
+            for base_col, live_col in override_pairs:
+                if live_col in future.columns and base_col in future.columns:
+                    future[base_col] = future[live_col].combine_first(future[base_col])
+
+            future["missing_top3_importance_diff"] = (
+                future["home_missing_top3_importance"] - future["away_missing_top3_importance"]
+            )
+            future["missing_top5_importance_diff"] = (
+                future["home_missing_top5_importance"] - future["away_missing_top5_importance"]
+            )
+            future["top3_availability_diff"] = (
+                future["home_top3_availability_ratio"] - future["away_top3_availability_ratio"]
+            )
+            future["top5_availability_diff"] = (
+                future["home_top5_availability_ratio"] - future["away_top5_availability_ratio"]
+            )
+    except Exception as exc:
+        print(f"WARNUNG: Injury-Reports konnten nicht eingerechnet werden: {exc}")
 
 
 # Prüfen, wie viele vollständige Datensätze wir haben
+for col in feature_cols:
+    if col not in future.columns:
+        future[col] = pd.NA
+
 complete_mask = future[feature_cols].notna().all(axis=1)
 print(f"Anzahl Spiele mit vollständigen Features: {complete_mask.sum()} von {len(future)}")
 
@@ -209,13 +464,18 @@ else:
     # -----------------------------
     # 7. Auswahl der relevanten Spiele (ab heute)
     # -----------------------------
-    eastern_now = pd.Timestamp.now(tz='US/Eastern')
-    today_naive = eastern_now.tz_localize(None).normalize()
-
+    #spiele für heute abend
+    
     future_today = future_valid[
-        future_valid["gameDateTimeEst"].dt.normalize() == today_naive  
+        future_valid["gameDateTimeEst"].dt.normalize() == prediction_date
     ].sort_values("gameDateTimeEst").copy()
-
+    '''
+    #spiele bis x datum
+    future_today = future_valid[
+    (future_valid["gameDateTimeEst"].dt.normalize() >= prediction_date)
+    & (future_valid["gameDateTimeEst"].dt.normalize() <= prediction_end)
+    ].sort_values("gameDateTimeEst").copy()
+'''
     if future_today.empty:
         print("Keine Spiele mit vollständigen Features heute gefunden.")
 
