@@ -3,3 +3,5 @@
 #data/
 __pycache__/
 *.pyc
+xgb_selected_features.json
+best_xgb_model.pkl
