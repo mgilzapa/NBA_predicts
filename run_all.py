@@ -16,10 +16,12 @@ def run_script(script_name):
             print(result.stdout)
     print("-" * 50)
 
-if __name__ == "__main__":
+if __name__ == "__main__": 
     # Reihenfolge der Skripte (angepasst an deine tatsächlichen Dateinamen)
     scripts = [
         "src/nba_api_test.py",   # Ergebnisse von der API holen
+        "src/scrape_upcoming_games.py",  # Kommende Spiele scrapen
+        "src/injury_reports.py",     # Verletzungsbericht aktualisieren
         "src/fetch_player_stats.py",  # Spielerstatistiken holen
         "src/tabelle.py",        # Tabelle bereinigen
         "src/feature_engineering.py",       # Features hinzufügen

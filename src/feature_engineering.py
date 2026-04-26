@@ -47,6 +47,69 @@ team_history = (
 )
 
 # ─────────────────────────────────────────────────────────────
+# ELO-RATING
+# ─────────────────────────────────────────────────────────────
+ELO_START = 1500
+ELO_K = 20
+
+def expected_elo(r_a, r_b):
+    return 1 / (1 + 10 ** ((r_b - r_a) / 400))
+
+# Alle Spiele chronologisch sortiert
+elo_games = (
+    df[["gameDateTimeEst", "gameId", "hometeamName", "awayteamName", "homeScore", "awayScore"]]
+    .sort_values("gameDateTimeEst")
+    .reset_index(drop=True)
+)
+
+elo_ratings = {}  # team → aktuelles ELO
+elo_games_played = {}
+home_elo_before = []
+away_elo_before = []
+home_elo_games_played = []
+away_elo_games_played = []
+
+for _, row in elo_games.iterrows():
+    home = row["hometeamName"]
+    away = row["awayteamName"]
+
+    r_home = elo_ratings.get(home, ELO_START)
+    r_away = elo_ratings.get(away, ELO_START)
+
+    # ELO VOR dem Spiel speichern (kein Leakage)
+    home_elo_before.append(r_home)
+    away_elo_before.append(r_away)
+    home_elo_games_played.append(elo_games_played.get(home, 0))  
+    away_elo_games_played.append(elo_games_played.get(away, 0))  
+
+    # Ergebnis
+    home_won = 1 if row["homeScore"] > row["awayScore"] else 0
+    exp_home = expected_elo(r_home, r_away)
+
+    # Update
+    elo_ratings[home] = r_home + ELO_K * (home_won - exp_home)
+    elo_ratings[away] = r_away + ELO_K * ((1 - home_won) - (1 - exp_home))
+    elo_games_played[home] = elo_games_played.get(home, 0) + 1  
+    elo_games_played[away] = elo_games_played.get(away, 0) + 1  
+
+elo_games["home_elo"] = home_elo_before
+elo_games["away_elo"] = away_elo_before
+elo_games["elo_diff"]  = elo_games["home_elo"] - elo_games["away_elo"]
+elo_games["home_elo_games_played"] = home_elo_games_played  
+elo_games["away_elo_games_played"] = away_elo_games_played  
+
+# In df mergen
+df = df.merge(
+    elo_games[["gameId", "home_elo", "away_elo", "elo_diff",
+               "home_elo_games_played", "away_elo_games_played"]],  # NEU
+    on="gameId", how="left"
+)
+
+ELO_WARMUP = 20
+mask = (df["home_elo_games_played"] < ELO_WARMUP) | (df["away_elo_games_played"] < ELO_WARMUP)
+df.loc[mask, ["home_elo", "away_elo", "elo_diff"]] = np.nan
+
+# ─────────────────────────────────────────────────────────────
 # FEATURE 1: Letzte 5 / letzte 3 / letzte 10 Winrate + Trend
 # ─────────────────────────────────────────────────────────────
 def shifted_rolling(series, window, min_p=None):
@@ -82,15 +145,49 @@ team_history["rest_days"] = (
 team_history["is_back_to_back"] = (team_history["rest_days"] == 1).astype(int)
 
 # ─────────────────────────────────────────────────────────────
+# FEATURE 3b: Fatigue – Spiele in letzten 7 Tagen & consecutive away
+# ─────────────────────────────────────────────────────────────
+team_history["games_last7"] = (
+    team_history.groupby("team", group_keys=False)
+    .apply(lambda g: (
+        g.set_index("date")["win"]
+        .shift(1, freq="D")  # kein Leakage
+        .rolling("7D")
+        .count()
+        .reset_index(drop=True)
+    ))
+    .reset_index(level=0, drop=True)
+)
+
+# Consecutive Away Games
+def count_consecutive_away(g):
+    result = []
+    count = 0
+    for is_home in g["is_home"].shift(1):  # shift: kein Leakage
+        if is_home == 0:
+            count += 1
+        else:
+            count = 0
+        result.append(count)
+    return pd.Series(result, index=g.index)
+
+team_history["consecutive_away"] = (
+    team_history.groupby("team", group_keys=False)
+    .apply(count_consecutive_away)
+    .reset_index(level=0, drop=True)
+)
+
+# ─────────────────────────────────────────────────────────────
 # FEATURE 4: Gegner-Stärke (SOS)
 # ─────────────────────────────────────────────────────────────
-opp_winrate = (
+# Erst eigene Rolling-Winrate berechnen und in separater Spalte speichern
+team_history["own_last5_winrate"] = (
     team_history.groupby("team")["win"]
     .transform(lambda x: shifted_rolling(x, 5, 3).mean())
 )
-team_history["opp_last5_winrate"] = opp_winrate.values
 
-opp_map = team_history.set_index(["date", "team"])["opp_last5_winrate"].to_dict()
+# Lookup: für jeden Row die Winrate des Gegners holen
+opp_map = team_history.set_index(["date", "team"])["own_last5_winrate"].to_dict()
 team_history["opponent_strength"] = team_history.apply(
     lambda r: opp_map.get((r["date"], r["opponent"]), np.nan), axis=1
 )
@@ -108,13 +205,22 @@ team_history["away_winrate"] = (
     .apply(lambda g: g["win"].where(g["is_home"] == 0).shift(1).expanding().mean())
     .reset_index(level=0, drop=True)
 )
+
+# ffill wie vorher, aber dann mit globaler Winrate als Fallback auffüllen
 team_history["home_winrate"] = team_history.groupby("team")["home_winrate"].ffill()
 team_history["away_winrate"] = team_history.groupby("team")["away_winrate"].ffill()
+
+# Fallback: globale last5_winrate wenn immer noch NaN
+team_history["home_winrate"] = team_history["home_winrate"].fillna(team_history["last5_winrate"])
+team_history["away_winrate"] = team_history["away_winrate"].fillna(team_history["last5_winrate"])
 
 # ─────────────────────────────────────────────────────────────
 # FEATURE 6: Head-to-Head Record (letzte 2 Saisons)
 # ─────────────────────────────────────────────────────────────
-team_history["season"] = team_history["date"].dt.year
+# NBA-Saison: Oktober–Dezember gehören zur neuen Saison, Januar–Juni zur alten
+team_history["season"] = team_history["date"].apply(
+    lambda d: d.year if d.month >= 10 else d.year - 1
+)
 current_season = team_history["season"].max()
 
 h2h = (
@@ -305,10 +411,19 @@ if os.path.exists(PLAYER_BOX):
 
     if not box_playoff.empty:
         player_playoff_exp = (
-            box_playoff.groupby(["PLAYER_ID", "teamNameFull"])
+            box_playoff.groupby("PLAYER_ID")  # kein teamNameFull → kein Doppelzählen
             .size()
             .reset_index(name="playoff_games")
         )
+        # Team-Zuordnung: letztes bekanntes Team pro Spieler
+        last_team = (
+            box_playoff.sort_values("GAME_ID")
+            .groupby("PLAYER_ID")["teamNameFull"]
+            .last()
+            .reset_index()
+        )
+        player_playoff_exp = player_playoff_exp.merge(last_team, on="PLAYER_ID")
+        
         team_playoff_exp = (
             player_playoff_exp.groupby("teamNameFull")["playoff_games"]
             .mean()
@@ -334,6 +449,52 @@ else:
     print(f"Warnung: {PLAYER_BOX} nicht gefunden – überspringe Spieler-Features.")
 
 # ─────────────────────────────────────────────────────────────
+# FEATURE 10: Injury Impact (aus current_injuries + player_matches)
+# ─────────────────────────────────────────────────────────────
+INJURY_MATCHES = os.path.join(base_dir, "data", "injury_player_matches.csv")
+
+if os.path.exists(INJURY_MATCHES):
+    print("Lade Injury-Daten...")
+    inj = pd.read_csv(INJURY_MATCHES)
+
+    # Injury-Score pro Team: Summe der importance_score aller verletzten Spieler
+    # status_weight ist bereits in importance_score eingerechnet? Nein → manuell gewichten
+    inj["weighted_impact"] = inj["importance_score"] * inj["status_weight"]
+
+    team_injury_score = (
+        inj.groupby("teamNameFull")["weighted_impact"]
+        .sum()
+        .reset_index(name="injury_impact")
+    )
+
+    # Heimteam
+    df = df.merge(
+        team_injury_score.rename(columns={
+            "teamNameFull": "hometeamName",
+            "injury_impact": "home_injury_impact"
+        }),
+        on="hometeamName", how="left"
+    )
+    # Auswärtsteam
+    df = df.merge(
+        team_injury_score.rename(columns={
+            "teamNameFull": "awayteamName",
+            "injury_impact": "away_injury_impact"
+        }),
+        on="awayteamName", how="left"
+    )
+
+    df["home_injury_impact"] = df["home_injury_impact"].fillna(0)
+    df["away_injury_impact"] = df["away_injury_impact"].fillna(0)
+
+    # Differenz: positiv = Heimteam hat mehr verletzte Spieler (schlechter)
+    df["injury_impact_diff"] = df["home_injury_impact"] - df["away_injury_impact"]
+
+    print("Injury-Features hinzugefügt.")
+else:
+    print(f"Warnung: {INJURY_MATCHES} nicht gefunden – überspringe Injury-Features.")
+
+# ─────────────────────────────────────────────────────────────
 # ALLE TEAM-HISTORY FEATURES IN df MERGEN
 # ─────────────────────────────────────────────────────────────
 history_features = [
@@ -343,18 +504,20 @@ history_features = [
     "opponent_strength", "h2h_winrate",
     "home_winrate", "away_winrate",
     "last_game_close",
+    "games_last7", "consecutive_away",
 ]
 
 def merge_history(df, side):
     name_col = f"{side}teamName"
     prefix   = f"{side}_"
-    cols     = ["date", "team"] + history_features
+    cols     = ["date", "team", "game_id"] + history_features  # game_id hinzufügen
     sub      = team_history[cols].rename(columns={
-        "date": "gameDateTimeEst",
-        "team": name_col,
+        "date":    "gameDateTimeEst",
+        "team":    name_col,
+        "game_id": "gameId",
         **{c: f"{prefix}{c}" for c in history_features},
     })
-    return df.merge(sub, on=["gameDateTimeEst", name_col], how="left")
+    return df.merge(sub, on=["gameDateTimeEst", name_col, "gameId"], how="left")  
 
 df = merge_history(df, "home")
 df = merge_history(df, "away")
@@ -366,6 +529,26 @@ df["average_points_diff"]           = df["home_last5_avg_points"]        - df["a
 df["average_points_allowed_diff"]   = df["home_last5_avg_points_allowed"]- df["away_last5_avg_points_allowed"]
 df["rest_days_diff"]                = df["home_rest_days"]               - df["away_rest_days"]
 df["h2h_winrate_diff"]              = df["home_h2h_winrate"]             - df["away_h2h_winrate"]
+
+# ─────────────────────────────────────────────────────────────
+# FEATURE: Offensive/Defensive Rating & Net Rating
+# ─────────────────────────────────────────────────────────────
+# Nur wenn Spieler-Features vorhanden (MIN > 0)
+if "home_last5_min" in df.columns and "away_last5_min" in df.columns:
+    # Minuten als Divisor absichern
+    home_min = df["home_last5_min"].replace(0, np.nan)
+    away_min = df["away_last5_min"].replace(0, np.nan)
+
+    df["home_off_rating"] = df["home_last5_pts"]               / home_min * 100
+    df["away_off_rating"] = df["away_last5_pts"]               / away_min * 100
+    df["home_def_rating"] = df["home_last5_avg_points_allowed"] / home_min * 100
+    df["away_def_rating"] = df["away_last5_avg_points_allowed"] / away_min * 100
+
+    df["home_net_rating"] = df["home_off_rating"] - df["home_def_rating"]
+    df["away_net_rating"] = df["away_off_rating"] - df["away_def_rating"]
+    df["net_rating_diff"] = df["home_net_rating"] - df["away_net_rating"]
+    df["off_rating_diff"] = df["home_off_rating"] - df["away_off_rating"]
+    df["def_rating_diff"] = df["home_def_rating"] - df["away_def_rating"]
 
 # ─────────────────────────────────────────────────────────────
 # HOME WIN LABEL
@@ -389,6 +572,12 @@ feature_cols = [
     "home_away_winrate", "away_away_winrate",
     "home_last_game_close", "away_last_game_close",
     "same_division", "is_playoff",
+    "home_elo", "away_elo", "elo_diff",
+    "home_consecutive_away", "away_consecutive_away",
+    "home_games_last7", "away_games_last7",
+    "home_off_rating", "away_off_rating", "off_rating_diff",
+    "home_def_rating", "away_def_rating", "def_rating_diff",
+    "home_net_rating", "away_net_rating", "net_rating_diff",
 ]
 
 # Player-Features dynamisch anhängen falls vorhanden
@@ -407,6 +596,9 @@ for col in player_feature_cols + playoff_exp_cols:
     if col in df.columns:
         feature_cols.append(col)
 
+# NEU: Injury-Features
+injury_cols = ["home_injury_impact", "away_injury_impact", "injury_impact_diff"]
+
 # Deduplizieren
 feature_cols = list(dict.fromkeys(feature_cols))
 
@@ -414,34 +606,14 @@ df_model = df.dropna(subset=feature_cols + ["home_win"]).copy()
 
 print(f"\nModel-Datensatz: {len(df_model)} Spiele, {len(feature_cols)} Features")
 
-# Zeitbasierte CV
-tscv = TimeSeriesSplit(n_splits=5)
-df_model_sorted = df_model.sort_values("gameDateTimeEst").reset_index(drop=True)
-X = df_model_sorted[feature_cols].values
-y = df_model_sorted["home_win"].values
-
-cv_scores = []
-for fold, (train_idx, val_idx) in enumerate(tscv.split(X)):
-    model_cv = XGBClassifier(
-        n_estimators=300, max_depth=4, learning_rate=0.05,
-        subsample=0.8, colsample_bytree=0.8,
-        objective="binary:logistic", eval_metric="logloss",
-        random_state=42, verbosity=0,
-    )
-    model_cv.fit(X[train_idx], y[train_idx])
-    acc = (model_cv.predict(X[val_idx]) == y[val_idx]).mean()
-    cv_scores.append(acc)
-    print(f"  Fold {fold+1}: Accuracy = {acc:.4f}")
-
-print(f"\nCV Mean Accuracy: {np.mean(cv_scores):.4f} ± {np.std(cv_scores):.4f}")
-
 # ─────────────────────────────────────────────────────────────
 # SPEICHERN
 # ─────────────────────────────────────────────────────────────
 model_output_path = os.path.join(base_dir, "data", "model_data.csv")
 df.to_csv(model_output_path, index=False)
 print(f"\nGespeichert: {model_output_path}")
-print(f"Features gesamt: {len(feature_cols)}")
-print("Feature-Liste:")
-for f in feature_cols:
-    print(f"  {f}")
+
+feat_path = os.path.join(base_dir, "models", "feature_cols.csv")
+os.makedirs(os.path.join(base_dir, "models"), exist_ok=True)
+pd.Series(feature_cols).to_csv(feat_path, index=False)
+print(f"Feature-Liste gespeichert: {feat_path} ({len(feature_cols)} Features)")

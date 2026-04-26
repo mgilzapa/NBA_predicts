@@ -1,4 +1,4 @@
-import json
+import joblib
 import os
 
 import pandas as pd
@@ -7,8 +7,6 @@ from injury_reports import INJURY_OUTPUT, build_player_importance_snapshot, comp
 
 output_today = pd.DataFrame()
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
-SELECTED_FEATURES_PATH = os.path.join(BASE_DIR, "output", "xgb_selected_features.json")
-
 
 def latest_team_snapshot(frame, team_col, role_cols, rename_map=None):
     team_frame = frame[["gameDateTimeEst", team_col] + role_cols].copy()
@@ -36,76 +34,23 @@ def latest_team_snapshot(frame, team_col, role_cols, rename_map=None):
 # -----------------------------
 df = pd.read_csv("data/model_data.csv")
 df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
-#df_model = df.dropna(subset=feature_cols).copy()
 df["winrate_diff"] = df["home_last5_winrate"] - df["away_last5_winrate"]
 df["average_points_diff"] = df["home_last5_avg_points"] - df["away_last5_avg_points"]
 df["average_points_allowed_diff"] = df["home_last5_avg_points_allowed"] - df["away_last5_avg_points_allowed"]
 df["rest_days_diff"] = df["home_rest_days"] - df["away_rest_days"]
 
-default_feature_cols = [
-    "winrate_diff",
-    "average_points_allowed_diff",
-    "away_last5_winrate",
-    "away_away_winrate",
-    "top3_availability_diff",
-    "away_top5_missing_count",
-    "away_h2h_winrate",
-    "home_h2h_winrate",
-    "missing_top5_importance_diff",
-    "top1_importance_diff",
-    "average_points_diff",
-    "home_top5_missing_count",
-    "home_last5_avg_points_allowed",
-    "away_last5_avg_points_allowed",
-    "away_last5_player_count",
-    "home_missing_top5_importance",
-    "home_top3_importance_sum",
-    "away_missing_top3_importance",
-    "away_top5_importance_sum",
-    "away_home_winrate",
-    "away_missing_top5_importance",
-    "ast_diff_last5",
-    "top5_availability_diff",
-    "winrate_trend_diff",
-    "rest_days_diff",
-    "away_last5_pts",
-    "home_last_game_close",
-    "missing_top3_importance_diff",
-    "home_away_winrate",
-    "home_winrate_trend",
-    "home_rest_days",
-    "away_top3_importance_sum",
-    "away_last5_avg_points",
-    "away_last_game_close",
-    "home_top5_importance_sum",
-    "home_last5_winrate",
-    "home_last5_ast",
-    "home_top1_importance",
-    "away_last5_ast",
-    "home_last5_avg_points",
-]
+feat_path = os.path.join(BASE_DIR, "models", "feature_cols.csv")
+feature_cols = pd.read_csv(feat_path).squeeze().tolist()
+feature_cols = [c for c in feature_cols if c in df.columns]
 
-selected_feature_cols = default_feature_cols
-model_params = {
-    "n_estimators": 200,
-    "max_depth": 3,
-    "learning_rate": 0.03,
-    "subsample": 0.7,
-    "colsample_bytree": 0.8,
-}
-if os.path.exists(SELECTED_FEATURES_PATH):
-    try:
-        with open(SELECTED_FEATURES_PATH, "r", encoding="utf-8") as f:
-            feature_config = json.load(f)
-        selected_feature_cols = feature_config.get("selected_feature_cols", default_feature_cols)
-        model_params.update(feature_config.get("best_params", {}))
-        print(
-            f"Feature-Auswahl geladen: {len(selected_feature_cols)} Features aus {SELECTED_FEATURES_PATH}"
-        )
-    except Exception as exc:
-        print(f"WARNUNG: Konnte Feature-Auswahl nicht laden, nutze Fallback-Liste: {exc}")
-
-feature_cols = [col for col in selected_feature_cols if col in df.columns]
+exclude_cols = [
+    "home_off_rating", "away_off_rating", "off_rating_diff",
+    "home_def_rating", "away_def_rating", "def_rating_diff",
+    "home_net_rating", "away_net_rating", "net_rating_diff",
+    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
+    "same_division", "is_playoff", "away_opponent_strength",
+    ]
+feature_cols = [c for c in feature_cols if c not in exclude_cols]
 derived_feature_dependencies = {
     "winrate_diff": ["home_last5_winrate", "away_last5_winrate"],
     "winrate_trend_diff": ["home_winrate_trend", "away_winrate_trend"],
@@ -142,7 +87,11 @@ support_feature_cols = feature_cols + [
 ]
 for derived_col in feature_cols:
     support_feature_cols.extend(derived_feature_dependencies.get(derived_col, []))
-support_feature_cols = list(dict.fromkeys([col for col in support_feature_cols if col in df.columns]))
+
+support_feature_cols = list(dict.fromkeys([
+    col for col in support_feature_cols + ["home_elo", "away_elo"]
+    if col in df.columns
+]))
 
 df_model = df.dropna(subset=feature_cols).copy()
 
@@ -153,21 +102,8 @@ yesterday_naive = (eastern_now - pd.Timedelta(days=1)).tz_localize(None).normali
 prediction_date = today_naive
 #prediction_end = pd.Timestamp("2026-04-27")
 
-train = df_model[df_model["gameDateTimeEst"] < today_naive].copy()
-X_train = train[feature_cols].values
-y_train = train["home_win"].values
-
-model = XGBClassifier(
-    n_estimators=model_params["n_estimators"],
-    max_depth=model_params["max_depth"],
-    learning_rate=model_params["learning_rate"],
-    subsample=model_params["subsample"],
-    colsample_bytree=model_params["colsample_bytree"],
-    objective="binary:logistic",
-    eval_metric="logloss",
-    random_state=42
-)
-model.fit(X_train, y_train)
+model_path = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
+model = joblib.load(model_path)
 
 # -----------------------------
 # 3. Zukünftige Spiele laden und auf NBA-Teams beschränken
@@ -291,6 +227,23 @@ future = future.sort_values("gameDateTimeEst").copy()  # kein head(8) hier!
 
 future = future.merge(home_latest, on="hometeamName", how="left")
 future = future.merge(away_latest, on="awayteamName", how="left")
+
+home_elo_from_home = history_source[["gameDateTimeEst", "hometeamName", "home_elo"]].rename(
+    columns={"hometeamName": "team", "home_elo": "elo"}
+)
+home_elo_from_away = history_source[["gameDateTimeEst", "awayteamName", "away_elo"]].rename(
+    columns={"awayteamName": "team", "away_elo": "elo"}
+)
+all_elo = pd.concat([home_elo_from_home, home_elo_from_away], ignore_index=True)
+latest_elo = (
+    all_elo.sort_values("gameDateTimeEst")
+    .groupby("team")["elo"]
+    .last()
+    .reset_index()
+)
+future["home_elo"] = future["hometeamName"].map(latest_elo.set_index("team")["elo"])
+future["away_elo"] = future["awayteamName"].map(latest_elo.set_index("team")["elo"])
+future["elo_diff"] = future["home_elo"] - future["away_elo"]
 
 future["winrate_diff"] = future["home_last5_winrate"] - future["away_last5_winrate"]
 if {"home_winrate_trend", "away_winrate_trend"}.issubset(future.columns):
@@ -441,6 +394,12 @@ if os.path.exists(INJURY_OUTPUT):
 for col in feature_cols:
     if col not in future.columns:
         future[col] = pd.NA
+
+print("\nFehlende Features in future:")
+for col in feature_cols:
+    null_count = future[col].isna().sum() if col in future.columns else "SPALTE FEHLT"
+    if null_count != 0:
+        print(f"  {col}: {null_count}")
 
 complete_mask = future[feature_cols].notna().all(axis=1)
 print(f"Anzahl Spiele mit vollständigen Features: {complete_mask.sum()} von {len(future)}")
