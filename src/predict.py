@@ -310,6 +310,16 @@ if os.path.exists(INJURY_OUTPUT):
         injury_features = compute_injury_features(injuries, player_snapshot)
 
         if not injury_features.empty:
+            injury_base_cols = [
+                "home_missing_top3_importance", "away_missing_top3_importance",
+                "home_missing_top5_importance", "away_missing_top5_importance",
+                "home_top3_availability_ratio", "away_top3_availability_ratio",
+                "home_top5_availability_ratio", "away_top5_availability_ratio",
+            ]
+            for col in injury_base_cols:
+                if col not in future.columns:
+                    future[col] = 0.0
+                    
             home_live = injury_features.rename(columns={
                 "team_name": "hometeamName",
                 "top3_missing_count": "home_top3_missing_count_live",
