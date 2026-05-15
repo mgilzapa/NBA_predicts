@@ -1,0 +1,26 @@
+{
+  "generated_at": "2026-05-15T12:00:00Z",
+  "games": {
+    "2026-05-15|cleveland cavaliers|detroit pistons": {
+      "home_team": "Cleveland Cavaliers",
+      "away_team": "Detroit Pistons",
+      "date": "2026-05-15",
+      "bookmakers": [
+        { "name": "FanDuel",    "home": 1.72, "away": 2.15 },
+        { "name": "DraftKings", "home": 1.70, "away": 2.20 },
+        { "name": "BetMGM",     "home": 1.68, "away": 2.25 },
+        { "name": "Caesars",    "home": 1.65, "away": 2.30 }
+      ]
+    },
+    "2026-05-15|minnesota timberwolves|san antonio spurs": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-05-15",
+      "bookmakers": [
+        { "name": "FanDuel",    "home": 2.80, "away": 1.45 },
+        { "name": "DraftKings", "home": 2.75, "away": 1.48 },
+        { "name": "BetMGM",     "home": 2.70, "away": 1.50 }
+      ]
+    }
+  }
+}
