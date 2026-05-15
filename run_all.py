@@ -28,6 +28,8 @@ if __name__ == "__main__":
         "src/predict.py",        # Vorhersage für heute
         "src/clean_excel.py",    # Excel-Datei bereinigen
         "src/create_excel.py",   # Excel-Datei aktualisieren
+        "src/export_json.py",    # JSON für Webseite exportieren
+        "src/fetch_bracket.py",  # Bracket predictions für Webseite
     ]
 
     # Prüfen, ob alle Skripte existieren
