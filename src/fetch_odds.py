@@ -27,12 +27,13 @@ def parse_bookmakers(api_game: dict) -> list:
             home_price = outcomes.get(home)
             away_prices = [v for k, v in outcomes.items() if k != home]
             away_price = away_prices[0] if away_prices else None
-            if home_price and away_price:
+            if home_price is not None and away_price is not None:
                 result.append({
                     "name": bm["title"],
                     "home": round(home_price, 3),
                     "away": round(away_price, 3),
                 })
+                break  # only take the first h2h market per bookmaker
     return result
 
 
@@ -62,7 +63,9 @@ def fetch_and_save(api_key: str, output_path: str) -> dict:
         "games": games,
     }
 
-    os.makedirs(os.path.dirname(output_path), exist_ok=True)
+    parent = os.path.dirname(output_path)
+    if parent:
+        os.makedirs(parent, exist_ok=True)
     with open(output_path, "w", encoding="utf-8") as f:
         json.dump(payload, f, ensure_ascii=False, indent=2)
 

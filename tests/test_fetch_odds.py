@@ -74,6 +74,30 @@ def test_parse_bookmakers_skips_incomplete_outcomes():
     assert fetch_odds.parse_bookmakers(api_game) == []
 
 
+def test_parse_bookmakers_none_check_not_falsy():
+    """Ensure price=0.0 is not silently dropped (falsy trap)."""
+    api_game = {
+        "home_team": "Los Angeles Lakers",
+        "bookmakers": [
+            {
+                "title": "TestBook",
+                "markets": [
+                    {
+                        "key": "h2h",
+                        "outcomes": [
+                            {"name": "Los Angeles Lakers", "price": 1.0},
+                            {"name": "Golden State Warriors", "price": 2.0},
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+    result = fetch_odds.parse_bookmakers(api_game)
+    assert len(result) == 1
+    assert result[0]["home"] == 1.0
+
+
 def test_fetch_and_save_writes_valid_json():
     mock_api_response = [
         {
