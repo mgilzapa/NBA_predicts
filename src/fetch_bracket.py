@@ -144,3 +144,106 @@ def build_series_dict(df_playoff):
             'winner':     winner,
         }
     return result
+
+
+EXCLUDE_COLS = {
+    "home_off_rating", "away_off_rating", "off_rating_diff",
+    "home_def_rating", "away_def_rating", "def_rating_diff",
+    "home_net_rating", "away_net_rating", "net_rating_diff",
+    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
+    "same_division", "is_playoff", "away_opponent_strength",
+}
+
+DERIVED_PAIRS = [
+    ("winrate_diff",                "home_last5_winrate",       "away_last5_winrate"),
+    ("winrate_trend_diff",          "home_winrate_trend",       "away_winrate_trend"),
+    ("average_points_diff",         "home_last5_avg_points",    "away_last5_avg_points"),
+    ("average_points_allowed_diff", "home_last5_avg_points_allowed", "away_last5_avg_points_allowed"),
+    ("rest_days_diff",              "home_rest_days",           "away_rest_days"),
+    ("pts_diff_last5",              "home_last5_pts",           "away_last5_pts"),
+    ("reb_diff_last5",              "home_last5_rebounds",      "away_last5_rebounds"),
+    ("ast_diff_last5",              "home_last5_ast",           "away_last5_ast"),
+    ("min_diff_last5",              "home_last5_min",           "away_last5_min"),
+    ("player_count_diff_last5",     "home_last5_player_count",  "away_last5_player_count"),
+    ("elo_diff",                    "home_elo",                 "away_elo"),
+]
+
+
+def get_team_snapshots(df_model):
+    """
+    Return (home_snap, away_snap): dicts mapping team_name → latest feature values.
+
+    home_snap[team] = {'home_last5_winrate': ..., 'home_elo': ..., ...}
+    away_snap[team] = {'away_last5_winrate': ..., 'away_elo': ..., ...}
+    """
+    df = df_model.copy()
+    df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
+
+    home_cols = [c for c in df.columns if c.startswith("home_")]
+    away_cols = [c for c in df.columns if c.startswith("away_")]
+
+    def latest(df_grp, team_col, feat_cols):
+        snap = {}
+        for team, grp in df_grp.groupby(team_col):
+            grp = grp.sort_values("gameDateTimeEst")
+            row = {}
+            for col in feat_cols:
+                non_null = grp[col].dropna()
+                row[col] = float(non_null.iloc[-1]) if not non_null.empty else np.nan
+            snap[team] = row
+        return snap
+
+    # Build home snapshot from home-role games + away-role games (columns renamed)
+    away_to_home = {c: c.replace("away_", "home_", 1) for c in away_cols}
+    df_h1 = df[["gameDateTimeEst", "hometeamName"] + home_cols].rename(columns={"hometeamName": "_team"})
+    df_h2 = df[["gameDateTimeEst", "awayteamName"] + away_cols].rename(
+        columns={"awayteamName": "_team", **away_to_home})
+    df_home_all = pd.concat([df_h1, df_h2], ignore_index=True)
+    home_snap = latest(df_home_all, "_team", home_cols)
+
+    # Build away snapshot from away-role games + home-role games (columns renamed)
+    home_to_away = {c: c.replace("home_", "away_", 1) for c in home_cols}
+    df_a1 = df[["gameDateTimeEst", "awayteamName"] + away_cols].rename(columns={"awayteamName": "_team"})
+    df_a2 = df[["gameDateTimeEst", "hometeamName"] + home_cols].rename(
+        columns={"hometeamName": "_team", **home_to_away})
+    df_away_all = pd.concat([df_a1, df_a2], ignore_index=True)
+    away_snap = latest(df_away_all, "_team", away_cols)
+
+    return home_snap, away_snap
+
+
+def build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols):
+    """
+    Build a single feature vector (numpy array, length = len(feature_cols))
+    for a game where `home_team` is hosting `away_team`.
+    """
+    h = home_snap.get(home_team, {})
+    a = away_snap.get(away_team, {})
+    merged = {**h, **a}
+    merged["is_playoff"] = 1.0
+
+    # Compute all derived difference features
+    for diff_col, home_col, away_col in DERIVED_PAIRS:
+        if home_col in merged and away_col in merged:
+            merged[diff_col] = merged[home_col] - merged[away_col]
+
+    return np.array([merged.get(c, np.nan) for c in feature_cols], dtype=float)
+
+
+def predict_series(home_team, away_team, home_snap, away_snap, model, feature_cols):
+    """
+    Predict win probability and expected length for a full series.
+
+    Returns (p_home_wins_series, expected_games) starting from 0-0.
+    Uses simulate_series with home_wins=0, away_wins=0.
+    """
+    # p1: P(series home team wins) when they host (games 1,2,5,7)
+    row_home_hosts = build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols)
+    p1 = float(model.predict_proba(row_home_hosts.reshape(1, -1))[0, 1])
+
+    # p2: P(series home team wins) when away team hosts (games 3,4,6)
+    row_away_hosts = build_feature_row(away_team, home_team, home_snap, away_snap, feature_cols)
+    p_away_wins_away_game = float(model.predict_proba(row_away_hosts.reshape(1, -1))[0, 1])
+    p2 = 1.0 - p_away_wins_away_game
+
+    return simulate_series(0, 0, p1, p2)
