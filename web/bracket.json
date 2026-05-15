@@ -1,0 +1,213 @@
+{
+  "generated_at": "2026-05-15T09:25:43",
+  "season": "2025-26",
+  "east": {
+    "r1": [
+      {
+        "home_team": "Detroit Pistons",
+        "away_team": "Orlando Magic",
+        "home_wins": 4,
+        "away_wins": 3,
+        "status": "complete",
+        "winner": "Detroit Pistons",
+        "prediction": {
+          "winner": "Detroit Pistons",
+          "win_probability": 0.5954,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "Boston Celtics",
+        "away_team": "Philadelphia 76ers",
+        "home_wins": 3,
+        "away_wins": 4,
+        "status": "complete",
+        "winner": "Philadelphia 76ers",
+        "prediction": {
+          "winner": "Boston Celtics",
+          "win_probability": 0.731,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "New York Knicks",
+        "away_team": "Atlanta Hawks",
+        "home_wins": 4,
+        "away_wins": 2,
+        "status": "complete",
+        "winner": "New York Knicks",
+        "prediction": {
+          "winner": "New York Knicks",
+          "win_probability": 0.7504,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "Cleveland Cavaliers",
+        "away_team": "Toronto Raptors",
+        "home_wins": 4,
+        "away_wins": 3,
+        "status": "complete",
+        "winner": "Cleveland Cavaliers",
+        "prediction": {
+          "winner": "Cleveland Cavaliers",
+          "win_probability": 0.7592,
+          "predicted_length": 6
+        }
+      }
+    ],
+    "r2": [
+      {
+        "home_team": "Detroit Pistons",
+        "away_team": "Cleveland Cavaliers",
+        "home_wins": 2,
+        "away_wins": 3,
+        "status": "active",
+        "winner": null,
+        "prediction": {
+          "winner": "Detroit Pistons",
+          "win_probability": 0.6152,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "New York Knicks",
+        "away_team": "Philadelphia 76ers",
+        "home_wins": 4,
+        "away_wins": 0,
+        "status": "complete",
+        "winner": "New York Knicks",
+        "prediction": {
+          "winner": "New York Knicks",
+          "win_probability": 0.9622,
+          "predicted_length": 5
+        }
+      }
+    ],
+    "r3": [
+      {
+        "home_team": "Detroit Pistons",
+        "away_team": "New York Knicks",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "upcoming",
+        "winner": null,
+        "prediction": {
+          "winner": "New York Knicks",
+          "win_probability": 0.823,
+          "predicted_length": 6
+        }
+      }
+    ],
+    "finalist": null
+  },
+  "west": {
+    "r1": [
+      {
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "Phoenix Suns",
+        "home_wins": 4,
+        "away_wins": 0,
+        "status": "complete",
+        "winner": "Oklahoma City Thunder",
+        "prediction": {
+          "winner": "Oklahoma City Thunder",
+          "win_probability": 0.7048,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "San Antonio Spurs",
+        "away_team": "Portland Trail Blazers",
+        "home_wins": 4,
+        "away_wins": 1,
+        "status": "complete",
+        "winner": "San Antonio Spurs",
+        "prediction": {
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.9624,
+          "predicted_length": 5
+        }
+      },
+      {
+        "home_team": "Denver Nuggets",
+        "away_team": "Minnesota Timberwolves",
+        "home_wins": 2,
+        "away_wins": 4,
+        "status": "complete",
+        "winner": "Minnesota Timberwolves",
+        "prediction": {
+          "winner": "Denver Nuggets",
+          "win_probability": 0.7957,
+          "predicted_length": 6
+        }
+      },
+      {
+        "home_team": "Los Angeles Lakers",
+        "away_team": "Houston Rockets",
+        "home_wins": 4,
+        "away_wins": 2,
+        "status": "complete",
+        "winner": "Los Angeles Lakers",
+        "prediction": {
+          "winner": "Houston Rockets",
+          "win_probability": 0.6296,
+          "predicted_length": 6
+        }
+      }
+    ],
+    "r2": [
+      {
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "Los Angeles Lakers",
+        "home_wins": 4,
+        "away_wins": 0,
+        "status": "complete",
+        "winner": "Oklahoma City Thunder",
+        "prediction": {
+          "winner": "Oklahoma City Thunder",
+          "win_probability": 0.841,
+          "predicted_length": 5
+        }
+      },
+      {
+        "home_team": "San Antonio Spurs",
+        "away_team": "Minnesota Timberwolves",
+        "home_wins": 3,
+        "away_wins": 1,
+        "status": "active",
+        "winner": null,
+        "prediction": {
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.9872,
+          "predicted_length": 5
+        }
+      }
+    ],
+    "r3": [
+      {
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "San Antonio Spurs",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "upcoming",
+        "winner": null,
+        "prediction": {
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.7165,
+          "predicted_length": 6
+        }
+      }
+    ],
+    "finalist": null
+  },
+  "finals": {
+    "home_team": "TBD",
+    "away_team": "TBD",
+    "home_wins": 0,
+    "away_wins": 0,
+    "status": "tbd",
+    "winner": null,
+    "prediction": null
+  }
+}

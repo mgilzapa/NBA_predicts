@@ -189,7 +189,13 @@ def get_team_snapshots(df_model):
             row = {}
             for col in feat_cols:
                 non_null = grp[col].dropna()
-                row[col] = float(non_null.iloc[-1]) if not non_null.empty else np.nan
+                if non_null.empty:
+                    row[col] = np.nan
+                else:
+                    try:
+                        row[col] = float(non_null.iloc[-1])
+                    except (ValueError, TypeError):
+                        row[col] = np.nan
             snap[team] = row
         return snap
 
@@ -247,3 +253,164 @@ def predict_series(home_team, away_team, home_snap, away_snap, model, feature_co
     p2 = 1.0 - p_away_wins_away_game
 
     return simulate_series(0, 0, p1, p2)
+
+
+def _series_obj(home_team, away_team, home_wins, away_wins, status, winner,
+                predict_fn):
+    """
+    Build the series dict for bracket.json.
+    predict_fn(home, away) → (prob, exp_games) for 0-0 start.
+    """
+    if status == 'tbd':
+        return {
+            'home_team': home_team or 'TBD',
+            'away_team': away_team or 'TBD',
+            'home_wins': 0, 'away_wins': 0,
+            'status': 'tbd', 'winner': None,
+            'prediction': None,
+        }
+
+    prob, exp_games = predict_fn(home_team, away_team) if predict_fn else (0.5, 6)
+    pred_winner = home_team if prob >= 0.5 else away_team
+    pred_prob   = prob if prob >= 0.5 else 1.0 - prob
+
+    return {
+        'home_team': home_team,
+        'away_team': away_team,
+        'home_wins': home_wins,
+        'away_wins': away_wins,
+        'status':    status,
+        'winner':    winner,
+        'prediction': {
+            'winner':           pred_winner,
+            'win_probability':  round(pred_prob, 4),
+            'predicted_length': exp_games,
+        },
+    }
+
+
+def _effective_winner(series_map, key, predict_fn):
+    """
+    Return the team expected to advance from a series:
+    - If complete: the actual winner
+    - If active/upcoming: the prediction winner
+    - If not in series_map: None
+    """
+    s = series_map.get(key)
+    if s is None:
+        return None
+    if s['status'] == 'complete':
+        return s['winner']
+    prob, _ = predict_fn(s['home_team'], s['away_team']) if predict_fn else (0.5, 6)
+    return s['home_team'] if prob >= 0.5 else s['away_team']
+
+
+def build_bracket_json(series_map, predict_fn=None):
+    """
+    Build the full bracket dict from a series_map keyed by (round, matchup).
+    Fills TBD entries for future rounds using predicted winners.
+    """
+    def get_series(rnd, matchup):
+        key = (rnd, matchup)
+        if key in series_map:
+            s = series_map[key]
+            return _series_obj(
+                s['home_team'], s['away_team'],
+                s['home_wins'], s['away_wins'],
+                s['status'], s['winner'],
+                predict_fn,
+            )
+        # Series not started: determine teams from previous round if possible
+        if rnd == 2:
+            r1a, r1b = R1_TO_R2[matchup]
+            home = _effective_winner(series_map, (1, r1a), predict_fn)
+            away = _effective_winner(series_map, (1, r1b), predict_fn)
+        elif rnd == 3:
+            r2a, r2b = R2_TO_R3[matchup]
+            home = _effective_winner(series_map, (2, r2a), predict_fn)
+            away = _effective_winner(series_map, (2, r2b), predict_fn)
+        elif rnd == 4:
+            home = _effective_winner(series_map, (3, 0), predict_fn)
+            away = _effective_winner(series_map, (3, 1), predict_fn)
+        else:
+            home, away = None, None
+
+        status = 'upcoming' if (home and away) else 'tbd'
+        if home and away and predict_fn:
+            return _series_obj(home, away, 0, 0, status, None, predict_fn)
+        return _series_obj(home, away, 0, 0, 'tbd', None, None)
+
+    # East/West each have 4 R1, 2 R2, 1 R3 series
+    east_r1 = [get_series(1, m) for m in range(4)]
+    east_r2 = [get_series(2, m) for m in range(2)]
+    east_r3 = [get_series(3, 0)]
+    east_finalist = _effective_winner(series_map, (3, 0), predict_fn)
+
+    west_r1 = [get_series(1, m) for m in range(4, 8)]
+    west_r2 = [get_series(2, m) for m in range(2, 4)]
+    west_r3 = [get_series(3, 1)]
+    west_finalist = _effective_winner(series_map, (3, 1), predict_fn)
+
+    finals = get_series(4, 0)
+
+    return {
+        'generated_at': pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%dT%H:%M:%S'),
+        'season': SEASON,
+        'east': {
+            'r1':       east_r1,
+            'r2':       east_r2,
+            'r3':       east_r3,
+            'finalist': east_finalist,
+        },
+        'west': {
+            'r1':       west_r1,
+            'r2':       west_r2,
+            'r3':       west_r3,
+            'finalist': west_finalist,
+        },
+        'finals': finals,
+    }
+
+
+def build_bracket():
+    """Main entry point: load data, run predictions, write bracket.json."""
+    # 1. Load playoff games
+    df_all = pd.read_csv(GAMES_CSV)
+    playoff_mask = df_all['GAME_ID'].astype(str).str.startswith(SEASON_CODE)
+    df_playoff = df_all[playoff_mask].copy()
+
+    # 2. Build series standings
+    series_map = build_series_dict(df_playoff)
+
+    # 3. Load model and features
+    model        = joblib.load(MODEL_PKL)
+    feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
+    feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
+
+    # 4. Load model data and build team snapshots
+    df_model     = pd.read_csv(MODEL_DATA_CSV)
+    home_snap, away_snap = get_team_snapshots(df_model)
+
+    def predict_fn(home_team, away_team):
+        return predict_series(home_team, away_team, home_snap, away_snap,
+                              model, feature_cols)
+
+    # 5. Assemble bracket JSON
+    bracket = build_bracket_json(series_map, predict_fn)
+
+    # 6. Write output
+    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
+    with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
+        json.dump(bracket, f, ensure_ascii=False, indent=2)
+
+    total_series = (
+        len(bracket['east']['r1']) + len(bracket['east']['r2']) +
+        len(bracket['east']['r3']) + len(bracket['west']['r1']) +
+        len(bracket['west']['r2']) + len(bracket['west']['r3']) + 1
+    )
+    print(f"OK: bracket.json written ({total_series} series, "
+          f"{len(series_map)} with game data)")
+
+
+if __name__ == '__main__':
+    build_bracket()
