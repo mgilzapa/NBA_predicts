@@ -35,7 +35,7 @@ async function loadData() {
     const data = await predRes.json();
 
     if (oddsRes && oddsRes.ok) {
-      oddsData = await oddsRes.json();
+      try { oddsData = await oddsRes.json(); } catch { /* ignore */ }
     }
 
     currentData = data;
