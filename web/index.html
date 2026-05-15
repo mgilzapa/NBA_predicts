@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NBA Predictor</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header>
+    <div class="header-inner">
+      <div class="logo">
+        <svg class="logo-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
+          <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 1 Q14 5 14 10 Q14 15 10 19" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M10 1 Q6 5 6 10 Q6 15 10 19" stroke="currentColor" stroke-width="1.5"/>
+          <line x1="1" y1="10" x2="19" y2="10" stroke="currentColor" stroke-width="1.5"/>
+        </svg>
+        <span>NBA<strong>PREDICT</strong></span>
+      </div>
+      <div class="header-right">
+        <div class="meta" id="meta"></div>
+        <div class="fmt-toggle" id="fmt-toggle">
+          <button class="fmt-btn active" data-fmt="decimal">Dec</button>
+          <button class="fmt-btn" data-fmt="american">Am</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="tab-bar" role="tablist">
+    <button class="tab active" data-tab="today" role="tab">Today</button>
+    <button class="tab" data-tab="yesterday" role="tab">Yesterday</button>
+    <button class="tab" data-tab="all" role="tab">All Predictions</button>
+  </nav>
+
+  <main>
+    <section id="tab-today" class="tab-content active" role="tabpanel">
+      <div class="section-header" id="today-header"></div>
+      <div class="cards-grid" id="today-cards"></div>
+    </section>
+
+    <section id="tab-yesterday" class="tab-content" role="tabpanel">
+      <div class="section-header" id="yesterday-header"></div>
+      <div class="cards-grid" id="yesterday-cards"></div>
+    </section>
+
+    <section id="tab-all" class="tab-content" role="tabpanel">
+      <div class="all-header" id="all-header"></div>
+      <div class="table-wrapper">
+        <table id="all-table">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Home</th>
+              <th>Away</th>
+              <th>Predicted</th>
+              <th>Actual</th>
+              <th>Result</th>
+            </tr>
+          </thead>
+          <tbody id="all-tbody"></tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <script src="app.js"></script>
+</body>
+</html>
