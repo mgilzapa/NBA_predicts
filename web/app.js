@@ -1,5 +1,38 @@
 'use strict';
 
+const TEAM_LOGOS = {
+  'Atlanta Hawks': 'atl',
+  'Boston Celtics': 'bos',
+  'Brooklyn Nets': 'bkn',
+  'Charlotte Hornets': 'cha',
+  'Chicago Bulls': 'chi',
+  'Cleveland Cavaliers': 'cle',
+  'Dallas Mavericks': 'dal',
+  'Denver Nuggets': 'den',
+  'Detroit Pistons': 'det',
+  'Golden State Warriors': 'gs',
+  'Houston Rockets': 'hou',
+  'Indiana Pacers': 'ind',
+  'LA Clippers': 'lac',
+  'Los Angeles Lakers': 'lal',
+  'Memphis Grizzlies': 'mem',
+  'Miami Heat': 'mia',
+  'Milwaukee Bucks': 'mil',
+  'Minnesota Timberwolves': 'min',
+  'New Orleans Pelicans': 'no',
+  'New York Knicks': 'ny',
+  'Oklahoma City Thunder': 'okc',
+  'Orlando Magic': 'orl',
+  'Philadelphia 76ers': 'phi',
+  'Phoenix Suns': 'phx',
+  'Portland Trail Blazers': 'por',
+  'Sacramento Kings': 'sac',
+  'San Antonio Spurs': 'sa',
+  'Toronto Raptors': 'tor',
+  'Utah Jazz': 'utah',
+  'Washington Wizards': 'wsh',
+};
+
 let currentData = null;
 let oddsData = { games: {} };
 let oddsFormat = 'decimal';
@@ -26,9 +59,10 @@ document.querySelectorAll('.tab').forEach(btn => {
 
 async function loadData() {
   try {
-    const [predRes, oddsRes] = await Promise.all([
+    const [predRes, oddsRes, bracketRes] = await Promise.all([
       fetch('predictions.json'),
       fetch('odds.json').catch(() => null),
+      fetch('bracket.json').catch(() => null),
     ]);
 
     if (!predRes.ok) throw new Error(`HTTP ${predRes.status}`);
@@ -38,8 +72,14 @@ async function loadData() {
       try { oddsData = await oddsRes.json(); } catch { /* ignore */ }
     }
 
+    let bracketData = null;
+    if (bracketRes && bracketRes.ok) {
+      try { bracketData = await bracketRes.json(); } catch { /* ignore */ }
+    }
+
     currentData = data;
     render(data);
+    renderBracket(bracketData);
   } catch (err) {
     showGlobalError(err.message);
   }
@@ -181,7 +221,7 @@ function renderAll(games) {
 
   if (games.length === 0) {
     header.textContent = '';
-    tbody.innerHTML    = '<tr><td colspan="6" style="text-align:center;color:var(--muted);padding:48px">No predictions yet.</td></tr>';
+    tbody.innerHTML    = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:48px">No predictions yet.</td></tr>';
     return;
   }
 
@@ -204,12 +244,16 @@ function renderAll(games) {
     const resultTxt = g.correct === true  ? '✓' :
                       g.correct === false ? '✗' : '—';
 
+    const oddsEntry = matchOdds(g);
+    const oddsCell  = bestOddsCell(g, oddsEntry);
+
     return `<tr>
       <td class="td-date">${date}</td>
       <td>${esc(g.home_team)}</td>
       <td>${esc(g.away_team)}</td>
       <td style="color:var(--accent)">${esc(g.predicted_winner)}</td>
       <td>${esc(actual)}</td>
+      <td class="td-odds">${oddsCell}</td>
       <td class="td-result ${resultCls}">${resultTxt}</td>
     </tr>`;
   }).join('');
@@ -247,6 +291,7 @@ function buildCard(g, showResult, oddsEntry = null) {
   ${badge}
   <div class="teams-row">
     <div class="team away-side">
+      ${logoHtml(g.away_team)}
       <span class="${awayCls}">${esc(g.away_team)}</span>
       <span class="team-role">Away</span>
     </div>
@@ -255,6 +300,7 @@ function buildCard(g, showResult, oddsEntry = null) {
       <span class="game-time">${time}</span>
     </div>
     <div class="team home-side">
+      ${logoHtml(g.home_team)}
       <span class="${homeCls}">${esc(g.home_team)}</span>
       <span class="team-role">Home</span>
     </div>
@@ -294,6 +340,24 @@ function animateBars(container) {
 
 // ─── Helpers ───────────────────────────────────────────────────────
 
+function bestOddsCell(game, oddsEntry) {
+  if (!oddsEntry || !oddsEntry.bookmakers || oddsEntry.bookmakers.length === 0) return '—';
+  const key = game.predicted_winner === game.home_team ? 'home' : 'away';
+  const best = oddsEntry.bookmakers.reduce((a, b) => b[key] > a[key] ? b : a);
+  return `<span class="td-odds-val">${formatOdds(best[key])}</span> <span class="td-odds-bm">${esc(best.name)}</span>`;
+}
+
+function teamLogoUrl(name) {
+  const abbr = TEAM_LOGOS[name];
+  return abbr ? `https://a.espncdn.com/i/teamlogos/nba/500/${abbr}.png` : null;
+}
+
+function logoHtml(teamName) {
+  const url = teamLogoUrl(teamName);
+  if (!url) return '';
+  return `<img class="team-logo" src="${url}" alt="${esc(teamName)}" onerror="this.style.display='none'">`;
+}
+
 function humanDate(dateStr) {
   const d = new Date(dateStr + 'T12:00:00');
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -317,6 +381,128 @@ document.getElementById('fmt-toggle').addEventListener('click', e => {
   document.querySelectorAll('.fmt-btn').forEach(b => b.classList.toggle('active', b === btn));
   if (currentData) render(currentData);
 });
+
+// ─── Bracket Rendering ─────────────────────────────────────────────
+
+function renderBracket(data) {
+  const header    = document.getElementById('bracket-header');
+  const container = document.getElementById('bracket-container');
+  const mobile    = document.getElementById('bracket-mobile');
+
+  if (!data) {
+    header.textContent = 'Bracket data not available yet.';
+    return;
+  }
+
+  header.innerHTML =
+    `Season <strong>${esc(data.season)}</strong> · Updated ${esc(data.generated_at.slice(0, 16).replace('T', ' '))} ET`;
+
+  container.innerHTML = buildBracketDesktop(data);
+  mobile.innerHTML    = buildBracketMobile(data);
+}
+
+function buildMatchupCard(series) {
+  if (!series) return '<div class="matchup-card status-tbd"><div class="mc-teams"><div class="mc-team">TBD</div></div></div>';
+
+  const home = series.home_team || 'TBD';
+  const away = series.away_team || 'TBD';
+
+  if (series.status === 'tbd') {
+    return `<div class="matchup-card status-tbd">
+      <div class="mc-teams">
+        <div class="mc-team">${esc(home)}</div>
+        <div class="mc-team">${esc(away)}</div>
+      </div>
+    </div>`;
+  }
+
+  const pred   = series.prediction;
+  const winner = series.winner;
+
+  const homeCls = winner ? (winner === home ? 'winner' : 'loser') : '';
+  const awayCls = winner ? (winner === away ? 'winner' : 'loser') : '';
+
+  const scoreHtml = (series.status === 'complete' || series.home_wins + series.away_wins > 0)
+    ? `<span class="mc-score">${series.home_wins}–${series.away_wins}</span>`
+    : '';
+
+  let predHtml = '';
+  if (pred) {
+    predHtml = `<div class="mc-pred">
+      → <span class="pred-winner">${esc(pred.winner)}</span>
+      <span class="pred-prob">${Math.round(pred.win_probability * 100)}% · in ${pred.predicted_length}G</span>
+    </div>`;
+  }
+
+  let badge = '';
+  if (series.status === 'complete' && pred) {
+    const correct = pred.winner === winner;
+    badge = `<span class="mc-badge ${correct ? 'correct' : 'wrong'}">${correct ? '✓' : '✗'}</span>`;
+  }
+
+  const cardCls = `matchup-card status-${series.status}`;
+  return `<div class="${cardCls}">
+    ${badge}
+    <div class="mc-teams">
+      <div class="mc-team ${awayCls}">
+        ${logoHtml(away)}
+        ${esc(away)}
+      </div>
+      <div class="mc-team ${homeCls}">
+        ${logoHtml(home)}
+        ${esc(home)}
+        ${scoreHtml}
+      </div>
+    </div>
+    ${predHtml}
+  </div>`;
+}
+
+function buildRoundCol(series_list, label) {
+  const cards = series_list.map(s =>
+    `<div class="bracket-matchup">${buildMatchupCard(s)}</div>`
+  ).join('');
+  return `<div class="bracket-round">
+    <div class="bracket-round-label">${esc(label)}</div>
+    ${cards}
+  </div>`;
+}
+
+function buildBracketDesktop(data) {
+  const eastR1  = buildRoundCol(data.east.r1,  'R1');
+  const eastR2  = buildRoundCol(data.east.r2,  'R2');
+  const eastR3  = buildRoundCol(data.east.r3,  'Conf Finals');
+  const westR3  = buildRoundCol(data.west.r3,  'Conf Finals');
+  const westR2  = buildRoundCol(data.west.r2,  'R2');
+  const westR1  = buildRoundCol(data.west.r1,  'R1');
+
+  const finalsCard = buildMatchupCard(data.finals);
+  const finalsCol  = `<div class="bracket-finals-col">
+    <div class="bracket-finals-label">Finals</div>
+    ${finalsCard}
+  </div>`;
+
+  return `
+    <div class="bracket-half east">${eastR1}${eastR2}${eastR3}</div>
+    ${finalsCol}
+    <div class="bracket-half west">${westR3}${westR2}${westR1}</div>
+  `;
+}
+
+function buildBracketMobile(data) {
+  const rounds = [
+    { label: 'First Round',        east: data.east.r1, west: data.west.r1 },
+    { label: 'Second Round',       east: data.east.r2, west: data.west.r2 },
+    { label: 'Conference Finals',  east: data.east.r3, west: data.west.r3 },
+    { label: 'NBA Finals',         east: [data.finals], west: [] },
+  ];
+
+  return rounds.map(r => `
+    <div class="bm-round-title">${esc(r.label)}</div>
+    ${r.east.length ? `<div class="bm-conf-label">East</div><div class="bm-series-list">${r.east.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
+    ${r.west.length ? `<div class="bm-conf-label">West</div><div class="bm-series-list">${r.west.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
+  `).join('');
+}
 
 // ─── Init ──────────────────────────────────────────────────────────
 
