@@ -81,3 +81,66 @@ def simulate_series(home_wins, away_wins, p1, p2):
 
     dfs(home_wins, away_wins, 1.0)
     return total_p_home, round(total_exp_games)
+
+
+def build_series_dict(df_playoff):
+    """
+    Group playoff game rows into series objects keyed by (round, matchup).
+
+    Each value is:
+      {'home_team', 'away_team', 'home_wins', 'away_wins', 'status', 'winner'}
+
+    home_team / away_team are determined from game 1 of each series (game_num == 1).
+    """
+    raw = {}   # (round, matchup) -> {series_home, series_away, win_counts}
+    for _, row in df_playoff.iterrows():
+        gid = int(row['GAME_ID'])
+        rnd, matchup, game_num = parse_game_id(gid)
+        key = (rnd, matchup)
+
+        if key not in raw:
+            raw[key] = {'series_home': None, 'series_away': None, 'wins': {}}
+
+        entry = raw[key]
+        game_host  = row['hometeamName']
+        game_visit = row['awayteamName']
+        winner     = game_host if row['home_win'] else game_visit
+
+        # Game 1 is always hosted by the series home team (higher seed)
+        if game_num == 1:
+            entry['series_home'] = game_host
+            entry['series_away'] = game_visit
+
+        entry['wins'][winner] = entry['wins'].get(winner, 0) + 1
+
+    result = {}
+    for key, entry in raw.items():
+        home = entry['series_home']
+        away = entry['series_away']
+        # Fall back to most-frequent home team if game 1 is missing
+        if home is None:
+            teams = list(entry['wins'].keys())
+            home = teams[0] if teams else 'TBD'
+            away = teams[1] if len(teams) > 1 else 'TBD'
+
+        hw = entry['wins'].get(home, 0)
+        aw = entry['wins'].get(away, 0)
+
+        if hw == 4:
+            status, winner = 'complete', home
+        elif aw == 4:
+            status, winner = 'complete', away
+        elif hw + aw == 0:
+            status, winner = 'upcoming', None
+        else:
+            status, winner = 'active', None
+
+        result[key] = {
+            'home_team':  home,
+            'away_team':  away,
+            'home_wins':  hw,
+            'away_wins':  aw,
+            'status':     status,
+            'winner':     winner,
+        }
+    return result
