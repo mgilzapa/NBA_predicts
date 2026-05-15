@@ -75,12 +75,13 @@ function updateMeta(generatedAt) {
 // ─── Odds Matching & Formatting ────────────────────
 
 function matchOdds(game) {
-  if (!oddsData.games || !game.date) return null;
+  if (!oddsData.games || !game.date || !game.home_team || !game.away_team) return null;
   const key = `${game.date}|${game.home_team.toLowerCase().trim()}|${game.away_team.toLowerCase().trim()}`;
   return oddsData.games[key] || null;
 }
 
 function decimalToAmerican(odds) {
+  if (odds <= 1.0) return '—';
   if (odds >= 2.0) return '+' + Math.round((odds - 1) * 100);
   return '-' + Math.round(100 / (odds - 1));
 }
