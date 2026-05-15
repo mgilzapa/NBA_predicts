@@ -36,6 +36,7 @@
     <button class="tab active" data-tab="today" role="tab">Today</button>
     <button class="tab" data-tab="yesterday" role="tab">Yesterday</button>
     <button class="tab" data-tab="all" role="tab">All Predictions</button>
+    <button class="tab" data-tab="bracket" role="tab">Bracket</button>
   </nav>
 
   <main>
@@ -60,11 +61,24 @@
               <th>Away</th>
               <th>Predicted</th>
               <th>Actual</th>
+              <th>Odds</th>
               <th>Result</th>
             </tr>
           </thead>
           <tbody id="all-tbody"></tbody>
         </table>
+      </div>
+    </section>
+
+    <section id="tab-bracket" class="tab-content" role="tabpanel">
+      <div class="bracket-header" id="bracket-header"></div>
+      <div class="bracket-outer" id="bracket-outer">
+        <div class="bracket-container" id="bracket-container">
+          <!-- rendered by app.js -->
+        </div>
+      </div>
+      <div class="bracket-mobile" id="bracket-mobile">
+        <!-- rendered by app.js for mobile -->
       </div>
     </section>
   </main>
