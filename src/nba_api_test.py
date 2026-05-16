@@ -53,9 +53,10 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
         axis=1
     )
 
-    # Merge über Datum + Home Team
+    # Merge über Datum + Home Team (erst dedup damit kein 1:n-Merge entsteht)
+    df_res_dedup = df_res[['_date', 'hometeamName', 'actual_winner']].drop_duplicates(subset=['_date', 'hometeamName'])
     merged = df_pred.merge(
-        df_res[['_date', 'hometeamName', 'actual_winner']],
+        df_res_dedup,
         left_on=['_date', 'Home Team'],
         right_on=['_date', 'hometeamName'],
         how='left'

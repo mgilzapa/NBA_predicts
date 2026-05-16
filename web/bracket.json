@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-15T09:25:43",
+  "generated_at": "2026-05-16T08:24:08",
   "season": "2025-26",
   "east": {
     "r1": [
@@ -12,7 +12,7 @@
         "winner": "Detroit Pistons",
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.5954,
+          "win_probability": 0.5075,
           "predicted_length": 6
         }
       },
@@ -51,7 +51,7 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Cleveland Cavaliers",
-          "win_probability": 0.7592,
+          "win_probability": 0.6037,
           "predicted_length": 6
         }
       }
@@ -60,13 +60,13 @@
       {
         "home_team": "Detroit Pistons",
         "away_team": "Cleveland Cavaliers",
-        "home_wins": 2,
+        "home_wins": 3,
         "away_wins": 3,
         "status": "active",
         "winner": null,
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.6152,
+          "win_probability": 0.6535,
           "predicted_length": 6
         }
       },
@@ -94,12 +94,12 @@
         "winner": null,
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.823,
-          "predicted_length": 6
+          "win_probability": 0.9587,
+          "predicted_length": 5
         }
       }
     ],
-    "finalist": null
+    "finalist": "New York Knicks"
   },
   "west": {
     "r1": [
@@ -125,7 +125,7 @@
         "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.9624,
+          "win_probability": 0.933,
           "predicted_length": 5
         }
       },
@@ -138,7 +138,7 @@
         "winner": "Minnesota Timberwolves",
         "prediction": {
           "winner": "Denver Nuggets",
-          "win_probability": 0.7957,
+          "win_probability": 0.7501,
           "predicted_length": 6
         }
       },
@@ -173,13 +173,13 @@
       {
         "home_team": "San Antonio Spurs",
         "away_team": "Minnesota Timberwolves",
-        "home_wins": 3,
+        "home_wins": 4,
         "away_wins": 1,
-        "status": "active",
-        "winner": null,
+        "status": "complete",
+        "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.9872,
+          "win_probability": 0.9765,
           "predicted_length": 5
         }
       }
@@ -194,20 +194,24 @@
         "winner": null,
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.7165,
+          "win_probability": 0.5054,
           "predicted_length": 6
         }
       }
     ],
-    "finalist": null
+    "finalist": "San Antonio Spurs"
   },
   "finals": {
-    "home_team": "TBD",
-    "away_team": "TBD",
+    "home_team": "New York Knicks",
+    "away_team": "San Antonio Spurs",
     "home_wins": 0,
     "away_wins": 0,
-    "status": "tbd",
+    "status": "upcoming",
     "winner": null,
-    "prediction": null
+    "prediction": {
+      "winner": "San Antonio Spurs",
+      "win_probability": 0.7194,
+      "predicted_length": 6
+    }
   }
 }

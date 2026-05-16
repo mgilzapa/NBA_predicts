@@ -36,6 +36,7 @@ const TEAM_LOGOS = {
 let currentData = null;
 let oddsData = { games: {} };
 let oddsFormat = 'decimal';
+let activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '' };
 
 // ─── Tab Switching ─────────────────────────────────────────────────
 
@@ -50,8 +51,19 @@ document.querySelectorAll('.tab').forEach(btn => {
     const panel = document.getElementById('tab-' + target);
     panel.classList.add('active');
 
-    // Re-animate bars when switching to a tab with cards
+    updateTabIndicator(btn);
     animateBars(panel);
+
+    if (target === 'bracket') {
+      requestAnimationFrame(() => {
+        document.querySelectorAll('#bracket-container .matchup-card').forEach((card, i) => {
+          card.style.animation = 'none';
+          void card.offsetWidth;
+          card.style.animation = `cardReveal 260ms cubic-bezier(0.22,1,0.36,1) ${Math.min(i * 22, 320)}ms both`;
+        });
+        drawBracketConnectors();
+      });
+    }
   });
 });
 
@@ -80,6 +92,7 @@ async function loadData() {
     currentData = data;
     render(data);
     renderBracket(bracketData);
+    initFilters();
   } catch (err) {
     showGlobalError(err.message);
   }
@@ -98,7 +111,110 @@ function render(data) {
   updateMeta(data.generated_at);
   renderToday(data.today || []);
   renderYesterday(data.yesterday || []);
-  renderAll(data.all || []);
+  renderAll(applyFilters(data.all || []));
+}
+
+function applyFilters(games) {
+  return games.filter(g => {
+    if (activeFilters.team && g.home_team !== activeFilters.team && g.away_team !== activeFilters.team) return false;
+    if (activeFilters.dateFrom && g.date < activeFilters.dateFrom) return false;
+    if (activeFilters.dateTo && g.date > activeFilters.dateTo) return false;
+    if (activeFilters.result === 'correct' && g.correct !== true) return false;
+    if (activeFilters.result === 'wrong' && g.correct !== false) return false;
+    if (activeFilters.result === 'pending' && (g.correct === true || g.correct === false)) return false;
+    if (activeFilters.seasonType) {
+      const isPlayoff = String(g.gameId || '').startsWith('4');
+      if (activeFilters.seasonType === 'playoffs' && !isPlayoff) return false;
+      if (activeFilters.seasonType === 'regular' && isPlayoff) return false;
+    }
+    return true;
+  });
+}
+
+function initFilters() {
+  const allGames = () => currentData ? currentData.all || [] : [];
+
+  // Populate team dropdown
+  const teams = [...new Set((currentData.all || []).flatMap(g => [g.home_team, g.away_team]))].sort();
+  const teamSelect = document.getElementById('f-team');
+  teams.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t; opt.textContent = t;
+    teamSelect.appendChild(opt);
+  });
+
+  function syncAndRender() {
+    activeFilters.team       = document.getElementById('f-team').value;
+    activeFilters.result     = document.getElementById('f-result').value;
+    activeFilters.seasonType = document.getElementById('f-season').value;
+    const hasAny = Object.values(activeFilters).some(v => v !== '');
+    document.getElementById('f-reset').style.display = hasAny ? '' : 'none';
+    renderAll(applyFilters(allGames()));
+  }
+
+  document.getElementById('f-team').addEventListener('change', syncAndRender);
+  document.getElementById('f-result').addEventListener('change', syncAndRender);
+  document.getElementById('f-season').addEventListener('change', syncAndRender);
+
+  document.getElementById('f-date-from').addEventListener('change', e => {
+    activeFilters.dateFrom = e.target.value;
+    activeFilters.quickDate = '';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    syncAndRender();
+  });
+
+  document.getElementById('f-date-to').addEventListener('change', e => {
+    activeFilters.dateTo = e.target.value;
+    activeFilters.quickDate = '';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    syncAndRender();
+  });
+
+  document.querySelector('.f-chips').addEventListener('click', e => {
+    const chip = e.target.closest('.chip');
+    if (!chip) return;
+    const wasActive = chip.classList.contains('active');
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+
+    if (wasActive) {
+      activeFilters.quickDate = activeFilters.dateFrom = activeFilters.dateTo = '';
+      document.getElementById('f-date-from').value = '';
+      document.getElementById('f-date-to').value = '';
+    } else {
+      chip.classList.add('active');
+      chip.style.animation = 'none';
+      void chip.offsetWidth;
+      chip.style.animation = 'chipActivate 180ms cubic-bezier(0.22,1,0.36,1)';
+      activeFilters.quickDate = chip.dataset.chip;
+      const today = new Date();
+      const fmt = d => d.toISOString().slice(0, 10);
+      if (chip.dataset.chip === 'last7') {
+        const from = new Date(today); from.setDate(from.getDate() - 7);
+        activeFilters.dateFrom = fmt(from); activeFilters.dateTo = '';
+      } else if (chip.dataset.chip === 'last30') {
+        const from = new Date(today); from.setDate(from.getDate() - 30);
+        activeFilters.dateFrom = fmt(from); activeFilters.dateTo = '';
+      } else if (chip.dataset.chip === 'thisMonth') {
+        activeFilters.dateFrom = fmt(new Date(today.getFullYear(), today.getMonth(), 1));
+        activeFilters.dateTo = '';
+      }
+      document.getElementById('f-date-from').value = activeFilters.dateFrom;
+      document.getElementById('f-date-to').value = activeFilters.dateTo;
+    }
+    syncAndRender();
+  });
+
+  document.getElementById('f-reset').addEventListener('click', () => {
+    activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '' };
+    document.getElementById('f-team').value = '';
+    document.getElementById('f-result').value = '';
+    document.getElementById('f-season').value = '';
+    document.getElementById('f-date-from').value = '';
+    document.getElementById('f-date-to').value = '';
+    document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+    document.getElementById('f-reset').style.display = 'none';
+    renderAll(allGames());
+  });
 }
 
 function updateMeta(generatedAt) {
@@ -116,8 +232,15 @@ function updateMeta(generatedAt) {
 
 function matchOdds(game) {
   if (!oddsData.games || !game.date || !game.home_team || !game.away_team) return null;
-  const key = `${game.date}|${game.home_team.toLowerCase().trim()}|${game.away_team.toLowerCase().trim()}`;
-  return oddsData.games[key] || null;
+  const home = game.home_team.toLowerCase().trim();
+  const away = game.away_team.toLowerCase().trim();
+  const key = `${game.date}|${home}|${away}`;
+  if (oddsData.games[key]) return oddsData.games[key];
+  // Odds API uses UTC — late ET games appear as next day in UTC
+  const nextDay = new Date(game.date + 'T12:00:00Z');
+  nextDay.setUTCDate(nextDay.getUTCDate() + 1);
+  const nextDate = nextDay.toISOString().slice(0, 10);
+  return oddsData.games[`${nextDate}|${home}|${away}`] || null;
 }
 
 function decimalToAmerican(odds) {
@@ -209,7 +332,8 @@ function renderYesterday(games) {
 
   header.innerHTML =
     `<span class="date-label">${dateLabel}</span>` +
-    `<span class="game-count">${count} Game${count !== 1 ? 's' : ''} · ${correct}/${count} Correct</span>`;
+    `<span class="game-count">${count} Game${count !== 1 ? 's' : ''}</span>` +
+    `<span class="accuracy-pill">${correct}/${count} correct</span>`;
 
   grid.innerHTML = games.map(g => buildCard(g, true, matchOdds(g))).join('');
   animateBars(grid);
@@ -219,9 +343,17 @@ function renderAll(games) {
   const header = document.getElementById('all-header');
   const tbody  = document.getElementById('all-tbody');
 
+  // Cross-fade header on every update
+  header.style.transition = 'none';
+  header.style.opacity    = '0';
+
   if (games.length === 0) {
     header.textContent = '';
-    tbody.innerHTML    = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:48px">No predictions yet.</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:48px">No predictions yet.</td></tr>';
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      header.style.transition = 'opacity 180ms ease';
+      header.style.opacity    = '1';
+    }));
     return;
   }
 
@@ -233,28 +365,34 @@ function renderAll(games) {
     : null;
 
   header.innerHTML = accuracy !== null
-    ? `${total} predictions · <strong style="color:var(--accent)">${accuracy}%</strong> accuracy (${correct}/${decided.length} decided)`
+    ? `${total} predictions · <span class="accuracy-pill">${accuracy}% accuracy</span> · ${correct}/${decided.length} decided`
     : `${total} predictions`;
 
-  tbody.innerHTML = games.map(g => {
-    const date      = g.date ? humanDate(g.date) : '—';
-    const actual    = g.actual_winner || '—';
-    const resultCls = g.correct === true  ? 'r-correct' :
-                      g.correct === false ? 'r-wrong'   : 'r-pending';
-    const resultTxt = g.correct === true  ? '✓' :
-                      g.correct === false ? '✗' : '—';
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    header.style.transition = 'opacity 180ms ease';
+    header.style.opacity    = '1';
+  }));
 
-    const oddsEntry = matchOdds(g);
-    const oddsCell  = bestOddsCell(g, oddsEntry);
+  tbody.innerHTML = games.map((g, index) => {
+    const date       = g.date ? humanDate(g.date) : '—';
+    const actual     = g.actual_winner || '—';
+    const resultHtml = g.correct === true  ? '<span class="result-pill correct">Correct</span>' :
+                       g.correct === false ? '<span class="result-pill wrong">Wrong</span>' :
+                                            '<span class="r-pending">—</span>';
+    const oddsEntry  = matchOdds(g);
+    const oddsCell   = bestOddsCell(g, oddsEntry);
+    const animStyle  = index < 15
+      ? ` style="animation:rowSlideIn 200ms cubic-bezier(0.22,1,0.36,1) ${index * 16}ms both"`
+      : '';
 
-    return `<tr>
+    return `<tr${animStyle}>
       <td class="td-date">${date}</td>
       <td>${esc(g.home_team)}</td>
       <td>${esc(g.away_team)}</td>
       <td style="color:var(--accent)">${esc(g.predicted_winner)}</td>
       <td>${esc(actual)}</td>
       <td class="td-odds">${oddsCell}</td>
-      <td class="td-result ${resultCls}">${resultTxt}</td>
+      <td class="td-result">${resultHtml}</td>
     </tr>`;
   }).join('');
 }
@@ -305,13 +443,14 @@ function buildCard(g, showResult, oddsEntry = null) {
       <span class="team-role">Home</span>
     </div>
   </div>
+  <div class="prob-label">Model confidence</div>
   <div class="prob-row">
-    <span class="pct away-pct">${awayProb}%</span>
+    <span class="pct away-pct${awayProb > homeProb ? ' pct-winner' : ''}">${awayProb}%</span>
     <div class="prob-bar">
       <div class="bar-away"></div>
       <div class="bar-home"></div>
     </div>
-    <span class="pct home-pct">${homeProb}%</span>
+    <span class="pct home-pct${homeProb >= awayProb ? ' pct-winner' : ''}">${homeProb}%</span>
   </div>
   <div class="elo-row">
     <span>${esc(awayElo)}</span>
@@ -347,15 +486,21 @@ function bestOddsCell(game, oddsEntry) {
   return `<span class="td-odds-val">${formatOdds(best[key])}</span> <span class="td-odds-bm">${esc(best.name)}</span>`;
 }
 
+function teamAbbr(name) {
+  const abbr = TEAM_LOGOS[name];
+  return abbr ? abbr.toUpperCase() : name;
+}
+
 function teamLogoUrl(name) {
   const abbr = TEAM_LOGOS[name];
   return abbr ? `https://a.espncdn.com/i/teamlogos/nba/500/${abbr}.png` : null;
 }
 
-function logoHtml(teamName) {
+function logoHtml(teamName, px = 64) {
   const url = teamLogoUrl(teamName);
   if (!url) return '';
-  return `<img class="team-logo" src="${url}" alt="${esc(teamName)}" onerror="this.style.display='none'">`;
+  const cls = px <= 20 ? 'mc-logo' : 'team-logo';
+  return `<img class="${cls}" src="${url}" alt="${esc(teamName)}" width="${px}" height="${px}" loading="lazy" decoding="async" onerror="this.style.display='none'">`;
 }
 
 function humanDate(dateStr) {
@@ -394,8 +539,11 @@ function renderBracket(data) {
     return;
   }
 
-  header.innerHTML =
-    `Season <strong>${esc(data.season)}</strong> · Updated ${esc(data.generated_at.slice(0, 16).replace('T', ' '))} ET`;
+  const acc = calcBracketAccuracy(data);
+  const accHtml = acc.total > 0
+    ? ` · <span class="accuracy-pill">${acc.correct}/${acc.total} series correct</span>`
+    : '';
+  header.innerHTML = `Season <strong>${esc(data.season)}</strong> · Updated ${esc(data.generated_at.slice(0, 16).replace('T', ' '))} ET${accHtml}`;
 
   container.innerHTML = buildBracketDesktop(data);
   mobile.innerHTML    = buildBracketMobile(data);
@@ -422,39 +570,52 @@ function buildMatchupCard(series) {
   const homeCls = winner ? (winner === home ? 'winner' : 'loser') : '';
   const awayCls = winner ? (winner === away ? 'winner' : 'loser') : '';
 
-  const scoreHtml = (series.status === 'complete' || series.home_wins + series.away_wins > 0)
-    ? `<span class="mc-score">${series.home_wins}–${series.away_wins}</span>`
-    : '';
-
-  let predHtml = '';
-  if (pred) {
-    predHtml = `<div class="mc-pred">
-      → <span class="pred-winner">${esc(pred.winner)}</span>
-      <span class="pred-prob">${Math.round(pred.win_probability * 100)}% · in ${pred.predicted_length}G</span>
-    </div>`;
-  }
-
   let badge = '';
   if (series.status === 'complete' && pred) {
     const correct = pred.winner === winner;
     badge = `<span class="mc-badge ${correct ? 'correct' : 'wrong'}">${correct ? '✓' : '✗'}</span>`;
   }
 
+  // Actual result line
+  let resultHtml = '';
+  if (series.status === 'complete' && winner) {
+    const wWins = winner === home ? series.home_wins : series.away_wins;
+    const lWins = winner === home ? series.away_wins : series.home_wins;
+    resultHtml = `<div class="mc-result"><span class="mc-result-winner">${esc(teamAbbr(winner))}</span><span class="mc-result-text"> Wins ${wWins}–${lWins}</span></div>`;
+  } else if (series.status === 'active' && (series.home_wins + series.away_wins > 0)) {
+    const hw = series.home_wins, aw = series.away_wins;
+    if (hw !== aw) {
+      const leader = hw > aw ? home : away;
+      resultHtml = `<div class="mc-result"><span class="mc-result-winner">${esc(teamAbbr(leader))}</span><span class="mc-result-text"> leads ${Math.max(hw, aw)}–${Math.min(hw, aw)}</span></div>`;
+    } else {
+      resultHtml = `<div class="mc-result"><span class="mc-result-text">Tied ${hw}–${aw}</span></div>`;
+    }
+  }
+
+  // Prediction line
+  let predHtml = '';
+  if (pred) {
+    predHtml = `<div class="mc-pred-row"><span class="mc-pred-label">PRED</span><span class="mc-pred-winner">${esc(teamAbbr(pred.winner))}</span><span class="mc-pred-score"> Wins 4–${pred.predicted_length - 4}</span></div>`;
+  }
+
+  const footerHtml = (resultHtml || predHtml)
+    ? `<div class="mc-footer">${resultHtml}${predHtml}</div>`
+    : '';
+
   const cardCls = `matchup-card status-${series.status}`;
   return `<div class="${cardCls}">
     ${badge}
     <div class="mc-teams">
       <div class="mc-team ${awayCls}">
-        ${logoHtml(away)}
+        ${logoHtml(away, 16)}
         ${esc(away)}
       </div>
       <div class="mc-team ${homeCls}">
-        ${logoHtml(home)}
+        ${logoHtml(home, 16)}
         ${esc(home)}
-        ${scoreHtml}
       </div>
     </div>
-    ${predHtml}
+    ${footerHtml}
   </div>`;
 }
 
@@ -468,30 +629,54 @@ function buildRoundCol(series_list, label) {
   </div>`;
 }
 
-function buildBracketDesktop(data) {
-  const eastR1  = buildRoundCol(data.east.r1,  'R1');
-  const eastR2  = buildRoundCol(data.east.r2,  'R2');
-  const eastR3  = buildRoundCol(data.east.r3,  'Conf Finals');
-  const westR3  = buildRoundCol(data.west.r3,  'Conf Finals');
-  const westR2  = buildRoundCol(data.west.r2,  'R2');
-  const westR1  = buildRoundCol(data.west.r1,  'R1');
+// NBA bracket visual order: 1v8 (idx 0), 4v5 (idx 3), 3v6 (idx 2), 2v7 (idx 1)
+function bracketOrderR1(arr) {
+  return [arr[0], arr[3], arr[2], arr[1]];
+}
 
-  const finalsCard = buildMatchupCard(data.finals);
-  const finalsCol  = `<div class="bracket-finals-col">
-    <div class="bracket-finals-label">Finals</div>
+function buildFinalsWinner(series) {
+  if (!series) return '';
+  const champion = series.status === 'complete' ? series.winner
+    : (series.prediction ? series.prediction.winner : null);
+  if (!champion) return '';
+  const url = teamLogoUrl(champion);
+  const logoEl = url
+    ? `<img class="finals-winner-logo" src="${url}" alt="${esc(champion)}" width="72" height="72" loading="lazy" decoding="async" onerror="this.style.display='none'">`
+    : '';
+  const label = series.status === 'complete' ? 'Champion' : 'Predicted Winner';
+  return `<div class="finals-winner-banner">
+    ${logoEl}
+    <div class="finals-winner-label">${esc(label)}</div>
+    <div class="finals-winner-name">${esc(champion)}</div>
+  </div>`;
+}
+
+function buildBracketDesktop(data) {
+  const westR1  = buildRoundCol(bracketOrderR1(data.west.r1), 'R1');
+  const westR2  = buildRoundCol(data.west.r2,  'R2');
+  const westR3  = buildRoundCol(data.west.r3,  'Conf Finals');
+  const eastR3  = buildRoundCol(data.east.r3,  'Conf Finals');
+  const eastR2  = buildRoundCol(data.east.r2,  'R2');
+  const eastR1  = buildRoundCol(bracketOrderR1(data.east.r1), 'R1');
+
+  const winnerBanner = buildFinalsWinner(data.finals);
+  const finalsCard   = buildMatchupCard(data.finals);
+  const finalsCol    = `<div class="bracket-finals-col">
+    ${winnerBanner}
+    <div class="bracket-finals-label">NBA Finals</div>
     ${finalsCard}
   </div>`;
 
   return `
-    <div class="bracket-half east">${eastR1}${eastR2}${eastR3}</div>
+    <div class="bracket-half west">${westR1}${westR2}${westR3}</div>
     ${finalsCol}
-    <div class="bracket-half west">${westR3}${westR2}${westR1}</div>
+    <div class="bracket-half east">${eastR3}${eastR2}${eastR1}</div>
   `;
 }
 
 function buildBracketMobile(data) {
   const rounds = [
-    { label: 'First Round',        east: data.east.r1, west: data.west.r1 },
+    { label: 'First Round',        east: bracketOrderR1(data.east.r1), west: bracketOrderR1(data.west.r1) },
     { label: 'Second Round',       east: data.east.r2, west: data.west.r2 },
     { label: 'Conference Finals',  east: data.east.r3, west: data.west.r3 },
     { label: 'NBA Finals',         east: [data.finals], west: [] },
@@ -504,6 +689,153 @@ function buildBracketMobile(data) {
   `).join('');
 }
 
+// ─── Bracket Accuracy ──────────────────────────────────────────────
+
+function calcBracketAccuracy(data) {
+  const allSeries = [
+    ...(data.west.r1 || []), ...(data.west.r2 || []), ...(data.west.r3 || []),
+    ...(data.east.r1 || []), ...(data.east.r2 || []), ...(data.east.r3 || []),
+    data.finals,
+  ].filter(s => s && s.status === 'complete' && s.winner && s.prediction);
+  const correct = allSeries.filter(s => s.prediction.winner === s.winner).length;
+  return { correct, total: allSeries.length };
+}
+
+// ─── Bracket Connectors (SVG) ───────────────────────────────────────
+
+function drawBracketConnectors() {
+  const container = document.getElementById('bracket-container');
+  if (!container || !container.children.length) return;
+
+  const old = container.querySelector('.bracket-svg');
+  if (old) old.remove();
+
+  container.style.position = 'relative';
+  const cRect = container.getBoundingClientRect();
+  if (cRect.width === 0) return;
+
+  const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  svg.classList.add('bracket-svg');
+  svg.setAttribute('aria-hidden', 'true');
+  svg.setAttribute('width', cRect.width);
+  svg.setAttribute('height', cRect.height);
+  svg.style.cssText = 'position:absolute;top:0;left:0;pointer-events:none;overflow:visible;';
+  container.insertBefore(svg, container.firstChild);
+
+  function rel(r) {
+    return {
+      left:  r.left  - cRect.left,
+      right: r.right - cRect.left,
+      cy:    (r.top  + r.bottom) / 2 - cRect.top,
+    };
+  }
+
+  function addPath(d) {
+    const p = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    p.setAttribute('d', d);
+    p.setAttribute('class', 'bracket-connector-line');
+    svg.appendChild(p);
+  }
+
+  function connectRounds(fromRound, toRound, dir) {
+    const fromMs = Array.from(fromRound.querySelectorAll('.bracket-matchup'));
+    const toMs   = Array.from(toRound.querySelectorAll('.bracket-matchup'));
+    if (!fromMs.length || !toMs.length) return;
+    const ratio = Math.max(1, Math.round(fromMs.length / toMs.length));
+
+    toMs.forEach((toM, ti) => {
+      const toCard = toM.querySelector('.matchup-card');
+      if (!toCard) return;
+      const to = rel(toCard.getBoundingClientRect());
+
+      for (let fi = ti * ratio; fi < (ti + 1) * ratio; fi++) {
+        const fromCard = fromMs[fi]?.querySelector('.matchup-card');
+        if (!fromCard) continue;
+        const from = rel(fromCard.getBoundingClientRect());
+
+        if (dir === 'right') {
+          const midX = (from.right + to.left) / 2;
+          addPath(`M ${from.right} ${from.cy} H ${midX} V ${to.cy} H ${to.left}`);
+        } else {
+          const midX = (from.left + to.right) / 2;
+          addPath(`M ${from.left} ${from.cy} H ${midX} V ${to.cy} H ${to.right}`);
+        }
+      }
+    });
+  }
+
+  function connectToFinals(confCard, finalsCard, dir) {
+    const from = rel(confCard.getBoundingClientRect());
+    const to   = rel(finalsCard.getBoundingClientRect());
+    if (dir === 'right') {
+      const midX = (from.right + to.left) / 2;
+      addPath(`M ${from.right} ${from.cy} H ${midX} V ${to.cy} H ${to.left}`);
+    } else {
+      const midX = (from.left + to.right) / 2;
+      addPath(`M ${from.left} ${from.cy} H ${midX} V ${to.cy} H ${to.right}`);
+    }
+  }
+
+  const finalsCard = container.querySelector('.bracket-finals-col .matchup-card');
+
+  const westHalf = container.querySelector('.bracket-half.west');
+  if (westHalf) {
+    const rounds = Array.from(westHalf.querySelectorAll('.bracket-round'));
+    for (let r = 0; r < rounds.length - 1; r++) connectRounds(rounds[r], rounds[r + 1], 'right');
+    if (finalsCard) {
+      const last = rounds[rounds.length - 1]?.querySelector('.matchup-card');
+      if (last) connectToFinals(last, finalsCard, 'right');
+    }
+  }
+
+  const eastHalf = container.querySelector('.bracket-half.east');
+  if (eastHalf) {
+    const rounds = Array.from(eastHalf.querySelectorAll('.bracket-round'));
+    for (let r = rounds.length - 1; r > 0; r--) connectRounds(rounds[r], rounds[r - 1], 'left');
+    if (finalsCard) {
+      const first = rounds[0]?.querySelector('.matchup-card');
+      if (first) connectToFinals(first, finalsCard, 'left');
+    }
+  }
+}
+
+// ─── Tab Indicator ─────────────────────────────────────────────────
+
+function initTabIndicator() {
+  const bar    = document.querySelector('.tab-bar');
+  const active = bar.querySelector('.tab.active');
+  if (!active) return;
+  const ind = document.createElement('span');
+  ind.className = 'tab-indicator';
+  bar.appendChild(ind);
+  const barRect = bar.getBoundingClientRect();
+  const btnRect = active.getBoundingClientRect();
+  ind.style.width     = btnRect.width + 'px';
+  ind.style.transform = `translateX(${btnRect.left - barRect.left}px)`;
+  window.addEventListener('resize', () => updateTabIndicator(bar.querySelector('.tab.active')));
+}
+
+function updateTabIndicator(btn) {
+  if (!btn) return;
+  const bar = document.querySelector('.tab-bar');
+  const ind = bar.querySelector('.tab-indicator');
+  if (!ind) return;
+  const barRect = bar.getBoundingClientRect();
+  const btnRect = btn.getBoundingClientRect();
+  ind.style.transition = 'transform 220ms cubic-bezier(0.22,1,0.36,1), width 220ms cubic-bezier(0.22,1,0.36,1)';
+  ind.style.width     = btnRect.width + 'px';
+  ind.style.transform = `translateX(${btnRect.left - barRect.left}px)`;
+}
+
 // ─── Init ──────────────────────────────────────────────────────────
 
+initTabIndicator();
 loadData();
+
+let _connDebounce;
+window.addEventListener('resize', () => {
+  clearTimeout(_connDebounce);
+  _connDebounce = setTimeout(() => {
+    if (document.querySelector('.tab[data-tab="bracket"].active')) drawBracketConnectors();
+  }, 150);
+});

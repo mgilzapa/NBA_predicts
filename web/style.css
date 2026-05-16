@@ -1,15 +1,18 @@
-@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
-
 :root {
-  --bg:            #0d1117;
-  --surface:       #161b22;
-  --surface-hover: #1c2128;
-  --border:        #30363d;
-  --text:          #e6edf3;
-  --muted:         #8b949e;
-  --accent:        #58a6ff;
-  --correct:       #3fb950;
-  --wrong:         #f85149;
+  --bg:            oklch(11% 0.015 52);
+  --surface:       oklch(17% 0.020 52);
+  --surface-hover: oklch(21% 0.022 52);
+  --border:        oklch(30% 0.024 50);
+  --text:          oklch(91% 0.010 80);
+  --muted:         oklch(56% 0.018 65);
+  --accent:        oklch(76% 0.24 48);
+  --accent-away:   oklch(65% 0.16 228);
+  --correct:       oklch(68% 0.16 145);
+  --wrong:         oklch(62% 0.20 22);
+
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+  --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -29,7 +32,7 @@ header {
   padding: 0 24px;
   position: sticky;
   top: 0;
-  background: rgba(13, 17, 23, 0.92);
+  background: oklch(11% 0.015 52 / 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   z-index: 100;
@@ -48,9 +51,11 @@ header {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 1rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
   user-select: none;
 }
 
@@ -61,6 +66,7 @@ header {
 
 .logo strong {
   color: var(--accent);
+  letter-spacing: 0.12em;
 }
 
 .meta {
@@ -77,7 +83,7 @@ header {
   display: flex;
   position: sticky;
   top: 56px;
-  background: rgba(13, 17, 23, 0.92);
+  background: oklch(11% 0.015 52 / 0.92);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   z-index: 99;
@@ -104,13 +110,23 @@ header {
 
 .tab.active {
   color: var(--accent);
-  border-bottom-color: var(--accent);
+}
+
+.tab-indicator {
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--accent);
+  pointer-events: none;
+  will-change: transform;
+  z-index: 1;
 }
 
 /* ─── Main ────────────────────────────────────────── */
 
 main {
-  max-width: 900px;
+  max-width: 1400px;
   margin: 0 auto;
   padding: 28px 24px 60px;
 }
@@ -127,25 +143,82 @@ main {
   to   { opacity: 1; transform: translateY(0); }
 }
 
+@keyframes rowSlideIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes cardReveal {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes chipActivate {
+  0%   { transform: scale(1); }
+  35%  { transform: scale(0.91); }
+  100% { transform: scale(1); }
+}
+
 /* ─── Section Header ──────────────────────────────── */
 
 .section-header {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .date-label {
   font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
-  font-size: 1.4rem;
-  font-weight: 600;
-  letter-spacing: 0.02em;
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .game-count {
   font-size: 0.82rem;
   color: var(--muted);
+}
+
+/* ─── Accuracy Pill ───────────────────────────────── */
+
+.accuracy-pill {
+  display: inline-flex;
+  align-items: center;
+  background: color-mix(in oklch, var(--correct) 16%, transparent);
+  border: 1px solid color-mix(in oklch, var(--correct) 35%, transparent);
+  border-radius: 20px;
+  color: var(--correct);
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 3px 13px;
+}
+
+/* ─── Result Pill ─────────────────────────────────── */
+
+.result-pill {
+  display: inline-block;
+  border-radius: 4px;
+  font-size: 0.73rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  padding: 3px 9px;
+  text-transform: uppercase;
+}
+
+.result-pill.correct {
+  background: color-mix(in oklch, var(--correct) 14%, transparent);
+  border: 1px solid color-mix(in oklch, var(--correct) 28%, transparent);
+  color: var(--correct);
+}
+
+.result-pill.wrong {
+  background: color-mix(in oklch, var(--wrong) 14%, transparent);
+  border: 1px solid color-mix(in oklch, var(--wrong) 28%, transparent);
+  color: var(--wrong);
 }
 
 /* ─── Cards Grid ──────────────────────────────────── */
@@ -164,9 +237,10 @@ main {
 }
 
 .game-card:hover {
-  border-color: rgba(88, 166, 255, 0.4);
+  border-color: color-mix(in oklch, var(--accent) 55%, transparent);
   background: var(--surface-hover);
-  transform: translateY(-1px);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 28px oklch(0% 0 0 / 0.35), 0 0 0 1px color-mix(in oklch, var(--accent) 18%, transparent);
 }
 
 /* Badge */
@@ -183,15 +257,15 @@ main {
 }
 
 .badge.correct {
-  background: rgba(63, 185, 80, 0.12);
+  background: color-mix(in oklch, var(--correct) 14%, transparent);
   color: var(--correct);
-  border: 1px solid rgba(63, 185, 80, 0.25);
+  border: 1px solid color-mix(in oklch, var(--correct) 28%, transparent);
 }
 
 .badge.wrong {
-  background: rgba(248, 81, 73, 0.12);
+  background: color-mix(in oklch, var(--wrong) 14%, transparent);
   color: var(--wrong);
-  border: 1px solid rgba(248, 81, 73, 0.25);
+  border: 1px solid color-mix(in oklch, var(--wrong) 28%, transparent);
 }
 
 /* Teams Row */
@@ -225,7 +299,8 @@ main {
 
 .team-name.winner {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
+  font-size: 1.05rem;
 }
 
 .team-role {
@@ -242,7 +317,7 @@ main {
   height: 64px;
   object-fit: contain;
   margin: 0 auto 6px;
-  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.4));
+  filter: drop-shadow(0 2px 4px oklch(0% 0 0 / 0.4));
 }
 
 .versus {
@@ -267,7 +342,19 @@ main {
   white-space: nowrap;
 }
 
-/* Probability Bar */
+/* ─── Probability Section ─────────────────────────── */
+
+.prob-label {
+  font-size: 0.5rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  opacity: 0.55;
+}
+
 .prob-row {
   display: flex;
   align-items: center;
@@ -277,15 +364,15 @@ main {
 
 .prob-bar {
   flex: 1;
-  height: 5px;
-  border-radius: 3px;
+  height: 11px;
+  border-radius: 6px;
   background: var(--border);
   overflow: hidden;
   display: flex;
 }
 
 .bar-away {
-  background: var(--muted);
+  background: var(--accent-away);
   height: 100%;
   width: 0;
   transition: width 0.65s cubic-bezier(0.4, 0, 0.2, 1);
@@ -300,9 +387,22 @@ main {
 
 .pct {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.72rem;
-  color: var(--muted);
-  min-width: 30px;
+  font-size: 0.82rem;
+  color: var(--text);
+  min-width: 34px;
+  font-weight: 500;
+}
+
+.pct:not(.pct-winner) {
+  opacity: 0.32;
+}
+
+.pct.pct-winner {
+  color: var(--text);
+  font-size: 3rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .pct.away-pct { text-align: right; }
@@ -313,8 +413,9 @@ main {
   display: flex;
   justify-content: space-between;
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
-  font-size: 0.68rem;
+  font-size: 0.62rem;
   color: var(--muted);
+  opacity: 0.38;
 }
 
 /* Actual Winner (Yesterday) */
@@ -339,12 +440,132 @@ main {
 
 .error-msg { color: var(--wrong); }
 
+/* ─── Filter Bar ──────────────────────────────────── */
+
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 12px;
+}
+
+.f-select {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.76rem;
+  padding: 5px 10px;
+  transition: border-color 0.15s;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%23666'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 8px center;
+  padding-right: 26px;
+}
+
+.f-select:hover, .f-select:focus {
+  border-color: color-mix(in oklch, var(--accent) 50%, transparent);
+  outline: none;
+}
+
+.f-select option { background: oklch(16% 0.018 52); }
+
+.f-chips {
+  display: flex;
+  gap: 4px;
+}
+
+.chip {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  color: var(--muted);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 4px 12px;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+  white-space: nowrap;
+}
+
+.chip:hover {
+  border-color: color-mix(in oklch, var(--accent) 40%, transparent);
+  color: var(--text);
+}
+
+.chip.active {
+  background: color-mix(in oklch, var(--accent) 15%, transparent);
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.f-date-range {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.f-date {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  padding: 5px 8px;
+  transition: border-color 0.15s;
+  width: 120px;
+  color-scheme: dark;
+}
+
+.f-date:hover, .f-date:focus {
+  border-color: color-mix(in oklch, var(--accent) 50%, transparent);
+  outline: none;
+}
+
+.f-date-sep { color: var(--muted); font-size: 0.8rem; }
+
+.f-reset {
+  background: color-mix(in oklch, var(--wrong) 12%, transparent);
+  border: 1px solid color-mix(in oklch, var(--wrong) 28%, transparent);
+  border-radius: 6px;
+  color: var(--wrong);
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  transition: background 0.15s;
+  white-space: nowrap;
+}
+
+.f-reset:hover {
+  background: color-mix(in oklch, var(--wrong) 22%, transparent);
+}
+
+@media (max-width: 640px) {
+  .filter-bar { gap: 6px; }
+  .f-date { width: 100px; font-size: 0.68rem; }
+  .f-select { font-size: 0.72rem; }
+}
+
 /* ─── All Predictions Table ───────────────────────── */
 
 .all-header {
-  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 0.84rem;
   color: var(--muted);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .table-wrapper {
@@ -381,7 +602,7 @@ th {
 
 td {
   padding: 9px 14px;
-  border-bottom: 1px solid rgba(48, 54, 61, 0.6);
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 60%, transparent);
   vertical-align: middle;
   color: var(--text);
 }
@@ -398,14 +619,10 @@ td.td-date {
   white-space: nowrap;
 }
 
-td.td-result { font-weight: 700; text-align: center; }
-.r-correct { color: var(--correct); }
-.r-wrong   { color: var(--wrong); }
+td.td-result { text-align: center; }
 .r-pending { color: var(--muted); }
 
-td.td-odds {
-  white-space: nowrap;
-}
+td.td-odds { white-space: nowrap; }
 
 .td-odds-val {
   font-family: 'JetBrains Mono', 'Fira Code', monospace;
@@ -463,7 +680,7 @@ td.td-odds {
 
 .fmt-btn.active {
   background: var(--accent);
-  color: #fff;
+  color: oklch(10% 0.02 52);
 }
 
 .fmt-btn:not(.active):hover {
@@ -501,12 +718,12 @@ td.td-odds {
 
 .odds-bm {
   color: var(--muted);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .odds-val {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 13px;
+  font-size: 12px;
 }
 
 .odds-best .odds-bm,
@@ -520,7 +737,7 @@ td.td-odds {
   margin-left: 4px;
 }
 
-/* ─── Odds Details (aufklappbar) ─────────────────── */
+/* ─── Odds Details ───────────────────────────────── */
 
 .odds-details {
   margin-top: 10px;
@@ -545,9 +762,7 @@ td.td-odds {
   content: '▼ ';
 }
 
-.odds-details summary:hover {
-  color: var(--text);
-}
+.odds-details summary:hover { color: var(--text); }
 
 .odds-all-header,
 .odds-all-row {
@@ -565,9 +780,7 @@ td.td-odds {
   margin-top: 8px;
 }
 
-.odds-all-row .odds-bm {
-  font-size: 12px;
-}
+.odds-all-row .odds-bm { font-size: 12px; }
 
 .odds-home,
 .odds-away {
@@ -589,71 +802,65 @@ td.td-odds {
   margin-bottom: 20px;
 }
 
-/* Desktop bracket: hidden on mobile */
 .bracket-outer {
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
 }
 
 .bracket-container {
   display: flex;
   align-items: stretch;
-  gap: 0;
-  min-width: 900px;
+  gap: 16px;
+  min-width: 1280px;
 }
 
-/* Each half fills half the container */
 .bracket-half {
   display: flex;
   flex: 1;
-  gap: 0;
+  gap: 8px;
 }
 
 .bracket-half.east { flex-direction: row; }
-.bracket-half.west { flex-direction: row-reverse; }
+.bracket-half.west { flex-direction: row; }
 
-/* Finals column in the center */
 .bracket-finals-col {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  flex: 0 0 180px;
-  padding: 0 8px;
+  flex: 0 0 200px;
+  padding: 0 12px;
 }
 
 .bracket-finals-label {
   font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
-  font-size: 0.7rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  letter-spacing: 0.12em;
-  color: var(--muted);
+  letter-spacing: 0.14em;
+  color: var(--accent);
   text-transform: uppercase;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
-/* Each round column */
 .bracket-round {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  flex: 0 0 160px;
+  flex: 0 0 172px;
   padding: 4px 0;
   position: relative;
 }
 
 .bracket-round-label {
   font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
-  font-size: 0.65rem;
+  font-size: 0.72rem;
   font-weight: 700;
   letter-spacing: 0.12em;
   color: var(--muted);
   text-transform: uppercase;
   text-align: center;
-  padding: 4px 0 8px;
+  padding: 4px 0 10px;
 }
 
-/* Matchup card wrapper (handles connector lines) */
 .bracket-matchup {
   position: relative;
   padding: 0 8px;
@@ -661,21 +868,11 @@ td.td-odds {
   align-items: center;
 }
 
-/* Connector lines between rounds — right edge of a card connects rightward */
-.bracket-matchup::after {
-  content: '';
-  position: absolute;
-  right: -1px;
-  top: 50%;
-  width: 9px;
-  height: 1px;
-  background: var(--border);
+.bracket-half.west .bracket-round:last-child,
+.bracket-half.east .bracket-round:first-child {
+  justify-content: center;
 }
 
-.bracket-half.west .bracket-matchup::after {
-  right: auto;
-  left: -1px;
-}
 
 /* ─── Matchup Card ─────────────────────────────────── */
 
@@ -683,26 +880,109 @@ td.td-odds {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 6px;
+  overflow: hidden;
   padding: 8px 10px;
   width: 100%;
   position: relative;
   transition: border-color 0.2s, background 0.2s;
 }
 
+.bracket-finals-col .matchup-card {
+  border-color: color-mix(in oklch, var(--accent) 28%, var(--border));
+  background: color-mix(in oklch, var(--accent) 5%, var(--surface));
+  padding: 12px 14px;
+}
+
+.bracket-finals-col .matchup-card .mc-teams {
+  gap: 7px;
+  margin-bottom: 7px;
+}
+
+.bracket-finals-col .matchup-card .mc-team {
+  font-size: 0.82rem;
+  gap: 7px;
+}
+
+.bracket-finals-col .matchup-card .mc-team img.mc-logo {
+  width: 20px;
+  height: 20px;
+}
+
+.bracket-finals-col .matchup-card .mc-team.winner {
+  font-size: 0.9rem;
+}
+
+/* ─── Finals Winner Banner ──────────────────────────── */
+
+.finals-winner-banner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 18px;
+  animation: fadeUp 380ms var(--ease-out-quart) both;
+}
+
+.finals-winner-logo {
+  width: 72px;
+  height: 72px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 14px color-mix(in oklch, var(--accent) 45%, transparent));
+}
+
+.finals-winner-label {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  color: var(--accent);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.finals-winner-name {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--text);
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.1;
+}
+
 .matchup-card:hover {
-  border-color: rgba(88, 166, 255, 0.35);
+  border-color: color-mix(in oklch, var(--accent) 35%, transparent);
   background: var(--surface-hover);
 }
 
-.matchup-card.status-tbd {
-  opacity: 0.45;
-}
+.matchup-card.status-tbd { opacity: 0.45; }
 
 .matchup-card.status-complete {
-  border-color: rgba(63, 185, 80, 0.25);
+  border-color: color-mix(in oklch, var(--correct) 30%, transparent);
 }
 
-/* Teams row inside card */
+.matchup-card.status-active {
+  border-color: color-mix(in oklch, var(--accent) 50%, transparent);
+}
+
+.matchup-card.status-active::before {
+  content: '';
+  position: absolute;
+  top: 9px;
+  right: 9px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  animation: mc-live-pulse 1.5s ease-in-out infinite;
+}
+
+.matchup-card.status-upcoming {
+  opacity: 0.68;
+}
+
+
 .mc-teams {
   display: flex;
   flex-direction: column;
@@ -721,11 +1001,14 @@ td.td-odds {
 .mc-team.winner {
   color: var(--accent);
   font-weight: 700;
+  font-size: 0.8rem;
 }
 
 .mc-team.loser {
   color: var(--muted);
-  opacity: 0.6;
+  opacity: 0.38;
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in oklch, var(--muted) 50%, transparent);
 }
 
 .mc-team img.mc-logo {
@@ -738,48 +1021,100 @@ td.td-odds {
 .mc-score {
   margin-left: auto;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.7rem;
+  font-size: 0.68rem;
+  font-weight: 700;
   color: var(--text);
-  font-weight: 600;
+  background: color-mix(in oklch, var(--border) 80%, transparent);
+  border-radius: 3px;
+  padding: 1px 5px;
 }
 
-/* Prediction row */
-.mc-pred {
-  font-size: 0.67rem;
+.mc-footer {
+  border-top: 1px solid color-mix(in oklch, var(--border) 55%, transparent);
+  padding-top: 5px;
+  margin-top: 5px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.mc-result {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.mc-result-text {
+  font-weight: 400;
   color: var(--muted);
+}
+
+.mc-pred-row {
   display: flex;
   align-items: center;
   gap: 4px;
-  flex-wrap: wrap;
+  font-size: 0.67rem;
 }
 
-.mc-pred .pred-winner {
+.mc-pred-label {
+  font-size: 0.52rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  color: var(--muted);
+  background: color-mix(in oklch, var(--border) 80%, transparent);
+  border-radius: 3px;
+  padding: 1px 4px;
+}
+
+.mc-pred-winner {
   color: var(--accent);
-  font-weight: 600;
+  font-weight: 700;
 }
 
-.mc-pred .pred-prob {
+.mc-pred-score {
   color: var(--muted);
 }
 
-/* Correct/Wrong badge on complete series */
 .mc-badge {
   position: absolute;
-  top: 6px;
-  right: 6px;
-  font-size: 0.6rem;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-size: 0.52rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
-  padding: 2px 5px;
-  border-radius: 4px;
+  letter-spacing: 0;
 }
 
-.mc-badge.correct { background: rgba(63, 185, 80, 0.2); color: var(--correct); }
-.mc-badge.wrong   { background: rgba(248, 81, 73, 0.2); color: var(--wrong); }
+.mc-badge.correct {
+  background: color-mix(in oklch, var(--correct) 20%, transparent);
+  color: var(--correct);
+}
 
-/* ─── Mobile bracket list ─────────────────────────── */
+.mc-badge.wrong {
+  background: color-mix(in oklch, var(--wrong) 20%, transparent);
+  color: var(--wrong);
+}
+
+@keyframes mc-live-pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.25; transform: scale(0.65); }
+}
+
+/* ─── Mobile Bracket List ─────────────────────────── */
 
 .bracket-mobile { display: none; }
+
+.bracket-connector-line {
+  fill: none;
+  stroke: var(--border);
+  stroke-width: 1;
+}
 
 .bm-round-title {
   font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
@@ -808,6 +1143,15 @@ td.td-odds {
 }
 
 @media (max-width: 640px) {
-  .bracket-outer    { display: none; }
-  .bracket-mobile   { display: block; }
+  .bracket-outer  { display: none; }
+  .bracket-mobile { display: block; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

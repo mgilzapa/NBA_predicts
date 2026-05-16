@@ -1,7 +1,7 @@
 import json
 import os
 import requests
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 OUTPUT_PATH = os.path.join(BASE_DIR, "web", "odds.json")
@@ -38,6 +38,15 @@ def parse_bookmakers(api_game: dict) -> list:
 
 
 def fetch_and_save(api_key: str, output_path: str) -> dict:
+    # Load existing accumulated odds
+    existing_games = {}
+    if os.path.exists(output_path):
+        try:
+            with open(output_path, encoding="utf-8") as f:
+                existing_games = json.load(f).get("games", {})
+        except (json.JSONDecodeError, KeyError):
+            pass
+
     resp = requests.get(API_URL, params={
         "apiKey": api_key,
         "regions": "us",
@@ -46,21 +55,28 @@ def fetch_and_save(api_key: str, output_path: str) -> dict:
     }, timeout=15)
     resp.raise_for_status()
 
-    games = {}
+    new_games = {}
     for g in resp.json():
         commence = g.get("commence_time", "")
         date = commence[:10] if commence else ""
         key = make_key(date, g["home_team"], g["away_team"])
-        games[key] = {
+        new_games[key] = {
             "home_team": g["home_team"],
             "away_team": g["away_team"],
             "date": date,
             "bookmakers": parse_bookmakers(g),
         }
 
+    # Merge: new data overwrites same-day entries, old entries are kept
+    merged = {**existing_games, **new_games}
+
+    # Prune entries older than 14 days
+    cutoff = (datetime.now(timezone.utc) - timedelta(days=14)).strftime("%Y-%m-%d")
+    merged = {k: v for k, v in merged.items() if v.get("date", "") >= cutoff}
+
     payload = {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "games": games,
+        "games": merged,
     }
 
     parent = os.path.dirname(output_path)
@@ -73,6 +89,9 @@ def fetch_and_save(api_key: str, output_path: str) -> dict:
 
 
 if __name__ == "__main__":
-    api_key = os.environ["ODDS_API_KEY"]
+    api_key = os.environ.get("ODDS_API_KEY")
+    if not api_key:
+        print("WARNUNG: ODDS_API_KEY nicht gesetzt, Quoten werden nicht aktualisiert.")
+        exit(0)
     result = fetch_and_save(api_key, OUTPUT_PATH)
     print(f"OK: odds.json geschrieben ({len(result['games'])} Spiele)")

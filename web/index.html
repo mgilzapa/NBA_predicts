@@ -52,6 +52,33 @@
 
     <section id="tab-all" class="tab-content" role="tabpanel">
       <div class="all-header" id="all-header"></div>
+      <div class="filter-bar" id="filter-bar">
+        <select id="f-team" class="f-select">
+          <option value="">All Teams</option>
+        </select>
+        <div class="f-chips">
+          <button class="chip" data-chip="last7">Last 7d</button>
+          <button class="chip" data-chip="last30">Last 30d</button>
+          <button class="chip" data-chip="thisMonth">This Month</button>
+        </div>
+        <div class="f-date-range">
+          <input type="date" id="f-date-from" class="f-date">
+          <span class="f-date-sep">–</span>
+          <input type="date" id="f-date-to" class="f-date">
+        </div>
+        <select id="f-result" class="f-select">
+          <option value="">All Results</option>
+          <option value="correct">Correct</option>
+          <option value="wrong">Wrong</option>
+          <option value="pending">Pending</option>
+        </select>
+        <select id="f-season" class="f-select">
+          <option value="">All Games</option>
+          <option value="regular">Regular Season</option>
+          <option value="playoffs">Playoffs</option>
+        </select>
+        <button id="f-reset" class="f-reset" style="display:none">× Reset</button>
+      </div>
       <div class="table-wrapper">
         <table id="all-table">
           <thead>

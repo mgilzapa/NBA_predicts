@@ -1,7 +1,14 @@
 .venv/
 .venv/
-#data/
+data/
+output/
 __pycache__/
 *.pyc
 xgb_selected_features.json
 best_xgb_model.pkl
+.agents/
+.claude/
+.impeccable/
+skills-lock.json
+docs/
+PRODUCT.md

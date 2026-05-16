@@ -1,15 +1,31 @@
 {
-  "generated_at": "2026-05-15T12:00:00Z",
+  "generated_at": "2026-05-16T12:07:00Z",
   "games": {
     "2026-05-15|cleveland cavaliers|detroit pistons": {
       "home_team": "Cleveland Cavaliers",
       "away_team": "Detroit Pistons",
       "date": "2026-05-15",
       "bookmakers": [
-        { "name": "FanDuel",    "home": 1.72, "away": 2.15 },
-        { "name": "DraftKings", "home": 1.70, "away": 2.20 },
-        { "name": "BetMGM",     "home": 1.68, "away": 2.25 },
-        { "name": "Caesars",    "home": 1.65, "away": 2.30 }
+        {
+          "name": "FanDuel",
+          "home": 1.72,
+          "away": 2.15
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.7,
+          "away": 2.2
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.68,
+          "away": 2.25
+        },
+        {
+          "name": "Caesars",
+          "home": 1.65,
+          "away": 2.3
+        }
       ]
     },
     "2026-05-15|minnesota timberwolves|san antonio spurs": {
@@ -17,9 +33,110 @@
       "away_team": "San Antonio Spurs",
       "date": "2026-05-15",
       "bookmakers": [
-        { "name": "FanDuel",    "home": 2.80, "away": 1.45 },
-        { "name": "DraftKings", "home": 2.75, "away": 1.48 },
-        { "name": "BetMGM",     "home": 2.70, "away": 1.50 }
+        {
+          "name": "FanDuel",
+          "home": 2.8,
+          "away": 1.45
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.75,
+          "away": 1.48
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.7,
+          "away": 1.5
+        }
+      ]
+    },
+    "2026-05-18|detroit pistons|cleveland cavaliers": {
+      "home_team": "Detroit Pistons",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-05-18",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.56,
+          "away": 2.5
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.56,
+          "away": 2.5
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.54,
+          "away": 2.62
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.54,
+          "away": 2.61
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.53,
+          "away": 2.55
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.57,
+          "away": 2.35
+        },
+        {
+          "name": "Bovada",
+          "home": 1.51,
+          "away": 2.65
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.51,
+          "away": 2.59
+        }
+      ]
+    },
+    "2026-05-19|oklahoma city thunder|san antonio spurs": {
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-05-19",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.42,
+          "away": 2.95
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.39,
+          "away": 3.1
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.4,
+          "away": 3.0
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.42,
+          "away": 2.91
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.38,
+          "away": 3.22
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.38,
+          "away": 3.19
+        },
+        {
+          "name": "Bovada",
+          "home": 1.38,
+          "away": 3.15
+        }
       ]
     }
   }

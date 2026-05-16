@@ -291,18 +291,37 @@ def _series_obj(home_team, away_team, home_wins, away_wins, status, winner,
 
 def _effective_winner(series_map, key, predict_fn):
     """
-    Return the team expected to advance from a series:
-    - If complete: the actual winner
-    - If active/upcoming: the prediction winner
-    - If not in series_map: None
+    Return the team expected to advance from a series.
+    If the series hasn't started yet (not in series_map), derive teams
+    recursively from the previous round and predict from there.
     """
     s = series_map.get(key)
-    if s is None:
+    if s is not None:
+        if s['status'] == 'complete':
+            return s['winner']
+        prob, _ = predict_fn(s['home_team'], s['away_team']) if predict_fn else (0.5, 6)
+        return s['home_team'] if prob >= 0.5 else s['away_team']
+
+    # Series not started yet — derive teams from previous round recursively
+    rnd, matchup = key
+    if rnd == 2:
+        r1a, r1b = R1_TO_R2[matchup]
+        home = _effective_winner(series_map, (1, r1a), predict_fn)
+        away = _effective_winner(series_map, (1, r1b), predict_fn)
+    elif rnd == 3:
+        r2a, r2b = R2_TO_R3[matchup]
+        home = _effective_winner(series_map, (2, r2a), predict_fn)
+        away = _effective_winner(series_map, (2, r2b), predict_fn)
+    elif rnd == 4:
+        home = _effective_winner(series_map, (3, 0), predict_fn)
+        away = _effective_winner(series_map, (3, 1), predict_fn)
+    else:
         return None
-    if s['status'] == 'complete':
-        return s['winner']
-    prob, _ = predict_fn(s['home_team'], s['away_team']) if predict_fn else (0.5, 6)
-    return s['home_team'] if prob >= 0.5 else s['away_team']
+
+    if home and away and predict_fn:
+        prob, _ = predict_fn(home, away)
+        return home if prob >= 0.5 else away
+    return home
 
 
 def build_bracket_json(series_map, predict_fn=None):
