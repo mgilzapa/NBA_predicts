@@ -33,24 +33,24 @@
   </header>
 
   <nav class="tab-bar" role="tablist">
-    <button class="tab active" data-tab="today" role="tab">Today</button>
-    <button class="tab" data-tab="yesterday" role="tab">Yesterday</button>
-    <button class="tab" data-tab="all" role="tab">All Predictions</button>
-    <button class="tab" data-tab="bracket" role="tab">Bracket</button>
+    <button class="tab active" data-tab="today" role="tab" id="tab-btn-today" aria-selected="true" aria-controls="tab-today">Today</button>
+    <button class="tab" data-tab="yesterday" role="tab" id="tab-btn-yesterday" aria-selected="false" aria-controls="tab-yesterday">Yesterday</button>
+    <button class="tab" data-tab="all" role="tab" id="tab-btn-all" aria-selected="false" aria-controls="tab-all">All Predictions</button>
+    <button class="tab" data-tab="bracket" role="tab" id="tab-btn-bracket" aria-selected="false" aria-controls="tab-bracket">Bracket</button>
   </nav>
 
   <main>
-    <section id="tab-today" class="tab-content active" role="tabpanel">
+    <section id="tab-today" class="tab-content active" role="tabpanel" aria-labelledby="tab-btn-today">
       <div class="section-header" id="today-header"></div>
       <div class="cards-grid" id="today-cards"></div>
     </section>
 
-    <section id="tab-yesterday" class="tab-content" role="tabpanel">
+    <section id="tab-yesterday" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-yesterday">
       <div class="section-header" id="yesterday-header"></div>
       <div class="cards-grid" id="yesterday-cards"></div>
     </section>
 
-    <section id="tab-all" class="tab-content" role="tabpanel">
+    <section id="tab-all" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-all">
       <div class="all-header" id="all-header"></div>
       <div class="filter-bar" id="filter-bar">
         <select id="f-team" class="f-select">
@@ -97,7 +97,7 @@
       </div>
     </section>
 
-    <section id="tab-bracket" class="tab-content" role="tabpanel">
+    <section id="tab-bracket" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-bracket">
       <div class="bracket-header" id="bracket-header"></div>
       <div class="bracket-outer" id="bracket-outer">
         <div class="bracket-container" id="bracket-container">

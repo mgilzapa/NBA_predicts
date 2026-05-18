@@ -1,6 +1,7 @@
 import joblib
 import os
 
+import numpy as np
 import pandas as pd
 from xgboost import XGBClassifier
 from injury_reports import INJURY_OUTPUT, build_player_importance_snapshot, compute_injury_features
@@ -303,6 +304,19 @@ future["same_division"] = (
 ).astype(int)
 future["is_playoff"] = 1
 
+# Streak-Differenz (home_current_streak / away_current_streak kommen aus latest_team_snapshot)
+if {"home_current_streak", "away_current_streak"}.issubset(future.columns):
+    future["streak_diff"] = future["home_current_streak"] - future["away_current_streak"]
+
+# Saisonfortschritt (0 = Okt-Beginn, 1 = Jun-Ende)
+def _season_progress(date):
+    year = date.year if date.month >= 10 else date.year - 1
+    start = pd.Timestamp(f"{year}-10-01")
+    return float(np.clip((date - start).days / 270, 0.0, 1.0))
+
+if "season_progress" in feature_cols:
+    future["season_progress"] = future["gameDateTimeEst"].apply(_season_progress)
+
 if os.path.exists(INJURY_OUTPUT):
     try:
         injuries = pd.read_csv(INJURY_OUTPUT)
@@ -423,8 +437,28 @@ if future_valid.empty:
     print("WARNUNG: Keine Spiele mit vollständigen Features – Vorhersage übersprungen.")
 else:
     X_future = future_valid[feature_cols].values
-    future_valid["prediction"] = model.predict(X_future)
-    future_valid["probability_home_win"] = model.predict_proba(X_future)[:, 1]
+    try:
+        future_valid["prediction"] = model.predict(X_future)
+        raw_probs = model.predict_proba(X_future)[:, 1]
+    except Exception as model_err:
+        print(
+            f"WARNUNG: Modell konnte nicht verwendet werden ({model_err}).\n"
+            "Bitte 'python src/agents/auto_retrainer.py --force' ausfuehren."
+        )
+        future_valid["prediction"] = 1
+        raw_probs = np.full(len(future_valid), 0.5)
+
+    calib_path = os.path.join(BASE_DIR, "models", "calibration_model.pkl")
+    if os.path.exists(calib_path):
+        try:
+            calibrator = joblib.load(calib_path)
+            raw_probs = np.clip(
+                calibrator.predict(raw_probs.reshape(-1, 1)), 0.01, 0.99
+            )
+        except Exception as _calib_err:
+            print(f"Kalibrierung übersprungen: {_calib_err}")
+
+    future_valid["probability_home_win"] = raw_probs
     future_valid["predicted_winner"] = future_valid.apply(
         lambda row: row["hometeamName"] if row["prediction"] == 1 else row["awayteamName"],
         axis=1

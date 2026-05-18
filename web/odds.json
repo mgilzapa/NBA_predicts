@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T12:07:00Z",
+  "generated_at": "2026-05-17T18:03:32Z",
   "games": {
     "2026-05-15|cleveland cavaliers|detroit pistons": {
       "home_team": "Cleveland Cavaliers",
@@ -57,43 +57,48 @@
       "bookmakers": [
         {
           "name": "DraftKings",
-          "home": 1.56,
-          "away": 2.5
+          "home": 1.54,
+          "away": 2.54
         },
         {
           "name": "FanDuel",
-          "home": 1.56,
-          "away": 2.5
+          "home": 1.54,
+          "away": 2.54
         },
         {
           "name": "LowVig.ag",
-          "home": 1.54,
-          "away": 2.62
+          "home": 1.53,
+          "away": 2.66
         },
         {
           "name": "BetOnline.ag",
-          "home": 1.54,
-          "away": 2.61
-        },
-        {
-          "name": "BetMGM",
           "home": 1.53,
-          "away": 2.55
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.57,
-          "away": 2.35
-        },
-        {
-          "name": "Bovada",
-          "home": 1.51,
           "away": 2.65
         },
         {
+          "name": "BetMGM",
+          "home": 1.5,
+          "away": 2.65
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.53,
+          "away": 2.5
+        },
+        {
+          "name": "Bovada",
+          "home": 1.56,
+          "away": 2.55
+        },
+        {
           "name": "MyBookie.ag",
-          "home": 1.51,
-          "away": 2.59
+          "home": 1.52,
+          "away": 2.54
+        },
+        {
+          "name": "BetUS",
+          "home": 1.53,
+          "away": 2.63
         }
       ]
     },
@@ -104,38 +109,43 @@
       "bookmakers": [
         {
           "name": "DraftKings",
-          "home": 1.42,
-          "away": 2.95
+          "home": 1.38,
+          "away": 3.15
         },
         {
           "name": "FanDuel",
-          "home": 1.39,
-          "away": 3.1
+          "home": 1.42,
+          "away": 2.98
         },
         {
           "name": "BetRivers",
-          "home": 1.4,
-          "away": 3.0
+          "home": 1.38,
+          "away": 3.05
         },
         {
           "name": "MyBookie.ag",
-          "home": 1.42,
-          "away": 2.91
+          "home": 1.37,
+          "away": 3.12
         },
         {
           "name": "LowVig.ag",
-          "home": 1.38,
-          "away": 3.22
+          "home": 1.4,
+          "away": 3.1
         },
         {
           "name": "BetOnline.ag",
-          "home": 1.38,
-          "away": 3.19
+          "home": 1.4,
+          "away": 3.07
         },
         {
           "name": "Bovada",
-          "home": 1.38,
-          "away": 3.15
+          "home": 1.43,
+          "away": 2.95
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.4,
+          "away": 3.0
         }
       ]
     }

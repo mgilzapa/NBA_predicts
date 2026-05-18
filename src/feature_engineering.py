@@ -124,6 +124,27 @@ for w, col in [(5, "last5_winrate"), (3, "last3_winrate"), (10, "last10_winrate"
 # Trend: verbessert oder verschlechtert sich das Team gerade?
 team_history["winrate_trend"] = team_history["last3_winrate"] - team_history["last10_winrate"]
 
+# Laufende Serie vor jedem Spiel (kein Leakage):
+# positiv = Siegesserie, negativ = Niederlagenserie
+def _streak_before(wins_series):
+    wins = wins_series.values
+    out = np.zeros(len(wins), dtype=int)
+    cur = 0
+    for i, w in enumerate(wins):
+        out[i] = cur
+        if np.isnan(float(w)):
+            cur = 0
+        elif w == 1:
+            cur = cur + 1 if cur >= 0 else 1
+        else:
+            cur = cur - 1 if cur <= 0 else -1
+    return pd.Series(out, index=wins_series.index)
+
+team_history["current_streak"] = (
+    team_history.groupby("team")["win"]
+    .transform(_streak_before)
+)
+
 # ─────────────────────────────────────────────────────────────
 # FEATURE 2: Punkte (letzte 5, min_periods=3)
 # ─────────────────────────────────────────────────────────────
@@ -505,6 +526,7 @@ history_features = [
     "home_winrate", "away_winrate",
     "last_game_close",
     "games_last7", "consecutive_away",
+    "current_streak",
 ]
 
 def merge_history(df, side):
@@ -529,6 +551,8 @@ df["average_points_diff"]           = df["home_last5_avg_points"]        - df["a
 df["average_points_allowed_diff"]   = df["home_last5_avg_points_allowed"]- df["away_last5_avg_points_allowed"]
 df["rest_days_diff"]                = df["home_rest_days"]               - df["away_rest_days"]
 df["h2h_winrate_diff"]              = df["home_h2h_winrate"]             - df["away_h2h_winrate"]
+if "home_current_streak" in df.columns and "away_current_streak" in df.columns:
+    df["streak_diff"] = df["home_current_streak"] - df["away_current_streak"]
 
 # ─────────────────────────────────────────────────────────────
 # FEATURE: Offensive/Defensive Rating & Net Rating
@@ -549,6 +573,16 @@ if "home_last5_min" in df.columns and "away_last5_min" in df.columns:
     df["net_rating_diff"] = df["home_net_rating"] - df["away_net_rating"]
     df["off_rating_diff"] = df["home_off_rating"] - df["away_off_rating"]
     df["def_rating_diff"] = df["home_def_rating"] - df["away_def_rating"]
+
+# ─────────────────────────────────────────────────────────────
+# FEATURE: Season Progress  (0 = Saisonbeginn, 1 = Saisonende)
+# ─────────────────────────────────────────────────────────────
+def _season_progress(date):
+    year = date.year if date.month >= 10 else date.year - 1
+    start = pd.Timestamp(f"{year}-10-01")
+    return float(np.clip((date - start).days / 270, 0.0, 1.0))
+
+df["season_progress"] = df["gameDateTimeEst"].apply(_season_progress)
 
 # ─────────────────────────────────────────────────────────────
 # HOME WIN LABEL
@@ -578,6 +612,8 @@ feature_cols = [
     "home_off_rating", "away_off_rating", "off_rating_diff",
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
+    "home_current_streak", "away_current_streak", "streak_diff",
+    "season_progress",
 ]
 
 # Player-Features dynamisch anhängen falls vorhanden
@@ -598,9 +634,13 @@ for col in player_feature_cols + playoff_exp_cols:
 
 # NEU: Injury-Features
 injury_cols = ["home_injury_impact", "away_injury_impact", "injury_impact_diff"]
+for col in injury_cols:
+    if col in df.columns:
+        feature_cols.append(col)
 
-# Deduplizieren
+# Deduplizieren und auf tatsächlich vorhandene Spalten beschränken
 feature_cols = list(dict.fromkeys(feature_cols))
+feature_cols = [c for c in feature_cols if c in df.columns]
 
 df_model = df.dropna(subset=feature_cols + ["home_win"]).copy()
 

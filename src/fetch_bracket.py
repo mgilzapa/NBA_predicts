@@ -245,12 +245,15 @@ def predict_series(home_team, away_team, home_snap, away_snap, model, feature_co
     """
     # p1: P(series home team wins) when they host (games 1,2,5,7)
     row_home_hosts = build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols)
-    p1 = float(model.predict_proba(row_home_hosts.reshape(1, -1))[0, 1])
-
     # p2: P(series home team wins) when away team hosts (games 3,4,6)
     row_away_hosts = build_feature_row(away_team, home_team, home_snap, away_snap, feature_cols)
-    p_away_wins_away_game = float(model.predict_proba(row_away_hosts.reshape(1, -1))[0, 1])
-    p2 = 1.0 - p_away_wins_away_game
+    try:
+        p1 = float(model.predict_proba(row_home_hosts.reshape(1, -1))[0, 1])
+        p_away_wins_away_game = float(model.predict_proba(row_away_hosts.reshape(1, -1))[0, 1])
+        p2 = 1.0 - p_away_wins_away_game
+    except Exception as e:
+        print(f"  WARNUNG: Modell-Vorhersage fehlgeschlagen ({e}) - verwende 0.5 als Fallback")
+        return 0.5, 6
 
     return simulate_series(0, 0, p1, p2)
 

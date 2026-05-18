@@ -31,13 +31,17 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
     Liest die Gewinner aus nba_api_games.csv und trägt sie in all_predictions.xlsx ein.
     """
     if not os.path.exists(nba_games_file):
-        print(f"❌ {nba_games_file} nicht gefunden.")
+        print(f"FEHLER: {nba_games_file} nicht gefunden.")
+        return
+
+    if not os.path.exists(target_file):
+        print(f"INFO: {target_file} nicht gefunden - ueberspringe Actual-Winner-Update.")
         return
 
     # all_predictions laden
     df_pred = pd.read_excel(target_file)
     if 'gameId' not in df_pred.columns:
-        print("❌ Keine Spalte 'gameId' in all_predictions.")
+        print("FEHLER: Keine Spalte 'gameId' in all_predictions.")
         return
 
     # nba_api_games laden
@@ -176,8 +180,6 @@ def update_nba_games(csv_path="data/nba_api_games.csv"):
 
 if __name__ == "__main__":
     update_nba_games("data/nba_api_games.csv")
-    df = pd.read_csv("data/model_data.csv")
-    df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
     base_dir = os.path.dirname(os.path.dirname(__file__))
     target_file = os.path.join(base_dir, "output", "all_predictions.xlsx")
     nba_games_file = os.path.join(base_dir, "data", "nba_api_games.csv")

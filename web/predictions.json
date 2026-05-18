@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T07:57:15",
+  "generated_at": "2026-05-17T15:39:01",
   "today": [
     {
       "gameId": "42500207",
@@ -8,40 +8,29 @@
       "home_team": "Detroit Pistons",
       "away_team": "Cleveland Cavaliers",
       "predicted_winner": "Detroit Pistons",
-      "probability_home_win": 0.5882,
-      "home_elo": 1630.2,
-      "away_elo": 1627.6
+      "probability_home_win": 0.6376,
+      "home_elo": 1629.4,
+      "away_elo": 1626.1,
+      "bet_value": -0.0053,
+      "best_odds": 1.56,
+      "best_bookmaker": "Bovada"
     }
   ],
-  "yesterday": [
-    {
-      "gameId": "42500236",
-      "date": "2026-05-15",
-      "time": "21:30",
-      "home_team": "Minnesota Timberwolves",
-      "away_team": "San Antonio Spurs",
-      "predicted_winner": "San Antonio Spurs",
-      "probability_home_win": 0.1616,
-      "home_elo": 1594.2,
-      "away_elo": 1712.7,
-      "actual_winner": "San Antonio Spurs",
-      "correct": true
-    },
-    {
-      "gameId": "42500206",
-      "date": "2026-05-15",
-      "time": "19:00",
-      "home_team": "Cleveland Cavaliers",
-      "away_team": "Detroit Pistons",
-      "predicted_winner": "Cleveland Cavaliers",
-      "probability_home_win": 0.5474,
-      "home_elo": 1627.6,
-      "away_elo": 1630.2,
-      "actual_winner": "Detroit Pistons",
-      "correct": false
-    }
-  ],
+  "yesterday": [],
   "all": [
+    {
+      "gameId": "42500207",
+      "date": "2026-05-17",
+      "time": "20:00",
+      "home_team": "Detroit Pistons",
+      "away_team": "Cleveland Cavaliers",
+      "predicted_winner": "Detroit Pistons",
+      "probability_home_win": 0.6667,
+      "home_elo": 1629.4,
+      "away_elo": 1626.1,
+      "actual_winner": null,
+      "correct": null
+    },
     {
       "gameId": "42500236",
       "date": "2026-05-15",

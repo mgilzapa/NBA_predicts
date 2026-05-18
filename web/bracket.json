@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-16T08:24:08",
+  "generated_at": "2026-05-17T14:03:41",
   "season": "2025-26",
   "east": {
     "r1": [
@@ -12,7 +12,7 @@
         "winner": "Detroit Pistons",
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.5075,
+          "win_probability": 0.7864,
           "predicted_length": 6
         }
       },
@@ -25,8 +25,8 @@
         "winner": "Philadelphia 76ers",
         "prediction": {
           "winner": "Boston Celtics",
-          "win_probability": 0.731,
-          "predicted_length": 6
+          "win_probability": 0.8511,
+          "predicted_length": 5
         }
       },
       {
@@ -38,7 +38,7 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.7504,
+          "win_probability": 0.758,
           "predicted_length": 6
         }
       },
@@ -51,7 +51,7 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Cleveland Cavaliers",
-          "win_probability": 0.6037,
+          "win_probability": 0.6935,
           "predicted_length": 6
         }
       }
@@ -66,7 +66,7 @@
         "winner": null,
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.6535,
+          "win_probability": 0.5932,
           "predicted_length": 6
         }
       },
@@ -79,7 +79,7 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.9622,
+          "win_probability": 0.8905,
           "predicted_length": 5
         }
       }
@@ -94,8 +94,8 @@
         "winner": null,
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.9587,
-          "predicted_length": 5
+          "win_probability": 0.6946,
+          "predicted_length": 6
         }
       }
     ],
@@ -112,8 +112,8 @@
         "winner": "Oklahoma City Thunder",
         "prediction": {
           "winner": "Oklahoma City Thunder",
-          "win_probability": 0.7048,
-          "predicted_length": 6
+          "win_probability": 0.9609,
+          "predicted_length": 5
         }
       },
       {
@@ -125,7 +125,7 @@
         "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.933,
+          "win_probability": 0.9698,
           "predicted_length": 5
         }
       },
@@ -138,7 +138,7 @@
         "winner": "Minnesota Timberwolves",
         "prediction": {
           "winner": "Denver Nuggets",
-          "win_probability": 0.7501,
+          "win_probability": 0.6237,
           "predicted_length": 6
         }
       },
@@ -150,8 +150,8 @@
         "status": "complete",
         "winner": "Los Angeles Lakers",
         "prediction": {
-          "winner": "Houston Rockets",
-          "win_probability": 0.6296,
+          "winner": "Los Angeles Lakers",
+          "win_probability": 0.6106,
           "predicted_length": 6
         }
       }
@@ -166,7 +166,7 @@
         "winner": "Oklahoma City Thunder",
         "prediction": {
           "winner": "Oklahoma City Thunder",
-          "win_probability": 0.841,
+          "win_probability": 0.9041,
           "predicted_length": 5
         }
       },
@@ -174,12 +174,12 @@
         "home_team": "San Antonio Spurs",
         "away_team": "Minnesota Timberwolves",
         "home_wins": 4,
-        "away_wins": 1,
+        "away_wins": 2,
         "status": "complete",
         "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.9765,
+          "win_probability": 0.8941,
           "predicted_length": 5
         }
       }
@@ -193,25 +193,25 @@
         "status": "upcoming",
         "winner": null,
         "prediction": {
-          "winner": "San Antonio Spurs",
-          "win_probability": 0.5054,
+          "winner": "Oklahoma City Thunder",
+          "win_probability": 0.7497,
           "predicted_length": 6
         }
       }
     ],
-    "finalist": "San Antonio Spurs"
+    "finalist": "Oklahoma City Thunder"
   },
   "finals": {
     "home_team": "New York Knicks",
-    "away_team": "San Antonio Spurs",
+    "away_team": "Oklahoma City Thunder",
     "home_wins": 0,
     "away_wins": 0,
     "status": "upcoming",
     "winner": null,
     "prediction": {
-      "winner": "San Antonio Spurs",
-      "win_probability": 0.7194,
-      "predicted_length": 6
+      "winner": "Oklahoma City Thunder",
+      "win_probability": 0.8802,
+      "predicted_length": 5
     }
   }
 }

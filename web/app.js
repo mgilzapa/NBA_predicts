@@ -44,10 +44,14 @@ document.querySelectorAll('.tab').forEach(btn => {
   btn.addEventListener('click', () => {
     const target = btn.dataset.tab;
 
-    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab').forEach(t => {
+      t.classList.remove('active');
+      t.setAttribute('aria-selected', 'false');
+    });
     document.querySelectorAll('.tab-content').forEach(s => s.classList.remove('active'));
 
     btn.classList.add('active');
+    btn.setAttribute('aria-selected', 'true');
     const panel = document.getElementById('tab-' + target);
     panel.classList.add('active');
 
@@ -103,6 +107,11 @@ function showGlobalError(msg) {
     document.getElementById(id).innerHTML =
       `<div class="error-msg">Failed to load predictions.json — ${msg}</div>`;
   });
+  const tbody = document.getElementById('all-tbody');
+  if (tbody) {
+    tbody.innerHTML =
+      `<tr><td colspan="7" style="text-align:center;color:var(--muted);padding:48px">Failed to load predictions.json — ${msg}</td></tr>`;
+  }
 }
 
 // ─── Render ────────────────────────────────────────────────────────
@@ -313,6 +322,9 @@ function renderToday(games) {
     `<span class="game-count">${count} Game${count !== 1 ? 's' : ''}</span>`;
 
   grid.innerHTML = games.map(g => buildCard(g, false, matchOdds(g))).join('');
+  grid.querySelectorAll('.game-card').forEach((card, i) => {
+    card.style.animation = `cardReveal 260ms cubic-bezier(0.22,1,0.36,1) ${i * 50}ms both`;
+  });
   animateBars(grid);
 }
 
@@ -336,6 +348,9 @@ function renderYesterday(games) {
     `<span class="accuracy-pill">${correct}/${count} correct</span>`;
 
   grid.innerHTML = games.map(g => buildCard(g, true, matchOdds(g))).join('');
+  grid.querySelectorAll('.game-card').forEach((card, i) => {
+    card.style.animation = `cardReveal 260ms cubic-bezier(0.22,1,0.36,1) ${i * 50}ms both`;
+  });
   animateBars(grid);
 }
 
@@ -424,6 +439,21 @@ function buildCard(g, showResult, oddsEntry = null) {
     actualInfo = `<div class="actual-info">Actual winner: <strong>${esc(g.actual_winner)}</strong></div>`;
   }
 
+  // Bet value (only for upcoming games that have odds)
+  let betHtml = '';
+  if (g.bet_value !== null && g.bet_value !== undefined) {
+    const evPct  = (g.bet_value * 100).toFixed(1);
+    const isPos  = g.bet_value >= 0;
+    const sign   = isPos ? '+' : '';
+    const oddsStr = g.best_odds
+      ? ` · ${g.best_odds.toFixed(2)}${g.best_bookmaker ? ' <span class="bet-bm">' + esc(g.best_bookmaker) + '</span>' : ''}`
+      : '';
+    betHtml = `<div class="bet-row ${isPos ? 'bet-value' : 'bet-no-value'}">
+      <span class="bet-label"><span aria-hidden="true">${isPos ? '▲' : '▼'}</span> ${isPos ? 'VALUE BET' : 'NO VALUE'}</span>
+      <span class="bet-ev">${sign}${evPct}% EV${oddsStr}</span>
+    </div>`;
+  }
+
   return `
 <div class="game-card" data-home="${homeProb}" data-away="${awayProb}">
   ${badge}
@@ -456,6 +486,7 @@ function buildCard(g, showResult, oddsEntry = null) {
     <span>${esc(awayElo)}</span>
     <span>${esc(homeElo)}</span>
   </div>
+  ${betHtml}
   ${actualInfo}
   ${buildOddsSection(oddsEntry, g)}
 </div>`;
