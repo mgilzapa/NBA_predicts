@@ -1,7 +1,7 @@
 .venv/
 .venv/
 #data/
-output/
+#output/
 __pycache__/
 *.pyc
 xgb_selected_features.json

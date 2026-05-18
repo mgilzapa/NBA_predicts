@@ -1,0 +1,20 @@
+{
+  "generated_at": "2026-05-17T14:04:42",
+  "expected_features": 43,
+  "effective_features": 37,
+  "available_columns": 57,
+  "missing_from_data": [],
+  "potential_new_features": [
+    "home_elo_games_played",
+    "away_elo_games_played",
+    "home_division",
+    "away_division",
+    "home_last10_winrate",
+    "away_last10_winrate"
+  ],
+  "issues": [],
+  "warnings": [
+    "6 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_last10_winrate', 'away_last10_winrate']"
+  ],
+  "passed": true
+}

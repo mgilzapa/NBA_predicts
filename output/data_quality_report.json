@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-05-17T14:03:17",
+  "total_rows": 12785,
+  "features_checked": 43,
+  "latest_game_date": "2026-05-15",
+  "issues": [],
+  "warnings": [
+    "'home_h2h_winrate': 83.1% null",
+    "'away_h2h_winrate': 83.1% null",
+    "'h2h_winrate_diff': 83.1% null"
+  ],
+  "passed": true
+}
