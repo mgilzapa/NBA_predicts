@@ -16,8 +16,8 @@ EXCLUDE_COLS = [
     "home_off_rating", "away_off_rating", "off_rating_diff",
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
-    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
-    "same_division", "is_playoff", "away_opponent_strength",
+    "same_division", "away_opponent_strength",
+    "injury_impact_diff",
 ]
 
 # Column prefixes that indicate a feature-like column in model_data.csv
@@ -74,7 +74,7 @@ def detect():
         issues.append("models/best_xgb_model.pkl nicht gefunden — Modell muss neu trainiert werden")
 
     # ── 6. Modell erwartet gleiche Anzahl Features wie feature_cols.csv (minus EXCLUDE_COLS) ───
-    effective_features = [c for c in expected if c not in EXCLUDE_COLS]
+    effective_features = [c for c in expected if c not in EXCLUDE_COLS and c in available]
     if os.path.exists(MODEL_PKL) and not missing:
         try:
             import joblib
