@@ -248,11 +248,11 @@ team_history["season"] = team_history["date"].apply(
 current_season = team_history["season"].max()
 
 h2h = (
-    team_history[team_history["season"] >= current_season - 1]
-    .groupby(["team", "opponent"], group_keys=False)["win"]
-    .apply(lambda x: x.shift(1).expanding().mean())
+    team_history
+    .groupby(["team", "opponent", "season"], group_keys=False)["win"]
+    .apply(lambda x: x.shift(1).expanding().mean(), include_groups=False)
 )
-team_history["h2h_winrate"] = h2h
+team_history["h2h_winrate"] = h2h.fillna(0.5)
 
 # ─────────────────────────────────────────────────────────────
 # FEATURE 7: Enges Spiel (close game) statt falschem OT-Indikator
