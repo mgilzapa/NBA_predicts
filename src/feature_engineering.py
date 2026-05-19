@@ -7,12 +7,15 @@ from xgboost import XGBClassifier
 base_dir = os.path.dirname(os.path.dirname(__file__))
 PLAYER_BOX = os.path.join(base_dir, "data", "player_boxscores.csv")
 base_games_path = os.path.join(base_dir, "data", "base_games.csv")
+nba_api_path    = os.path.join(base_dir, "data", "nba_api_games.csv")
 
 df = pd.read_csv(base_games_path)
 df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
-df["is_playoff"] = df.get("gameSubtype", pd.Series("", index=df.index)).str.contains(
-    "Playoff|playoff|First Round|Conference", na=False
-).astype(int)
+
+nba_api = pd.read_csv(nba_api_path, usecols=["GAME_ID", "season_type"])
+df = df.merge(nba_api.rename(columns={"GAME_ID": "gameId"}), on="gameId", how="left")
+df["is_playoff"] = (df["season_type"].fillna("") == "Playoffs").astype(int)
+df.drop(columns=["season_type"], inplace=True)
 
 # ─────────────────────────────────────────────────────────────
 # BASIS: Team-History (Heim + Auswärts zusammengeführt)
@@ -546,6 +549,7 @@ df = merge_history(df, "away")
 
 # Differenz-Features
 df["winrate_diff"]                  = df["home_last5_winrate"]           - df["away_last5_winrate"]
+df["last10_winrate_diff"]           = df["home_last10_winrate"]          - df["away_last10_winrate"]
 df["winrate_trend_diff"]            = df["home_winrate_trend"]           - df["away_winrate_trend"]
 df["average_points_diff"]           = df["home_last5_avg_points"]        - df["away_last5_avg_points"]
 df["average_points_allowed_diff"]   = df["home_last5_avg_points_allowed"]- df["away_last5_avg_points_allowed"]
@@ -594,6 +598,7 @@ df["home_win"] = (df["homeScore"] > df["awayScore"]).astype(int)
 # ─────────────────────────────────────────────────────────────
 feature_cols = [
     "home_last5_winrate", "away_last5_winrate", "winrate_diff",
+    "home_last10_winrate", "away_last10_winrate", "last10_winrate_diff",
     "home_last3_winrate", "away_last3_winrate",
     "home_winrate_trend", "away_winrate_trend", "winrate_trend_diff",
     "home_last5_avg_points", "away_last5_avg_points", "average_points_diff",
