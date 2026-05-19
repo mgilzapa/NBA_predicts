@@ -594,6 +594,51 @@ df["season_progress"] = df["gameDateTimeEst"].apply(_season_progress)
 df["home_win"] = (df["homeScore"] > df["awayScore"]).astype(int)
 
 # ─────────────────────────────────────────────────────────────
+# FEATURE: Series Record (Playoff only; Regular Season = 0)
+# ─────────────────────────────────────────────────────────────
+df["season"] = df["gameDateTimeEst"].apply(
+    lambda d: d.year if d.month >= 10 else d.year - 1
+)
+
+playoffs_sr = df[df["is_playoff"] == 1].copy()
+if not playoffs_sr.empty:
+    playoffs_sr = playoffs_sr.sort_values("gameDateTimeEst")
+    playoffs_sr["series_key"] = playoffs_sr.apply(
+        lambda r: str(sorted([r["hometeamName"], r["awayteamName"]])) + str(r["season"]),
+        axis=1,
+    )
+
+    def _compute_series_wins(group):
+        group = group.sort_values("gameDateTimeEst")
+        group["home_series_wins"] = (
+            group["home_win"].shift(1).expanding().sum().fillna(0).astype(int)
+        )
+        group["away_series_wins"] = (
+            (1 - group["home_win"]).shift(1).expanding().sum().fillna(0).astype(int)
+        )
+        return group
+
+    playoffs_sr = playoffs_sr.groupby("series_key", group_keys=False).apply(
+        _compute_series_wins, include_groups=False
+    )
+    playoffs_sr["series_wins_diff"] = playoffs_sr["home_series_wins"] - playoffs_sr["away_series_wins"]
+    playoffs_sr["is_elimination_game"] = (
+        (playoffs_sr["home_series_wins"] == 3) | (playoffs_sr["away_series_wins"] == 3)
+    ).astype(int)
+
+    df = df.merge(
+        playoffs_sr[["gameId", "home_series_wins", "away_series_wins",
+                     "series_wins_diff", "is_elimination_game"]],
+        on="gameId", how="left",
+    )
+else:
+    for _col in ["home_series_wins", "away_series_wins", "series_wins_diff", "is_elimination_game"]:
+        df[_col] = 0
+
+for _col in ["home_series_wins", "away_series_wins", "series_wins_diff", "is_elimination_game"]:
+    df[_col] = df[_col].fillna(0).astype(int)
+
+# ─────────────────────────────────────────────────────────────
 # ZEITBASIERTE CROSS-VALIDATION (Diagnose)
 # ─────────────────────────────────────────────────────────────
 feature_cols = [
@@ -619,6 +664,7 @@ feature_cols = [
     "home_net_rating", "away_net_rating", "net_rating_diff",
     "home_current_streak", "away_current_streak", "streak_diff",
     "season_progress",
+    "home_series_wins", "away_series_wins", "series_wins_diff", "is_elimination_game",
 ]
 
 # Player-Features dynamisch anhängen falls vorhanden
