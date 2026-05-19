@@ -48,12 +48,13 @@ exclude_cols = [
     "home_off_rating", "away_off_rating", "off_rating_diff",
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
-    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
-    "same_division", "is_playoff", "away_opponent_strength",
-    ]
+    "same_division", "away_opponent_strength",
+    "injury_impact_diff",
+]
 feature_cols = [c for c in feature_cols if c not in exclude_cols]
 derived_feature_dependencies = {
     "winrate_diff": ["home_last5_winrate", "away_last5_winrate"],
+    "last10_winrate_diff": ["home_last10_winrate", "away_last10_winrate"],
     "winrate_trend_diff": ["home_winrate_trend", "away_winrate_trend"],
     "average_points_diff": ["home_last5_avg_points", "away_last5_avg_points"],
     "average_points_allowed_diff": ["home_last5_avg_points_allowed", "away_last5_avg_points_allowed"],
@@ -70,6 +71,7 @@ derived_feature_dependencies = {
     "missing_top5_importance_diff": ["home_missing_top5_importance", "away_missing_top5_importance"],
     "top3_availability_diff": ["home_top3_availability_ratio", "away_top3_availability_ratio"],
     "top5_availability_diff": ["home_top5_availability_ratio", "away_top5_availability_ratio"],
+    "series_wins_diff": ["home_series_wins", "away_series_wins"],
 }
 
 support_feature_cols = feature_cols + [
@@ -247,6 +249,8 @@ future["away_elo"] = future["awayteamName"].map(latest_elo.set_index("team")["el
 future["elo_diff"] = future["home_elo"] - future["away_elo"]
 
 future["winrate_diff"] = future["home_last5_winrate"] - future["away_last5_winrate"]
+if {"home_last10_winrate", "away_last10_winrate"}.issubset(future.columns):
+    future["last10_winrate_diff"] = future["home_last10_winrate"] - future["away_last10_winrate"]
 if {"home_winrate_trend", "away_winrate_trend"}.issubset(future.columns):
     future["winrate_trend_diff"] = future["home_winrate_trend"] - future["away_winrate_trend"]
 future["average_points_diff"] = future["home_last5_avg_points"] - future["away_last5_avg_points"]
@@ -303,6 +307,47 @@ future["same_division"] = (
     future["hometeamName"].map(divisions) == future["awayteamName"].map(divisions)
 ).astype(int)
 future["is_playoff"] = 1
+
+# Series Record aus bracket.json (nur aktive Serien)
+import json as _json
+_bracket_path = os.path.join(BASE_DIR, "web", "bracket.json")
+if os.path.exists(_bracket_path):
+    with open(_bracket_path) as _f:
+        _bracket = _json.load(_f)
+
+    _series_map = {}
+    for _conf in ("east", "west"):
+        for _rnd_val in _bracket.get(_conf, {}).values():
+            if isinstance(_rnd_val, list):
+                for _sr in _rnd_val:
+                    if _sr.get("status") != "complete":
+                        _key = frozenset([_sr["home_team"], _sr["away_team"]])
+                        _series_map[_key] = {
+                            "home_team": _sr["home_team"],
+                            "home_wins": _sr.get("home_wins", 0),
+                            "away_wins": _sr.get("away_wins", 0),
+                        }
+
+    def _get_series_wins(row):
+        key = frozenset([row["hometeamName"], row["awayteamName"]])
+        if key not in _series_map:
+            return 0, 0
+        sr = _series_map[key]
+        if sr["home_team"] == row["hometeamName"]:
+            return sr["home_wins"], sr["away_wins"]
+        return sr["away_wins"], sr["home_wins"]
+
+    future[["home_series_wins", "away_series_wins"]] = future.apply(
+        lambda r: pd.Series(_get_series_wins(r)), axis=1
+    )
+else:
+    future["home_series_wins"] = 0
+    future["away_series_wins"] = 0
+
+future["series_wins_diff"] = future["home_series_wins"] - future["away_series_wins"]
+future["is_elimination_game"] = (
+    (future["home_series_wins"] == 3) | (future["away_series_wins"] == 3)
+).astype(int)
 
 # Streak-Differenz (home_current_streak / away_current_streak kommen aus latest_team_snapshot)
 if {"home_current_streak", "away_current_streak"}.issubset(future.columns):
