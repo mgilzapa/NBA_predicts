@@ -1,12 +1,12 @@
 {
   "retrained": true,
   "reason": "--force flag gesetzt",
-  "train_games": 12201,
-  "test_games": 262,
-  "feature_count": 37,
-  "train_accuracy": 0.7235,
-  "test_accuracy": 0.729,
-  "baseline_accuracy": 0.5954,
-  "vs_baseline": 0.1336,
-  "generated_at": "2026-05-17T14:04:01"
+  "train_games": 12215,
+  "test_games": 250,
+  "feature_count": 68,
+  "train_accuracy": 0.7133,
+  "test_accuracy": 0.708,
+  "baseline_accuracy": 0.596,
+  "vs_baseline": 0.112,
+  "generated_at": "2026-05-19T06:49:52"
 }

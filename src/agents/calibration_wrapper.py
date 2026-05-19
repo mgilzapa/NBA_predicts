@@ -28,8 +28,8 @@ EXCLUDE_COLS = [
     "home_off_rating", "away_off_rating", "off_rating_diff",
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
-    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
-    "same_division", "is_playoff", "away_opponent_strength",
+    "same_division", "away_opponent_strength",
+    "injury_impact_diff",
 ]
 
 
