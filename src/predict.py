@@ -328,6 +328,15 @@ if os.path.exists(_bracket_path):
                             "away_wins": _sr.get("away_wins", 0),
                         }
 
+    _finals = _bracket.get("finals")
+    if isinstance(_finals, dict) and _finals.get("status") != "complete":
+        _key = frozenset([_finals["home_team"], _finals["away_team"]])
+        _series_map[_key] = {
+            "home_team": _finals["home_team"],
+            "home_wins": _finals.get("home_wins", 0),
+            "away_wins": _finals.get("away_wins", 0),
+        }
+
     def _get_series_wins(row):
         key = frozenset([row["hometeamName"], row["awayteamName"]])
         if key not in _series_map:
