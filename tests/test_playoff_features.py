@@ -114,7 +114,7 @@ class TestSeriesRecord:
                 )
                 return group
 
-            playoffs = playoffs.groupby("series_key", group_keys=False).apply(compute_series_wins)
+            playoffs = playoffs.groupby("series_key", group_keys=False).apply(compute_series_wins, include_groups=False)
             playoffs["series_wins_diff"] = playoffs["home_series_wins"] - playoffs["away_series_wins"]
             playoffs["is_elimination_game"] = (
                 (playoffs["home_series_wins"] == 3) | (playoffs["away_series_wins"] == 3)
