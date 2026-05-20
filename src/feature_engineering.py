@@ -112,6 +112,12 @@ ELO_WARMUP = 20
 mask = (df["home_elo_games_played"] < ELO_WARMUP) | (df["away_elo_games_played"] < ELO_WARMUP)
 df.loc[mask, ["home_elo", "away_elo", "elo_diff"]] = np.nan
 
+# ELO-basierte Gewinnwahrscheinlichkeit mit Heimvorteil (+100 ELO ≈ 3-4 Punkte NBA-Heimvorteil)
+HCA = 100
+df["elo_expected_home_win"] = 1 / (
+    1 + 10 ** ((df["away_elo"] - df["home_elo"] - HCA) / 400)
+)
+
 # ─────────────────────────────────────────────────────────────
 # FEATURE 1: Letzte 5 / letzte 3 / letzte 10 Winrate + Trend
 # ─────────────────────────────────────────────────────────────
@@ -126,6 +132,14 @@ for w, col in [(5, "last5_winrate"), (3, "last3_winrate"), (10, "last10_winrate"
 
 # Trend: verbessert oder verschlechtert sich das Team gerade?
 team_history["winrate_trend"] = team_history["last3_winrate"] - team_history["last10_winrate"]
+
+# ─── Margin of Victory (kein Leakage: shift(1) via shifted_rolling) ──────────
+team_history["mov"] = team_history["points"] - team_history["points_allowed"]
+for w, col in [(5, "last5_mov"), (10, "last10_mov")]:
+    team_history[col] = (
+        team_history.groupby("team")["mov"]
+        .transform(lambda x, w=w: shifted_rolling(x, w).mean())
+    )
 
 # Laufende Serie vor jedem Spiel (kein Leakage):
 # positiv = Siegesserie, negativ = Niederlagenserie
@@ -374,29 +388,40 @@ if os.path.exists(PLAYER_BOX):
     # ── Team-Stats unified für Rolling ───────────────────────
     def build_team_stats(side):
         prefix = f"{side}_"
-        opp    = "away" if side == "home" else "home"
         name_col = f"{side}teamName"
-        s = df[["gameDateTimeEst", name_col,
-                 f"{prefix}points", f"{prefix}reboundsDefensive",
-                 f"{prefix}reboundsOffensive", f"{prefix}assists",
-                 f"{prefix}minutes", f"{prefix}player_count"]].copy()
-        s["rebounds"] = s[f"{prefix}reboundsDefensive"] + s[f"{prefix}reboundsOffensive"]
-        s.rename(columns={
-            name_col:              "team",
-            f"{prefix}points":     "PTS",
-            f"{prefix}assists":    "AST",
-            f"{prefix}minutes":    "MIN",
-            f"{prefix}player_count": "player_count",
-        }, inplace=True)
-        return s[["gameDateTimeEst", "team", "PTS", "rebounds", "AST", "MIN", "player_count"]]
+        needed = [
+            f"{prefix}points", f"{prefix}reboundsDefensive", f"{prefix}reboundsOffensive",
+            f"{prefix}assists", f"{prefix}steals", f"{prefix}blocks", f"{prefix}turnovers",
+            f"{prefix}minutes", f"{prefix}player_count",
+        ]
+        available = [c for c in needed if c in df.columns]
+        s = df[["gameDateTimeEst", name_col] + available].copy()
+        s["rebounds"] = (
+            s.get(f"{prefix}reboundsDefensive", 0) + s.get(f"{prefix}reboundsOffensive", 0)
+        )
+        rename_map = {
+            name_col:                  "team",
+            f"{prefix}points":         "PTS",
+            f"{prefix}assists":        "AST",
+            f"{prefix}steals":         "STL",
+            f"{prefix}blocks":         "BLK",
+            f"{prefix}turnovers":      "TOV",
+            f"{prefix}minutes":        "MIN",
+            f"{prefix}player_count":   "player_count",
+        }
+        s.rename(columns={k: v for k, v in rename_map.items() if k in s.columns}, inplace=True)
+        keep = ["gameDateTimeEst", "team", "PTS", "rebounds", "AST", "STL", "BLK", "TOV", "MIN", "player_count"]
+        return s[[c for c in keep if c in s.columns]]
 
     team_stats_all = (
         pd.concat([build_team_stats("home"), build_team_stats("away")], ignore_index=True)
         .sort_values(["team", "gameDateTimeEst"])
     )
 
-    metrics = ["PTS", "rebounds", "AST", "MIN", "player_count"]
+    metrics = ["PTS", "rebounds", "AST", "STL", "BLK", "TOV", "MIN", "player_count"]
     for m in metrics:
+        if m not in team_stats_all.columns:
+            continue
         team_stats_all[m] = pd.to_numeric(team_stats_all[m], errors="coerce").fillna(0)
         col = f"last5_{m.lower()}"
         team_stats_all[col] = (
@@ -404,7 +429,7 @@ if os.path.exists(PLAYER_BOX):
             .transform(lambda x: shifted_rolling(x, 5, 3).mean())
         )
 
-    last5_cols = [f"last5_{m.lower()}" for m in metrics]
+    last5_cols = [f"last5_{m.lower()}" for m in metrics if m in team_stats_all.columns]
 
     home_last5 = team_stats_all[["gameDateTimeEst", "team"] + last5_cols].rename(
         columns={"team": "hometeamName",
@@ -423,6 +448,12 @@ if os.path.exists(PLAYER_BOX):
     df["ast_diff_last5"]          = df["home_last5_ast"]           - df["away_last5_ast"]
     df["min_diff_last5"]          = df["home_last5_min"]           - df["away_last5_min"]
     df["player_count_diff_last5"] = df["home_last5_player_count"]  - df["away_last5_player_count"]
+    if "home_last5_stl" in df.columns and "away_last5_stl" in df.columns:
+        df["stl_diff_last5"] = df["home_last5_stl"] - df["away_last5_stl"]
+    if "home_last5_blk" in df.columns and "away_last5_blk" in df.columns:
+        df["blk_diff_last5"] = df["home_last5_blk"] - df["away_last5_blk"]
+    if "home_last5_tov" in df.columns and "away_last5_tov" in df.columns:
+        df["tov_diff_last5"] = df["home_last5_tov"] - df["away_last5_tov"]
 
     # ── Playoff Experience pro Team ───────────────────────────
     # Anzahl Playoff-Spiele pro Spieler (letzten 3 Saisons) → Teamdurchschnitt
@@ -530,6 +561,7 @@ history_features = [
     "last_game_close",
     "games_last7", "consecutive_away",
     "current_streak",
+    "last5_mov", "last10_mov",
 ]
 
 def merge_history(df, side):
@@ -557,6 +589,17 @@ df["rest_days_diff"]                = df["home_rest_days"]               - df["a
 df["h2h_winrate_diff"]              = df["home_h2h_winrate"]             - df["away_h2h_winrate"]
 if "home_current_streak" in df.columns and "away_current_streak" in df.columns:
     df["streak_diff"] = df["home_current_streak"] - df["away_current_streak"]
+
+# Margin-of-Victory Differenz
+if "home_last5_mov" in df.columns and "away_last5_mov" in df.columns:
+    df["mov_diff"] = df["home_last5_mov"] - df["away_last5_mov"]
+
+# Pace-adjusted Effizienz (Proxy: Punkte / Gesamtpunkte des Spiels)
+_home_pace = (df["home_last5_avg_points"] + df["home_last5_avg_points_allowed"]).replace(0, np.nan)
+_away_pace = (df["away_last5_avg_points"] + df["away_last5_avg_points_allowed"]).replace(0, np.nan)
+df["home_pts_per_pace"] = df["home_last5_avg_points"] / _home_pace
+df["away_pts_per_pace"] = df["away_last5_avg_points"] / _away_pace
+df["pts_per_pace_diff"] = df["home_pts_per_pace"] - df["away_pts_per_pace"]
 
 # ─────────────────────────────────────────────────────────────
 # FEATURE: Offensive/Defensive Rating & Net Rating
@@ -641,7 +684,14 @@ for _col in ["home_series_wins", "away_series_wins", "series_wins_diff", "is_eli
 # ─────────────────────────────────────────────────────────────
 # ZEITBASIERTE CROSS-VALIDATION (Diagnose)
 # ─────────────────────────────────────────────────────────────
+# Market probability from odds.json — NaN for all historical rows.
+# XGBoost learns a default branch direction for NaN; at prediction time
+# predict.py fills in the real no-vig market probability so the model
+# can exploit the full signal.
+df["market_prob_home_win"] = np.nan
+
 feature_cols = [
+    "market_prob_home_win",
     "home_last5_winrate", "away_last5_winrate", "winrate_diff",
     "home_last10_winrate", "away_last10_winrate", "last10_winrate_diff",
     "home_last3_winrate", "away_last3_winrate",
@@ -657,6 +707,7 @@ feature_cols = [
     "home_last_game_close", "away_last_game_close",
     "same_division", "is_playoff",
     "home_elo", "away_elo", "elo_diff",
+    "elo_expected_home_win",
     "home_consecutive_away", "away_consecutive_away",
     "home_games_last7", "away_games_last7",
     "home_off_rating", "away_off_rating", "off_rating_diff",
@@ -665,6 +716,9 @@ feature_cols = [
     "home_current_streak", "away_current_streak", "streak_diff",
     "season_progress",
     "home_series_wins", "away_series_wins", "series_wins_diff", "is_elimination_game",
+    "home_last5_mov", "away_last5_mov", "mov_diff",
+    "home_last10_mov", "away_last10_mov",
+    "home_pts_per_pace", "away_pts_per_pace", "pts_per_pace_diff",
 ]
 
 # Player-Features dynamisch anhängen falls vorhanden
@@ -672,9 +726,13 @@ player_feature_cols = [
     "home_last5_pts", "away_last5_pts",
     "home_last5_rebounds", "away_last5_rebounds",
     "home_last5_ast", "away_last5_ast",
+    "home_last5_stl", "away_last5_stl",
+    "home_last5_blk", "away_last5_blk",
+    "home_last5_tov", "away_last5_tov",
     "home_last5_min", "away_last5_min",
     "home_last5_player_count", "away_last5_player_count",
     "pts_diff_last5", "reb_diff_last5", "ast_diff_last5",
+    "stl_diff_last5", "blk_diff_last5", "tov_diff_last5",
     "min_diff_last5", "player_count_diff_last5",
 ]
 playoff_exp_cols = ["home_playoff_exp", "away_playoff_exp", "playoff_exp_diff"]
@@ -693,7 +751,21 @@ for col in injury_cols:
 feature_cols = list(dict.fromkeys(feature_cols))
 feature_cols = [c for c in feature_cols if c in df.columns]
 
-df_model = df.dropna(subset=feature_cols + ["home_win"]).copy()
+# Rating features and other excluded cols are ~90% null — don't let them gate row inclusion.
+# Training/prediction code filters these via EXCLUDE_COLS anyway.
+_EXCLUDE_FOR_DROPNA = {
+    "home_off_rating", "away_off_rating", "off_rating_diff",
+    "home_def_rating", "away_def_rating", "def_rating_diff",
+    "home_net_rating", "away_net_rating", "net_rating_diff",
+    "same_division", "away_opponent_strength",
+    "home_injury_impact", "away_injury_impact", "injury_impact_diff",
+    "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
+    "h2h_winrate_diff", "home_series_wins", "is_playoff",
+    # Always NaN in historical data — predict.py fills in live values
+    "market_prob_home_win",
+}
+feature_cols_for_filter = [c for c in feature_cols if c not in _EXCLUDE_FOR_DROPNA]
+df_model = df.dropna(subset=feature_cols_for_filter + ["home_win"]).copy()
 
 print(f"\nModel-Datensatz: {len(df_model)} Spiele, {len(feature_cols)} Features")
 

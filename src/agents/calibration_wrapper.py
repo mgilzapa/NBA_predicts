@@ -29,7 +29,12 @@ EXCLUDE_COLS = [
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
     "same_division", "away_opponent_strength",
-    "injury_impact_diff",
+    # Temporal leakage: injury data is today's snapshot applied to all historical rows
+    "home_injury_impact", "away_injury_impact", "injury_impact_diff",
+    # Temporal leakage: total playoff exp across all time merged statically to every row
+    "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
+    # Zero importance in trained model — dead weight
+    "h2h_winrate_diff", "home_series_wins", "is_playoff",
 ]
 
 
@@ -50,10 +55,12 @@ def calibrate():
     now = pd.Timestamp.now(tz="US/Eastern").tz_localize(None)
     calib_start = now - pd.Timedelta(days=CALIB_DAYS)
 
+    _DROPNA_EXCLUDE = {"market_prob_home_win"}
+    _dropna_cols = [c for c in feature_cols if c not in _DROPNA_EXCLUDE]
     df_calib = df[
         (df["gameDateTimeEst"] >= calib_start) &
         (df["gameDateTimeEst"] < now)
-    ].dropna(subset=feature_cols + ["home_win"]).copy()
+    ].dropna(subset=_dropna_cols + ["home_win"]).copy()
 
     if len(df_calib) < 30:
         print(f"WARNUNG: Nur {len(df_calib)} Kalibrierungsbeispiele — mindestens 30 benötigt.")

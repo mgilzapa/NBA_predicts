@@ -1,9 +1,13 @@
 gameId,gameDateTimeEst,homeTeamId,awayTeamId,homeTeamCity,homeTeamName,awayTeamCity,awayTeamName,gameDay,arenaName,arenaCity,arenaState,gameLabel,gameSubLabel,gameSubtype,seriesGameNumber,weekNumber
-0042500207,2026-05-17 20:00:00,1610612765,1610612739,Detroit,Pistons,Cleveland,Cavaliers,Sun,Little Caesars Arena,Detroit,MI,East Conf. Semifinals,Game 7,,Game 7,30
-0042500311,2026-05-18 20:30:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Mon,Paycom Center,Oklahoma City,OK,West Conf. Finals,Game 1,,Game 1,31
 0042500312,2026-05-20 20:30:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Wed,Paycom Center,Oklahoma City,OK,West Conf. Finals,Game 2,,Game 2,31
+0042500302,2026-05-21 20:00:00,1610612752,1610612739,New York,Knicks,Cleveland,Cavaliers,Thu,Madison Square Garden,New York,NY,East Conf. Finals,Game 2,,Game 2,31
 0042500313,2026-05-22 20:30:00,1610612759,1610612760,San Antonio,Spurs,Oklahoma City,Thunder,Fri,Frost Bank Center,San Antonio,TX,West Conf. Finals,Game 3,,Game 3,31
+0042500303,2026-05-23 20:00:00,1610612739,1610612752,Cleveland,Cavaliers,New York,Knicks,Sat,Rocket Arena,Cleveland,OH,East Conf. Finals,Game 3,,Game 3,31
 0042500314,2026-05-24 20:00:00,1610612759,1610612760,San Antonio,Spurs,Oklahoma City,Thunder,Sun,Frost Bank Center,San Antonio,TX,West Conf. Finals,Game 4,,Game 4,31
+0042500304,2026-05-25 20:00:00,1610612739,1610612752,Cleveland,Cavaliers,New York,Knicks,Mon,Rocket Arena,Cleveland,OH,East Conf. Finals,Game 4,,Game 4,32
 0042500315,2026-05-26 20:30:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Tue,Paycom Center,Oklahoma City,OK,West Conf. Finals,Game 5,,Game 5,32
+0042500305,2026-05-27 20:00:00,1610612752,1610612739,New York,Knicks,Cleveland,Cavaliers,Wed,Madison Square Garden,New York,NY,East Conf. Finals,Game 5,,Game 5,32
 0042500316,2026-05-28 20:30:00,1610612759,1610612760,San Antonio,Spurs,Oklahoma City,Thunder,Thu,Frost Bank Center,San Antonio,TX,West Conf. Finals,Game 6,,Game 6,32
+0042500306,2026-05-29 20:00:00,1610612739,1610612752,Cleveland,Cavaliers,New York,Knicks,Fri,Rocket Arena,Cleveland,OH,East Conf. Finals,Game 6,,Game 6,32
 0042500317,2026-05-30 20:00:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Sat,Paycom Center,Oklahoma City,OK,West Conf. Finals,Game 7,,Game 7,32
+0042500307,2026-05-31 20:00:00,1610612752,1610612739,New York,Knicks,Cleveland,Cavaliers,Sun,Madison Square Garden,New York,NY,East Conf. Finals,Game 7,,Game 7,32

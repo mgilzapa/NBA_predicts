@@ -44,7 +44,12 @@ EXCLUDE_COLS = [
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
     "same_division", "away_opponent_strength",
-    "injury_impact_diff",
+    # Temporal leakage: injury data is today's snapshot applied to all historical rows
+    "home_injury_impact", "away_injury_impact", "injury_impact_diff",
+    # Temporal leakage: total playoff exp across all time merged statically to every row
+    "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
+    # Zero importance in trained model — dead weight
+    "h2h_winrate_diff", "home_series_wins", "is_playoff",
 ]
 
 
@@ -128,12 +133,17 @@ def _load_data():
     now        = pd.Timestamp.now(tz="US/Eastern").tz_localize(None)
     test_start = now - pd.Timedelta(days=TEST_DAYS)
 
-    df_model = df.dropna(subset=feature_cols + ["home_win"]).copy()
+    _DROPNA_EXCLUDE = {"market_prob_home_win"}
+    _dropna_cols = [c for c in feature_cols if c not in _DROPNA_EXCLUDE]
+    df_model = df.dropna(subset=_dropna_cols + ["home_win"]).copy()
     if "home_elo_games_played" in df_model.columns:
         df_model = df_model[
             (df_model["home_elo_games_played"] > 20) &
             (df_model["away_elo_games_played"] > 20)
         ]
+    # Regular-season model only — playoff rows go to the separate playoff model
+    if "is_playoff" in df_model.columns:
+        df_model = df_model[df_model["is_playoff"] == 0]
 
     train = df_model[df_model["gameDateTimeEst"] < test_start].copy()
     test  = df_model[
@@ -160,12 +170,15 @@ def optimize(n_trials: int = 50):
     X_test  = test[feature_cols].values
     y_test  = test["home_win"].values
 
-    # Aktuelle Modell-Accuracy als Vergleichswert
+    # Aktuelle Modell-Accuracy als Vergleichswert (None wenn Feature-Shape geändert)
     current_acc = None
     if os.path.exists(MODEL_PKL):
         current_model = joblib.load(MODEL_PKL)
         if len(test) > 0:
-            current_acc = current_model.score(X_test, y_test)
+            try:
+                current_acc = current_model.score(X_test, y_test)
+            except ValueError:
+                pass  # feature count changed — treat as no prior baseline
 
     print(f"\n{'='*55}")
     print(f"  OPTUNA HYPERPARAMETER SEARCH")

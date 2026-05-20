@@ -1,13 +1,11 @@
 """odds_feature_injector.py
 
-Reads web/odds.json (market decimal odds) and output/predictions.xlsx,
-computes no-vig implied home-win probability per bookmaker, averages them,
-then blends with the model probability:
+Reads web/odds.json and output/predictions.xlsx, computes no-vig implied
+home-win probability per bookmaker, and writes it as an informational column
+(market_prob_home_win) to predictions_today — for display purposes only.
 
-    adjusted = ALPHA * model_prob + (1 - ALPHA) * market_prob
-
-Writes the adjusted probability back to predictions.xlsx (predictions_today sheet)
-so that export_json.py picks it up with calibrated values.
+The blend has been removed: probability_home_win is the model's direct output,
+which already incorporates market_prob_home_win as a trained feature via predict.py.
 
 Run order in pipeline: after fetch_odds.py, before export_json.py.
 """
@@ -20,10 +18,6 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__fil
 ODDS_JSON = os.path.join(BASE_DIR, "web", "odds.json")
 PREDICTIONS_XLSX = os.path.join(BASE_DIR, "output", "predictions.xlsx")
 
-# Weight of model probability vs. market probability (0.0 = pure market, 1.0 = pure model)
-ALPHA = 0.5
-
-# How many bookmakers must have odds for a game before we blend (avoid thin markets)
 MIN_BOOKMAKERS = 1
 
 
@@ -98,18 +92,8 @@ def inject():
         market_prob = odds_map.get((home, away))
         if market_prob is None:
             continue
-        model_prob = float(row["probability_home_win"])
-        blended = ALPHA * model_prob + (1 - ALPHA) * market_prob
-        df.at[idx, "probability_home_win"] = round(blended, 4)
+        # Write market prob as info column only — do NOT touch probability_home_win
         df.at[idx, "market_prob_home_win"] = round(market_prob, 4)
-
-        # Predicted winner neu bestimmen falls Blend die Mehrheit ändert
-        if "Predicted Winner" in df.columns:
-            if blended >= 0.5 and row.get("Home Team"):
-                df.at[idx, "Predicted Winner"] = row["Home Team"]
-            elif blended < 0.5 and row.get("Away Team"):
-                df.at[idx, "Predicted Winner"] = row["Away Team"]
-
         matched += 1
 
     if matched == 0:
@@ -126,8 +110,8 @@ def inject():
             sheet_df.to_excel(writer, sheet_name=sheet_name, index=False)
 
     print(
-        f"OK: Odds-Blend angewendet auf {matched}/{len(df)} Spiele "
-        f"(alpha={ALPHA}, {len(odds_map)} Spiele in odds.json)"
+        f"OK: market_prob_home_win gesetzt für {matched}/{len(df)} Spiele "
+        f"({len(odds_map)} Spiele in odds.json)"
     )
 
 

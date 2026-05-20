@@ -1,13 +1,182 @@
 {
-  "generated_at": "2026-05-17T14:03:17",
-  "total_rows": 12785,
-  "features_checked": 43,
-  "latest_game_date": "2026-05-15",
+  "generated_at": "2026-05-20T11:58:08",
+  "total_rows": 12788,
+  "features_checked": 99,
+  "latest_game_date": "2026-05-19",
   "issues": [],
   "warnings": [
-    "'home_h2h_winrate': 83.1% null",
-    "'away_h2h_winrate': 83.1% null",
-    "'h2h_winrate_diff': 83.1% null"
+    "'home_off_rating': 90.0% null",
+    "'away_off_rating': 90.0% null",
+    "'off_rating_diff': 90.0% null",
+    "'home_def_rating': 90.0% null",
+    "'away_def_rating': 90.0% null",
+    "'def_rating_diff': 90.0% null",
+    "'home_net_rating': 90.0% null",
+    "'away_net_rating': 90.0% null",
+    "'net_rating_diff': 90.0% null",
+    "'home_rest_days': 307 Ausreißer außerhalb [-3.0, 7.0]",
+    "'away_rest_days': 295 Ausreißer außerhalb [-3.0, 7.0]"
   ],
-  "passed": true
+  "passed": true,
+  "by_season": {
+    "2016": {
+      "games": 1309,
+      "home_win_rate": 0.5829,
+      "alert": false
+    },
+    "2017": {
+      "games": 1312,
+      "home_win_rate": 0.5869,
+      "alert": false
+    },
+    "2018": {
+      "games": 1312,
+      "home_win_rate": 0.5907,
+      "alert": false
+    },
+    "2019": {
+      "games": 1137,
+      "home_win_rate": 0.5471,
+      "alert": false
+    },
+    "2020": {
+      "games": 1170,
+      "home_win_rate": 0.5444,
+      "alert": false
+    },
+    "2021": {
+      "games": 1317,
+      "home_win_rate": 0.5475,
+      "alert": false
+    },
+    "2022": {
+      "games": 1314,
+      "home_win_rate": 0.5814,
+      "alert": false
+    },
+    "2023": {
+      "games": 1312,
+      "home_win_rate": 0.5457,
+      "alert": false
+    },
+    "2024": {
+      "games": 1309,
+      "home_win_rate": 0.5462,
+      "alert": false
+    },
+    "2025": {
+      "games": 1296,
+      "home_win_rate": 0.5556,
+      "alert": false
+    }
+  },
+  "outlier_flags": {
+    "home_elo": {
+      "n_outliers": 0,
+      "low_bound": 695.73,
+      "high_bound": 2325.68
+    },
+    "away_elo": {
+      "n_outliers": 0,
+      "low_bound": 693.93,
+      "high_bound": 2330.21
+    },
+    "elo_diff": {
+      "n_outliers": 0,
+      "low_bound": -1089.39,
+      "high_bound": 1086.96
+    },
+    "home_rest_days": {
+      "n_outliers": 307,
+      "low_bound": -3.0,
+      "high_bound": 7.0
+    },
+    "away_rest_days": {
+      "n_outliers": 295,
+      "low_bound": -3.0,
+      "high_bound": 7.0
+    },
+    "home_last5_avg_points": {
+      "n_outliers": 0,
+      "low_bound": 53.0,
+      "high_bound": 169.6
+    },
+    "away_last5_avg_points": {
+      "n_outliers": 0,
+      "low_bound": 55.4,
+      "high_bound": 167.6
+    }
+  },
+  "coverage_by_season": {
+    "2016": {
+      "home_last5_pts": 0.964,
+      "away_last5_pts": 0.967,
+      "home_last5_rebounds": 0.964,
+      "home_last5_ast": 0.964,
+      "home_last5_player_count": 0.964
+    },
+    "2017": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2018": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2019": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2020": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2021": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2022": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2023": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2024": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2025": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    }
+  }
 }

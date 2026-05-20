@@ -37,6 +37,8 @@
     <button class="tab" data-tab="yesterday" role="tab" id="tab-btn-yesterday" aria-selected="false" aria-controls="tab-yesterday">Yesterday</button>
     <button class="tab" data-tab="all" role="tab" id="tab-btn-all" aria-selected="false" aria-controls="tab-all">All Predictions</button>
     <button class="tab" data-tab="bracket" role="tab" id="tab-btn-bracket" aria-selected="false" aria-controls="tab-bracket">Bracket</button>
+    <button class="tab" data-tab="dashboard" role="tab" id="tab-btn-dashboard" aria-selected="false" aria-controls="tab-dashboard">Dashboard</button>
+    <button class="tab" data-tab="simulation" role="tab" id="tab-btn-simulation" aria-selected="false" aria-controls="tab-simulation">Simulation</button>
   </nav>
 
   <main>
@@ -108,8 +110,41 @@
         <!-- rendered by app.js for mobile -->
       </div>
     </section>
+
+    <section id="tab-simulation" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-simulation">
+      <div id="sim-root"></div>
+    </section>
   </main>
 
+    <section id="tab-dashboard" class="tab-content" role="tabpanel" aria-labelledby="tab-btn-dashboard">
+      <div id="dashboard-root"></div>
+    </section>
+
+  <!-- New Simulation Modal -->
+  <div id="sim-modal" class="sim-modal-overlay" hidden aria-hidden="true">
+    <div class="sim-modal-box" role="dialog" aria-modal="true" aria-labelledby="sim-modal-title">
+      <div class="sim-modal-header">
+        <h3 id="sim-modal-title" class="sim-modal-title">Neue Simulation</h3>
+        <button class="sim-modal-close" id="sim-modal-close" aria-label="Schließen">&times;</button>
+      </div>
+      <form class="sim-modal-form" id="sim-modal-form" novalidate>
+        <div class="sim-field">
+          <label class="sim-field-label" for="sim-modal-name">Name <span class="sim-optional">(optional)</span></label>
+          <input type="text" id="sim-modal-name" class="sim-field-input" placeholder="Sim #1" maxlength="40" />
+        </div>
+        <div class="sim-field">
+          <label class="sim-field-label" for="sim-modal-capital">Startkapital (€) <span class="sim-required">*</span></label>
+          <input type="number" id="sim-modal-capital" class="sim-field-input" min="0.01" step="0.01" placeholder="500" />
+        </div>
+        <div class="sim-modal-actions">
+          <button type="button" class="sim-btn-cancel" id="sim-modal-cancel">Abbrechen</button>
+          <button type="submit" class="sim-btn-create">Erstellen</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script src="app.js"></script>
+  <script src="sim.js"></script>
 </body>
 </html>

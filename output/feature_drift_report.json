@@ -1,20 +1,38 @@
 {
-  "generated_at": "2026-05-17T14:04:42",
-  "expected_features": 43,
-  "effective_features": 37,
-  "available_columns": 57,
+  "generated_at": "2026-05-20T11:58:09",
+  "expected_features": 99,
+  "effective_features": 87,
+  "available_columns": 130,
   "missing_from_data": [],
   "potential_new_features": [
     "home_elo_games_played",
     "away_elo_games_played",
     "home_division",
     "away_division",
-    "home_last10_winrate",
-    "away_last10_winrate"
+    "home_points",
+    "home_reboundsDefensive",
+    "home_reboundsOffensive",
+    "home_assists",
+    "home_steals",
+    "home_blocks",
+    "home_turnovers",
+    "home_minutes",
+    "home_player_count",
+    "away_points",
+    "away_reboundsDefensive",
+    "away_reboundsOffensive",
+    "away_assists",
+    "away_steals",
+    "away_blocks",
+    "away_turnovers",
+    "away_minutes",
+    "away_player_count"
   ],
-  "issues": [],
+  "issues": [
+    "Modell erwartet 79 Features, feature_cols.csv hat 87 effektive Features (99 gesamt - 12 EXCLUDE_COLS)"
+  ],
   "warnings": [
-    "6 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_last10_winrate', 'away_last10_winrate']"
+    "22 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 'home_assists', 'home_steals', 'home_blocks']  (+12 weitere)"
   ],
-  "passed": true
+  "passed": false
 }

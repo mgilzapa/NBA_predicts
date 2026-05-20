@@ -94,7 +94,7 @@ def evaluate():
     print(f"\n{'='*55}")
     print(f"  MODEL EVALUATION REPORT")
     print(f"{'='*55}")
-    print(f"  Zeitraum:   {report['date_range']['from']}  →  {report['date_range']['to']}")
+    print(f"  Zeitraum:   {report['date_range']['from']}  ->  {report['date_range']['to']}")
     print(f"  Spiele:     {total}")
     print()
     print(f"  Accuracy gesamt:   {overall_acc:.2%}")
@@ -109,7 +109,7 @@ def evaluate():
         print(f"  Letzte 30 Tage:    {stats_30['accuracy']:.2%}  ({stats_30['games']} Spiele)")
 
     if calibration:
-        print(f"\n  Kalibrierung (Konfidenz → Trefferquote):")
+        print(f"\n  Kalibrierung (Konfidenz -> Trefferquote):")
         for b in calibration:
             print(f"    {b['range']:<10}  {b['accuracy']:.2%}  ({b['games']} Spiele)")
 

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-19T06:50:31",
-  "calib_samples": 481,
+  "generated_at": "2026-05-20T03:17:27",
+  "calib_samples": 472,
   "calib_days": 90,
-  "mean_cal_error_before": 0.0756,
+  "mean_cal_error_before": 0.0877,
   "mean_cal_error_after": 0.0,
-  "improvement": 0.0756
+  "improvement": 0.0877
 }

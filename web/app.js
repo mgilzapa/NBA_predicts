@@ -75,10 +75,11 @@ document.querySelectorAll('.tab').forEach(btn => {
 
 async function loadData() {
   try {
-    const [predRes, oddsRes, bracketRes] = await Promise.all([
+    const [predRes, oddsRes, bracketRes, dashRes] = await Promise.all([
       fetch('predictions.json'),
       fetch('odds.json').catch(() => null),
       fetch('bracket.json').catch(() => null),
+      fetch('dashboard.json').catch(() => null),
     ]);
 
     if (!predRes.ok) throw new Error(`HTTP ${predRes.status}`);
@@ -93,9 +94,15 @@ async function loadData() {
       try { bracketData = await bracketRes.json(); } catch { /* ignore */ }
     }
 
+    let dashData = null;
+    if (dashRes && dashRes.ok) {
+      try { dashData = await dashRes.json(); } catch { /* ignore */ }
+    }
+
     currentData = data;
     render(data);
     renderBracket(bracketData);
+    renderDashboard(dashData);
     initFilters();
   } catch (err) {
     showGlobalError(err.message);
@@ -548,6 +555,11 @@ function esc(str) {
     .replace(/"/g, '&quot;');
 }
 
+function pct(val) {
+  if (val == null || isNaN(val)) return '—';
+  return Math.round(val * 100) + '%';
+}
+
 // ─── Format Toggle ─────────────────────────────────
 
 document.getElementById('fmt-toggle').addEventListener('click', e => {
@@ -828,6 +840,105 @@ function drawBracketConnectors() {
       if (first) connectToFinals(first, finalsCard, 'left');
     }
   }
+}
+
+// ─── Dashboard ─────────────────────────────────────────────────────
+
+function renderDashboard(data) {
+  const root = document.getElementById('dashboard-root');
+  if (!root) return;
+
+  if (!data) {
+    root.innerHTML = '<div class="db-empty">dashboard.json not found. Run the pipeline first.</div>';
+    return;
+  }
+
+  const status = data.overall_status || 'ok';
+  const statusLabel = { ok: 'All Systems OK', warning: 'Warnings', critical: 'Issues Detected' }[status] || status;
+  const statusClass = { ok: 'db-status--ok', warning: 'db-status--warn', critical: 'db-status--crit' }[status] || '';
+
+  const fmt = ts => {
+    if (!ts) return '—';
+    const d = new Date(ts);
+    return d.toLocaleString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }) + ' ET';
+  };
+
+  // ── Status banner ──────────────────────────────────────────────────
+  const banner = `
+    <div class="db-banner ${statusClass}">
+      <span class="db-banner-dot"></span>
+      <span class="db-banner-label">${esc(statusLabel)}</span>
+      <span class="db-banner-time">Updated ${fmt(data.generated_at)}</span>
+    </div>`;
+
+
+  // ── Health list ────────────────────────────────────────────────────
+  const h = data.health || {};
+
+  function healthRow(title, item, statusHtml) {
+    if (!item) return '';
+    const ok = item.passed === true;
+    const unknown = item.passed == null;
+    const rowClass = unknown ? '' : (ok ? 'db-health--ok' : 'db-health--fail');
+    const dotClass = unknown ? 'db-health-dot--unknown' : (ok ? 'db-health-dot--ok' : 'db-health-dot--fail');
+    return `
+      <div class="db-health-row ${rowClass}">
+        <span class="db-health-dot ${dotClass}"></span>
+        <span class="db-health-name">${esc(title)}</span>
+        <span class="db-health-status">${statusHtml}</span>
+        <span class="db-health-time">${fmt(item.generated_at)}</span>
+      </div>`;
+  }
+
+  const dq = h.data_quality;
+  const fd = h.feature_drift;
+  const pa = h.prediction_audit;
+  const rt = h.retraining;
+
+  const healthSection = `
+    <div class="db-section-title">System Health</div>
+    <div class="db-health-list">
+      ${healthRow('Data Quality', dq, dq ? (dq.issues === 0 ? `<span class="db-ok-text">OK</span>` + (dq.warnings ? ` <span class="db-muted">(${dq.warnings} warnings)</span>` : '') : `<span class="db-fail-text">${dq.issues} issue${dq.issues !== 1 ? 's' : ''}</span>`) : '—')}
+      ${healthRow('Feature Drift', fd, fd ? (fd.issues === 0 ? `<span class="db-ok-text">No drift</span>` + (fd.warnings ? ` <span class="db-muted">(${fd.warnings} warnings)</span>` : '') : `<span class="db-fail-text">${fd.issues} issue${fd.issues !== 1 ? 's' : ''}</span>`) : '—')}
+      ${healthRow('Prediction Audit', pa, pa ? `<span class="db-muted">${pa.predictions} prediction${pa.predictions !== 1 ? 's' : ''}:</span> ` + (pa.flags === 0 ? `<span class="db-ok-text">no flags</span>` : `<span class="db-fail-text">${pa.flags} flag${pa.flags !== 1 ? 's' : ''}</span>`) : '—')}
+      ${healthRow('Retraining', rt, rt ? (rt.retrained ? `<span class="db-ok-text">Retrained</span> <span class="db-muted">(${pct(rt.test_accuracy)})</span>` : `<span class="db-muted">${esc(rt.reason || 'Not needed')}</span>`) : '—')}
+    </div>`;
+
+  // ── Observations ───────────────────────────────────────────────────
+  const obs = data.observations || [];
+  let obsSection = '';
+  if (obs.length) {
+    const severityOrder = { high: 0, medium: 1, low: 2 };
+    const sorted = [...obs].sort((a, b) => (severityOrder[a.severity] ?? 9) - (severityOrder[b.severity] ?? 9));
+    const items = sorted.map(o => {
+      const cls = { high: 'db-obs--high', medium: 'db-obs--med', low: 'db-obs--low' }[o.severity] || '';
+      const badge = { high: 'Critical', medium: 'Warning', low: 'Info' }[o.severity] || o.severity;
+      const src = { prediction_audit: 'Prediction Audit', feature_drift: 'Feature Drift', data_quality: 'Data Quality', model_evaluator: 'Model' }[o.source] || o.source;
+      return `
+        <div class="db-obs ${cls}">
+          <div class="db-obs-top">
+            <span class="db-obs-badge">${esc(badge)}</span>
+            <span class="db-obs-src">${esc(src)}</span>
+            <span class="db-obs-title">${esc(o.title)}</span>
+          </div>
+          <div class="db-obs-detail">${esc(o.detail)}</div>
+        </div>`;
+    }).join('');
+    obsSection = `
+      <div class="db-section-title">Observations <span class="db-obs-count">${obs.length}</span></div>
+      <div class="db-obs-list">${items}</div>`;
+  } else {
+    obsSection = `
+      <div class="db-section-title">Observations</div>
+      <div class="db-obs-empty">No flags or issues. Everything looks good.</div>`;
+  }
+
+  root.innerHTML = `
+    <div class="db-root">
+      ${banner}
+      ${healthSection}
+      ${obsSection}
+    </div>`;
 }
 
 // ─── Tab Indicator ─────────────────────────────────────────────────

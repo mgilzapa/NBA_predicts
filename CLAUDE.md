@@ -89,8 +89,20 @@ Four standalone scripts that can be run after the pipeline or on demand. All wri
 | `model_evaluator.py` | Overall/7-day/30-day accuracy vs. baseline, confidence calibration, daily trend | `output/model_evaluation.json` |
 | `auto_retrainer.py` | Retrains XGBoost + re-calibrates when accuracy drops below baseline or `--force` | `output/retraining_report.json` |
 | `calibration_wrapper.py` | Fits IsotonicRegression on last 90 days, saves `models/calibration_model.pkl` | `output/calibration_report.json` |
+| `prediction_auditor.py` | Sanity-checks today's predictions: high confidence, model vs. market divergence, ELO upsets, form upsets | `output/prediction_audit_report.json` |
+| `dashboard_exporter.py` | Aggregates all agent reports into `web/dashboard.json` for the frontend Dashboard tab | `web/dashboard.json` |
 
-`data_quality_checker`, `feature_drift_detector`, `odds_feature_injector`, `model_evaluator`, and `auto_retrainer` are wired into `run_all.py`. `calibration_wrapper` is triggered automatically by `auto_retrainer` after retraining.
+`data_quality_checker`, `feature_drift_detector`, `odds_feature_injector`, `prediction_auditor`, `model_evaluator`, `auto_retrainer`, and `dashboard_exporter` are wired into `run_all.py`. `calibration_wrapper` is triggered automatically by `auto_retrainer` after retraining.
+
+## Dashboard tab
+
+The webapp has a fifth tab "Dashboard" that shows a maintenance overview:
+- **Status banner**: Overall OK / Warning / Critical based on all agent reports
+- **Model Performance**: Overall accuracy, 7-day, 30-day, vs. baseline, calibration table
+- **System Health**: Per-component status cards (Data Quality, Feature Drift, Prediction Audit, Retraining)
+- **Observations**: All flags and issues from all agents, sorted by severity
+
+Data source: `web/dashboard.json` (written by `dashboard_exporter.py` at end of pipeline).
 
 Run any agent directly:
 ```

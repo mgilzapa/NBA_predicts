@@ -1,12 +1,5 @@
 {
-  "retrained": true,
-  "reason": "--force flag gesetzt",
-  "train_games": 12215,
-  "test_games": 250,
-  "feature_count": 68,
-  "train_accuracy": 0.7133,
-  "test_accuracy": 0.708,
-  "baseline_accuracy": 0.596,
-  "vs_baseline": 0.112,
-  "generated_at": "2026-05-19T06:49:52"
+  "retrained": false,
+  "reason": "Kein Trigger \u2014 Accuracy OK (7d: 0.3333)",
+  "generated_at": "2026-05-20T11:58:32"
 }

@@ -1,23 +1,88 @@
 {
-  "generated_at": "2026-05-17T15:39:01",
+  "generated_at": "2026-05-20T11:58:26",
   "today": [
     {
-      "gameId": "42500207",
-      "date": "2026-05-17",
-      "time": "20:00",
-      "home_team": "Detroit Pistons",
-      "away_team": "Cleveland Cavaliers",
-      "predicted_winner": "Detroit Pistons",
-      "probability_home_win": 0.6376,
-      "home_elo": 1629.4,
-      "away_elo": 1626.1,
-      "bet_value": -0.0053,
-      "best_odds": 1.56,
-      "best_bookmaker": "Bovada"
+      "gameId": "42500312",
+      "date": "2026-05-20",
+      "time": "20:30",
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "San Antonio Spurs",
+      "predicted_winner": "Oklahoma City Thunder",
+      "probability_home_win": 0.6624,
+      "home_elo": 1787.9,
+      "away_elo": 1708.2,
+      "bet_value": -0.0594,
+      "best_odds": 1.42,
+      "best_bookmaker": "DraftKings"
     }
   ],
-  "yesterday": [],
+  "yesterday": [
+    {
+      "gameId": "42500301",
+      "date": "2026-05-19",
+      "time": "20:00",
+      "home_team": "New York Knicks",
+      "away_team": "Cleveland Cavaliers",
+      "predicted_winner": "New York Knicks",
+      "probability_home_win": 0.789,
+      "home_elo": 1650.4,
+      "away_elo": 1616.2,
+      "bet_value": 0.1046,
+      "best_odds": 1.4,
+      "best_bookmaker": "FanDuel",
+      "actual_winner": "New York Knicks",
+      "correct": true
+    }
+  ],
   "all": [
+    {
+      "gameId": "42500312",
+      "date": "2026-05-20",
+      "time": "20:30",
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "San Antonio Spurs",
+      "predicted_winner": "Oklahoma City Thunder",
+      "probability_home_win": 0.8072,
+      "home_elo": 1787.9,
+      "away_elo": 1708.2,
+      "bet_value": 0.1462,
+      "best_odds": 1.42,
+      "best_bookmaker": "DraftKings",
+      "actual_winner": null,
+      "correct": null
+    },
+    {
+      "gameId": "42500301",
+      "date": "2026-05-19",
+      "time": "20:00",
+      "home_team": "New York Knicks",
+      "away_team": "Cleveland Cavaliers",
+      "predicted_winner": "New York Knicks",
+      "probability_home_win": 0.789,
+      "home_elo": 1650.4,
+      "away_elo": 1616.2,
+      "bet_value": 0.1046,
+      "best_odds": 1.4,
+      "best_bookmaker": "FanDuel",
+      "actual_winner": "New York Knicks",
+      "correct": true
+    },
+    {
+      "gameId": "42500311",
+      "date": "2026-05-18",
+      "time": "20:30",
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "San Antonio Spurs",
+      "predicted_winner": "Oklahoma City Thunder",
+      "probability_home_win": 0.8189,
+      "home_elo": 1782.4,
+      "away_elo": 1700.8,
+      "bet_value": 0.1792,
+      "best_odds": 1.44,
+      "best_bookmaker": "LowVig.ag",
+      "actual_winner": "San Antonio Spurs",
+      "correct": false
+    },
     {
       "gameId": "42500207",
       "date": "2026-05-17",
@@ -28,8 +93,8 @@
       "probability_home_win": 0.6667,
       "home_elo": 1629.4,
       "away_elo": 1626.1,
-      "actual_winner": null,
-      "correct": null
+      "actual_winner": "Cleveland Cavaliers",
+      "correct": false
     },
     {
       "gameId": "42500236",

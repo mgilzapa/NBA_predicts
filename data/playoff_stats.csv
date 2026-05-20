@@ -1,0 +1,17 @@
+team_name,playoff_games_played,playoff_pts_last3,playoff_margin_last3,prev_series_games,playoff_home_winrate_hist
+Atlanta Hawks,6,94.67,-32.0,0,0.4737
+Boston Celtics,7,96.67,-12.67,0,0.5823
+Cleveland Cavaliers,15,107.67,-0.33,7,0.675
+Denver Nuggets,6,106.33,-5.33,0,0.6538
+Detroit Pistons,14,107.33,-4.67,7,0.3846
+Houston Rockets,6,97.33,1.67,0,0.6571
+Los Angeles Lakers,10,108.33,-15.33,6,0.6061
+Minnesota Timberwolves,12,106.67,-18.0,6,0.5357
+New York Knicks,11,122.33,18.33,4,0.6333
+Oklahoma City Thunder,9,120.33,7.0,4,0.7576
+Orlando Magic,7,94.0,-14.33,0,0.5
+Philadelphia 76ers,11,103.33,-16.67,7,0.5128
+Phoenix Suns,4,112.67,-11.33,0,0.6071
+Portland Trail Blazers,5,98.67,-17.33,0,0.3158
+San Antonio Spurs,12,129.0,22.0,6,0.6316
+Toronto Raptors,7,111.33,-5.0,0,0.5714

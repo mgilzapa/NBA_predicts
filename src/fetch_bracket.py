@@ -7,11 +7,15 @@ import numpy as np
 import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GAMES_CSV       = os.path.join(BASE_DIR, "data", "nba_api_games.csv")
-MODEL_DATA_CSV  = os.path.join(BASE_DIR, "data", "model_data.csv")
-MODEL_PKL       = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
-FEATURE_CSV     = os.path.join(BASE_DIR, "models", "feature_cols.csv")
-OUTPUT_JSON     = os.path.join(BASE_DIR, "web", "bracket.json")
+GAMES_CSV            = os.path.join(BASE_DIR, "data",   "nba_api_games.csv")
+MODEL_DATA_CSV       = os.path.join(BASE_DIR, "data",   "model_data.csv")
+PLAYOFF_STATS_CSV    = os.path.join(BASE_DIR, "data",   "playoff_stats.csv")
+MODEL_PKL            = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
+FEATURE_CSV          = os.path.join(BASE_DIR, "models", "feature_cols.csv")
+PLAYOFF_MODEL_PKL    = os.path.join(BASE_DIR, "models", "best_xgb_model_playoff.pkl")
+PLAYOFF_FEATURE_CSV  = os.path.join(BASE_DIR, "models", "feature_cols_playoff.csv")
+PLAYOFF_CALIB_PKL    = os.path.join(BASE_DIR, "models", "calibration_model_playoff.pkl")
+OUTPUT_JSON          = os.path.join(BASE_DIR, "web",    "bracket.json")
 
 SEASON_CODE = "42500"   # prefix of 2025-26 playoff game IDs
 SEASON      = "2025-26"
@@ -150,8 +154,10 @@ EXCLUDE_COLS = {
     "home_off_rating", "away_off_rating", "off_rating_diff",
     "home_def_rating", "away_def_rating", "def_rating_diff",
     "home_net_rating", "away_net_rating", "net_rating_diff",
-    "home_h2h_winrate", "away_h2h_winrate", "h2h_winrate_diff",
-    "same_division", "is_playoff", "away_opponent_strength",
+    "same_division", "away_opponent_strength",
+    "home_injury_impact", "away_injury_impact", "injury_impact_diff",
+    "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
+    "h2h_winrate_diff", "home_series_wins", "is_playoff",
 }
 
 DERIVED_PAIRS = [
@@ -166,6 +172,10 @@ DERIVED_PAIRS = [
     ("min_diff_last5",              "home_last5_min",           "away_last5_min"),
     ("player_count_diff_last5",     "home_last5_player_count",  "away_last5_player_count"),
     ("elo_diff",                    "home_elo",                 "away_elo"),
+    ("last10_winrate_diff",         "home_last10_winrate",      "away_last10_winrate"),
+    ("streak_diff",                 "home_current_streak",      "away_current_streak"),
+    ("h2h_winrate_diff",            "home_h2h_winrate",         "away_h2h_winrate"),
+    ("series_wins_diff",            "home_series_wins",         "away_series_wins"),
 ]
 
 
@@ -227,6 +237,15 @@ def build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols):
     a = away_snap.get(away_team, {})
     merged = {**h, **a}
     merged["is_playoff"] = 1.0
+
+    # Game-context defaults for features with no home_/away_ source columns.
+    # Playoffs = end of season; series starts 0-0 so no leader and no elimination yet.
+    merged.setdefault("season_progress", 1.0)
+    merged.setdefault("home_series_wins", 0.0)
+    merged.setdefault("away_series_wins", 0.0)
+    merged.setdefault("series_wins_diff", 0.0)
+    merged.setdefault("is_elimination_game", 0.0)
+    merged.setdefault("market_prob_home_win", np.nan)  # no live odds for bracket games
 
     # Compute all derived difference features
     for diff_col, home_col, away_col in DERIVED_PAIRS:
@@ -394,6 +413,63 @@ def build_bracket_json(series_map, predict_fn=None):
     }
 
 
+def _playoff_predict_fn(home_team, away_team, home_snap, away_snap,
+                        base_model, base_feat_cols,
+                        playoff_model, playoff_feat_cols,
+                        playoff_stats_idx, playoff_calib=None):
+    """
+    Build feature vectors for the playoff model and simulate the full series.
+
+    For each game in the series (home-hosting and away-hosting), we:
+      1. Build the base feature row
+      2. Add base_prob_home_win from the base model
+      3. Add series context defaults (game 1, 0-0 score)
+      4. Add current-season playoff rolling stats for each team
+    Then call simulate_series with the resulting home/away win probabilities.
+    """
+    def build_po_row(game_home, game_away, series_game_num=1, score_diff=0):
+        base_row  = build_feature_row(game_home, game_away, home_snap, away_snap, base_feat_cols)
+        base_prob = float(base_model.predict_proba(base_row.reshape(1, -1))[0, 1])
+
+        merged = {c: base_row[i] for i, c in enumerate(base_feat_cols)}
+        merged["base_prob_home_win"]    = base_prob
+        merged["series_game_number"]    = float(series_game_num)
+        merged["series_score_diff"]     = float(score_diff)
+        merged["is_closeout_game"]      = float(abs(score_diff) == 3)
+
+        def _stat(team, col):
+            try:
+                return float(playoff_stats_idx.at[team, col])
+            except (KeyError, ValueError):
+                return 0.0
+
+        merged["home_playoff_last3_pts"]        = _stat(game_home, "playoff_pts_last3")
+        merged["away_playoff_last3_pts"]        = _stat(game_away, "playoff_pts_last3")
+        merged["home_playoff_margin_last3"]     = _stat(game_home, "playoff_margin_last3")
+        merged["away_playoff_margin_last3"]     = _stat(game_away, "playoff_margin_last3")
+        merged["home_playoff_home_winrate_hist"] = _stat(game_home, "playoff_home_winrate_hist")
+
+        vec = np.array([merged.get(c, 0.0) for c in playoff_feat_cols], dtype=float)
+        np.nan_to_num(vec, nan=0.0, copy=False)
+        return vec
+
+    try:
+        row_home = build_po_row(home_team, away_team, 1,  0)
+        row_away = build_po_row(away_team, home_team, 1,  0)
+        p1 = float(playoff_model.predict_proba(row_home.reshape(1, -1))[0, 1])
+        p_away_win = float(playoff_model.predict_proba(row_away.reshape(1, -1))[0, 1])
+        p2 = 1.0 - p_away_win
+
+        if playoff_calib is not None:
+            p1 = float(np.clip(playoff_calib.predict([[p1]]), 0.01, 0.99)[0])
+            p2 = float(np.clip(playoff_calib.predict([[p2]]), 0.01, 0.99)[0])
+    except Exception as e:
+        print(f"  WARNUNG: Playoff-Vorhersage fehlgeschlagen ({e}) - Fallback 0.5")
+        return 0.5, 6
+
+    return simulate_series(0, 0, p1, p2)
+
+
 def build_bracket():
     """Main entry point: load data, run predictions, write bracket.json."""
     # 1. Load playoff games
@@ -404,18 +480,51 @@ def build_bracket():
     # 2. Build series standings
     series_map = build_series_dict(df_playoff)
 
-    # 3. Load model and features
-    model        = joblib.load(MODEL_PKL)
-    feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
-    feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
-
-    # 4. Load model data and build team snapshots
-    df_model     = pd.read_csv(MODEL_DATA_CSV)
+    # 3. Load model data and build team snapshots
+    df_model = pd.read_csv(MODEL_DATA_CSV)
     home_snap, away_snap = get_team_snapshots(df_model)
 
-    def predict_fn(home_team, away_team):
-        return predict_series(home_team, away_team, home_snap, away_snap,
-                              model, feature_cols)
+    # 4. Choose model: prefer playoff model when both model and feature list exist
+    use_playoff = (
+        os.path.exists(PLAYOFF_MODEL_PKL) and
+        os.path.exists(PLAYOFF_FEATURE_CSV)
+    )
+
+    if use_playoff:
+        base_model    = joblib.load(MODEL_PKL)
+        base_feat     = pd.read_csv(FEATURE_CSV).squeeze().tolist()
+        base_feat     = [c for c in base_feat if c not in EXCLUDE_COLS]
+
+        playoff_model = joblib.load(PLAYOFF_MODEL_PKL)
+        playoff_feat  = pd.read_csv(PLAYOFF_FEATURE_CSV).squeeze().tolist()
+
+        playoff_calib = None
+        if os.path.exists(PLAYOFF_CALIB_PKL):
+            playoff_calib = joblib.load(PLAYOFF_CALIB_PKL)
+
+        # Load current-season playoff stats for team-level rolling features
+        if os.path.exists(PLAYOFF_STATS_CSV):
+            playoff_stats_idx = pd.read_csv(PLAYOFF_STATS_CSV).set_index("team_name")
+        else:
+            playoff_stats_idx = pd.DataFrame()
+
+        def predict_fn(home_team, away_team):
+            return _playoff_predict_fn(
+                home_team, away_team, home_snap, away_snap,
+                base_model, base_feat,
+                playoff_model, playoff_feat,
+                playoff_stats_idx, playoff_calib,
+            )
+
+        print("Playoff-Modell für Bracket-Vorhersage verwendet.")
+    else:
+        model        = joblib.load(MODEL_PKL)
+        feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
+        feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
+
+        def predict_fn(home_team, away_team):
+            return predict_series(home_team, away_team, home_snap, away_snap,
+                                  model, feature_cols)
 
     # 5. Assemble bracket JSON
     bracket = build_bracket_json(series_map, predict_fn)
