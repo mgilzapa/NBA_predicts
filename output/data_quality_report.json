@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-05-21T07:31:03",
-  "total_rows": 12789,
-  "features_checked": 66,
-  "latest_game_date": "2026-05-20",
+  "generated_at": "2026-05-22T04:41:26",
+  "total_rows": 12790,
+  "features_checked": 75,
+  "latest_game_date": "2026-05-21",
   "issues": [],
   "warnings": [
     "'home_rest_days': 307 Ausreißer außerhalb [-3.0, 7.0]",
@@ -56,26 +56,26 @@
       "alert": false
     },
     "2025": {
-      "games": 1297,
-      "home_win_rate": 0.5559,
+      "games": 1298,
+      "home_win_rate": 0.5562,
       "alert": false
     }
   },
   "outlier_flags": {
     "home_elo": {
       "n_outliers": 0,
-      "low_bound": 695.57,
-      "high_bound": 2325.9
+      "low_bound": 695.58,
+      "high_bound": 2325.93
     },
     "away_elo": {
       "n_outliers": 0,
-      "low_bound": 693.93,
-      "high_bound": 2330.22
+      "low_bound": 693.65,
+      "high_bound": 2330.58
     },
     "elo_diff": {
       "n_outliers": 0,
-      "low_bound": -1089.37,
-      "high_bound": 1086.95
+      "low_bound": -1089.36,
+      "high_bound": 1086.93
     },
     "home_rest_days": {
       "n_outliers": 307,

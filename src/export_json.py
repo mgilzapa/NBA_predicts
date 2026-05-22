@@ -186,11 +186,19 @@ def build_json():
     # ── 4. Merge: existing + today + updates ─────────────────────────────────
     merged: dict[str, dict] = dict(existing_all)  # start from persisted state
 
-    # Add today's games (new entries only; never overwrite existing prediction data)
+    # Add/update today's games: always refresh the prediction fields (prob, winner,
+    # ELO, bet_value) with the latest model output while preserving actual_winner/correct.
     for g in today_games:
         k = _game_key(g)
         if k not in merged:
             merged[k] = {**g, "actual_winner": None, "correct": None}
+        else:
+            # Overwrite prediction fields with the latest run's values; keep
+            # actual_winner / correct from the persisted entry (they come from
+            # real game results, not from the model).
+            existing_actual = merged[k].get("actual_winner")
+            existing_correct = merged[k].get("correct")
+            merged[k] = {**g, "actual_winner": existing_actual, "correct": existing_correct}
 
     # Apply actual_winner / correct updates from all_predictions.xlsx
     for k, upd in updates.items():

@@ -36,7 +36,7 @@ const TEAM_LOGOS = {
 let currentData = null;
 let oddsData = { games: {} };
 let oddsFormat = 'decimal';
-let activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '' };
+let activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '', confidence: '' };
 
 // ─── Tab Switching ─────────────────────────────────────────────────
 
@@ -143,6 +143,7 @@ function applyFilters(games) {
       if (activeFilters.seasonType === 'playoffs' && !isPlayoff) return false;
       if (activeFilters.seasonType === 'regular' && isPlayoff) return false;
     }
+    if (activeFilters.confidence && gameConfidenceLevel(g) !== activeFilters.confidence) return false;
     return true;
   });
 }
@@ -163,6 +164,7 @@ function initFilters() {
     activeFilters.team       = document.getElementById('f-team').value;
     activeFilters.result     = document.getElementById('f-result').value;
     activeFilters.seasonType = document.getElementById('f-season').value;
+    activeFilters.confidence = document.getElementById('f-confidence').value;
     const hasAny = Object.values(activeFilters).some(v => v !== '');
     document.getElementById('f-reset').style.display = hasAny ? '' : 'none';
     renderAll(applyFilters(allGames()));
@@ -171,6 +173,7 @@ function initFilters() {
   document.getElementById('f-team').addEventListener('change', syncAndRender);
   document.getElementById('f-result').addEventListener('change', syncAndRender);
   document.getElementById('f-season').addEventListener('change', syncAndRender);
+  document.getElementById('f-confidence').addEventListener('change', syncAndRender);
 
   document.getElementById('f-date-from').addEventListener('change', e => {
     activeFilters.dateFrom = e.target.value;
@@ -221,10 +224,11 @@ function initFilters() {
   });
 
   document.getElementById('f-reset').addEventListener('click', () => {
-    activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '' };
+    activeFilters = { team: '', dateFrom: '', dateTo: '', quickDate: '', result: '', seasonType: '', confidence: '' };
     document.getElementById('f-team').value = '';
     document.getElementById('f-result').value = '';
     document.getElementById('f-season').value = '';
+    document.getElementById('f-confidence').value = '';
     document.getElementById('f-date-from').value = '';
     document.getElementById('f-date-to').value = '';
     document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
@@ -361,6 +365,24 @@ function renderYesterday(games) {
   animateBars(grid);
 }
 
+function gameConfidenceLevel(g) {
+  const prob = g.predicted_winner === g.home_team
+    ? (g.probability_home_win || 0) * 100
+    : (1 - (g.probability_home_win || 0)) * 100;
+  if (!prob) return '';
+  if (prob >= 65) return 'high';
+  if (prob >= 55) return 'medium';
+  return 'low';
+}
+
+function confidenceBadge(g) {
+  const level = gameConfidenceLevel(g);
+  if (!level) return '';
+  if (level === 'high')   return '<span class="conf-badge conf-high">High</span>';
+  if (level === 'medium') return '<span class="conf-badge conf-med">Medium</span>';
+  return '<span class="conf-badge conf-low">Low</span>';
+}
+
 function renderAll(games) {
   const header = document.getElementById('all-header');
   const tbody  = document.getElementById('all-tbody');
@@ -411,7 +433,7 @@ function renderAll(games) {
       <td class="td-date">${date}</td>
       <td>${esc(g.home_team)}</td>
       <td>${esc(g.away_team)}</td>
-      <td style="color:var(--accent)">${esc(g.predicted_winner)}</td>
+      <td style="color:var(--accent)">${esc(g.predicted_winner)} ${confidenceBadge(g)}</td>
       <td>${esc(actual)}</td>
       <td class="td-odds">${oddsCell}</td>
       <td class="td-result">${resultHtml}</td>

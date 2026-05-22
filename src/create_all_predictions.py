@@ -36,7 +36,7 @@ def update_all_predictions():
         
         # Gleiche Vorbereitung für Ziel-Daten
         if "gameId" in df_target.columns:
-            df_target["gameId"] = df_target["gameId"].astype(str)
+            df_target["gameId"] = df_target["gameId"].astype(str).str.replace(r'\.0$', '', regex=True)
             target_key_column = "gameId"
         else:
             df_target["_temp_key"] = df_target["Date"].astype(str) + "|" + df_target["Home Team"] + "|" + df_target["Away Team"]
@@ -48,10 +48,11 @@ def update_all_predictions():
         combined = df_source
         target_key_column = key_column
 
-    # Duplikate entfernen
+    # Duplikate entfernen — keep="last" damit die neueste Vorhersage gewinnt.
+    # df_target (alt) kommt vor df_source (neu) im concat, also ist df_source die letzte Instanz.
     dedup_col = target_key_column if target_key_column in combined.columns else key_column
     before = len(combined)
-    combined.drop_duplicates(subset=[dedup_col], keep="first", inplace=True)
+    combined.drop_duplicates(subset=[dedup_col], keep="last", inplace=True)
     after = len(combined)
     if before > after:
         print(f"Info: {before - after} Duplikate entfernt.")

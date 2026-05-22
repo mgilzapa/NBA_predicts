@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-21T11:35:18",
+  "generated_at": "2026-05-22T04:42:01",
   "season": "2025-26",
   "east": {
     "r1": [
@@ -54,15 +54,15 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.9188,
+          "win_probability": 0.8866,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.333,
-            "4-0": 0.279,
-            "4-2": 0.185,
-            "4-3": 0.121,
-            "3-4": 0.033
+            "4-1": 0.321,
+            "4-0": 0.23,
+            "4-2": 0.189,
+            "4-3": 0.146,
+            "2-4": 0.045
           }
         }
       },
@@ -75,15 +75,15 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Cleveland Cavaliers",
-          "win_probability": 0.6283,
-          "predicted_length": 7,
-          "predicted_score": "4-3",
+          "win_probability": 0.7733,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-3": 0.209,
-            "4-1": 0.192,
-            "2-4": 0.154,
-            "4-2": 0.149,
-            "3-4": 0.108
+            "4-1": 0.233,
+            "4-2": 0.222,
+            "4-0": 0.164,
+            "4-3": 0.154,
+            "3-4": 0.094
           }
         }
       }
@@ -98,15 +98,15 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.8344,
+          "win_probability": 0.7103,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.299,
-            "4-2": 0.184,
-            "4-3": 0.18,
-            "4-0": 0.172,
-            "2-4": 0.071
+            "4-1": 0.208,
+            "4-2": 0.207,
+            "4-3": 0.166,
+            "4-0": 0.129,
+            "3-4": 0.11
           }
         }
       },
@@ -119,15 +119,15 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.9819,
-          "predicted_length": 4,
-          "predicted_score": "4-0",
+          "win_probability": 0.9705,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-0": 0.419,
-            "4-1": 0.378,
-            "4-2": 0.122,
-            "4-3": 0.063,
-            "2-4": 0.009
+            "4-1": 0.4,
+            "4-0": 0.34,
+            "4-2": 0.138,
+            "4-3": 0.092,
+            "2-4": 0.015
           }
         }
       }
@@ -136,21 +136,21 @@
       {
         "home_team": "New York Knicks",
         "away_team": "Cleveland Cavaliers",
-        "home_wins": 1,
+        "home_wins": 2,
         "away_wins": 0,
         "status": "active",
         "winner": null,
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.8607,
+          "win_probability": 0.8205,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.333,
-            "4-3": 0.188,
-            "4-0": 0.172,
-            "4-2": 0.168,
-            "2-4": 0.066
+            "4-1": 0.272,
+            "4-0": 0.23,
+            "4-2": 0.18,
+            "4-3": 0.138,
+            "3-4": 0.116
           }
         }
       }
@@ -322,15 +322,15 @@
     "winner": null,
     "prediction": {
       "winner": "San Antonio Spurs",
-      "win_probability": 0.5155,
+      "win_probability": 0.6834,
       "predicted_length": 6,
       "predicted_score": "2-4",
       "outcome_distribution": {
-        "2-4": 0.244,
-        "4-3": 0.229,
-        "4-1": 0.134,
-        "3-4": 0.115,
-        "1-4": 0.096
+        "2-4": 0.283,
+        "4-3": 0.163,
+        "1-4": 0.158,
+        "3-4": 0.127,
+        "0-4": 0.115
       }
     }
   }

@@ -1,20 +1,25 @@
 {
-  "generated_at": "2026-05-21T07:31:43",
-  "overall_status": "warning",
+  "generated_at": "2026-05-22T04:42:08",
+  "overall_status": "ok",
   "model": {
-    "overall_accuracy": 0.5,
-    "baseline_accuracy": 0.5,
-    "vs_baseline": 0.0,
-    "total_games": 4,
+    "overall_accuracy": 0.4,
+    "baseline_accuracy": 0.6,
+    "vs_baseline": -0.2,
+    "total_games": 5,
     "last_7_days": {
-      "games": 4,
-      "accuracy": 0.5
+      "games": 5,
+      "accuracy": 0.4
     },
     "last_30_days": {
-      "games": 4,
-      "accuracy": 0.5
+      "games": 5,
+      "accuracy": 0.4
     },
     "calibration": [
+      {
+        "range": "50-60%",
+        "games": 1,
+        "accuracy": 0.0
+      },
       {
         "range": "60-70%",
         "games": 2,
@@ -33,39 +38,33 @@
       "passed": true,
       "issues": 0,
       "warnings": 2,
-      "generated_at": "2026-05-21T07:31:03"
+      "generated_at": "2026-05-22T04:41:26"
     },
     "feature_drift": {
       "passed": true,
       "issues": 0,
       "warnings": 1,
-      "generated_at": "2026-05-21T07:31:06"
+      "generated_at": "2026-05-22T04:41:29"
     },
     "prediction_audit": {
       "passed": true,
       "predictions": 1,
-      "flags": 1,
-      "generated_at": "2026-05-21T07:31:30"
+      "flags": 0,
+      "generated_at": "2026-05-22T04:41:54"
     },
     "retraining": {
       "retrained": false,
-      "reason": "Kein Trigger — Accuracy OK (7d: 0.5)",
+      "reason": "Kein Trigger — Accuracy OK (7d: 0.4)",
       "test_accuracy": null,
-      "generated_at": "2026-05-21T07:31:42"
+      "generated_at": "2026-05-22T04:42:06"
     }
   },
   "observations": [
     {
-      "source": "prediction_audit",
-      "severity": "medium",
-      "title": "Cleveland Cavaliers @ New York Knicks",
-      "detail": "[high_confidence] Confidence 92.4% > 85% — ggf. Feature-Anomalie"
-    },
-    {
       "source": "feature_drift",
       "severity": "low",
       "title": "Neue Features verfuegbar",
-      "detail": "44 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo', 'away_elo', 'home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 'home_assists']  (+34 weitere)"
+      "detail": "38 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo', 'away_elo', 'home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 'home_assists']  (+28 weitere)"
     }
   ]
 }
