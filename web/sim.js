@@ -36,6 +36,14 @@ function genId() {
   return 'sim_' + Date.now() + '_' + Math.random().toString(36).slice(2, 6);
 }
 
+function gameKey(game) {
+  return game.gameId || `${game.date}|${game.home_team}|${game.away_team}`;
+}
+
+function betKey(bet) {
+  return bet.gameId || `${bet.date}|${bet.home_team}|${bet.away_team}`;
+}
+
 // ─── Storage ─────────────────────────────────────────────────────────────────
 
 function stLoad() {
@@ -86,19 +94,23 @@ function findBestOdds(game) {
 
 function resolveBets() {
   if (!_pred || !_pred.all) return;
-  const gameMap = {};
-  _pred.all.forEach(g => { gameMap[g.gameId] = g; });
+  const byId = {};
+  const byFallback = {};
+  _pred.all.forEach(g => {
+    if (g.gameId) byId[g.gameId] = g;
+    byFallback[`${g.date}|${g.home_team}|${g.away_team}`] = g;
+  });
 
   let changed = false;
   _state.simulations.forEach(sim => {
     sim.bets.forEach(bet => {
       if (bet.status !== 'pending') return;
-      const g = gameMap[bet.gameId];
+      const g = (bet.gameId && byId[bet.gameId]) ||
+                byFallback[`${bet.date}|${bet.home_team}|${bet.away_team}`];
       if (!g || g.correct === null || g.correct === undefined) return;
       const won = g.actual_winner === bet.predicted_winner;
       bet.status = won ? 'won' : 'lost';
       bet.payout = won ? parseFloat((bet.stake * bet.odds).toFixed(2)) : 0;
-      // At placement stake was already deducted. Add payout back (0 if lost).
       sim.capital = parseFloat((sim.capital + bet.payout).toFixed(2));
       changed = true;
     });
@@ -254,10 +266,11 @@ function renderDetail() {
 
   const today = todayStr();
   const todayBets = sim.bets.filter(b => b.date === today);
-  const alreadyBetToday = todayBets.length > 0;
   const todayGames = _pred && _pred.today ? _pred.today : [];
+  const betKeySet = new Set(todayBets.map(betKey));
+  const remainingGames = todayGames.filter(g => !betKeySet.has(gameKey(g)));
 
-  const todaySection = buildTodaySection(sim, todayGames, alreadyBetToday, todayBets);
+  const todaySection = buildTodaySection(sim, todayBets, remainingGames);
   const historyHtml = buildHistoryTable(sim);
   const chartHtml = renderChart(sim);
 
@@ -296,22 +309,22 @@ ${historyHtml}`;
   document.getElementById('sim-back-btn').addEventListener('click', showOverview);
   document.getElementById('sim-delete-btn').addEventListener('click', () => deleteSim(sim.id));
 
-  if (!alreadyBetToday && todayGames.length > 0) {
+  if (remainingGames.length > 0) {
     wireConfirm(sim);
   }
 }
 
 // ─── Today section ───────────────────────────────────────────────────────────
 
-function buildTodaySection(sim, todayGames, alreadyBetToday, todayBets) {
+function buildTodaySection(sim, todayBets, remainingGames) {
   const header = '<div class="sim-section-title sim-section-title--today">Heute tippen</div>';
 
-  if (todayGames.length === 0) {
+  if (remainingGames.length === 0 && todayBets.length === 0) {
     return `<div class="sim-today-section">${header}<div class="sim-empty">Keine Spiele heute.</div></div>`;
   }
 
-  if (alreadyBetToday) {
-    const rows = todayBets.map(bet => `
+  // Readonly rows for already-placed bets
+  const placedRows = todayBets.map(bet => `
 <div class="sim-today-row sim-today-readonly">
   <div class="sim-today-teams">${esc(bet.away_team)} @ ${esc(bet.home_team)}</div>
   <div class="sim-today-pick">Tipp: <strong>${esc(bet.predicted_winner)}</strong></div>
@@ -320,10 +333,16 @@ function buildTodaySection(sim, todayGames, alreadyBetToday, todayBets) {
     <span class="sim-status-badge sim-badge-pending">Ausstehend</span>
   </div>
 </div>`).join('');
-    return `<div class="sim-today-section">${header}${rows}</div>`;
+
+  if (remainingGames.length === 0) {
+    return `<div class="sim-today-section">${header}${placedRows}</div>`;
   }
 
-  const rows = todayGames.map(game => {
+  const divider = todayBets.length > 0
+    ? '<div class="sim-section-divider">Noch nicht getippt</div>'
+    : '';
+
+  const interactiveRows = remainingGames.map(game => {
     const bestOdds = findBestOdds(game);
     const oddsVal = bestOdds ? bestOdds.odds.toFixed(2) : '';
     const oddsSource = bestOdds ? 'bookmaker' : 'manual';
@@ -332,10 +351,11 @@ function buildTodaySection(sim, todayGames, alreadyBetToday, todayBets) {
     const probPct = Math.round(predProb * 100);
 
     return `
-<div class="sim-today-row" data-gameid="${esc(game.gameId)}">
+<div class="sim-today-row">
   <label class="sim-today-check-wrap" title="Auswählen">
     <input type="checkbox" class="sim-game-check"
       data-gameid="${esc(game.gameId)}"
+      data-date="${esc(game.date)}"
       data-home="${esc(game.home_team)}"
       data-away="${esc(game.away_team)}"
       data-winner="${esc(game.predicted_winner)}"
@@ -348,14 +368,14 @@ function buildTodaySection(sim, todayGames, alreadyBetToday, todayBets) {
   </div>
   <div class="sim-today-inputs">
     <div class="sim-input-group">
-      <label class="sim-input-label" for="stake-${esc(game.gameId)}">Einsatz&nbsp;(€)</label>
-      <input type="number" id="stake-${esc(game.gameId)}" class="sim-input sim-stake-input"
-        data-gameid="${esc(game.gameId)}" min="0.01" step="0.01" placeholder="0.00" />
+      <label class="sim-input-label">Einsatz&nbsp;(€)</label>
+      <input type="number" class="sim-input sim-stake-input"
+        min="0.01" step="0.01" placeholder="0.00" />
     </div>
     <div class="sim-input-group">
-      <label class="sim-input-label" for="odds-${esc(game.gameId)}">Quote</label>
-      <input type="number" id="odds-${esc(game.gameId)}" class="sim-input sim-odds-input"
-        data-gameid="${esc(game.gameId)}" min="1.01" step="0.01" placeholder="1.00"
+      <label class="sim-input-label">Quote</label>
+      <input type="number" class="sim-input sim-odds-input"
+        min="1.01" step="0.01" placeholder="1.00"
         value="${esc(oddsVal)}" data-source="${oddsSource}" />
     </div>
   </div>
@@ -365,7 +385,9 @@ function buildTodaySection(sim, todayGames, alreadyBetToday, todayBets) {
   return `
 <div class="sim-today-section" id="sim-today-section">
   ${header}
-  ${rows}
+  ${placedRows}
+  ${divider}
+  ${interactiveRows}
   <div class="sim-today-footer">
     <button class="sim-confirm-btn" id="sim-confirm-btn" disabled>Bets bestätigen</button>
   </div>
@@ -382,9 +404,9 @@ function wireConfirm(sim) {
     if (!checked.length) { confirmBtn.disabled = true; return; }
     let ok = true;
     checked.forEach(cb => {
-      const id = cb.dataset.gameid;
-      const stake = parseFloat(section.querySelector(`.sim-stake-input[data-gameid="${id}"]`).value);
-      const odds  = parseFloat(section.querySelector(`.sim-odds-input[data-gameid="${id}"]`).value);
+      const row = cb.closest('.sim-today-row');
+      const stake = parseFloat(row.querySelector('.sim-stake-input').value);
+      const odds  = parseFloat(row.querySelector('.sim-odds-input').value);
       if (!stake || stake <= 0 || !odds || odds <= 1) ok = false;
     });
     confirmBtn.disabled = !ok;
@@ -403,16 +425,16 @@ function placeBets(sim, section) {
   const today = todayStr();
 
   checked.forEach(cb => {
-    const id = cb.dataset.gameid;
-    const stakeRaw = parseFloat(section.querySelector(`.sim-stake-input[data-gameid="${id}"]`).value);
-    const oddsRaw  = parseFloat(section.querySelector(`.sim-odds-input[data-gameid="${id}"]`).value);
+    const row = cb.closest('.sim-today-row');
+    const stakeRaw = parseFloat(row.querySelector('.sim-stake-input').value);
+    const oddsRaw  = parseFloat(row.querySelector('.sim-odds-input').value);
     const stake    = parseFloat(Math.min(stakeRaw, sim.capital).toFixed(2));
     const odds     = parseFloat(oddsRaw.toFixed(2));
     if (stake <= 0) return;
 
     sim.bets.push({
       date: today,
-      gameId: id,
+      gameId: cb.dataset.gameid,
       home_team: cb.dataset.home,
       away_team: cb.dataset.away,
       predicted_winner: cb.dataset.winner,

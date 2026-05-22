@@ -18,7 +18,7 @@ else:
 # Heutige Spiele kombinieren und Duplikate entfernen
 if not output_today.empty:
     combined_today = pd.concat([existing_today, output_today], ignore_index=True)
-    combined_today.drop_duplicates(subset=["Date", "Home Team", "Away Team"], keep="last", inplace=True)
+    combined_today.drop_duplicates(subset=["Date", "Home Team", "Away Team"], keep="first", inplace=True)
 else:
     combined_today = existing_today
 

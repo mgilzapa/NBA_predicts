@@ -1,19 +1,10 @@
 {
-  "generated_at": "2026-05-20T11:58:08",
-  "total_rows": 12788,
-  "features_checked": 99,
-  "latest_game_date": "2026-05-19",
+  "generated_at": "2026-05-21T07:31:03",
+  "total_rows": 12789,
+  "features_checked": 66,
+  "latest_game_date": "2026-05-20",
   "issues": [],
   "warnings": [
-    "'home_off_rating': 90.0% null",
-    "'away_off_rating': 90.0% null",
-    "'off_rating_diff': 90.0% null",
-    "'home_def_rating': 90.0% null",
-    "'away_def_rating': 90.0% null",
-    "'def_rating_diff': 90.0% null",
-    "'home_net_rating': 90.0% null",
-    "'away_net_rating': 90.0% null",
-    "'net_rating_diff': 90.0% null",
     "'home_rest_days': 307 Ausreißer außerhalb [-3.0, 7.0]",
     "'away_rest_days': 295 Ausreißer außerhalb [-3.0, 7.0]"
   ],
@@ -65,26 +56,26 @@
       "alert": false
     },
     "2025": {
-      "games": 1296,
-      "home_win_rate": 0.5556,
+      "games": 1297,
+      "home_win_rate": 0.5559,
       "alert": false
     }
   },
   "outlier_flags": {
     "home_elo": {
       "n_outliers": 0,
-      "low_bound": 695.73,
-      "high_bound": 2325.68
+      "low_bound": 695.57,
+      "high_bound": 2325.9
     },
     "away_elo": {
       "n_outliers": 0,
       "low_bound": 693.93,
-      "high_bound": 2330.21
+      "high_bound": 2330.22
     },
     "elo_diff": {
       "n_outliers": 0,
-      "low_bound": -1089.39,
-      "high_bound": 1086.96
+      "low_bound": -1089.37,
+      "high_bound": 1086.95
     },
     "home_rest_days": {
       "n_outliers": 307,

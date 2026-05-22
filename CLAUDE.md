@@ -87,12 +87,11 @@ Four standalone scripts that can be run after the pipeline or on demand. All wri
 | `feature_drift_detector.py` | Features in `feature_cols.csv` missing from `model_data.csv`; model feature-count mismatch | `output/feature_drift_report.json` |
 | `odds_feature_injector.py` | Blends model probability with no-vig market probability from `odds.json` (α=0.5) | updates `predictions.xlsx` in place |
 | `model_evaluator.py` | Overall/7-day/30-day accuracy vs. baseline, confidence calibration, daily trend | `output/model_evaluation.json` |
-| `auto_retrainer.py` | Retrains XGBoost + re-calibrates when accuracy drops below baseline or `--force` | `output/retraining_report.json` |
-| `calibration_wrapper.py` | Fits IsotonicRegression on last 90 days, saves `models/calibration_model.pkl` | `output/calibration_report.json` |
+| `auto_retrainer.py` | Retrains XGBoost when accuracy drops below baseline or `--force` | `output/retraining_report.json` |
 | `prediction_auditor.py` | Sanity-checks today's predictions: high confidence, model vs. market divergence, ELO upsets, form upsets | `output/prediction_audit_report.json` |
 | `dashboard_exporter.py` | Aggregates all agent reports into `web/dashboard.json` for the frontend Dashboard tab | `web/dashboard.json` |
 
-`data_quality_checker`, `feature_drift_detector`, `odds_feature_injector`, `prediction_auditor`, `model_evaluator`, `auto_retrainer`, and `dashboard_exporter` are wired into `run_all.py`. `calibration_wrapper` is triggered automatically by `auto_retrainer` after retraining.
+`data_quality_checker`, `feature_drift_detector`, `odds_feature_injector`, `prediction_auditor`, `model_evaluator`, `auto_retrainer`, and `dashboard_exporter` are wired into `run_all.py`.
 
 ## Dashboard tab
 

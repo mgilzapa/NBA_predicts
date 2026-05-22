@@ -1,24 +1,24 @@
 {
-  "generated_at": "2026-05-20T11:58:32",
-  "overall_status": "critical",
+  "generated_at": "2026-05-21T07:31:43",
+  "overall_status": "warning",
   "model": {
-    "overall_accuracy": 0.3333,
-    "baseline_accuracy": 0.3333,
+    "overall_accuracy": 0.5,
+    "baseline_accuracy": 0.5,
     "vs_baseline": 0.0,
-    "total_games": 3,
+    "total_games": 4,
     "last_7_days": {
-      "games": 3,
-      "accuracy": 0.3333
+      "games": 4,
+      "accuracy": 0.5
     },
     "last_30_days": {
-      "games": 3,
-      "accuracy": 0.3333
+      "games": 4,
+      "accuracy": 0.5
     },
     "calibration": [
       {
         "range": "60-70%",
-        "games": 1,
-        "accuracy": 0.0
+        "games": 2,
+        "accuracy": 0.5
       },
       {
         "range": "80-100%",
@@ -32,40 +32,40 @@
     "data_quality": {
       "passed": true,
       "issues": 0,
-      "warnings": 11,
-      "generated_at": "2026-05-20T11:58:08"
+      "warnings": 2,
+      "generated_at": "2026-05-21T07:31:03"
     },
     "feature_drift": {
-      "passed": false,
-      "issues": 1,
+      "passed": true,
+      "issues": 0,
       "warnings": 1,
-      "generated_at": "2026-05-20T11:58:09"
+      "generated_at": "2026-05-21T07:31:06"
     },
     "prediction_audit": {
       "passed": true,
       "predictions": 1,
-      "flags": 0,
-      "generated_at": "2026-05-20T11:58:24"
+      "flags": 1,
+      "generated_at": "2026-05-21T07:31:30"
     },
     "retraining": {
       "retrained": false,
-      "reason": "Kein Trigger — Accuracy OK (7d: 0.3333)",
+      "reason": "Kein Trigger — Accuracy OK (7d: 0.5)",
       "test_accuracy": null,
-      "generated_at": "2026-05-20T11:58:32"
+      "generated_at": "2026-05-21T07:31:42"
     }
   },
   "observations": [
     {
-      "source": "feature_drift",
-      "severity": "high",
-      "title": "Feature Drift erkannt",
-      "detail": "Modell erwartet 79 Features, feature_cols.csv hat 87 effektive Features (99 gesamt - 12 EXCLUDE_COLS)"
+      "source": "prediction_audit",
+      "severity": "medium",
+      "title": "Cleveland Cavaliers @ New York Knicks",
+      "detail": "[high_confidence] Confidence 92.4% > 85% — ggf. Feature-Anomalie"
     },
     {
       "source": "feature_drift",
       "severity": "low",
       "title": "Neue Features verfuegbar",
-      "detail": "22 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 'home_assists', 'home_steals', 'home_blocks']  (+12 weitere)"
+      "detail": "44 mögliche neue Features in model_data.csv (nicht in feature_cols.csv): ['home_elo', 'away_elo', 'home_elo_games_played', 'away_elo_games_played', 'home_division', 'away_division', 'home_points', 'home_reboundsDefensive', 'home_reboundsOffensive', 'home_assists']  (+34 weitere)"
     }
   ]
 }

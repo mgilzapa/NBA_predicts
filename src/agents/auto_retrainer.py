@@ -2,7 +2,7 @@
 
 Checks model_evaluation.json for performance degradation.
 If triggered, retrains the XGBoost model headlessly (no input() prompts),
-saves the new model, then re-runs calibration.
+saves the new model.
 
 Trigger conditions (any one is sufficient):
   - alert_model_below_baseline is True  (model < home-team baseline)
@@ -18,7 +18,6 @@ Usage:
 import argparse
 import json
 import os
-import subprocess
 import sys
 
 import joblib
@@ -31,7 +30,6 @@ EVAL_JSON = os.path.join(BASE_DIR, "output", "model_evaluation.json")
 MODEL_DATA_CSV = os.path.join(BASE_DIR, "data", "model_data.csv")
 FEATURE_COLS_CSV = os.path.join(BASE_DIR, "models", "feature_cols.csv")
 MODEL_PKL = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
-CALIB_SCRIPT = os.path.join(BASE_DIR, "src", "agents", "calibration_wrapper.py")
 REPORT_PATH = os.path.join(BASE_DIR, "output", "retraining_report.json")
 
 ACCURACY_FLOOR  = 0.50   # retrain if 7-day accuracy drops below this
@@ -49,7 +47,10 @@ EXCLUDE_COLS = [
     # Temporal leakage: total playoff exp across all time merged statically to every row
     "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
     # Zero importance in trained model — dead weight
-    "h2h_winrate_diff", "home_series_wins", "is_playoff",
+    "h2h_winrate_diff", "home_series_wins", "away_series_wins",
+    "market_prob_home_win",
+    # Redundant ELO encoding — elo_diff captures the same signal
+    "home_elo", "away_elo", "elo_expected_home_win",
 ]
 
 
@@ -88,12 +89,14 @@ def retrain() -> dict:
 
     model = XGBClassifier(
         n_estimators=400,
-        max_depth=4,
+        max_depth=3,
         learning_rate=0.05,
         subsample=0.8,
         colsample_bytree=0.8,
-        min_child_weight=3,
-        gamma=0.5,
+        min_child_weight=10,
+        gamma=1.0,
+        reg_alpha=0.5,
+        reg_lambda=2.0,
         objective="binary:logistic",
         eval_metric="logloss",
         random_state=42,
@@ -106,6 +109,7 @@ def retrain() -> dict:
     baseline_acc = float(test["home_win"].mean()) if len(test) > 0 else None
 
     joblib.dump(model, MODEL_PKL)
+    pd.Series(feature_cols).to_csv(FEATURE_COLS_CSV, index=False)
 
     return {
         "train_games": len(train),
@@ -141,9 +145,7 @@ def _load_data():
             (df_model["home_elo_games_played"] > 20) &
             (df_model["away_elo_games_played"] > 20)
         ]
-    # Regular-season model only — playoff rows go to the separate playoff model
-    if "is_playoff" in df_model.columns:
-        df_model = df_model[df_model["is_playoff"] == 0]
+    # Playoff games included — model learns both regular-season and playoff dynamics
 
     train = df_model[df_model["gameDateTimeEst"] < test_start].copy()
     test  = df_model[
@@ -271,9 +273,8 @@ def optimize(n_trials: int = 50):
 
     if improved:
         joblib.dump(final_model, MODEL_PKL)
+        pd.Series(feature_cols).to_csv(FEATURE_COLS_CSV, index=False)
         print(f"  Verbesserung: +{new_acc - (current_acc or 0):.4%} — Modell gespeichert.")
-        if os.path.exists(CALIB_SCRIPT):
-            subprocess.run([sys.executable, CALIB_SCRIPT], check=False, cwd=BASE_DIR)
     else:
         delta = (new_acc - current_acc) if (new_acc and current_acc) else 0
         print(f"  Keine ausreichende Verbesserung ({delta:+.4%}) — altes Modell behalten.")
@@ -309,11 +310,6 @@ def run(force: bool = False):
             if stats["test_accuracy"] is not None:
                 print(f"  Test-Acc: {stats['test_accuracy']:.2%}  (Baseline: {stats['baseline_accuracy']:.2%})")
             print(f"  Modell gespeichert: {MODEL_PKL}")
-
-            # Kalibrierung sofort neu berechnen
-            if os.path.exists(CALIB_SCRIPT):
-                print(f"  Starte Kalibrierung...")
-                subprocess.run([sys.executable, CALIB_SCRIPT], check=False, cwd=BASE_DIR)
 
             report = {"retrained": True, "reason": reason, **stats}
         except Exception as exc:

@@ -51,7 +51,7 @@ def update_all_predictions():
     # Duplikate entfernen
     dedup_col = target_key_column if target_key_column in combined.columns else key_column
     before = len(combined)
-    combined.drop_duplicates(subset=[dedup_col], keep="last", inplace=True)
+    combined.drop_duplicates(subset=[dedup_col], keep="first", inplace=True)
     after = len(combined)
     if before > after:
         print(f"Info: {before - after} Duplikate entfernt.")

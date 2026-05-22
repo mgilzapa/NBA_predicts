@@ -706,8 +706,7 @@ feature_cols = [
     "home_away_winrate", "away_away_winrate",
     "home_last_game_close", "away_last_game_close",
     "same_division", "is_playoff",
-    "home_elo", "away_elo", "elo_diff",
-    "elo_expected_home_win",
+    "elo_diff",
     "home_consecutive_away", "away_consecutive_away",
     "home_games_last7", "away_games_last7",
     "home_off_rating", "away_off_rating", "off_rating_diff",
@@ -778,5 +777,8 @@ print(f"\nGespeichert: {model_output_path}")
 
 feat_path = os.path.join(base_dir, "models", "feature_cols.csv")
 os.makedirs(os.path.join(base_dir, "models"), exist_ok=True)
-pd.Series(feature_cols).to_csv(feat_path, index=False)
-print(f"Feature-Liste gespeichert: {feat_path} ({len(feature_cols)} Features)")
+if not os.path.exists(feat_path):
+    pd.Series(feature_cols).to_csv(feat_path, index=False)
+    print(f"Feature-Liste gespeichert: {feat_path} ({len(feature_cols)} Features)")
+else:
+    print(f"Feature-Liste beibehalten: {feat_path} (manuell kuratiert – nicht überschrieben)")

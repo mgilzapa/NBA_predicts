@@ -1,40 +1,22 @@
 {
-  "generated_at": "2026-05-20T11:58:26",
+  "generated_at": "2026-05-21T07:31:33",
   "today": [
     {
-      "gameId": "42500312",
-      "date": "2026-05-20",
-      "time": "20:30",
-      "home_team": "Oklahoma City Thunder",
-      "away_team": "San Antonio Spurs",
-      "predicted_winner": "Oklahoma City Thunder",
-      "probability_home_win": 0.6624,
-      "home_elo": 1787.9,
-      "away_elo": 1708.2,
-      "bet_value": -0.0594,
-      "best_odds": 1.42,
-      "best_bookmaker": "DraftKings"
-    }
-  ],
-  "yesterday": [
-    {
-      "gameId": "42500301",
-      "date": "2026-05-19",
+      "gameId": "42500302",
+      "date": "2026-05-21",
       "time": "20:00",
       "home_team": "New York Knicks",
       "away_team": "Cleveland Cavaliers",
       "predicted_winner": "New York Knicks",
-      "probability_home_win": 0.789,
-      "home_elo": 1650.4,
-      "away_elo": 1616.2,
-      "bet_value": 0.1046,
-      "best_odds": 1.4,
-      "best_bookmaker": "FanDuel",
-      "actual_winner": "New York Knicks",
-      "correct": true
+      "probability_home_win": 0.9243,
+      "home_elo": 1656.9,
+      "away_elo": 1626.9,
+      "bet_value": 0.3217,
+      "best_odds": 1.43,
+      "best_bookmaker": "DraftKings"
     }
   ],
-  "all": [
+  "yesterday": [
     {
       "gameId": "42500312",
       "date": "2026-05-20",
@@ -48,8 +30,42 @@
       "bet_value": 0.1462,
       "best_odds": 1.42,
       "best_bookmaker": "DraftKings",
+      "actual_winner": "Oklahoma City Thunder",
+      "correct": true
+    }
+  ],
+  "all": [
+    {
+      "gameId": "42500302",
+      "date": "2026-05-21",
+      "time": "20:00",
+      "home_team": "New York Knicks",
+      "away_team": "Cleveland Cavaliers",
+      "predicted_winner": "Cleveland Cavaliers",
+      "probability_home_win": 0.5,
+      "home_elo": 1656.9,
+      "away_elo": 1626.9,
+      "bet_value": 0.515,
+      "best_odds": 3.03,
+      "best_bookmaker": "BetUS",
       "actual_winner": null,
       "correct": null
+    },
+    {
+      "gameId": "42500312",
+      "date": "2026-05-20",
+      "time": "20:30",
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "San Antonio Spurs",
+      "predicted_winner": "Oklahoma City Thunder",
+      "probability_home_win": 0.8072,
+      "home_elo": 1787.9,
+      "away_elo": 1708.2,
+      "bet_value": 0.1462,
+      "best_odds": 1.42,
+      "best_bookmaker": "DraftKings",
+      "actual_winner": "Oklahoma City Thunder",
+      "correct": true
     },
     {
       "gameId": "42500301",

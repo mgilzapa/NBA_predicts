@@ -1,7 +1,14 @@
 {
-  "generated_at": "2026-05-20T11:58:24",
+  "generated_at": "2026-05-21T07:31:30",
   "predictions": 1,
-  "flags": [],
+  "flags": [
+    {
+      "game": "Cleveland Cavaliers @ New York Knicks",
+      "type": "high_confidence",
+      "detail": "Confidence 92.4% > 85% — ggf. Feature-Anomalie",
+      "severity": "medium"
+    }
+  ],
   "warnings": [],
   "passed": true
 }

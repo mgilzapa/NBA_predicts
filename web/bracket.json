@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-05-20T11:58:29",
+  "generated_at": "2026-05-21T11:35:18",
   "season": "2025-26",
   "east": {
     "r1": [
@@ -12,8 +12,16 @@
         "winner": "Detroit Pistons",
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.7992,
-          "predicted_length": 6
+          "win_probability": 0.8034,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.275,
+            "4-2": 0.188,
+            "4-3": 0.181,
+            "4-0": 0.159,
+            "2-4": 0.079
+          }
         }
       },
       {
@@ -25,8 +33,16 @@
         "winner": "Philadelphia 76ers",
         "prediction": {
           "winner": "Boston Celtics",
-          "win_probability": 0.8195,
-          "predicted_length": 6
+          "win_probability": 0.9734,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.42,
+            "4-0": 0.319,
+            "4-2": 0.134,
+            "4-3": 0.1,
+            "2-4": 0.015
+          }
         }
       },
       {
@@ -38,8 +54,16 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.8201,
-          "predicted_length": 6
+          "win_probability": 0.9188,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.333,
+            "4-0": 0.279,
+            "4-2": 0.185,
+            "4-3": 0.121,
+            "3-4": 0.033
+          }
         }
       },
       {
@@ -51,8 +75,16 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Cleveland Cavaliers",
-          "win_probability": 0.6718,
-          "predicted_length": 6
+          "win_probability": 0.6283,
+          "predicted_length": 7,
+          "predicted_score": "4-3",
+          "outcome_distribution": {
+            "4-3": 0.209,
+            "4-1": 0.192,
+            "2-4": 0.154,
+            "4-2": 0.149,
+            "3-4": 0.108
+          }
         }
       }
     ],
@@ -66,8 +98,16 @@
         "winner": "Cleveland Cavaliers",
         "prediction": {
           "winner": "Detroit Pistons",
-          "win_probability": 0.5,
-          "predicted_length": 6
+          "win_probability": 0.8344,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.299,
+            "4-2": 0.184,
+            "4-3": 0.18,
+            "4-0": 0.172,
+            "2-4": 0.071
+          }
         }
       },
       {
@@ -79,8 +119,16 @@
         "winner": "New York Knicks",
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.8046,
-          "predicted_length": 6
+          "win_probability": 0.9819,
+          "predicted_length": 4,
+          "predicted_score": "4-0",
+          "outcome_distribution": {
+            "4-0": 0.419,
+            "4-1": 0.378,
+            "4-2": 0.122,
+            "4-3": 0.063,
+            "2-4": 0.009
+          }
         }
       }
     ],
@@ -94,8 +142,16 @@
         "winner": null,
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.5748,
-          "predicted_length": 6
+          "win_probability": 0.8607,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.333,
+            "4-3": 0.188,
+            "4-0": 0.172,
+            "4-2": 0.168,
+            "2-4": 0.066
+          }
         }
       }
     ],
@@ -112,8 +168,16 @@
         "winner": "Oklahoma City Thunder",
         "prediction": {
           "winner": "Oklahoma City Thunder",
-          "win_probability": 0.8201,
-          "predicted_length": 6
+          "win_probability": 0.971,
+          "predicted_length": 4,
+          "predicted_score": "4-0",
+          "outcome_distribution": {
+            "4-0": 0.408,
+            "4-1": 0.347,
+            "4-2": 0.147,
+            "4-3": 0.068,
+            "3-4": 0.013
+          }
         }
       },
       {
@@ -125,8 +189,16 @@
         "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.8308,
-          "predicted_length": 5
+          "win_probability": 0.9369,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.401,
+            "4-0": 0.218,
+            "4-3": 0.162,
+            "4-2": 0.156,
+            "2-4": 0.036
+          }
         }
       },
       {
@@ -138,8 +210,16 @@
         "winner": "Minnesota Timberwolves",
         "prediction": {
           "winner": "Denver Nuggets",
-          "win_probability": 0.6987,
-          "predicted_length": 6
+          "win_probability": 0.6793,
+          "predicted_length": 7,
+          "predicted_score": "4-3",
+          "outcome_distribution": {
+            "4-3": 0.24,
+            "4-1": 0.223,
+            "2-4": 0.154,
+            "4-2": 0.141,
+            "3-4": 0.088
+          }
         }
       },
       {
@@ -151,8 +231,16 @@
         "winner": "Los Angeles Lakers",
         "prediction": {
           "winner": "Los Angeles Lakers",
-          "win_probability": 0.6718,
-          "predicted_length": 6
+          "win_probability": 0.5303,
+          "predicted_length": 7,
+          "predicted_score": "4-3",
+          "outcome_distribution": {
+            "4-3": 0.185,
+            "2-4": 0.176,
+            "4-1": 0.147,
+            "4-2": 0.138,
+            "3-4": 0.133
+          }
         }
       }
     ],
@@ -166,8 +254,16 @@
         "winner": "Oklahoma City Thunder",
         "prediction": {
           "winner": "Oklahoma City Thunder",
-          "win_probability": 0.8046,
-          "predicted_length": 6
+          "win_probability": 0.9301,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.319,
+            "4-0": 0.316,
+            "4-2": 0.196,
+            "4-3": 0.1,
+            "3-4": 0.032
+          }
         }
       },
       {
@@ -179,8 +275,16 @@
         "winner": "San Antonio Spurs",
         "prediction": {
           "winner": "San Antonio Spurs",
-          "win_probability": 0.6987,
-          "predicted_length": 6
+          "win_probability": 0.9092,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.345,
+            "4-0": 0.244,
+            "4-2": 0.178,
+            "4-3": 0.142,
+            "2-4": 0.039
+          }
         }
       }
     ],
@@ -188,30 +292,46 @@
       {
         "home_team": "Oklahoma City Thunder",
         "away_team": "San Antonio Spurs",
-        "home_wins": 0,
+        "home_wins": 1,
         "away_wins": 1,
         "status": "active",
         "winner": null,
         "prediction": {
-          "winner": "Oklahoma City Thunder",
-          "win_probability": 0.6987,
-          "predicted_length": 6
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.503,
+          "predicted_length": 6,
+          "predicted_score": "2-4",
+          "outcome_distribution": {
+            "4-3": 0.241,
+            "2-4": 0.236,
+            "4-2": 0.15,
+            "3-4": 0.139,
+            "1-4": 0.128
+          }
         }
       }
     ],
-    "finalist": "Oklahoma City Thunder"
+    "finalist": "San Antonio Spurs"
   },
   "finals": {
     "home_team": "New York Knicks",
-    "away_team": "Oklahoma City Thunder",
+    "away_team": "San Antonio Spurs",
     "home_wins": 0,
     "away_wins": 0,
     "status": "upcoming",
     "winner": null,
     "prediction": {
-      "winner": "New York Knicks",
-      "win_probability": 0.5,
-      "predicted_length": 6
+      "winner": "San Antonio Spurs",
+      "win_probability": 0.5155,
+      "predicted_length": 6,
+      "predicted_score": "2-4",
+      "outcome_distribution": {
+        "2-4": 0.244,
+        "4-3": 0.229,
+        "4-1": 0.134,
+        "3-4": 0.115,
+        "1-4": 0.096
+      }
     }
   }
 }

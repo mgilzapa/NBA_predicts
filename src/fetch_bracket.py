@@ -7,15 +7,11 @@ import numpy as np
 import pandas as pd
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-GAMES_CSV            = os.path.join(BASE_DIR, "data",   "nba_api_games.csv")
-MODEL_DATA_CSV       = os.path.join(BASE_DIR, "data",   "model_data.csv")
-PLAYOFF_STATS_CSV    = os.path.join(BASE_DIR, "data",   "playoff_stats.csv")
-MODEL_PKL            = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
-FEATURE_CSV          = os.path.join(BASE_DIR, "models", "feature_cols.csv")
-PLAYOFF_MODEL_PKL    = os.path.join(BASE_DIR, "models", "best_xgb_model_playoff.pkl")
-PLAYOFF_FEATURE_CSV  = os.path.join(BASE_DIR, "models", "feature_cols_playoff.csv")
-PLAYOFF_CALIB_PKL    = os.path.join(BASE_DIR, "models", "calibration_model_playoff.pkl")
-OUTPUT_JSON          = os.path.join(BASE_DIR, "web",    "bracket.json")
+GAMES_CSV      = os.path.join(BASE_DIR, "data",   "nba_api_games.csv")
+MODEL_DATA_CSV = os.path.join(BASE_DIR, "data",   "model_data.csv")
+MODEL_PKL      = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
+FEATURE_CSV    = os.path.join(BASE_DIR, "models", "feature_cols.csv")
+OUTPUT_JSON    = os.path.join(BASE_DIR, "web",    "bracket.json")
 
 SEASON_CODE = "42500"   # prefix of 2025-26 playoff game IDs
 SEASON      = "2025-26"
@@ -61,22 +57,26 @@ def simulate_series(home_wins, away_wins, p1, p2):
     p1: P(series home team wins) when series home team is hosting (games 1,2,5,7)
     p2: P(series home team wins) when series away team is hosting (games 3,4,6)
 
-    Returns (p_home_wins_series, expected_total_games_rounded).
-    If the series is already decided, returns immediately with 0 remaining games.
+    Returns (p_home_wins_series, mode_total_games, outcome_probs).
+    mode_total_games: total games in the single most likely outcome (mode, not expected value).
+    outcome_probs: dict mapping "h-a" strings (e.g. "4-2") to their probability.
     """
     if home_wins == 4:
-        return 1.0, home_wins + away_wins
+        key = f"{home_wins}-{away_wins}"
+        return 1.0, home_wins + away_wins, {key: 1.0}
     if away_wins == 4:
-        return 0.0, home_wins + away_wins
+        key = f"{home_wins}-{away_wins}"
+        return 0.0, home_wins + away_wins, {key: 1.0}
 
     total_p_home = 0.0
-    total_exp_games = 0.0
+    outcome_probs = {}
 
     def dfs(h, a, prob):
-        nonlocal total_p_home, total_exp_games
+        nonlocal total_p_home
         if h == 4 or a == 4:
             total_p_home += prob * (1.0 if h == 4 else 0.0)
-            total_exp_games += prob * (h + a)
+            key = f"{h}-{a}"
+            outcome_probs[key] = outcome_probs.get(key, 0.0) + prob
             return
         game_num = h + a + 1
         p = p1 if game_num in SERIES_HOME_GAMES else p2
@@ -84,7 +84,10 @@ def simulate_series(home_wins, away_wins, p1, p2):
         dfs(h, a + 1, prob * (1.0 - p))
 
     dfs(home_wins, away_wins, 1.0)
-    return total_p_home, round(total_exp_games)
+
+    best_key = max(outcome_probs, key=outcome_probs.get)
+    mode_games = sum(int(x) for x in best_key.split("-"))
+    return total_p_home, mode_games, outcome_probs
 
 
 def build_series_dict(df_playoff):
@@ -157,7 +160,7 @@ EXCLUDE_COLS = {
     "same_division", "away_opponent_strength",
     "home_injury_impact", "away_injury_impact", "injury_impact_diff",
     "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
-    "h2h_winrate_diff", "home_series_wins", "is_playoff",
+    "h2h_winrate_diff", "home_series_wins",
 }
 
 DERIVED_PAIRS = [
@@ -255,33 +258,34 @@ def build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols):
     return np.array([merged.get(c, np.nan) for c in feature_cols], dtype=float)
 
 
-def predict_series(home_team, away_team, home_snap, away_snap, model, feature_cols):
+def predict_series(home_team, away_team, home_snap, away_snap, model, feature_cols,
+                   cur_home_wins=0, cur_away_wins=0):
     """
-    Predict win probability and expected length for a full series.
+    Predict win probability and series outcome distribution.
 
-    Returns (p_home_wins_series, expected_games) starting from 0-0.
-    Uses simulate_series with home_wins=0, away_wins=0.
+    Returns (p_home_wins_series, mode_total_games, outcome_probs).
+    Starts simulation from (cur_home_wins, cur_away_wins) so active series
+    are evaluated from their actual current state, not 0-0.
     """
-    # p1: P(series home team wins) when they host (games 1,2,5,7)
     row_home_hosts = build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols)
-    # p2: P(series home team wins) when away team hosts (games 3,4,6)
     row_away_hosts = build_feature_row(away_team, home_team, home_snap, away_snap, feature_cols)
     try:
         p1 = float(model.predict_proba(row_home_hosts.reshape(1, -1))[0, 1])
         p_away_wins_away_game = float(model.predict_proba(row_away_hosts.reshape(1, -1))[0, 1])
         p2 = 1.0 - p_away_wins_away_game
     except Exception as e:
-        print(f"  WARNUNG: Modell-Vorhersage fehlgeschlagen ({e}) - verwende 0.5 als Fallback")
-        return 0.5, 6
+        print(f"  WARNUNG: Modell-Vorhersage fehlgeschlagen ({home_team} vs {away_team}): {e}")
+        return 0.5, 6, {}
 
-    return simulate_series(0, 0, p1, p2)
+    return simulate_series(cur_home_wins, cur_away_wins, p1, p2)
 
 
 def _series_obj(home_team, away_team, home_wins, away_wins, status, winner,
                 predict_fn):
     """
     Build the series dict for bracket.json.
-    predict_fn(home, away) → (prob, exp_games) for 0-0 start.
+    predict_fn(home, away, cur_hw, cur_aw) → (prob, mode_games, outcome_probs).
+    Active series are evaluated from their current win state, not 0-0.
     """
     if status == 'tbd':
         return {
@@ -292,9 +296,40 @@ def _series_obj(home_team, away_team, home_wins, away_wins, status, winner,
             'prediction': None,
         }
 
-    prob, exp_games = predict_fn(home_team, away_team) if predict_fn else (0.5, 6)
+    if predict_fn:
+        # Completed series: predict from 0-0 to show what model expected pre-series.
+        # Active/upcoming: predict from current state so remaining games are realistic.
+        sim_hw = 0 if status == 'complete' else home_wins
+        sim_aw = 0 if status == 'complete' else away_wins
+        prob, mode_games, outcome_probs = predict_fn(home_team, away_team, sim_hw, sim_aw)
+    else:
+        prob, mode_games, outcome_probs = 0.5, 6, {}
+
     pred_winner = home_team if prob >= 0.5 else away_team
     pred_prob   = prob if prob >= 0.5 else 1.0 - prob
+
+    # Most likely specific outcome consistent with the predicted winner.
+    # In close series the overall mode can belong to the other team, so we filter
+    # to only consider outcomes where the predicted winner actually wins.
+    home_wins_series = prob >= 0.5
+    winner_outcomes = {
+        k: v for k, v in outcome_probs.items()
+        if (k.startswith("4-")) == home_wins_series
+    }
+    best_score = (
+        max(winner_outcomes, key=winner_outcomes.get) if winner_outcomes
+        else max(outcome_probs, key=outcome_probs.get) if outcome_probs
+        else ("4-2" if home_wins_series else "2-4")
+    )
+
+    # Total games in the predicted score (consistent with best_score)
+    predicted_length = sum(int(x) for x in best_score.split("-"))
+
+    # Top outcomes sorted by probability for frontend display
+    top_outcomes = dict(
+        sorted(outcome_probs.items(), key=lambda x: -x[1])[:5]
+    )
+    outcome_dist = {k: round(v, 3) for k, v in top_outcomes.items()}
 
     return {
         'home_team': home_team,
@@ -304,9 +339,11 @@ def _series_obj(home_team, away_team, home_wins, away_wins, status, winner,
         'status':    status,
         'winner':    winner,
         'prediction': {
-            'winner':           pred_winner,
-            'win_probability':  round(pred_prob, 4),
-            'predicted_length': exp_games,
+            'winner':               pred_winner,
+            'win_probability':      round(pred_prob, 4),
+            'predicted_length':     predicted_length,
+            'predicted_score':      best_score,
+            'outcome_distribution': outcome_dist,
         },
     }
 
@@ -321,7 +358,10 @@ def _effective_winner(series_map, key, predict_fn):
     if s is not None:
         if s['status'] == 'complete':
             return s['winner']
-        prob, _ = predict_fn(s['home_team'], s['away_team']) if predict_fn else (0.5, 6)
+        # Use actual wins for active series (same logic as _series_obj)
+        sim_hw = s['home_wins'] if s['status'] == 'active' else 0
+        sim_aw = s['away_wins'] if s['status'] == 'active' else 0
+        prob, *_ = predict_fn(s['home_team'], s['away_team'], sim_hw, sim_aw) if predict_fn else (0.5, 6, {})
         return s['home_team'] if prob >= 0.5 else s['away_team']
 
     # Series not started yet — derive teams from previous round recursively
@@ -341,7 +381,7 @@ def _effective_winner(series_map, key, predict_fn):
         return None
 
     if home and away and predict_fn:
-        prob, _ = predict_fn(home, away)
+        prob, *_ = predict_fn(home, away)
         return home if prob >= 0.5 else away
     return home
 
@@ -413,63 +453,6 @@ def build_bracket_json(series_map, predict_fn=None):
     }
 
 
-def _playoff_predict_fn(home_team, away_team, home_snap, away_snap,
-                        base_model, base_feat_cols,
-                        playoff_model, playoff_feat_cols,
-                        playoff_stats_idx, playoff_calib=None):
-    """
-    Build feature vectors for the playoff model and simulate the full series.
-
-    For each game in the series (home-hosting and away-hosting), we:
-      1. Build the base feature row
-      2. Add base_prob_home_win from the base model
-      3. Add series context defaults (game 1, 0-0 score)
-      4. Add current-season playoff rolling stats for each team
-    Then call simulate_series with the resulting home/away win probabilities.
-    """
-    def build_po_row(game_home, game_away, series_game_num=1, score_diff=0):
-        base_row  = build_feature_row(game_home, game_away, home_snap, away_snap, base_feat_cols)
-        base_prob = float(base_model.predict_proba(base_row.reshape(1, -1))[0, 1])
-
-        merged = {c: base_row[i] for i, c in enumerate(base_feat_cols)}
-        merged["base_prob_home_win"]    = base_prob
-        merged["series_game_number"]    = float(series_game_num)
-        merged["series_score_diff"]     = float(score_diff)
-        merged["is_closeout_game"]      = float(abs(score_diff) == 3)
-
-        def _stat(team, col):
-            try:
-                return float(playoff_stats_idx.at[team, col])
-            except (KeyError, ValueError):
-                return 0.0
-
-        merged["home_playoff_last3_pts"]        = _stat(game_home, "playoff_pts_last3")
-        merged["away_playoff_last3_pts"]        = _stat(game_away, "playoff_pts_last3")
-        merged["home_playoff_margin_last3"]     = _stat(game_home, "playoff_margin_last3")
-        merged["away_playoff_margin_last3"]     = _stat(game_away, "playoff_margin_last3")
-        merged["home_playoff_home_winrate_hist"] = _stat(game_home, "playoff_home_winrate_hist")
-
-        vec = np.array([merged.get(c, 0.0) for c in playoff_feat_cols], dtype=float)
-        np.nan_to_num(vec, nan=0.0, copy=False)
-        return vec
-
-    try:
-        row_home = build_po_row(home_team, away_team, 1,  0)
-        row_away = build_po_row(away_team, home_team, 1,  0)
-        p1 = float(playoff_model.predict_proba(row_home.reshape(1, -1))[0, 1])
-        p_away_win = float(playoff_model.predict_proba(row_away.reshape(1, -1))[0, 1])
-        p2 = 1.0 - p_away_win
-
-        if playoff_calib is not None:
-            p1 = float(np.clip(playoff_calib.predict([[p1]]), 0.01, 0.99)[0])
-            p2 = float(np.clip(playoff_calib.predict([[p2]]), 0.01, 0.99)[0])
-    except Exception as e:
-        print(f"  WARNUNG: Playoff-Vorhersage fehlgeschlagen ({e}) - Fallback 0.5")
-        return 0.5, 6
-
-    return simulate_series(0, 0, p1, p2)
-
-
 def build_bracket():
     """Main entry point: load data, run predictions, write bracket.json."""
     # 1. Load playoff games
@@ -484,47 +467,14 @@ def build_bracket():
     df_model = pd.read_csv(MODEL_DATA_CSV)
     home_snap, away_snap = get_team_snapshots(df_model)
 
-    # 4. Choose model: prefer playoff model when both model and feature list exist
-    use_playoff = (
-        os.path.exists(PLAYOFF_MODEL_PKL) and
-        os.path.exists(PLAYOFF_FEATURE_CSV)
-    )
+    # 4. Load model
+    model        = joblib.load(MODEL_PKL)
+    feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
+    feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
 
-    if use_playoff:
-        base_model    = joblib.load(MODEL_PKL)
-        base_feat     = pd.read_csv(FEATURE_CSV).squeeze().tolist()
-        base_feat     = [c for c in base_feat if c not in EXCLUDE_COLS]
-
-        playoff_model = joblib.load(PLAYOFF_MODEL_PKL)
-        playoff_feat  = pd.read_csv(PLAYOFF_FEATURE_CSV).squeeze().tolist()
-
-        playoff_calib = None
-        if os.path.exists(PLAYOFF_CALIB_PKL):
-            playoff_calib = joblib.load(PLAYOFF_CALIB_PKL)
-
-        # Load current-season playoff stats for team-level rolling features
-        if os.path.exists(PLAYOFF_STATS_CSV):
-            playoff_stats_idx = pd.read_csv(PLAYOFF_STATS_CSV).set_index("team_name")
-        else:
-            playoff_stats_idx = pd.DataFrame()
-
-        def predict_fn(home_team, away_team):
-            return _playoff_predict_fn(
-                home_team, away_team, home_snap, away_snap,
-                base_model, base_feat,
-                playoff_model, playoff_feat,
-                playoff_stats_idx, playoff_calib,
-            )
-
-        print("Playoff-Modell für Bracket-Vorhersage verwendet.")
-    else:
-        model        = joblib.load(MODEL_PKL)
-        feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
-        feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
-
-        def predict_fn(home_team, away_team):
-            return predict_series(home_team, away_team, home_snap, away_snap,
-                                  model, feature_cols)
+    def predict_fn(home_team, away_team, cur_home_wins=0, cur_away_wins=0):
+        return predict_series(home_team, away_team, home_snap, away_snap,
+                              model, feature_cols, cur_home_wins, cur_away_wins)
 
     # 5. Assemble bracket JSON
     bracket = build_bracket_json(series_map, predict_fn)

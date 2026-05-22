@@ -54,7 +54,10 @@ exclude_cols = [
     # Temporal leakage: total playoff exp across all time merged statically to every row
     "home_playoff_exp", "away_playoff_exp", "playoff_exp_diff",
     # Zero importance in trained model — dead weight
-    "h2h_winrate_diff", "home_series_wins", "is_playoff",
+    "h2h_winrate_diff", "home_series_wins", "away_series_wins",
+    "market_prob_home_win",
+    # Redundant ELO encoding — elo_diff captures the same signal
+    "home_elo", "away_elo", "elo_expected_home_win",
 ]
 feature_cols = [c for c in feature_cols if c not in exclude_cols]
 
@@ -208,25 +211,6 @@ if future.empty:
     print("Keine Spiele heute gefunden.")
     exit()
 
-# Playoff detection: seriesGameNumber is non-null for playoff games
-_is_playoff_game = (
-    "seriesGameNumber" in future.columns and
-    future["seriesGameNumber"].notna().any()
-)
-_playoff_model_path = os.path.join(BASE_DIR, "models", "best_xgb_model_playoff.pkl")
-_playoff_feat_csv   = os.path.join(BASE_DIR, "models", "feature_cols_playoff.csv")
-_playoff_game_feat  = os.path.join(BASE_DIR, "data",   "playoff_game_features.csv")
-_use_playoff_model  = (
-    _is_playoff_game and
-    os.path.exists(_playoff_model_path) and
-    os.path.exists(_playoff_feat_csv) and
-    os.path.exists(_playoff_game_feat)
-)
-if _is_playoff_game:
-    mode_label = "Playoff-Modell" if _use_playoff_model else "Basis-Modell (Playoff-Modell nicht gefunden)"
-    print(f"Playoff-Modus erkannt — verwende {mode_label}.")
-
-
 # -----------------------------
 # 4. Letzte bekannte Team-Features aus Modelldaten extrahieren
 # -----------------------------
@@ -287,7 +271,8 @@ if {"home_last10_winrate", "away_last10_winrate"}.issubset(future.columns):
     future["last10_winrate_diff"] = future["home_last10_winrate"] - future["away_last10_winrate"]
 if {"home_winrate_trend", "away_winrate_trend"}.issubset(future.columns):
     future["winrate_trend_diff"] = future["home_winrate_trend"] - future["away_winrate_trend"]
-future["average_points_diff"] = future["home_last5_avg_points"] - future["away_last5_avg_points"]
+if {"home_last5_avg_points", "away_last5_avg_points"}.issubset(future.columns):
+    future["average_points_diff"] = future["home_last5_avg_points"] - future["away_last5_avg_points"]
 future["average_points_allowed_diff"] = future["home_last5_avg_points_allowed"] - future["away_last5_avg_points_allowed"]
 future["rest_days_diff"] = future["home_rest_days"] - future["away_rest_days"]
 if {"home_h2h_winrate", "away_h2h_winrate"}.issubset(future.columns):
@@ -565,6 +550,24 @@ print(f"Anzahl Spiele mit vollständigen Features: {complete_mask.sum()} von {le
 # -----------------------------
 future_valid = future.loc[complete_mask].sort_values("gameDateTimeEst").copy()
 
+# Clip volatile features to training distribution range — prevents out-of-distribution
+# extrapolation when playoff teams run extreme streaks or margins
+_CLIP_RULES = {
+    "home_last5_mov": (-12, 12), "away_last5_mov": (-12, 12), "mov_diff": (-12, 12),
+    "home_last10_mov": (-10, 10), "away_last10_mov": (-10, 10),
+    "home_current_streak": (-4, 4), "away_current_streak": (-4, 4), "streak_diff": (-4, 4),
+    "home_last5_winrate": (0.1, 0.9), "away_last5_winrate": (0.1, 0.9),
+    "home_last10_winrate": (0.1, 0.9), "away_last10_winrate": (0.1, 0.9),
+    "home_last3_winrate": (0.0, 1.0),
+}
+for col, (lo, hi) in _CLIP_RULES.items():
+    if col in future_valid.columns:
+        before = future_valid[col].values[0] if len(future_valid) > 0 else None
+        future_valid[col] = future_valid[col].clip(lo, hi)
+        after = future_valid[col].values[0] if len(future_valid) > 0 else None
+        if before != after:
+            print(f"  CLIP {col}: {before:.2f} -> {after:.2f}")
+
 if future_valid.empty:
     print("WARNUNG: Keine Spiele mit vollständigen Features – Vorhersage übersprungen.")
 else:
@@ -578,48 +581,6 @@ else:
         raw_probs = np.full(len(future_valid), 0.5)
 
     future_valid["prediction"] = preds
-    future_valid["base_prob_home_win"] = raw_probs  # raw base-model probability (used as feature for playoff model)
-
-    if _use_playoff_model:
-        try:
-            _pf = pd.read_csv(_playoff_game_feat)
-            future_valid = future_valid.merge(_pf, on="gameId", how="left").reset_index(drop=True)
-
-            _pf_cols = pd.read_csv(_playoff_feat_csv).squeeze().tolist()
-            for _c in _pf_cols:
-                if _c not in future_valid.columns:
-                    future_valid[_c] = 0.0
-
-            X_po = future_valid[_pf_cols].fillna(0).values
-            _po_model = joblib.load(_playoff_model_path)
-            raw_probs = _po_model.predict_proba(X_po)[:, 1]
-            future_valid["prediction"] = _po_model.predict(X_po).astype(int)
-
-            _po_calib_path = os.path.join(BASE_DIR, "models", "calibration_model_playoff.pkl")
-            if os.path.exists(_po_calib_path):
-                try:
-                    _po_calib = joblib.load(_po_calib_path)
-                    raw_probs = np.clip(
-                        _po_calib.predict(raw_probs.reshape(-1, 1)), 0.01, 0.99
-                    )
-                except Exception as _ce:
-                    print(f"Playoff-Kalibrierung übersprungen: {_ce}")
-
-            print(f"Playoff-Modell angewendet ({len(_pf_cols)} Features).")
-        except Exception as _po_err:
-            print(f"WARNUNG: Playoff-Modell fehlgeschlagen ({_po_err}), falle auf Basis-Modell zurück.")
-            _use_playoff_model = False
-
-    if not _use_playoff_model:
-        calib_path = os.path.join(BASE_DIR, "models", "calibration_model.pkl")
-        if os.path.exists(calib_path):
-            try:
-                calibrator = joblib.load(calib_path)
-                raw_probs = np.clip(
-                    calibrator.predict(raw_probs.reshape(-1, 1)), 0.01, 0.99
-                )
-            except Exception as _calib_err:
-                print(f"Kalibrierung übersprungen: {_calib_err}")
 
     future_valid["probability_home_win"] = raw_probs
     future_valid["predicted_winner"] = future_valid.apply(

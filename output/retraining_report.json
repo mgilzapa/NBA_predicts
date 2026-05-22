@@ -1,5 +1,12 @@
 {
-  "retrained": false,
-  "reason": "Kein Trigger \u2014 Accuracy OK (7d: 0.3333)",
-  "generated_at": "2026-05-20T11:58:32"
+  "retrained": true,
+  "reason": "--force flag gesetzt",
+  "train_games": 12230,
+  "test_games": 237,
+  "feature_count": 75,
+  "train_accuracy": 0.6823,
+  "test_accuracy": 0.7342,
+  "baseline_accuracy": 0.6034,
+  "vs_baseline": 0.1308,
+  "generated_at": "2026-05-21T11:19:00"
 }

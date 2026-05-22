@@ -3,8 +3,6 @@ import sys
 import os
 from datetime import datetime
 
-import pandas as pd
-
 
 def run_script(script_name):
     print(f"[{datetime.now()}] Starte {script_name}...")
@@ -20,27 +18,11 @@ def run_script(script_name):
     print("-" * 50)
 
 
-def is_playoff_season():
-    """Return True if today's schedule contains playoff games."""
-    schedule_path = os.path.join("data", "schedule_round_1.csv")
-    if not os.path.exists(schedule_path):
-        return False
-    try:
-        df = pd.read_csv(schedule_path)
-        return (
-            "seriesGameNumber" in df.columns and
-            df["seriesGameNumber"].notna().any()
-        )
-    except Exception:
-        return False
-
-
 if __name__ == "__main__":
     # Odds API Key setzen falls noch nicht als Umgebungsvariable vorhanden
     if not os.environ.get("ODDS_API_KEY"):
         os.environ["ODDS_API_KEY"] = "373d3a5bd6b6dad8581de9490f258177"
 
-    # Reihenfolge der Skripte (angepasst an deine tatsächlichen Dateinamen)
     scripts = [
         "src/nba_api_test.py",                      # Ergebnisse von der API holen
         "src/scrape_upcoming_games.py",             # Kommende Spiele scrapen
@@ -51,14 +33,6 @@ if __name__ == "__main__":
         "src/agents/data_quality_checker.py",       # Datenqualität prüfen
         "src/agents/feature_drift_detector.py",     # Feature-Drift erkennen
     ]
-
-    # Steps 6b + 6c: playoff-only, run after feature_engineering and before predict.py
-    if is_playoff_season():
-        print(f"[{datetime.now()}] Playoff-Saison erkannt — füge Playoff-Schritte hinzu.")
-        scripts += [
-            "src/fetch_playoff_stats.py",           # [6b] Playoff-Statistiken holen
-            "src/playoff_feature_engineering.py",   # [6c] Playoff-Features berechnen
-        ]
 
     scripts += [
         "src/predict.py",                           # Vorhersage für heute

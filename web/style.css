@@ -1779,6 +1779,17 @@ td.td-odds { white-space: nowrap; }
   opacity: 0.85;
 }
 
+.sim-section-divider {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 10px 0 4px;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+}
+
 .sim-today-check-wrap {
   display: flex;
   align-items: center;
