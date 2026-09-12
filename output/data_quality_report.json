@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-05-22T04:41:26",
-  "total_rows": 12790,
+  "generated_at": "2026-06-11T05:52:04",
+  "total_rows": 12801,
   "features_checked": 75,
-  "latest_game_date": "2026-05-21",
+  "latest_game_date": "2026-06-10",
   "issues": [],
   "warnings": [
     "'home_rest_days': 307 Ausreißer außerhalb [-3.0, 7.0]",
-    "'away_rest_days': 295 Ausreißer außerhalb [-3.0, 7.0]"
+    "'away_rest_days': 296 Ausreißer außerhalb [-3.0, 7.0]"
   ],
   "passed": true,
   "by_season": {
@@ -56,26 +56,26 @@
       "alert": false
     },
     "2025": {
-      "games": 1298,
-      "home_win_rate": 0.5562,
+      "games": 1309,
+      "home_win_rate": 0.5546,
       "alert": false
     }
   },
   "outlier_flags": {
     "home_elo": {
       "n_outliers": 0,
-      "low_bound": 695.58,
-      "high_bound": 2325.93
+      "low_bound": 695.78,
+      "high_bound": 2326.12
     },
     "away_elo": {
       "n_outliers": 0,
-      "low_bound": 693.65,
-      "high_bound": 2330.58
+      "low_bound": 692.76,
+      "high_bound": 2331.88
     },
     "elo_diff": {
       "n_outliers": 0,
-      "low_bound": -1089.36,
-      "high_bound": 1086.93
+      "low_bound": -1087.95,
+      "high_bound": 1085.69
     },
     "home_rest_days": {
       "n_outliers": 307,
@@ -83,7 +83,7 @@
       "high_bound": 7.0
     },
     "away_rest_days": {
-      "n_outliers": 295,
+      "n_outliers": 296,
       "low_bound": -3.0,
       "high_bound": 7.0
     },
