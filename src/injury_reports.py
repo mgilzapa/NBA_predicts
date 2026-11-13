@@ -6,6 +6,8 @@ from datetime import datetime, timezone
 import pandas as pd
 import requests
 
+from fetch_rosters import load_current_rosters
+
 
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 PLAYER_BOX = os.path.join(BASE_DIR, "data", "player_boxscores.csv")
@@ -364,16 +366,17 @@ def build_player_importance_snapshot(
         on="gameId",
         how="inner",
     )
-    player_games.sort_values(["teamNameFull", "PLAYER_ID", "gameDateTimeEst"], inplace=True)
+    # Form pro Spieler (teamuebergreifend) – ein getradeter Spieler nimmt seine Form mit
+    player_games.sort_values(["PLAYER_ID", "gameDateTimeEst"], inplace=True)
 
     for metric in ["minutes", "points", "reboundsTotal", "assists"]:
         player_games[f"prev_{metric}"] = (
-            player_games.groupby(["teamNameFull", "PLAYER_ID"])[metric]
+            player_games.groupby("PLAYER_ID")[metric]
             .transform(lambda x: shifted_rolling(x, 5, 3).mean())
         )
 
     player_games["prev_games_played"] = (
-        player_games.groupby(["teamNameFull", "PLAYER_ID"]).cumcount()
+        player_games.groupby("PLAYER_ID").cumcount()
     )
     player_games["importance_score"] = (
         0.50 * player_games["prev_minutes"].fillna(0) +
@@ -385,10 +388,22 @@ def build_player_importance_snapshot(
 
     latest = (
         player_games.sort_values("gameDateTimeEst")
-        .groupby(["teamNameFull", "PLAYER_ID"], as_index=False)
+        .groupby("PLAYER_ID", as_index=False)
         .last()
     )
     latest = latest.dropna(subset=["importance_score"]).copy()
+
+    # Aktuelle Kader: Spieler dem NEUEN Team zuordnen, Spieler ohne Kaderplatz entfernen
+    rosters = load_current_rosters()
+    if not rosters.empty:
+        roster_team = rosters.drop_duplicates("PLAYER_ID", keep="last").set_index("PLAYER_ID")["teamNameFull"]
+        moved = latest["PLAYER_ID"].map(roster_team)
+        debug_print(
+            f"Roster-Abgleich: {int((moved.notna() & (moved != latest['teamNameFull'])).sum())} Teamwechsel, "
+            f"{int(moved.isna().sum())} Spieler ohne aktuellen Kaderplatz entfernt"
+        )
+        latest["teamNameFull"] = moved
+        latest = latest.dropna(subset=["teamNameFull"]).copy()
     latest["family_name_norm"] = latest["familyName"].str.lower().str.replace(r"[^a-z0-9]", "", regex=True)
     latest["report_name_norm"] = latest["report_name"].str.lower().str.replace(r"[^a-z0-9]", "", regex=True)
     latest["player_name_norm"] = latest["player_name"].str.lower().str.replace(r"[^a-z0-9]", "", regex=True)

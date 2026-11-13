@@ -32,7 +32,7 @@ def _season_label(date):
     """Oct–Dec → current year; Jan–Jun → previous year (e.g. 2025 = 2024-25 season)."""
     if pd.isna(date):
         return None
-    return date.year if date.month >= 10 else date.year - 1
+    return date.year if date.month >= 8 else date.year - 1
 
 
 def check():

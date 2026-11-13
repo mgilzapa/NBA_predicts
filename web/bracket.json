@@ -1,313 +1,453 @@
 {
-  "generated_at": "2026-06-11T05:52:46",
-  "season": "2025-26",
+  "generated_at": "2026-11-13T01:09:11",
+  "season": "2026-27",
   "east": {
     "r1": [
       {
-        "home_team": "Detroit Pistons",
-        "away_team": "Orlando Magic",
-        "home_wins": 4,
-        "away_wins": 3,
-        "status": "complete",
-        "winner": "Detroit Pistons",
-        "prediction": {
-          "winner": "Detroit Pistons",
-          "win_probability": 0.8034,
-          "predicted_length": 5,
-          "predicted_score": "4-1",
-          "outcome_distribution": {
-            "4-1": 0.275,
-            "4-2": 0.188,
-            "4-3": 0.181,
-            "4-0": 0.159,
-            "2-4": 0.079
-          }
-        }
-      },
-      {
         "home_team": "Boston Celtics",
-        "away_team": "Philadelphia 76ers",
-        "home_wins": 3,
-        "away_wins": 4,
-        "status": "complete",
-        "winner": "Philadelphia 76ers",
+        "away_team": "Charlotte Hornets",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
           "winner": "Boston Celtics",
-          "win_probability": 0.9734,
+          "win_probability": 0.9076,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.42,
-            "4-0": 0.319,
-            "4-2": 0.134,
-            "4-3": 0.1,
-            "2-4": 0.015
-          }
+            "4-1": 0.341,
+            "4-0": 0.318,
+            "4-2": 0.13,
+            "4-3": 0.118,
+            "2-4": 0.039,
+            "3-4": 0.03,
+            "1-4": 0.014,
+            "0-4": 0.01
+          },
+          "team_probabilities": {
+            "Boston Celtics": 0.9076,
+            "Charlotte Hornets": 0.0924
+          },
+          "sims_matched": 3355,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "New York Knicks",
-        "away_team": "Atlanta Hawks",
-        "home_wins": 4,
-        "away_wins": 2,
-        "status": "complete",
-        "winner": "New York Knicks",
+        "home_team": "Detroit Pistons",
+        "away_team": "Miami Heat",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
+        "prediction": {
+          "winner": "Detroit Pistons",
+          "win_probability": 0.7721,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.271,
+            "4-0": 0.214,
+            "4-3": 0.147,
+            "4-2": 0.14,
+            "2-4": 0.095,
+            "3-4": 0.077,
+            "1-4": 0.036,
+            "0-4": 0.02
+          },
+          "team_probabilities": {
+            "Detroit Pistons": 0.7721,
+            "Miami Heat": 0.2279
+          },
+          "sims_matched": 1632,
+          "source": "simulation"
+        }
+      },
+      {
+        "home_team": "Philadelphia 76ers",
+        "away_team": "Cleveland Cavaliers",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
+        "prediction": {
+          "winner": "Philadelphia 76ers",
+          "win_probability": 0.5553,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
+          "outcome_distribution": {
+            "4-1": 0.197,
+            "4-3": 0.143,
+            "2-4": 0.137,
+            "4-2": 0.125,
+            "1-4": 0.12,
+            "3-4": 0.108,
+            "4-0": 0.09,
+            "0-4": 0.079
+          },
+          "team_probabilities": {
+            "Philadelphia 76ers": 0.5553,
+            "Cleveland Cavaliers": 0.4447
+          },
+          "sims_matched": 2235,
+          "source": "simulation"
+        }
+      },
+      {
+        "home_team": "Atlanta Hawks",
+        "away_team": "New York Knicks",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
           "winner": "New York Knicks",
-          "win_probability": 0.9725,
-          "predicted_length": 4,
-          "predicted_score": "4-0",
+          "win_probability": 0.5776,
+          "predicted_length": 5,
+          "predicted_score": "1-4",
           "outcome_distribution": {
-            "4-0": 0.382,
-            "4-1": 0.375,
-            "4-2": 0.138,
-            "4-3": 0.077,
-            "2-4": 0.012
-          }
-        }
-      },
-      {
-        "home_team": "Cleveland Cavaliers",
-        "away_team": "Toronto Raptors",
-        "home_wins": 4,
-        "away_wins": 3,
-        "status": "complete",
-        "winner": "Cleveland Cavaliers",
-        "prediction": {
-          "winner": "Cleveland Cavaliers",
-          "win_probability": 0.5304,
-          "predicted_length": 7,
-          "predicted_score": "4-3",
-          "outcome_distribution": {
-            "4-3": 0.175,
-            "2-4": 0.165,
-            "4-2": 0.148,
-            "4-1": 0.143,
-            "3-4": 0.139
-          }
+            "1-4": 0.178,
+            "2-4": 0.154,
+            "3-4": 0.134,
+            "4-3": 0.129,
+            "4-2": 0.128,
+            "0-4": 0.111,
+            "4-1": 0.104,
+            "4-0": 0.062
+          },
+          "team_probabilities": {
+            "Atlanta Hawks": 0.4224,
+            "New York Knicks": 0.5776
+          },
+          "sims_matched": 3111,
+          "source": "simulation"
         }
       }
     ],
     "r2": [
       {
-        "home_team": "Detroit Pistons",
-        "away_team": "Cleveland Cavaliers",
-        "home_wins": 3,
-        "away_wins": 4,
-        "status": "complete",
-        "winner": "Cleveland Cavaliers",
+        "home_team": "Boston Celtics",
+        "away_team": "New York Knicks",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Detroit Pistons",
-          "win_probability": 0.8734,
+          "winner": "Boston Celtics",
+          "win_probability": 0.6483,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.288,
-            "4-0": 0.24,
-            "4-2": 0.216,
-            "4-3": 0.13,
-            "3-4": 0.056
-          }
+            "4-1": 0.225,
+            "4-3": 0.145,
+            "4-0": 0.144,
+            "4-2": 0.135,
+            "2-4": 0.112,
+            "1-4": 0.094,
+            "3-4": 0.084,
+            "0-4": 0.061
+          },
+          "team_probabilities": {
+            "Boston Celtics": 0.6483,
+            "New York Knicks": 0.3517
+          },
+          "sims_matched": 4430,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "New York Knicks",
+        "home_team": "Detroit Pistons",
         "away_team": "Philadelphia 76ers",
-        "home_wins": 4,
+        "home_wins": 0,
         "away_wins": 0,
-        "status": "complete",
-        "winner": "New York Knicks",
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "New York Knicks",
-          "win_probability": 0.9898,
-          "predicted_length": 4,
-          "predicted_score": "4-0",
+          "winner": "Detroit Pistons",
+          "win_probability": 0.5672,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-0": 0.443,
-            "4-1": 0.393,
-            "4-2": 0.102,
-            "4-3": 0.051,
-            "2-4": 0.006
-          }
+            "4-1": 0.17,
+            "4-2": 0.153,
+            "4-3": 0.145,
+            "2-4": 0.144,
+            "3-4": 0.119,
+            "1-4": 0.109,
+            "4-0": 0.099,
+            "0-4": 0.061
+          },
+          "team_probabilities": {
+            "Detroit Pistons": 0.5672,
+            "Philadelphia 76ers": 0.4328
+          },
+          "sims_matched": 3429,
+          "source": "simulation"
         }
       }
     ],
     "r3": [
       {
-        "home_team": "New York Knicks",
-        "away_team": "Cleveland Cavaliers",
-        "home_wins": 4,
+        "home_team": "Boston Celtics",
+        "away_team": "Detroit Pistons",
+        "home_wins": 0,
         "away_wins": 0,
-        "status": "complete",
-        "winner": "New York Knicks",
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "New York Knicks",
-          "win_probability": 0.9455,
+          "winner": "Boston Celtics",
+          "win_probability": 0.5386,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.363,
-            "4-0": 0.308,
-            "4-2": 0.164,
-            "4-3": 0.109,
-            "2-4": 0.024
-          }
+            "4-1": 0.164,
+            "4-3": 0.142,
+            "2-4": 0.138,
+            "4-2": 0.136,
+            "1-4": 0.128,
+            "3-4": 0.121,
+            "4-0": 0.096,
+            "0-4": 0.074
+          },
+          "team_probabilities": {
+            "Boston Celtics": 0.5386,
+            "Detroit Pistons": 0.4614
+          },
+          "sims_matched": 7582,
+          "source": "simulation"
         }
       }
     ],
-    "finalist": "New York Knicks"
+    "finalist": "Boston Celtics"
   },
   "west": {
     "r1": [
       {
-        "home_team": "Oklahoma City Thunder",
-        "away_team": "Phoenix Suns",
-        "home_wins": 4,
+        "home_team": "San Antonio Spurs",
+        "away_team": "Golden State Warriors",
+        "home_wins": 0,
         "away_wins": 0,
-        "status": "complete",
-        "winner": "Oklahoma City Thunder",
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Oklahoma City Thunder",
-          "win_probability": 0.9584,
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.8999,
           "predicted_length": 4,
           "predicted_score": "4-0",
           "outcome_distribution": {
-            "4-0": 0.379,
-            "4-1": 0.332,
-            "4-2": 0.171,
-            "4-3": 0.077,
-            "3-4": 0.02
-          }
+            "4-0": 0.335,
+            "4-1": 0.335,
+            "4-2": 0.13,
+            "4-3": 0.1,
+            "2-4": 0.042,
+            "3-4": 0.033,
+            "1-4": 0.014,
+            "0-4": 0.01
+          },
+          "team_probabilities": {
+            "San Antonio Spurs": 0.8999,
+            "Golden State Warriors": 0.1001
+          },
+          "sims_matched": 2147,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "San Antonio Spurs",
-        "away_team": "Portland Trail Blazers",
-        "home_wins": 4,
-        "away_wins": 1,
-        "status": "complete",
-        "winner": "San Antonio Spurs",
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "Denver Nuggets",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "San Antonio Spurs",
-          "win_probability": 0.9404,
+          "winner": "Oklahoma City Thunder",
+          "win_probability": 0.761,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.376,
-            "4-0": 0.277,
-            "4-2": 0.162,
-            "4-3": 0.125,
-            "2-4": 0.028
-          }
+            "4-1": 0.284,
+            "4-0": 0.208,
+            "4-2": 0.14,
+            "4-3": 0.13,
+            "2-4": 0.081,
+            "3-4": 0.069,
+            "1-4": 0.049,
+            "0-4": 0.039
+          },
+          "team_probabilities": {
+            "Oklahoma City Thunder": 0.761,
+            "Denver Nuggets": 0.239
+          },
+          "sims_matched": 1598,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "Denver Nuggets",
-        "away_team": "Minnesota Timberwolves",
-        "home_wins": 2,
-        "away_wins": 4,
-        "status": "complete",
-        "winner": "Minnesota Timberwolves",
+        "home_team": "Houston Rockets",
+        "away_team": "Portland Trail Blazers",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Denver Nuggets",
-          "win_probability": 0.6793,
-          "predicted_length": 7,
-          "predicted_score": "4-3",
+          "winner": "Houston Rockets",
+          "win_probability": 0.5651,
+          "predicted_length": 5,
+          "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-3": 0.24,
-            "4-1": 0.223,
-            "2-4": 0.154,
-            "4-2": 0.141,
-            "3-4": 0.088
-          }
+            "4-1": 0.176,
+            "2-4": 0.146,
+            "4-3": 0.145,
+            "4-2": 0.142,
+            "1-4": 0.113,
+            "3-4": 0.102,
+            "4-0": 0.101,
+            "0-4": 0.073
+          },
+          "team_probabilities": {
+            "Houston Rockets": 0.5651,
+            "Portland Trail Blazers": 0.4349
+          },
+          "sims_matched": 1798,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "Los Angeles Lakers",
-        "away_team": "Houston Rockets",
-        "home_wins": 4,
-        "away_wins": 2,
-        "status": "complete",
-        "winner": "Los Angeles Lakers",
+        "home_team": "Minnesota Timberwolves",
+        "away_team": "Los Angeles Lakers",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Los Angeles Lakers",
-          "win_probability": 0.5303,
+          "winner": "Minnesota Timberwolves",
+          "win_probability": 0.5142,
           "predicted_length": 7,
           "predicted_score": "4-3",
           "outcome_distribution": {
-            "4-3": 0.185,
-            "2-4": 0.176,
-            "4-1": 0.147,
-            "4-2": 0.138,
-            "3-4": 0.133
-          }
+            "1-4": 0.147,
+            "4-3": 0.146,
+            "4-1": 0.141,
+            "2-4": 0.14,
+            "4-2": 0.136,
+            "3-4": 0.121,
+            "4-0": 0.092,
+            "0-4": 0.079
+          },
+          "team_probabilities": {
+            "Minnesota Timberwolves": 0.5142,
+            "Los Angeles Lakers": 0.4858
+          },
+          "sims_matched": 2211,
+          "source": "simulation"
         }
       }
     ],
     "r2": [
       {
-        "home_team": "Oklahoma City Thunder",
-        "away_team": "Los Angeles Lakers",
-        "home_wins": 4,
+        "home_team": "San Antonio Spurs",
+        "away_team": "Minnesota Timberwolves",
+        "home_wins": 0,
         "away_wins": 0,
-        "status": "complete",
-        "winner": "Oklahoma City Thunder",
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Oklahoma City Thunder",
-          "win_probability": 0.9054,
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.6512,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.302,
-            "4-0": 0.28,
-            "4-2": 0.212,
-            "4-3": 0.112,
-            "3-4": 0.044
-          }
+            "4-1": 0.224,
+            "4-0": 0.156,
+            "4-2": 0.137,
+            "4-3": 0.134,
+            "2-4": 0.116,
+            "3-4": 0.094,
+            "1-4": 0.086,
+            "0-4": 0.053
+          },
+          "team_probabilities": {
+            "San Antonio Spurs": 0.6512,
+            "Minnesota Timberwolves": 0.3488
+          },
+          "sims_matched": 2678,
+          "source": "simulation"
         }
       },
       {
-        "home_team": "San Antonio Spurs",
-        "away_team": "Minnesota Timberwolves",
-        "home_wins": 4,
-        "away_wins": 2,
-        "status": "complete",
-        "winner": "San Antonio Spurs",
+        "home_team": "Oklahoma City Thunder",
+        "away_team": "Houston Rockets",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "San Antonio Spurs",
-          "win_probability": 0.8667,
+          "winner": "Oklahoma City Thunder",
+          "win_probability": 0.5755,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.3,
-            "4-0": 0.22,
-            "4-2": 0.2,
-            "4-3": 0.147,
-            "3-4": 0.053
-          }
+            "4-1": 0.174,
+            "4-2": 0.162,
+            "4-3": 0.138,
+            "3-4": 0.126,
+            "1-4": 0.122,
+            "2-4": 0.113,
+            "4-0": 0.102,
+            "0-4": 0.064
+          },
+          "team_probabilities": {
+            "Oklahoma City Thunder": 0.5755,
+            "Houston Rockets": 0.4245
+          },
+          "sims_matched": 2848,
+          "source": "simulation"
         }
       }
     ],
     "r3": [
       {
-        "home_team": "Oklahoma City Thunder",
-        "away_team": "San Antonio Spurs",
-        "home_wins": 3,
-        "away_wins": 4,
-        "status": "complete",
-        "winner": "San Antonio Spurs",
+        "home_team": "San Antonio Spurs",
+        "away_team": "Oklahoma City Thunder",
+        "home_wins": 0,
+        "away_wins": 0,
+        "status": "projected",
+        "winner": null,
+        "projected": true,
         "prediction": {
-          "winner": "Oklahoma City Thunder",
-          "win_probability": 0.81,
+          "winner": "San Antonio Spurs",
+          "win_probability": 0.5051,
           "predicted_length": 5,
           "predicted_score": "4-1",
           "outcome_distribution": {
-            "4-1": 0.275,
-            "4-2": 0.193,
-            "4-3": 0.175,
-            "4-0": 0.167,
-            "2-4": 0.074
-          }
+            "4-1": 0.156,
+            "2-4": 0.141,
+            "1-4": 0.14,
+            "4-2": 0.138,
+            "4-3": 0.134,
+            "3-4": 0.124,
+            "0-4": 0.091,
+            "4-0": 0.077
+          },
+          "team_probabilities": {
+            "San Antonio Spurs": 0.5051,
+            "Oklahoma City Thunder": 0.4949
+          },
+          "sims_matched": 5916,
+          "source": "simulation"
         }
       }
     ],
@@ -315,22 +455,1180 @@
   },
   "finals": {
     "home_team": "San Antonio Spurs",
-    "away_team": "New York Knicks",
-    "home_wins": 1,
-    "away_wins": 3,
-    "status": "active",
+    "away_team": "Boston Celtics",
+    "home_wins": 0,
+    "away_wins": 0,
+    "status": "projected",
     "winner": null,
+    "projected": true,
     "prediction": {
-      "winner": "New York Knicks",
-      "win_probability": 0.9065,
-      "predicted_length": 6,
-      "predicted_score": "2-4",
+      "winner": "San Antonio Spurs",
+      "win_probability": 0.5358,
+      "predicted_length": 5,
+      "predicted_score": "4-1",
       "outcome_distribution": {
-        "2-4": 0.483,
-        "1-4": 0.369,
-        "4-3": 0.093,
-        "3-4": 0.055
-      }
+        "4-1": 0.168,
+        "4-2": 0.148,
+        "1-4": 0.145,
+        "3-4": 0.127,
+        "2-4": 0.125,
+        "4-3": 0.125,
+        "4-0": 0.095,
+        "0-4": 0.067
+      },
+      "team_probabilities": {
+        "San Antonio Spurs": 0.5358,
+        "Boston Celtics": 0.4642
+      },
+      "sims_matched": 3363,
+      "source": "simulation"
     }
-  }
+  },
+  "mode": "projected",
+  "sims": 50000,
+  "projection_date": "2026-11-13",
+  "standings": {
+    "east": {
+      "current": [
+        {
+          "rank": 1,
+          "team": "Boston Celtics",
+          "w": 10,
+          "l": 2,
+          "pct": 0.833,
+          "gb": 0.0,
+          "l10": "9-1",
+          "streak": "W5",
+          "division_leader": true
+        },
+        {
+          "rank": 2,
+          "team": "Philadelphia 76ers",
+          "w": 10,
+          "l": 3,
+          "pct": 0.769,
+          "gb": 0.5,
+          "l10": "7-3",
+          "streak": "W1",
+          "division_leader": false
+        },
+        {
+          "rank": 3,
+          "team": "Detroit Pistons",
+          "w": 8,
+          "l": 3,
+          "pct": 0.727,
+          "gb": 1.5,
+          "l10": "7-3",
+          "streak": "W2",
+          "division_leader": true
+        },
+        {
+          "rank": 4,
+          "team": "Atlanta Hawks",
+          "w": 7,
+          "l": 5,
+          "pct": 0.583,
+          "gb": 3.0,
+          "l10": "5-5",
+          "streak": "L1",
+          "division_leader": true
+        },
+        {
+          "rank": 5,
+          "team": "New York Knicks",
+          "w": 6,
+          "l": 5,
+          "pct": 0.545,
+          "gb": 3.5,
+          "l10": "6-4",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 6,
+          "team": "Cleveland Cavaliers",
+          "w": 6,
+          "l": 6,
+          "pct": 0.5,
+          "gb": 4.0,
+          "l10": "5-5",
+          "streak": "W1",
+          "division_leader": false
+        },
+        {
+          "rank": 7,
+          "team": "Toronto Raptors",
+          "w": 5,
+          "l": 7,
+          "pct": 0.417,
+          "gb": 5.0,
+          "l10": "3-7",
+          "streak": "L3",
+          "division_leader": false
+        },
+        {
+          "rank": 8,
+          "team": "Miami Heat",
+          "w": 4,
+          "l": 7,
+          "pct": 0.364,
+          "gb": 5.5,
+          "l10": "4-6",
+          "streak": "W2",
+          "division_leader": false
+        },
+        {
+          "rank": 9,
+          "team": "Orlando Magic",
+          "w": 4,
+          "l": 7,
+          "pct": 0.364,
+          "gb": 5.5,
+          "l10": "4-6",
+          "streak": "W2",
+          "division_leader": false
+        },
+        {
+          "rank": 10,
+          "team": "Indiana Pacers",
+          "w": 4,
+          "l": 7,
+          "pct": 0.364,
+          "gb": 5.5,
+          "l10": "3-7",
+          "streak": "W1",
+          "division_leader": false
+        },
+        {
+          "rank": 11,
+          "team": "Charlotte Hornets",
+          "w": 4,
+          "l": 8,
+          "pct": 0.333,
+          "gb": 6.0,
+          "l10": "3-7",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 12,
+          "team": "Washington Wizards",
+          "w": 4,
+          "l": 9,
+          "pct": 0.308,
+          "gb": 6.5,
+          "l10": "2-8",
+          "streak": "L6",
+          "division_leader": false
+        },
+        {
+          "rank": 13,
+          "team": "Brooklyn Nets",
+          "w": 3,
+          "l": 8,
+          "pct": 0.273,
+          "gb": 6.5,
+          "l10": "3-7",
+          "streak": "W1",
+          "division_leader": false
+        },
+        {
+          "rank": 14,
+          "team": "Chicago Bulls",
+          "w": 1,
+          "l": 9,
+          "pct": 0.1,
+          "gb": 8.0,
+          "l10": "1-9",
+          "streak": "L8",
+          "division_leader": false
+        },
+        {
+          "rank": 15,
+          "team": "Milwaukee Bucks",
+          "w": 1,
+          "l": 11,
+          "pct": 0.083,
+          "gb": 9.0,
+          "l10": "1-9",
+          "streak": "L8",
+          "division_leader": false
+        }
+      ],
+      "projected": [
+        {
+          "rank": 1,
+          "team": "Boston Celtics",
+          "exp_w": 57,
+          "exp_l": 23,
+          "w_p10": 49,
+          "w_p90": 65,
+          "avg_seed": 2.21,
+          "pct_playoffs": 0.9802,
+          "pct_playin": 0.0195,
+          "pct_top_seed": 0.445,
+          "rank_change": 0
+        },
+        {
+          "rank": 2,
+          "team": "Detroit Pistons",
+          "exp_w": 54,
+          "exp_l": 26,
+          "w_p10": 45,
+          "w_p90": 62,
+          "avg_seed": 2.92,
+          "pct_playoffs": 0.949,
+          "pct_playin": 0.0499,
+          "pct_top_seed": 0.254,
+          "rank_change": 1
+        },
+        {
+          "rank": 3,
+          "team": "Philadelphia 76ers",
+          "exp_w": 51,
+          "exp_l": 29,
+          "w_p10": 42,
+          "w_p90": 59,
+          "avg_seed": 3.89,
+          "pct_playoffs": 0.8799,
+          "pct_playin": 0.1157,
+          "pct_top_seed": 0.1193,
+          "rank_change": -1
+        },
+        {
+          "rank": 4,
+          "team": "New York Knicks",
+          "exp_w": 51,
+          "exp_l": 29,
+          "w_p10": 42,
+          "w_p90": 59,
+          "avg_seed": 3.97,
+          "pct_playoffs": 0.8692,
+          "pct_playin": 0.1258,
+          "pct_top_seed": 0.1157,
+          "rank_change": 1
+        },
+        {
+          "rank": 5,
+          "team": "Atlanta Hawks",
+          "exp_w": 45,
+          "exp_l": 35,
+          "w_p10": 36,
+          "w_p90": 54,
+          "avg_seed": 5.6,
+          "pct_playoffs": 0.6556,
+          "pct_playin": 0.3172,
+          "pct_top_seed": 0.0316,
+          "rank_change": -1
+        },
+        {
+          "rank": 6,
+          "team": "Cleveland Cavaliers",
+          "exp_w": 44,
+          "exp_l": 36,
+          "w_p10": 35,
+          "w_p90": 53,
+          "avg_seed": 6.05,
+          "pct_playoffs": 0.5877,
+          "pct_playin": 0.3721,
+          "pct_top_seed": 0.0215,
+          "rank_change": 0
+        },
+        {
+          "rank": 7,
+          "team": "Toronto Raptors",
+          "exp_w": 40,
+          "exp_l": 40,
+          "w_p10": 31,
+          "w_p90": 49,
+          "avg_seed": 7.59,
+          "pct_playoffs": 0.3314,
+          "pct_playin": 0.5481,
+          "pct_top_seed": 0.0058,
+          "rank_change": 0
+        },
+        {
+          "rank": 8,
+          "team": "Orlando Magic",
+          "exp_w": 39,
+          "exp_l": 41,
+          "w_p10": 30,
+          "w_p90": 48,
+          "avg_seed": 7.85,
+          "pct_playoffs": 0.3017,
+          "pct_playin": 0.5479,
+          "pct_top_seed": 0.0041,
+          "rank_change": 1
+        },
+        {
+          "rank": 9,
+          "team": "Charlotte Hornets",
+          "exp_w": 38,
+          "exp_l": 42,
+          "w_p10": 29,
+          "w_p90": 47,
+          "avg_seed": 8.35,
+          "pct_playoffs": 0.2291,
+          "pct_playin": 0.5832,
+          "pct_top_seed": 0.002,
+          "rank_change": 2
+        },
+        {
+          "rank": 10,
+          "team": "Miami Heat",
+          "exp_w": 36,
+          "exp_l": 44,
+          "w_p10": 27,
+          "w_p90": 45,
+          "avg_seed": 8.82,
+          "pct_playoffs": 0.1777,
+          "pct_playin": 0.5775,
+          "pct_top_seed": 0.0009,
+          "rank_change": -2
+        },
+        {
+          "rank": 11,
+          "team": "Indiana Pacers",
+          "exp_w": 26,
+          "exp_l": 53,
+          "w_p10": 18,
+          "w_p90": 35,
+          "avg_seed": 12.08,
+          "pct_playoffs": 0.011,
+          "pct_playin": 0.1987,
+          "pct_top_seed": 0.0001,
+          "rank_change": -1
+        },
+        {
+          "rank": 12,
+          "team": "Brooklyn Nets",
+          "exp_w": 26,
+          "exp_l": 54,
+          "w_p10": 18,
+          "w_p90": 34,
+          "avg_seed": 12.37,
+          "pct_playoffs": 0.0093,
+          "pct_playin": 0.1643,
+          "pct_top_seed": 0.0,
+          "rank_change": 1
+        },
+        {
+          "rank": 13,
+          "team": "Chicago Bulls",
+          "exp_w": 26,
+          "exp_l": 54,
+          "w_p10": 17,
+          "w_p90": 35,
+          "avg_seed": 12.39,
+          "pct_playoffs": 0.0103,
+          "pct_playin": 0.1708,
+          "pct_top_seed": 0.0,
+          "rank_change": 1
+        },
+        {
+          "rank": 14,
+          "team": "Milwaukee Bucks",
+          "exp_w": 24,
+          "exp_l": 56,
+          "w_p10": 16,
+          "w_p90": 32,
+          "avg_seed": 12.91,
+          "pct_playoffs": 0.0047,
+          "pct_playin": 0.114,
+          "pct_top_seed": 0.0,
+          "rank_change": 1
+        },
+        {
+          "rank": 15,
+          "team": "Washington Wizards",
+          "exp_w": 24,
+          "exp_l": 56,
+          "w_p10": 16,
+          "w_p90": 32,
+          "avg_seed": 13.0,
+          "pct_playoffs": 0.0032,
+          "pct_playin": 0.0954,
+          "pct_top_seed": 0.0,
+          "rank_change": -3
+        }
+      ]
+    },
+    "west": {
+      "current": [
+        {
+          "rank": 1,
+          "team": "Los Angeles Lakers",
+          "w": 11,
+          "l": 2,
+          "pct": 0.846,
+          "gb": 0.0,
+          "l10": "8-2",
+          "streak": "W7",
+          "division_leader": true
+        },
+        {
+          "rank": 2,
+          "team": "San Antonio Spurs",
+          "w": 10,
+          "l": 2,
+          "pct": 0.833,
+          "gb": 0.5,
+          "l10": "10-0",
+          "streak": "W10",
+          "division_leader": true
+        },
+        {
+          "rank": 3,
+          "team": "Minnesota Timberwolves",
+          "w": 9,
+          "l": 3,
+          "pct": 0.75,
+          "gb": 1.5,
+          "l10": "7-3",
+          "streak": "W5",
+          "division_leader": true
+        },
+        {
+          "rank": 4,
+          "team": "Houston Rockets",
+          "w": 9,
+          "l": 3,
+          "pct": 0.75,
+          "gb": 1.5,
+          "l10": "7-3",
+          "streak": "W2",
+          "division_leader": false
+        },
+        {
+          "rank": 5,
+          "team": "Portland Trail Blazers",
+          "w": 8,
+          "l": 3,
+          "pct": 0.727,
+          "gb": 2.0,
+          "l10": "7-3",
+          "streak": "W2",
+          "division_leader": false
+        },
+        {
+          "rank": 6,
+          "team": "Golden State Warriors",
+          "w": 8,
+          "l": 4,
+          "pct": 0.667,
+          "gb": 2.5,
+          "l10": "8-2",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 7,
+          "team": "Oklahoma City Thunder",
+          "w": 8,
+          "l": 4,
+          "pct": 0.667,
+          "gb": 2.5,
+          "l10": "6-4",
+          "streak": "L2",
+          "division_leader": false
+        },
+        {
+          "rank": 8,
+          "team": "Memphis Grizzlies",
+          "w": 7,
+          "l": 4,
+          "pct": 0.636,
+          "gb": 3.0,
+          "l10": "6-4",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 9,
+          "team": "Dallas Mavericks",
+          "w": 7,
+          "l": 5,
+          "pct": 0.583,
+          "gb": 3.5,
+          "l10": "6-4",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 10,
+          "team": "Denver Nuggets",
+          "w": 5,
+          "l": 4,
+          "pct": 0.556,
+          "gb": 4.0,
+          "l10": "5-4",
+          "streak": "W1",
+          "division_leader": false
+        },
+        {
+          "rank": 11,
+          "team": "Phoenix Suns",
+          "w": 5,
+          "l": 6,
+          "pct": 0.455,
+          "gb": 5.0,
+          "l10": "5-5",
+          "streak": "W2",
+          "division_leader": false
+        },
+        {
+          "rank": 12,
+          "team": "New Orleans Pelicans",
+          "w": 4,
+          "l": 8,
+          "pct": 0.333,
+          "gb": 6.5,
+          "l10": "4-6",
+          "streak": "L4",
+          "division_leader": false
+        },
+        {
+          "rank": 13,
+          "team": "LA Clippers",
+          "w": 3,
+          "l": 7,
+          "pct": 0.3,
+          "gb": 6.5,
+          "l10": "3-7",
+          "streak": "L1",
+          "division_leader": false
+        },
+        {
+          "rank": 14,
+          "team": "Sacramento Kings",
+          "w": 1,
+          "l": 10,
+          "pct": 0.091,
+          "gb": 9.0,
+          "l10": "1-9",
+          "streak": "L4",
+          "division_leader": false
+        },
+        {
+          "rank": 15,
+          "team": "Utah Jazz",
+          "w": 1,
+          "l": 11,
+          "pct": 0.083,
+          "gb": 9.5,
+          "l10": "0-10",
+          "streak": "L10",
+          "division_leader": false
+        }
+      ],
+      "projected": [
+        {
+          "rank": 1,
+          "team": "San Antonio Spurs",
+          "exp_w": 57,
+          "exp_l": 23,
+          "w_p10": 48,
+          "w_p90": 64,
+          "avg_seed": 2.93,
+          "pct_playoffs": 0.9304,
+          "pct_playin": 0.0675,
+          "pct_top_seed": 0.3159,
+          "rank_change": 1
+        },
+        {
+          "rank": 2,
+          "team": "Oklahoma City Thunder",
+          "exp_w": 55,
+          "exp_l": 25,
+          "w_p10": 47,
+          "w_p90": 63,
+          "avg_seed": 3.41,
+          "pct_playoffs": 0.8978,
+          "pct_playin": 0.0983,
+          "pct_top_seed": 0.2229,
+          "rank_change": 5
+        },
+        {
+          "rank": 3,
+          "team": "Houston Rockets",
+          "exp_w": 53,
+          "exp_l": 27,
+          "w_p10": 45,
+          "w_p90": 61,
+          "avg_seed": 4.04,
+          "pct_playoffs": 0.8366,
+          "pct_playin": 0.1554,
+          "pct_top_seed": 0.1508,
+          "rank_change": 1
+        },
+        {
+          "rank": 4,
+          "team": "Los Angeles Lakers",
+          "exp_w": 53,
+          "exp_l": 27,
+          "w_p10": 44,
+          "w_p90": 61,
+          "avg_seed": 4.21,
+          "pct_playoffs": 0.8163,
+          "pct_playin": 0.1741,
+          "pct_top_seed": 0.1386,
+          "rank_change": -3
+        },
+        {
+          "rank": 5,
+          "team": "Minnesota Timberwolves",
+          "exp_w": 50,
+          "exp_l": 30,
+          "w_p10": 41,
+          "w_p90": 59,
+          "avg_seed": 5.14,
+          "pct_playoffs": 0.6938,
+          "pct_playin": 0.283,
+          "pct_top_seed": 0.0792,
+          "rank_change": -2
+        },
+        {
+          "rank": 6,
+          "team": "Portland Trail Blazers",
+          "exp_w": 48,
+          "exp_l": 32,
+          "w_p10": 39,
+          "w_p90": 57,
+          "avg_seed": 5.83,
+          "pct_playoffs": 0.6003,
+          "pct_playin": 0.3576,
+          "pct_top_seed": 0.0439,
+          "rank_change": -1
+        },
+        {
+          "rank": 7,
+          "team": "Denver Nuggets",
+          "exp_w": 46,
+          "exp_l": 33,
+          "w_p10": 37,
+          "w_p90": 55,
+          "avg_seed": 6.29,
+          "pct_playoffs": 0.527,
+          "pct_playin": 0.4146,
+          "pct_top_seed": 0.0316,
+          "rank_change": 3
+        },
+        {
+          "rank": 8,
+          "team": "Golden State Warriors",
+          "exp_w": 44,
+          "exp_l": 36,
+          "w_p10": 35,
+          "w_p90": 53,
+          "avg_seed": 7.49,
+          "pct_playoffs": 0.3395,
+          "pct_playin": 0.5324,
+          "pct_top_seed": 0.0123,
+          "rank_change": -2
+        },
+        {
+          "rank": 9,
+          "team": "Phoenix Suns",
+          "exp_w": 39,
+          "exp_l": 41,
+          "w_p10": 30,
+          "w_p90": 48,
+          "avg_seed": 9.15,
+          "pct_playoffs": 0.1423,
+          "pct_playin": 0.545,
+          "pct_top_seed": 0.0024,
+          "rank_change": 2
+        },
+        {
+          "rank": 10,
+          "team": "LA Clippers",
+          "exp_w": 37,
+          "exp_l": 43,
+          "w_p10": 28,
+          "w_p90": 47,
+          "avg_seed": 9.69,
+          "pct_playoffs": 0.104,
+          "pct_playin": 0.4865,
+          "pct_top_seed": 0.0014,
+          "rank_change": 3
+        },
+        {
+          "rank": 11,
+          "team": "Dallas Mavericks",
+          "exp_w": 35,
+          "exp_l": 45,
+          "w_p10": 26,
+          "w_p90": 44,
+          "avg_seed": 10.47,
+          "pct_playoffs": 0.0544,
+          "pct_playin": 0.394,
+          "pct_top_seed": 0.0003,
+          "rank_change": -2
+        },
+        {
+          "rank": 12,
+          "team": "Memphis Grizzlies",
+          "exp_w": 35,
+          "exp_l": 45,
+          "w_p10": 26,
+          "w_p90": 44,
+          "avg_seed": 10.47,
+          "pct_playoffs": 0.0544,
+          "pct_playin": 0.387,
+          "pct_top_seed": 0.0007,
+          "rank_change": -4
+        },
+        {
+          "rank": 13,
+          "team": "New Orleans Pelicans",
+          "exp_w": 26,
+          "exp_l": 54,
+          "w_p10": 18,
+          "w_p90": 35,
+          "avg_seed": 12.77,
+          "pct_playoffs": 0.0029,
+          "pct_playin": 0.0794,
+          "pct_top_seed": 0.0,
+          "rank_change": -1
+        },
+        {
+          "rank": 14,
+          "team": "Sacramento Kings",
+          "exp_w": 22,
+          "exp_l": 58,
+          "w_p10": 14,
+          "w_p90": 30,
+          "avg_seed": 13.82,
+          "pct_playoffs": 0.0004,
+          "pct_playin": 0.0191,
+          "pct_top_seed": 0.0,
+          "rank_change": 0
+        },
+        {
+          "rank": 15,
+          "team": "Utah Jazz",
+          "exp_w": 19,
+          "exp_l": 61,
+          "w_p10": 12,
+          "w_p90": 26,
+          "avg_seed": 14.29,
+          "pct_playoffs": 0.0001,
+          "pct_playin": 0.006,
+          "pct_top_seed": 0.0,
+          "rank_change": 0
+        }
+      ]
+    }
+  },
+  "play_in": {
+    "east": [
+      {
+        "game": "7v8",
+        "label": "7 vs 8",
+        "home_team": "Charlotte Hornets",
+        "away_team": "Miami Heat",
+        "home_seed": 7,
+        "away_seed": 8,
+        "winner": "Miami Heat",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "Charlotte Hornets": 0.686,
+          "Miami Heat": 0.314
+        },
+        "sims_matched": 1054,
+        "source": "simulation"
+      },
+      {
+        "game": "9v10",
+        "label": "9 vs 10",
+        "home_team": "Chicago Bulls",
+        "away_team": "Toronto Raptors",
+        "home_seed": 9,
+        "away_seed": 10,
+        "winner": "Chicago Bulls",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "Chicago Bulls": 0.4654,
+          "Toronto Raptors": 0.5346
+        },
+        "sims_matched": 288,
+        "source": "elo_analytic"
+      },
+      {
+        "game": "final",
+        "label": "Final 8th seed",
+        "home_team": "Charlotte Hornets",
+        "away_team": "Chicago Bulls",
+        "home_seed": 7,
+        "away_seed": 9,
+        "winner": "Charlotte Hornets",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "Charlotte Hornets": 0.7776,
+          "Chicago Bulls": 0.2224
+        },
+        "sims_matched": 445,
+        "source": "elo_analytic"
+      }
+    ],
+    "west": [
+      {
+        "game": "7v8",
+        "label": "7 vs 8",
+        "home_team": "Denver Nuggets",
+        "away_team": "Dallas Mavericks",
+        "home_seed": 7,
+        "away_seed": 8,
+        "winner": "Denver Nuggets",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "Denver Nuggets": 0.6712,
+          "Dallas Mavericks": 0.3288
+        },
+        "sims_matched": 587,
+        "source": "simulation"
+      },
+      {
+        "game": "9v10",
+        "label": "9 vs 10",
+        "home_team": "New Orleans Pelicans",
+        "away_team": "Golden State Warriors",
+        "home_seed": 9,
+        "away_seed": 10,
+        "winner": "Golden State Warriors",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "New Orleans Pelicans": 0.4698,
+          "Golden State Warriors": 0.5302
+        },
+        "sims_matched": 124,
+        "source": "elo_analytic"
+      },
+      {
+        "game": "final",
+        "label": "Final 8th seed",
+        "home_team": "Dallas Mavericks",
+        "away_team": "Golden State Warriors",
+        "home_seed": 8,
+        "away_seed": 10,
+        "winner": "Golden State Warriors",
+        "status": "projected",
+        "projected": true,
+        "team_probabilities": {
+          "Dallas Mavericks": 0.666,
+          "Golden State Warriors": 0.334
+        },
+        "sims_matched": 539,
+        "source": "simulation"
+      }
+    ]
+  },
+  "round_odds": [
+    {
+      "team": "Boston Celtics",
+      "conf": "east",
+      "play_in": 0.0195,
+      "playoffs": 0.9945,
+      "r2": 0.7639,
+      "conf_finals": 0.491,
+      "finals": 0.2859,
+      "champion": 0.1453
+    },
+    {
+      "team": "San Antonio Spurs",
+      "conf": "west",
+      "play_in": 0.0675,
+      "playoffs": 0.979,
+      "r2": 0.6952,
+      "conf_finals": 0.4233,
+      "finals": 0.2392,
+      "champion": 0.1437
+    },
+    {
+      "team": "Oklahoma City Thunder",
+      "conf": "west",
+      "play_in": 0.0983,
+      "playoffs": 0.9673,
+      "r2": 0.6641,
+      "conf_finals": 0.3921,
+      "finals": 0.2177,
+      "champion": 0.1285
+    },
+    {
+      "team": "Detroit Pistons",
+      "conf": "east",
+      "play_in": 0.0499,
+      "playoffs": 0.9846,
+      "r2": 0.6875,
+      "conf_finals": 0.3921,
+      "finals": 0.2054,
+      "champion": 0.0956
+    },
+    {
+      "team": "New York Knicks",
+      "conf": "east",
+      "play_in": 0.1258,
+      "playoffs": 0.9587,
+      "r2": 0.6202,
+      "conf_finals": 0.3396,
+      "finals": 0.1835,
+      "champion": 0.086
+    },
+    {
+      "team": "Los Angeles Lakers",
+      "conf": "west",
+      "play_in": 0.1741,
+      "playoffs": 0.9305,
+      "r2": 0.5266,
+      "conf_finals": 0.2601,
+      "finals": 0.1246,
+      "champion": 0.0674
+    },
+    {
+      "team": "Houston Rockets",
+      "conf": "west",
+      "play_in": 0.1554,
+      "playoffs": 0.9391,
+      "r2": 0.5337,
+      "conf_finals": 0.2616,
+      "finals": 0.1258,
+      "champion": 0.0673
+    },
+    {
+      "team": "Minnesota Timberwolves",
+      "conf": "west",
+      "play_in": 0.283,
+      "playoffs": 0.8724,
+      "r2": 0.4428,
+      "conf_finals": 0.2096,
+      "finals": 0.0987,
+      "champion": 0.052
+    },
+    {
+      "team": "Philadelphia 76ers",
+      "conf": "east",
+      "play_in": 0.1157,
+      "playoffs": 0.9552,
+      "r2": 0.5246,
+      "conf_finals": 0.2323,
+      "finals": 0.1018,
+      "champion": 0.0422
+    },
+    {
+      "team": "Denver Nuggets",
+      "conf": "west",
+      "play_in": 0.4146,
+      "playoffs": 0.78,
+      "r2": 0.3428,
+      "conf_finals": 0.1498,
+      "finals": 0.0701,
+      "champion": 0.0358
+    },
+    {
+      "team": "Portland Trail Blazers",
+      "conf": "west",
+      "play_in": 0.3576,
+      "playoffs": 0.816,
+      "r2": 0.3486,
+      "conf_finals": 0.1442,
+      "finals": 0.0624,
+      "champion": 0.0307
+    },
+    {
+      "team": "Atlanta Hawks",
+      "conf": "east",
+      "play_in": 0.3172,
+      "playoffs": 0.855,
+      "r2": 0.3696,
+      "conf_finals": 0.1508,
+      "finals": 0.0662,
+      "champion": 0.0254
+    },
+    {
+      "team": "Cleveland Cavaliers",
+      "conf": "east",
+      "play_in": 0.3721,
+      "playoffs": 0.8171,
+      "r2": 0.338,
+      "conf_finals": 0.139,
+      "finals": 0.0602,
+      "champion": 0.0229
+    },
+    {
+      "team": "Golden State Warriors",
+      "conf": "west",
+      "play_in": 0.5324,
+      "playoffs": 0.6129,
+      "r2": 0.1848,
+      "conf_finals": 0.0648,
+      "finals": 0.0259,
+      "champion": 0.0114
+    },
+    {
+      "team": "Orlando Magic",
+      "conf": "east",
+      "play_in": 0.5479,
+      "playoffs": 0.5964,
+      "r2": 0.1953,
+      "conf_finals": 0.0763,
+      "finals": 0.0309,
+      "champion": 0.0106
+    },
+    {
+      "team": "Toronto Raptors",
+      "conf": "east",
+      "play_in": 0.5481,
+      "playoffs": 0.6189,
+      "r2": 0.1955,
+      "conf_finals": 0.0709,
+      "finals": 0.0281,
+      "champion": 0.0094
+    },
+    {
+      "team": "Charlotte Hornets",
+      "conf": "east",
+      "play_in": 0.5832,
+      "playoffs": 0.5179,
+      "r2": 0.1471,
+      "conf_finals": 0.0546,
+      "finals": 0.0202,
+      "champion": 0.0067
+    },
+    {
+      "team": "LA Clippers",
+      "conf": "west",
+      "play_in": 0.4865,
+      "playoffs": 0.3132,
+      "r2": 0.0878,
+      "conf_finals": 0.0346,
+      "finals": 0.0135,
+      "champion": 0.006
+    },
+    {
+      "team": "Phoenix Suns",
+      "conf": "west",
+      "play_in": 0.545,
+      "playoffs": 0.3756,
+      "r2": 0.0954,
+      "conf_finals": 0.0342,
+      "finals": 0.0129,
+      "champion": 0.0054
+    },
+    {
+      "team": "Miami Heat",
+      "conf": "east",
+      "play_in": 0.5775,
+      "playoffs": 0.4445,
+      "r2": 0.1176,
+      "conf_finals": 0.0408,
+      "finals": 0.0137,
+      "champion": 0.0036
+    },
+    {
+      "team": "Dallas Mavericks",
+      "conf": "west",
+      "play_in": 0.394,
+      "playoffs": 0.1919,
+      "r2": 0.0369,
+      "conf_finals": 0.0124,
+      "finals": 0.0045,
+      "champion": 0.0015
+    },
+    {
+      "team": "Memphis Grizzlies",
+      "conf": "west",
+      "play_in": 0.387,
+      "playoffs": 0.1904,
+      "r2": 0.0357,
+      "conf_finals": 0.0116,
+      "finals": 0.0039,
+      "champion": 0.0014
+    },
+    {
+      "team": "Chicago Bulls",
+      "conf": "east",
+      "play_in": 0.1708,
+      "playoffs": 0.0668,
+      "r2": 0.0114,
+      "conf_finals": 0.0034,
+      "finals": 0.0012,
+      "champion": 0.0004
+    },
+    {
+      "team": "Indiana Pacers",
+      "conf": "east",
+      "play_in": 0.1987,
+      "playoffs": 0.0682,
+      "r2": 0.01,
+      "conf_finals": 0.0031,
+      "finals": 0.0011,
+      "champion": 0.0003
+    },
+    {
+      "team": "New Orleans Pelicans",
+      "conf": "west",
+      "play_in": 0.0794,
+      "playoffs": 0.0251,
+      "r2": 0.0045,
+      "conf_finals": 0.0015,
+      "finals": 0.0006,
+      "champion": 0.0003
+    },
+    {
+      "team": "Brooklyn Nets",
+      "conf": "east",
+      "play_in": 0.1643,
+      "playoffs": 0.0576,
+      "r2": 0.0094,
+      "conf_finals": 0.0028,
+      "finals": 0.0009,
+      "champion": 0.0002
+    },
+    {
+      "team": "Milwaukee Bucks",
+      "conf": "east",
+      "play_in": 0.114,
+      "playoffs": 0.0377,
+      "r2": 0.0063,
+      "conf_finals": 0.0023,
+      "finals": 0.0006,
+      "champion": 0.0001
+    },
+    {
+      "team": "Washington Wizards",
+      "conf": "east",
+      "play_in": 0.0954,
+      "playoffs": 0.0267,
+      "r2": 0.0034,
+      "conf_finals": 0.0011,
+      "finals": 0.0003,
+      "champion": 0.0
+    },
+    {
+      "team": "Sacramento Kings",
+      "conf": "west",
+      "play_in": 0.0191,
+      "playoffs": 0.0053,
+      "r2": 0.0008,
+      "conf_finals": 0.0003,
+      "finals": 0.0,
+      "champion": 0.0
+    },
+    {
+      "team": "Utah Jazz",
+      "conf": "west",
+      "play_in": 0.006,
+      "playoffs": 0.0014,
+      "r2": 0.0002,
+      "conf_finals": 0.0,
+      "finals": 0.0,
+      "champion": 0.0
+    }
+  ]
 }

@@ -1,20 +1,52 @@
-"""fetch_bracket.py — builds web/bracket.json from existing playoff game data."""
+"""fetch_bracket.py — builds web/bracket.json (season projection + playoff bracket).
+
+Modes (detected automatically from the data):
+  projected            regular season running → full Monte-Carlo projection (season_simulator.py)
+  post_season_pending  regular season over, no play-in yet → only play-in + playoffs simulated
+  live                 real play-in/playoff games exist → real series (XGBoost, as before),
+                       later rounds and round odds via ELO simulation
+"""
 import json
 import os
+import shutil
+import sys
+import time
+import traceback
 
 import joblib
 import numpy as np
 import pandas as pd
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 GAMES_CSV      = os.path.join(BASE_DIR, "data",   "nba_api_games.csv")
+PLAYIN_CSV     = os.path.join(BASE_DIR, "data",   "nba_api_playin.csv")
+SCHEDULE_CSV   = os.path.join(BASE_DIR, "data",   "schedule_round_1.csv")
+PREDICTIONS_XLSX = os.path.join(BASE_DIR, "output", "predictions.xlsx")
 MODEL_DATA_CSV = os.path.join(BASE_DIR, "data",   "model_data.csv")
 MODEL_PKL      = os.path.join(BASE_DIR, "models", "best_xgb_model.pkl")
 FEATURE_CSV    = os.path.join(BASE_DIR, "models", "feature_cols.csv")
 OUTPUT_JSON    = os.path.join(BASE_DIR, "web",    "bracket.json")
+HISTORY_JSON   = os.path.join(BASE_DIR, "web",    "projection_history.json")
+SIM_REPORT_JSON = os.path.join(BASE_DIR, "output", "season_sim_report.json")
+ARCHIVE_DIR    = os.path.join(BASE_DIR, "data",   "archive")
 
-SEASON_CODE = "42500"   # prefix of 2025-26 playoff game IDs
-SEASON      = "2025-26"
+N_SIMS = 50_000
+
+
+def _current_season():
+    try:
+        from scrape_upcoming_games import current_nba_season
+        return current_nba_season()
+    except Exception:
+        now = pd.Timestamp.now(tz="America/New_York")
+        start = now.year if now.month >= 7 else now.year - 1
+        return f"{start}-{str(start + 1)[-2:]}"
+
+
+SEASON      = _current_season()            # e.g. "2026-27"
+SEASON_CODE = f"4{SEASON[2:4]}00"          # prefix of this season's playoff game IDs, e.g. "42600"
 
 # Games 1,2,5,7 are hosted by the series home team (higher seed); 3,4,6 by away
 SERIES_HOME_GAMES = {1, 2, 5, 7}
@@ -231,15 +263,21 @@ def get_team_snapshots(df_model):
     return home_snap, away_snap
 
 
-def build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols):
+def build_feature_row(home_team, away_team, home_snap, away_snap, feature_cols, context=None):
     """
     Build a single feature vector (numpy array, length = len(feature_cols))
     for a game where `home_team` is hosting `away_team`.
+
+    context: optional dict of game-context values (e.g. is_playoff=0, rest days,
+    ELO) that override the snapshot/playoff defaults before diffs are derived.
+    Without it the behaviour is unchanged (playoff game context).
     """
     h = home_snap.get(home_team, {})
     a = away_snap.get(away_team, {})
     merged = {**h, **a}
     merged["is_playoff"] = 1.0
+    if context:
+        merged.update(context)
 
     # Game-context defaults for features with no home_/away_ source columns.
     # Playoffs = end of season; series starts 0-0 so no leader and no elimination yet.
@@ -386,7 +424,7 @@ def _effective_winner(series_map, key, predict_fn):
     return home
 
 
-def build_bracket_json(series_map, predict_fn=None):
+def build_bracket_json(series_map, predict_fn=None, season=None):
     """
     Build the full bracket dict from a series_map keyed by (round, matchup).
     Fills TBD entries for future rounds using predicted winners.
@@ -436,7 +474,7 @@ def build_bracket_json(series_map, predict_fn=None):
 
     return {
         'generated_at': pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%dT%H:%M:%S'),
-        'season': SEASON,
+        'season': season or SEASON,
         'east': {
             'r1':       east_r1,
             'r2':       east_r2,
@@ -453,36 +491,209 @@ def build_bracket_json(series_map, predict_fn=None):
     }
 
 
-def build_bracket():
-    """Main entry point: load data, run predictions, write bracket.json."""
-    # 1. Load playoff games
+def _read_csv(path):
+    if not os.path.exists(path):
+        return None
+    try:
+        return pd.read_csv(path)
+    except Exception as e:
+        print(f"  WARNUNG: {os.path.basename(path)} nicht lesbar: {e}")
+        return None
+
+
+def detect_mode(df_all, season, schedule_df=None, playin_df=None):
+    """projected | post_season_pending | live — rein aus den Daten abgeleitet."""
+    import season_simulator as ss
+    cur = df_all[df_all['season'] == season] if 'season' in df_all.columns else df_all.iloc[0:0]
+    has_playoffs = (
+        (cur['season_type'] == 'Playoffs').any() if 'season_type' in cur.columns else False
+    ) or df_all['GAME_ID'].astype(str).str.startswith(f"4{season[2:4]}00").any()
+    has_playin = playin_df is not None and not playin_df.empty and (
+        (playin_df['season'] == season).any() if 'season' in playin_df.columns else True)
+    if has_playoffs or has_playin:
+        return 'live'
+    played = ss.played_regular_season(df_all, season)
+    remaining = ss.remaining_regular_season(schedule_df, played['GAME_ID'].tolist())
+    if len(played) > 0 and remaining.empty:
+        return 'post_season_pending'
+    return 'projected'
+
+
+def archive_previous_bracket(season, path=OUTPUT_JSON, archive_dir=ARCHIVE_DIR):
+    """Alte Saison aus bracket.json nach data/archive/bracket_<saison>.json sichern."""
+    if not os.path.exists(path):
+        return None
+    try:
+        with open(path, encoding='utf-8') as f:
+            old_season = json.load(f).get('season')
+    except Exception:
+        return None
+    if not old_season or old_season == season:
+        return None
+    os.makedirs(archive_dir, exist_ok=True)
+    dest = os.path.join(archive_dir, f"bracket_{old_season}.json")
+    if not os.path.exists(dest):          # erste Kopie behalten, nie ueberschreiben
+        shutil.copy2(path, dest)
+        print(f"  Archiviert: {dest}")
+    return dest
+
+
+def known_states(series_map, playin_df, season):
+    """Echte Serienstaende / Play-In-Ergebnisse als Team-Index-Dicts fuer den Simulator."""
+    import season_simulator as ss
+    known_series = {}
+    for s in series_map.values():
+        h, a = s['home_team'], s['away_team']
+        if h in ss.TEAM_IDX and a in ss.TEAM_IDX:
+            hi, ai = ss.TEAM_IDX[h], ss.TEAM_IDX[a]
+            known_series[frozenset((hi, ai))] = {hi: int(s['home_wins']), ai: int(s['away_wins'])}
+    known_playin = {}
+    if playin_df is not None and not playin_df.empty:
+        df = playin_df[playin_df['season'] == season] if 'season' in playin_df.columns else playin_df
+        for _, r in df.iterrows():
+            h, a = r['hometeamName'], r['awayteamName']
+            if h in ss.TEAM_IDX and a in ss.TEAM_IDX:
+                hi, ai = ss.TEAM_IDX[h], ss.TEAM_IDX[a]
+                known_playin[frozenset((hi, ai))] = hi if int(r['home_win']) == 1 else ai
+    return known_series, known_playin
+
+
+def _mark_live_series(bracket, series_map):
+    """Live-Modus: team_probabilities + projected-Flag an die bestehenden Serienobjekte."""
+    real_pairs = {frozenset((s['home_team'], s['away_team'])) for s in series_map.values()}
+
+    def mark(s):
+        if not s:
+            return
+        s['projected'] = frozenset((s.get('home_team'), s.get('away_team'))) not in real_pairs
+        pred = s.get('prediction')
+        if pred and pred.get('winner'):
+            other = s['away_team'] if pred['winner'] == s['home_team'] else s['home_team']
+            p = float(pred.get('win_probability', 0.5))
+            pred['team_probabilities'] = {pred['winner']: round(p, 4), other: round(1 - p, 4)}
+
+    for conf in ('east', 'west'):
+        for rnd in ('r1', 'r2', 'r3'):
+            for s in bracket[conf][rnd]:
+                mark(s)
+    mark(bracket['finals'])
+
+
+def update_history(entry, path=HISTORY_JSON):
+    """Ein Eintrag pro Tag; ein erneuter Lauf am selben Tag ueberschreibt den Tageseintrag."""
+    history = []
+    if os.path.exists(path):
+        try:
+            with open(path, encoding='utf-8') as f:
+                history = json.load(f)
+            if not isinstance(history, list):
+                history = []
+        except Exception:
+            history = []
+    history = [h for h in history if h.get('date') != entry['date']]
+    history.append(entry)
+    history.sort(key=lambda h: h.get('date', ''))
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(history, f, ensure_ascii=False, indent=1)
+    return history
+
+
+def _write_json(path, obj, indent=2):
+    os.makedirs(os.path.dirname(path), exist_ok=True)
+    with open(path, 'w', encoding='utf-8') as f:
+        json.dump(obj, f, ensure_ascii=False, indent=indent)
+
+
+def build_bracket(n_sims=N_SIMS):
+    """Main entry point: load data, run predictions + season simulation, write bracket.json."""
+    season = SEASON
+    archive_previous_bracket(season, OUTPUT_JSON, ARCHIVE_DIR)
+
+    # 1. Load games + playoff series of the current season
     df_all = pd.read_csv(GAMES_CSV)
     playoff_mask = df_all['GAME_ID'].astype(str).str.startswith(SEASON_CODE)
     df_playoff = df_all[playoff_mask].copy()
-
-    # 2. Build series standings
     series_map = build_series_dict(df_playoff)
 
-    # 3. Load model data and build team snapshots
-    df_model = pd.read_csv(MODEL_DATA_CSV)
-    home_snap, away_snap = get_team_snapshots(df_model)
+    schedule_df = _read_csv(SCHEDULE_CSV)
+    playin_df = _read_csv(PLAYIN_CSV)
+    try:
+        mode = detect_mode(df_all, season, schedule_df, playin_df)
+    except Exception as e:
+        mode = 'live' if series_map else 'projected'
+        print(f"  WARNUNG: Modus-Erkennung fehlgeschlagen ({e}), nutze {mode}")
+    print(f"  Modus: {mode}")
 
-    # 4. Load model
-    model        = joblib.load(MODEL_PKL)
-    feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
-    feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
+    # 2. Model + team snapshots (XGBoost) — failure must not stop the bracket
+    predict_fn, xgb = None, None
+    try:
+        df_model = pd.read_csv(MODEL_DATA_CSV)
+        home_snap, away_snap = get_team_snapshots(df_model)
+        model        = joblib.load(MODEL_PKL)
+        feature_cols = pd.read_csv(FEATURE_CSV).squeeze().tolist()
+        feature_cols = [c for c in feature_cols if c not in EXCLUDE_COLS]
 
-    def predict_fn(home_team, away_team, cur_home_wins=0, cur_away_wins=0):
-        return predict_series(home_team, away_team, home_snap, away_snap,
-                              model, feature_cols, cur_home_wins, cur_away_wins)
+        def predict_fn(home_team, away_team, cur_home_wins=0, cur_away_wins=0):
+            return predict_series(home_team, away_team, home_snap, away_snap,
+                                  model, feature_cols, cur_home_wins, cur_away_wins)
 
-    # 5. Assemble bracket JSON
-    bracket = build_bracket_json(series_map, predict_fn)
+        xgb = {"model": model, "feature_cols": feature_cols,
+               "home_snap": home_snap, "away_snap": away_snap}
+    except Exception as e:
+        print(f"  WARNUNG: Modell/Snapshots nicht verfuegbar: {e}")
 
-    # 6. Write output
-    os.makedirs(os.path.dirname(OUTPUT_JSON), exist_ok=True)
-    with open(OUTPUT_JSON, 'w', encoding='utf-8') as f:
-        json.dump(bracket, f, ensure_ascii=False, indent=2)
+    # 3. Season simulation (errors are reported, never fatal)
+    sim, t0 = None, time.time()
+    try:
+        import season_simulator as ss
+        predictions_df = None
+        if os.path.exists(PREDICTIONS_XLSX):
+            try:
+                predictions_df = pd.read_excel(PREDICTIONS_XLSX)
+            except Exception as e:
+                print(f"  WARNUNG: predictions.xlsx nicht lesbar: {e}")
+        known_series, known_playin = known_states(series_map, playin_df, season)
+        sim = ss.run_simulation(season, mode, df_all, schedule_df,
+                                predictions_df=predictions_df, xgb=xgb, n_sims=n_sims,
+                                known_playin=known_playin, known_series=known_series)
+        report = sim['report']
+    except Exception as e:
+        traceback.print_exc()
+        report = {
+            "generated_at": pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%dT%H:%M:%S'),
+            "season": season, "mode": mode, "sims": 0,
+            "runtime_seconds": round(time.time() - t0, 1),
+            "status": "critical", "passed": False, "checks": [],
+            "issues": [f"Saison-Simulation fehlgeschlagen: {type(e).__name__}: {e}"],
+            "warnings": [],
+        }
+
+    # 4. Assemble bracket JSON
+    if mode == 'live' and series_map:
+        bracket = build_bracket_json(series_map, predict_fn, season)   # bestehende Live-Logik
+        _mark_live_series(bracket, series_map)
+    elif sim is not None:
+        bracket = {
+            'generated_at': pd.Timestamp.now(tz='America/New_York').strftime('%Y-%m-%dT%H:%M:%S'),
+            'season': season,
+            **sim['bracket'],
+        }
+    else:
+        bracket = build_bracket_json(series_map, predict_fn, season)   # Rueckfall: Bestandslogik
+
+    bracket['mode'] = mode
+    bracket['sims'] = n_sims if sim is not None else 0
+    if sim is not None:
+        bracket['projection_date'] = sim['history_entry']['date']
+        bracket['standings']  = sim['standings']
+        bracket['play_in']    = sim['play_in']
+        bracket['round_odds'] = sim['round_odds']
+
+    # 5. Write outputs
+    _write_json(OUTPUT_JSON, bracket)
+    _write_json(SIM_REPORT_JSON, report)
+    if sim is not None:
+        update_history(sim['history_entry'], HISTORY_JSON)
 
     total_series = (
         len(bracket['east']['r1']) + len(bracket['east']['r2']) +
@@ -490,7 +701,8 @@ def build_bracket():
         len(bracket['west']['r2']) + len(bracket['west']['r3']) + 1
     )
     print(f"OK: bracket.json written ({total_series} series, "
-          f"{len(series_map)} with game data)")
+          f"{len(series_map)} with game data, mode {mode}, "
+          f"simulation {report.get('status')})")
 
 
 if __name__ == '__main__':

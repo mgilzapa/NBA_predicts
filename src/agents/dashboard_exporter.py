@@ -14,6 +14,7 @@ REPORTS = {
     "feature_drift":      os.path.join(OUTPUT_DIR, "feature_drift_report.json"),
     "prediction_audit":   os.path.join(OUTPUT_DIR, "prediction_audit_report.json"),
     "retraining":         os.path.join(OUTPUT_DIR, "retraining_report.json"),
+    "season_simulation":  os.path.join(OUTPUT_DIR, "season_sim_report.json"),
 }
 DASHBOARD_JSON = os.path.join(WEB_DIR, "dashboard.json")
 
@@ -32,6 +33,7 @@ def export():
     fd   = _load("feature_drift")
     pa   = _load("prediction_audit")
     rt   = _load("retraining")
+    ss   = _load("season_simulation")
 
     # ── Model metrics ─────────────────────────────────────────────────────
     model = None
@@ -73,6 +75,16 @@ def export():
             "test_accuracy": rt.get("test_accuracy") or rt.get("new_test_accuracy") if rt else None,
             "generated_at": rt.get("generated_at")      if rt else None,
         },
+        "season_simulation": {
+            "passed":          ss.get("passed", True)           if ss else None,
+            "status":          ss.get("status")                 if ss else None,
+            "mode":            ss.get("mode")                   if ss else None,
+            "sims":            ss.get("sims", 0)                if ss else 0,
+            "runtime_seconds": ss.get("runtime_seconds")        if ss else None,
+            "issues":          len(ss.get("issues", []))        if ss else 0,
+            "warnings":        len(ss.get("warnings", []))      if ss else 0,
+            "generated_at":    ss.get("generated_at")           if ss else None,
+        },
     }
 
     # ── Observations (all flags/issues across all reports) ────────────────
@@ -110,6 +122,22 @@ def export():
                 "severity": "high",
                 "title":    "Datenproblem",
                 "detail":   issue,
+            })
+
+    if ss:
+        for issue in ss.get("issues", []):
+            observations.append({
+                "source":   "season_simulation",
+                "severity": "high",
+                "title":    "Saison-Simulation fehlerhaft",
+                "detail":   issue,
+            })
+        for warn in ss.get("warnings", []):
+            observations.append({
+                "source":   "season_simulation",
+                "severity": "medium",
+                "title":    "Saison-Simulation Warnung",
+                "detail":   warn,
             })
 
     if ev and ev.get("alert_model_below_baseline"):

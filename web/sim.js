@@ -65,8 +65,8 @@ function stSave() {
 
 async function fetchSimData() {
   const [predRes, oddsRes] = await Promise.all([
-    fetch('predictions.json').catch(() => null),
-    fetch('odds.json').catch(() => null),
+    fetch('predictions.json', { cache: 'no-store' }).catch(() => null),
+    fetch('odds.json', { cache: 'no-store' }).catch(() => null),
   ]);
   _pred = null;
   _odds = null;

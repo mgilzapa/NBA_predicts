@@ -67,7 +67,7 @@ def evaluate():
             "accuracy": round(grp["correct"].mean(), 4),
         })
 
-    alert = total >= MIN_GAMES_FOR_ALERT and overall_acc < baseline_acc
+    alert = bool(total >= MIN_GAMES_FOR_ALERT and overall_acc < baseline_acc)  # np.bool_ is not JSON-serializable
 
     report = {
         "generated_at": now.strftime("%Y-%m-%dT%H:%M:%S"),

@@ -65,6 +65,10 @@ def calc_bet_value(game: dict, odds_map: dict) -> tuple:
 
 
 def get_latest_elo():
+    # Bevorzugt: ELO nach allen Spielen inkl. Saison-Regression (aus feature_engineering.py)
+    elo_current = os.path.join(os.path.dirname(MODEL_DATA_CSV), "elo_current.csv")
+    if os.path.exists(elo_current):
+        return pd.read_csv(elo_current).set_index("team")["elo"].to_dict()
     if not os.path.exists(MODEL_DATA_CSV):
         return {}
     df = pd.read_csv(MODEL_DATA_CSV, usecols=["gameDateTimeEst", "hometeamName", "awayteamName", "home_elo", "away_elo"])

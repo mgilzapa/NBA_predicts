@@ -26,6 +26,7 @@ if __name__ == "__main__":
     scripts = [
         "src/nba_api_test.py",                      # Ergebnisse von der API holen
         "src/scrape_upcoming_games.py",             # Kommende Spiele scrapen
+        "src/fetch_rosters.py",                     # Aktuelle Kader aller Teams holen
         "src/injury_reports.py",                    # Verletzungsbericht aktualisieren
         "src/fetch_player_stats.py",                # Spielerstatistiken holen
         "src/tabelle.py",                           # Tabelle bereinigen
@@ -36,7 +37,7 @@ if __name__ == "__main__":
 
     scripts += [
         "src/predict.py",                           # Vorhersage für heute
-        "src/clean_excel.py",                       # Excel-Datei bereinigen
+        "src/clean_excel.py",                        # Excel-Datei bereinigen
         "src/create_excel.py",                      # Excel-Datei aktualisieren
         "src/create_all_predictions.py",            # Heutige Vorhersagen sofort in all_predictions.xlsx
         "src/fetch_odds.py",                        # Wettquoten holen (braucht ODDS_API_KEY)

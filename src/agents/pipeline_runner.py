@@ -12,6 +12,7 @@ REPORT_PATH = os.path.join(BASE_DIR, "output", "pipeline_report.json")
 SCRIPTS = [
     "src/nba_api_test.py",
     "src/scrape_upcoming_games.py",
+    "src/fetch_rosters.py",
     "src/injury_reports.py",
     "src/fetch_player_stats.py",
     "src/tabelle.py",

@@ -260,6 +260,12 @@ latest_elo = (
 )
 future["home_elo"] = future["hometeamName"].map(latest_elo.set_index("team")["elo"])
 future["away_elo"] = future["awayteamName"].map(latest_elo.set_index("team")["elo"])
+# Bevorzugt: ELO nach allen Spielen inkl. Saison-Regression (aus feature_engineering.py)
+_elo_current_path = os.path.join(BASE_DIR, "data", "elo_current.csv")
+if os.path.exists(_elo_current_path):
+    _elo_current = pd.read_csv(_elo_current_path).set_index("team")["elo"]
+    future["home_elo"] = future["hometeamName"].map(_elo_current).combine_first(future["home_elo"])
+    future["away_elo"] = future["awayteamName"].map(_elo_current).combine_first(future["away_elo"])
 future["elo_diff"] = future["home_elo"] - future["away_elo"]
 if {"home_elo", "away_elo"}.issubset(future.columns):
     future["elo_expected_home_win"] = 1 / (
@@ -335,7 +341,10 @@ divisions = {
 future["same_division"] = (
     future["hometeamName"].map(divisions) == future["awayteamName"].map(divisions)
 ).astype(int)
-future["is_playoff"] = 1
+# Spieltyp aus der gameId: 001 = Preseason, 002 = Regular Season, 004 = Playoffs
+_game_type = future["gameId"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(10).str[:3]
+future["is_playoff"] = (_game_type == "004").astype(int)
+future["is_preseason"] = (_game_type == "001").astype(int)
 
 # Series Record aus bracket.json (nur aktive Serien)
 import json as _json
@@ -368,7 +377,7 @@ if os.path.exists(_bracket_path):
 
     def _get_series_wins(row):
         key = frozenset([row["hometeamName"], row["awayteamName"]])
-        if key not in _series_map:
+        if row["is_playoff"] != 1 or key not in _series_map:
             return 0, 0
         sr = _series_map[key]
         if sr["home_team"] == row["hometeamName"]:
@@ -427,7 +436,7 @@ if {"home_current_streak", "away_current_streak"}.issubset(future.columns):
 
 # Saisonfortschritt (0 = Okt-Beginn, 1 = Jun-Ende)
 def _season_progress(date):
-    year = date.year if date.month >= 10 else date.year - 1
+    year = date.year if date.month >= 8 else date.year - 1
     start = pd.Timestamp(f"{year}-10-01")
     return float(np.clip((date - start).days / 270, 0.0, 1.0))
 
@@ -581,6 +590,19 @@ else:
         raw_probs = np.full(len(future_valid), 0.5)
 
     future_valid["prediction"] = preds
+
+    # NUR Preseason: Wahrscheinlichkeit Richtung 50 % ziehen. ELO/Form sagen dort
+    # kaum etwas voraus (logit-Koeffizient pro 100 ELO: 0.153 Preseason vs. 0.571
+    # Regular Season), das Modell lernt das aber wegen weniger Preseason-Spiele nicht.
+    # Regular Season und Playoffs bleiben unveraendert.
+    PRESEASON_LOGIT_SHRINK = 0.27
+    is_pre = future_valid["is_preseason"].to_numpy() == 1
+    if is_pre.any():
+        p = np.clip(raw_probs[is_pre], 1e-6, 1 - 1e-6)
+        shrunk_logit = PRESEASON_LOGIT_SHRINK * np.log(p / (1 - p))
+        raw_probs = raw_probs.copy()
+        raw_probs[is_pre] = 1 / (1 + np.exp(-shrunk_logit))
+        print(f"Preseason-Shrink auf {is_pre.sum()} Spiel(e) angewendet (Faktor {PRESEASON_LOGIT_SHRINK}).")
 
     future_valid["probability_home_win"] = raw_probs
     future_valid["predicted_winner"] = future_valid.apply(

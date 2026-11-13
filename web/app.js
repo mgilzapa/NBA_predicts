@@ -75,11 +75,12 @@ document.querySelectorAll('.tab').forEach(btn => {
 
 async function loadData() {
   try {
-    const [predRes, oddsRes, bracketRes, dashRes] = await Promise.all([
-      fetch('predictions.json'),
-      fetch('odds.json').catch(() => null),
-      fetch('bracket.json').catch(() => null),
-      fetch('dashboard.json').catch(() => null),
+    const [predRes, oddsRes, bracketRes, dashRes, histRes] = await Promise.all([
+      fetch('predictions.json', { cache: 'no-store' }),
+      fetch('odds.json', { cache: 'no-store' }).catch(() => null),
+      fetch('bracket.json', { cache: 'no-store' }).catch(() => null),
+      fetch('dashboard.json', { cache: 'no-store' }).catch(() => null),
+      fetch('projection_history.json', { cache: 'no-store' }).catch(() => null),
     ]);
 
     if (!predRes.ok) throw new Error(`HTTP ${predRes.status}`);
@@ -99,9 +100,21 @@ async function loadData() {
       try { dashData = await dashRes.json(); } catch { /* ignore */ }
     }
 
+    let histData = null;
+    if (histRes && histRes.ok) {
+      try { histData = await histRes.json(); } catch { /* ignore */ }
+    }
+
     currentData = data;
     render(data);
-    renderBracket(bracketData);
+    try {
+      renderBracket(bracketData, histData);
+    } catch (e) {
+      // Bracket-Fehler duerfen den Rest der Seite nicht mitreissen
+      const bh = document.getElementById('bracket-header');
+      if (bh) bh.textContent = 'Bracket could not be rendered.';
+      console.error(e);
+    }
     renderDashboard(dashData);
     initFilters();
   } catch (err) {
@@ -594,13 +607,17 @@ document.getElementById('fmt-toggle').addEventListener('click', e => {
 
 // ─── Bracket Rendering ─────────────────────────────────────────────
 
-function renderBracket(data) {
+function renderBracket(data, history = null) {
   const header    = document.getElementById('bracket-header');
   const container = document.getElementById('bracket-container');
   const mobile    = document.getElementById('bracket-mobile');
+  const extra     = document.getElementById('bracket-extra');
+
+  seriesTips.clear();
 
   if (!data) {
     header.textContent = 'Bracket data not available yet.';
+    if (extra) extra.innerHTML = '';
     return;
   }
 
@@ -608,11 +625,70 @@ function renderBracket(data) {
   const accHtml = acc.total > 0
     ? ` · <span class="accuracy-pill">${acc.correct}/${acc.total} series correct</span>`
     : '';
-  header.innerHTML = `Season <strong>${esc(data.season)}</strong> · Updated ${esc(data.generated_at.slice(0, 16).replace('T', ' '))} ET${accHtml}`;
+  const updated = data.generated_at ? ` · Updated ${esc(data.generated_at.slice(0, 16).replace('T', ' '))} ET` : '';
+  header.innerHTML = `Season <strong>${esc(data.season)}</strong>${updated}${accHtml}${projectionBadge(data)}`;
 
+  container.classList.toggle('has-playin', hasPlayIn(data));
+  const outer = document.getElementById('bracket-outer');
+  if (outer) outer.classList.toggle('has-playin', hasPlayIn(data));
   container.innerHTML = buildBracketDesktop(data);
   mobile.innerHTML    = buildBracketMobile(data);
+  initSeriesTooltip();
+
+  if (extra) {
+    // Fehlende Bereiche werden ausgeblendet, das Bracket bleibt wie bisher sichtbar
+    try {
+      extra.innerHTML = buildProjectionSections(data, history);
+      initProjectionSections(extra, data, history);
+    } catch (e) {
+      extra.innerHTML = '';
+      console.error(e);
+    }
+  }
 }
+
+function isProjectionMode(data) {
+  return data && (data.mode === 'projected' || data.mode === 'post_season_pending');
+}
+
+function projectionBadge(data) {
+  if (!data || !data.mode || !data.sims) return '';
+  const sims = Number(data.sims).toLocaleString('en-US');
+  const asOf = data.projection_date ? ` · as of ${esc(humanDateLong(data.projection_date))}` : '';
+  if (isProjectionMode(data)) {
+    return ` <span class="proj-badge"><span class="proj-badge-tag">Projection</span>${sims} simulations${asOf}</span>`;
+  }
+  return ` <span class="proj-badge proj-badge--live"><span class="proj-badge-tag">Live</span>round odds from ${sims} simulations${asOf}</span>`;
+}
+
+function hasPlayIn(data) {
+  return !!(data && data.play_in && Array.isArray(data.play_in.east) && Array.isArray(data.play_in.west)
+    && data.play_in.east.length && data.play_in.west.length);
+}
+
+function humanDateLong(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+}
+
+function fmtProb(p) {
+  if (p == null || isNaN(p)) return '—';
+  if (p <= 0) return '0%';
+  if (p >= 1) return '100%';
+  if (p < 0.005) return '<1%';
+  if (p > 0.995) return '>99%';
+  return Math.round(p * 100) + '%';
+}
+
+function isProjectedSeries(series) {
+  if (!series || series.status === 'tbd') return false;
+  if (series.status === 'projected') return true;
+  return series.projected === true && series.status !== 'complete' && series.status !== 'active';
+}
+
+// Serien-Tooltips (Ergebnisverteilung): ein gemeinsames, fixiertes Element
+const seriesTips = new Map();
+let seriesTipSeq = 0;
 
 function buildMatchupCard(series) {
   if (!series) return '<div class="matchup-card status-tbd"><div class="mc-teams"><div class="mc-team">TBD</div></div></div>';
@@ -631,6 +707,8 @@ function buildMatchupCard(series) {
 
   const pred   = series.prediction;
   const winner = series.winner;
+
+  if (isProjectedSeries(series)) return buildProjectedCard(series);
 
   const homeCls = winner ? (winner === home ? 'winner' : 'loser') : '';
   const awayCls = winner ? (winner === away ? 'winner' : 'loser') : '';
@@ -684,6 +762,86 @@ function buildMatchupCard(series) {
   </div>`;
 }
 
+// Teamname ohne Stadt ("San Antonio Spurs" -> "Spurs") fuer die schmalen Bracket-Spalten
+function teamNickname(name) {
+  if (!name) return '';
+  if (name.endsWith('Trail Blazers')) return 'Trail Blazers';
+  const parts = name.split(' ');
+  return parts[parts.length - 1];
+}
+
+// Prognose-Serie: gestrichelter Rahmen, Serien-Siegchance pro Team, wahrscheinlichstes Ergebnis,
+// Ergebnisverteilung im Tooltip (Hover oder Tastaturfokus)
+function buildProjectedCard(series) {
+  const home = series.home_team;
+  const away = series.away_team;
+  const pred = series.prediction || {};
+  const tp   = pred.team_probabilities || {};
+  const pHome = tp[home] != null ? tp[home] : (pred.winner === home ? pred.win_probability : 1 - (pred.win_probability || 0.5));
+  const pAway = tp[away] != null ? tp[away] : 1 - pHome;
+
+  const tipId = 'st' + (++seriesTipSeq);
+  seriesTips.set(tipId, series);
+
+  const row = (team, p) => {
+    const isPred = pred.winner === team;
+    return `<div class="mc-team${isPred ? ' pred-winner' : ''}">
+        ${logoHtml(team, 16)}
+        <span class="mc-team-name"><span class="tn-full">${esc(team)}</span><span class="tn-short" aria-hidden="true">${esc(teamNickname(team))}</span></span>
+        <span class="mc-prob" aria-label="${esc(team)} series win chance ${fmtProb(p)}">${fmtProb(p)}</span>
+      </div>`;
+  };
+
+  let predHtml = '';
+  if (pred.winner) {
+    const lost = (pred.predicted_length || 6) - 4;
+    predHtml = `<div class="mc-footer"><div class="mc-pred-row"><span class="mc-pred-label">PROJ</span><span class="mc-pred-winner">${esc(teamAbbr(pred.winner))}</span><span class="mc-pred-score"> Wins 4–${lost}</span><span class="mc-dist-hint" aria-hidden="true">i</span></div></div>`;
+  }
+
+  const label = `Projected series: ${away} at ${home}. ${home} ${fmtProb(pHome)}, ${away} ${fmtProb(pAway)}. Focus for outcome distribution.`;
+  return `<div class="matchup-card status-projected" role="group" tabindex="0" data-tip="${tipId}" aria-label="${esc(label)}">
+    <div class="mc-teams">
+      ${row(away, pAway)}
+      ${row(home, pHome)}
+    </div>
+    ${predHtml}
+  </div>`;
+}
+
+function buildPlayInCard(game) {
+  if (!game) return '';
+  const tp = game.team_probabilities || {};
+  const done = game.status === 'complete';
+  const row = (team, seed) => {
+    const isWin = game.winner === team;
+    const cls = done ? (isWin ? 'winner' : 'loser') : (isWin ? 'pred-winner' : '');
+    return `<div class="mc-team ${cls}">
+        <span class="pi-seed" aria-label="seed ${seed}">${seed}</span>
+        ${logoHtml(team, 16)}
+        <span class="mc-team-name">${esc(teamAbbr(team))}</span>
+        <span class="mc-prob">${done ? (isWin ? 'W' : 'L') : fmtProb(tp[team])}</span>
+      </div>`;
+  };
+  const statusCls = done ? 'status-complete' : 'status-projected';
+  const label = `Play-in ${game.label}: ${game.away_team} at ${game.home_team}` +
+    (done ? `, ${game.winner} won` : `, ${game.home_team} ${fmtProb(tp[game.home_team])}, ${game.away_team} ${fmtProb(tp[game.away_team])}`);
+  return `<div class="matchup-card playin-card ${statusCls}" role="group" aria-label="${esc(label)}">
+    <div class="pi-label">${esc(game.label || '')}</div>
+    <div class="mc-teams">
+      ${row(game.home_team, game.home_seed)}
+      ${row(game.away_team, game.away_seed)}
+    </div>
+  </div>`;
+}
+
+function buildPlayInCol(games, conf) {
+  if (!games || !games.length) return '';
+  return `<div class="bracket-playin ${conf}">
+    <div class="bracket-round-label">Play-In</div>
+    <div class="bracket-playin-list">${games.map(buildPlayInCard).join('')}</div>
+  </div>`;
+}
+
 function buildRoundCol(series_list, label) {
   const cards = series_list.map(s =>
     `<div class="bracket-matchup">${buildMatchupCard(s)}</div>`
@@ -699,7 +857,7 @@ function bracketOrderR1(arr) {
   return [arr[0], arr[3], arr[2], arr[1]];
 }
 
-function buildFinalsWinner(series) {
+function buildFinalsWinner(series, data = null) {
   if (!series) return '';
   const champion = series.status === 'complete' ? series.winner
     : (series.prediction ? series.prediction.winner : null);
@@ -708,11 +866,18 @@ function buildFinalsWinner(series) {
   const logoEl = url
     ? `<img class="finals-winner-logo" src="${url}" alt="${esc(champion)}" width="72" height="72" loading="lazy" decoding="async" onerror="this.style.display='none'">`
     : '';
-  const label = series.status === 'complete' ? 'Champion' : 'Predicted Winner';
+  const projected = isProjectedSeries(series);
+  const label = series.status === 'complete' ? 'Champion' : (projected ? 'Projected Champion' : 'Predicted Winner');
+  let oddsHtml = '';
+  if (projected && data && Array.isArray(data.round_odds)) {
+    const r = data.round_odds.find(x => x.team === champion);
+    if (r) oddsHtml = `<div class="finals-winner-odds">${fmtProb(r.champion)} title chance</div>`;
+  }
   return `<div class="finals-winner-banner">
     ${logoEl}
     <div class="finals-winner-label">${esc(label)}</div>
     <div class="finals-winner-name">${esc(champion)}</div>
+    ${oddsHtml}
   </div>`;
 }
 
@@ -724,7 +889,7 @@ function buildBracketDesktop(data) {
   const eastR2  = buildRoundCol(data.east.r2,  'R2');
   const eastR1  = buildRoundCol(bracketOrderR1(data.east.r1), 'R1');
 
-  const winnerBanner = buildFinalsWinner(data.finals);
+  const winnerBanner = buildFinalsWinner(data.finals, data);
   const finalsCard   = buildMatchupCard(data.finals);
   const finalsCol    = `<div class="bracket-finals-col">
     ${winnerBanner}
@@ -732,26 +897,424 @@ function buildBracketDesktop(data) {
     ${finalsCard}
   </div>`;
 
+  const withPlayIn = hasPlayIn(data);
+  const piWest = withPlayIn ? buildPlayInCol(data.play_in.west, 'west') : '';
+  const piEast = withPlayIn ? buildPlayInCol(data.play_in.east, 'east') : '';
+
   return `
+    ${piWest}
     <div class="bracket-half west">${westR1}${westR2}${westR3}</div>
     ${finalsCol}
     <div class="bracket-half east">${eastR3}${eastR2}${eastR1}</div>
+    ${piEast}
   `;
 }
 
 function buildBracketMobile(data) {
+  const withPlayIn = hasPlayIn(data);
   const rounds = [
-    { label: 'First Round',        east: bracketOrderR1(data.east.r1), west: bracketOrderR1(data.west.r1) },
+    { label: 'First Round',        east: bracketOrderR1(data.east.r1), west: bracketOrderR1(data.west.r1),
+      playIn: withPlayIn ? data.play_in : null },
     { label: 'Second Round',       east: data.east.r2, west: data.west.r2 },
     { label: 'Conference Finals',  east: data.east.r3, west: data.west.r3 },
     { label: 'NBA Finals',         east: [data.finals], west: [] },
   ];
 
+  // Play-In erscheint als eigener Block vor R1 der jeweiligen Conference
+  const piBlock = (games) => games && games.length
+    ? `<div class="bm-playin"><div class="bm-playin-label">Play-In</div><div class="bm-series-list">${games.map(buildPlayInCard).join('')}</div></div>`
+    : '';
+
   return rounds.map(r => `
     <div class="bm-round-title">${esc(r.label)}</div>
-    ${r.east.length ? `<div class="bm-conf-label">East</div><div class="bm-series-list">${r.east.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
-    ${r.west.length ? `<div class="bm-conf-label">West</div><div class="bm-series-list">${r.west.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
+    ${r.east.length ? `<div class="bm-conf-label">East</div>${r.playIn ? piBlock(r.playIn.east) : ''}<div class="bm-series-list">${r.east.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
+    ${r.west.length ? `<div class="bm-conf-label">West</div>${r.playIn ? piBlock(r.playIn.west) : ''}<div class="bm-series-list">${r.west.map(s => buildMatchupCard(s)).join('')}</div>` : ''}
   `).join('');
+}
+
+// ─── Series Tooltip (outcome distribution) ─────────────────────────
+
+function outcomeLabel(key, home, away) {
+  const [h, a] = key.split('-').map(Number);
+  return h === 4 ? `${teamAbbr(home)} 4–${a}` : `${teamAbbr(away)} 4–${h}`;
+}
+
+function buildSeriesTipHtml(series) {
+  const pred = series.prediction || {};
+  const tp = pred.team_probabilities || {};
+  const home = series.home_team, away = series.away_team;
+  const dist = Object.entries(pred.outcome_distribution || {}).sort((a, b) => b[1] - a[1]);
+  const max = dist.length ? dist[0][1] : 1;
+  const rows = dist.map(([k, v]) => `
+    <div class="tip-row">
+      <span class="tip-outcome">${esc(outcomeLabel(k, home, away))}</span>
+      <span class="tip-bar" aria-hidden="true"><span style="width:${Math.round((v / max) * 100)}%"></span></span>
+      <span class="tip-val">${fmtProb(v)}</span>
+    </div>`).join('');
+  const src = pred.source === 'elo_analytic'
+    ? 'ELO estimate (few matching simulations)'
+    : (pred.sims_matched ? `${Number(pred.sims_matched).toLocaleString('en-US')} simulations with this matchup` : '');
+  return `
+    <div class="tip-title">${esc(teamAbbr(away))} @ ${esc(teamAbbr(home))}</div>
+    <div class="tip-teams">
+      <span>${esc(teamAbbr(home))} <strong>${fmtProb(tp[home])}</strong></span>
+      <span>${esc(teamAbbr(away))} <strong>${fmtProb(tp[away])}</strong></span>
+    </div>
+    <div class="tip-sub">Series outcome</div>
+    ${rows}
+    ${src ? `<div class="tip-foot">${esc(src)}</div>` : ''}`;
+}
+
+function initSeriesTooltip() {
+  let tip = document.getElementById('series-tip');
+  if (tip) return;
+  tip = document.createElement('div');
+  tip.id = 'series-tip';
+  tip.className = 'series-tip';
+  tip.setAttribute('role', 'tooltip');
+  tip.hidden = true;
+  document.body.appendChild(tip);
+
+  let current = null;
+
+  function show(card) {
+    const series = seriesTips.get(card.dataset.tip);
+    if (!series) return;
+    current = card;
+    tip.innerHTML = buildSeriesTipHtml(series);
+    tip.hidden = false;
+    card.setAttribute('aria-describedby', 'series-tip');
+    const r = card.getBoundingClientRect();
+    const tw = tip.offsetWidth, th = tip.offsetHeight;
+    let left = r.left + r.width / 2 - tw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - tw - 8));
+    let top = r.bottom + 8;
+    if (top + th > window.innerHeight - 8) top = Math.max(8, r.top - th - 8);
+    tip.style.left = left + 'px';
+    tip.style.top  = top + 'px';
+  }
+
+  function hide(card) {
+    if (card && card !== current) return;
+    if (current) current.removeAttribute('aria-describedby');
+    current = null;
+    tip.hidden = true;
+  }
+
+  document.addEventListener('mouseover', e => {
+    const card = e.target.closest && e.target.closest('[data-tip]');
+    if (card && card !== current) show(card);
+  });
+  document.addEventListener('mouseout', e => {
+    const card = e.target.closest && e.target.closest('[data-tip]');
+    if (card && !card.contains(e.relatedTarget)) hide(card);
+  });
+  document.addEventListener('focusin', e => {
+    const card = e.target.closest && e.target.closest('[data-tip]');
+    if (card) show(card);
+  });
+  document.addEventListener('focusout', e => {
+    const card = e.target.closest && e.target.closest('[data-tip]');
+    if (card) hide(card);
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') hide(); });
+  window.addEventListener('scroll', () => hide(), { passive: true });
+  document.addEventListener('scroll', () => hide(), { passive: true, capture: true });
+}
+
+// ─── Projection Sections (standings, round odds, history) ──────────
+
+const standingsView = { east: 'projected', west: 'projected' };   // Standard: Prognose
+let roundOddsSort = { key: 'champion', dir: -1 };
+let historyMetric = 'playoffs';
+
+function buildProjectionSections(data, history) {
+  const parts = [];
+  if (data.standings && data.standings.east && data.standings.west) {
+    parts.push(`
+      <section class="proj-section" aria-labelledby="standings-title">
+        <h2 class="proj-title" id="standings-title">Standings</h2>
+        <p class="proj-note">${isProjectionMode(data)
+          ? 'Projected final table from the Monte Carlo simulation. Seeds 1–6 go to the playoffs, 7–10 to the play-in.'
+          : 'Final regular season table.'}</p>
+        <div class="standings-grid">
+          <div class="standings-card" data-conf="west">${buildStandingsCard(data, 'west')}</div>
+          <div class="standings-card" data-conf="east">${buildStandingsCard(data, 'east')}</div>
+        </div>
+      </section>`);
+  }
+  if (Array.isArray(data.round_odds) && data.round_odds.length) {
+    parts.push(`
+      <section class="proj-section" aria-labelledby="odds-title">
+        <h2 class="proj-title" id="odds-title">Round Odds</h2>
+        <p class="proj-note">Chance of each team to reach each round, from ${Number(data.sims || 0).toLocaleString('en-US')} simulations. Click a column to sort.</p>
+        <div class="table-scroll" id="round-odds-wrap">${buildRoundOddsTable(data.round_odds)}</div>
+      </section>`);
+  }
+  if (Array.isArray(history)) {
+    parts.push(`
+      <section class="proj-section" aria-labelledby="history-title">
+        <div class="proj-title-row">
+          <h2 class="proj-title" id="history-title">Odds History</h2>
+          <label class="hist-metric-label">
+            <span class="visually-hidden">Metric</span>
+            <select class="f-select" id="hist-metric">
+              <option value="playoffs"${historyMetric === 'playoffs' ? ' selected' : ''}>% Playoffs</option>
+              <option value="conf_finals"${historyMetric === 'conf_finals' ? ' selected' : ''}>% Conf Finals</option>
+              <option value="champion"${historyMetric === 'champion' ? ' selected' : ''}>% Title</option>
+            </select>
+          </label>
+        </div>
+        <div class="hist-wrap" id="hist-wrap">${buildHistoryChart(history, historyMetric)}</div>
+      </section>`);
+  }
+  return parts.join('');
+}
+
+function buildStandingsCard(data, conf) {
+  const view = standingsView[conf];
+  const confLabel = conf === 'east' ? 'East' : 'West';
+  const btn = (v, label) =>
+    `<button type="button" class="seg-btn${view === v ? ' active' : ''}" data-view="${v}" aria-pressed="${view === v}">${label}</button>`;
+  const table = view === 'current'
+    ? buildCurrentTable(data.standings[conf].current || [])
+    : buildProjectedTable(data.standings[conf].projected || []);
+  return `
+    <div class="standings-head">
+      <h3 class="standings-conf">${confLabel}</h3>
+      <div class="seg-toggle" role="group" aria-label="${confLabel} standings view">
+        ${btn('current', 'Current')}${btn('projected', 'Projected')}
+      </div>
+    </div>
+    <div class="table-scroll">${table}</div>`;
+}
+
+function rowSepClass(rank) {
+  if (rank === 6) return ' class="row-sep"';
+  if (rank === 10) return ' class="row-sep row-sep--playin"';
+  return '';
+}
+
+function teamCell(team) {
+  return `<td class="st-team"><span class="st-team-inner">${logoHtml(team, 16)}<span>${esc(team)}</span></span></td>`;
+}
+
+function buildCurrentTable(rows) {
+  const body = rows.map(r => `
+    <tr${rowSepClass(r.rank)}>
+      <td class="st-num">${r.rank}</td>
+      ${teamCell(r.team)}
+      <td class="st-num">${r.w}-${r.l}</td>
+      <td class="st-num">${(r.pct != null ? r.pct.toFixed(3) : '—').replace(/^0\./, '.')}</td>
+      <td class="st-num">${r.gb ? r.gb.toFixed(1) : '—'}</td>
+      <td class="st-num">${esc(r.l10 || '—')}</td>
+      <td class="st-num">${esc(r.streak || '—')}</td>
+    </tr>`).join('');
+  return `<table class="standings-table">
+    <thead><tr>
+      <th scope="col" class="st-num">#</th><th scope="col">Team</th><th scope="col" class="st-num">W-L</th>
+      <th scope="col" class="st-num">Win %</th><th scope="col" class="st-num">GB</th>
+      <th scope="col" class="st-num">L10</th><th scope="col" class="st-num">Strk</th>
+    </tr></thead>
+    <tbody>${body}</tbody>
+  </table>`;
+}
+
+function rankChangeHtml(c) {
+  if (!c) return '<span class="rc rc-same" aria-label="no change">–</span>';
+  return c > 0
+    ? `<span class="rc rc-up" aria-label="up ${c}"><span aria-hidden="true">▲</span>${c}</span>`
+    : `<span class="rc rc-down" aria-label="down ${-c}"><span aria-hidden="true">▼</span>${-c}</span>`;
+}
+
+function buildProjectedTable(rows) {
+  const body = rows.map(r => `
+    <tr${rowSepClass(r.rank)}>
+      <td class="st-num">${r.rank}</td>
+      ${teamCell(r.team)}
+      <td class="st-num">${r.exp_w}-${r.exp_l}</td>
+      <td class="st-num st-muted">${r.w_p10}–${r.w_p90}</td>
+      <td class="st-num">${fmtProb(r.pct_playoffs)}</td>
+      <td class="st-num">${fmtProb(r.pct_playin)}</td>
+      <td class="st-num">${fmtProb(r.pct_top_seed)}</td>
+      <td class="st-num">${rankChangeHtml(r.rank_change)}</td>
+    </tr>`).join('');
+  return `<table class="standings-table">
+    <thead><tr>
+      <th scope="col" class="st-num">#</th><th scope="col">Team</th>
+      <th scope="col" class="st-num"><abbr title="Expected wins-losses">Exp W-L</abbr></th>
+      <th scope="col" class="st-num"><abbr title="Wins, 10th to 90th percentile">Range</abbr></th>
+      <th scope="col" class="st-num"><abbr title="Seed 1-6">Playoffs</abbr></th>
+      <th scope="col" class="st-num"><abbr title="Seed 7-10">Play-In</abbr></th>
+      <th scope="col" class="st-num"><abbr title="Seed 1">#1 Seed</abbr></th>
+      <th scope="col" class="st-num"><abbr title="Change vs. current rank">Δ</abbr></th>
+    </tr></thead>
+    <tbody>${body}</tbody>
+  </table>`;
+}
+
+const ROUND_ODDS_COLS = [
+  { key: 'play_in',     label: 'Play-In' },
+  { key: 'playoffs',    label: 'Playoffs' },
+  { key: 'r2',          label: 'R2' },
+  { key: 'conf_finals', label: 'Conf Finals' },
+  { key: 'finals',      label: 'Finals' },
+  { key: 'champion',    label: 'Title' },
+];
+
+function buildRoundOddsTable(rows) {
+  const { key, dir } = roundOddsSort;
+  const sorted = [...rows].sort((a, b) => {
+    if (key === 'team') return dir * a.team.localeCompare(b.team);
+    return dir * ((a[key] || 0) - (b[key] || 0)) || a.team.localeCompare(b.team);
+  });
+  const th = (k, label, cls = 'st-num') => {
+    const active = key === k;
+    const aria = active ? (dir === -1 ? 'descending' : 'ascending') : 'none';
+    const arrow = active ? (dir === -1 ? '▼' : '▲') : '';
+    return `<th scope="col" class="${cls}" aria-sort="${aria}"><button type="button" class="sort-btn" data-sort="${k}">${label}<span class="sort-arrow" aria-hidden="true">${arrow}</span></button></th>`;
+  };
+  const body = sorted.map(r => `
+    <tr>
+      ${teamCell(r.team)}
+      <td class="st-conf">${r.conf === 'east' ? 'E' : 'W'}</td>
+      ${ROUND_ODDS_COLS.map(c => `<td class="st-num${c.key === 'champion' ? ' st-strong' : ''}">${fmtProb(r[c.key])}</td>`).join('')}
+    </tr>`).join('');
+  return `<table class="standings-table odds-table">
+    <thead><tr>
+      ${th('team', 'Team', '')}
+      <th scope="col" class="st-conf"><abbr title="Conference">Conf</abbr></th>
+      ${ROUND_ODDS_COLS.map(c => th(c.key, c.label)).join('')}
+    </tr></thead>
+    <tbody>${body}</tbody>
+  </table>`;
+}
+
+const HIST_LABELS = { playoffs: '% Playoffs', conf_finals: '% Conf Finals', champion: '% Title' };
+
+function buildHistoryChart(history, metric) {
+  const pts = history.filter(h => h && h.date && h.teams);
+  if (pts.length < 2) {
+    return `<div class="sim-chart-empty">The history chart appears after the second daily run${pts.length ? ` (first data point: ${esc(humanDateLong(pts[0].date))})` : ''}.</div>`;
+  }
+  const teams = [...new Set(pts.flatMap(p => Object.keys(p.teams)))];
+  const last = pts[pts.length - 1].teams;
+  const val = (p, t) => (p.teams[t] && p.teams[t][metric] != null) ? p.teams[t][metric] : null;
+  const ranked = [...teams].sort((a, b) => ((last[b] || {})[metric] || 0) - ((last[a] || {})[metric] || 0));
+  const top = ranked.slice(0, 5);
+
+  const W = 760, H = 260, PL = 44, PR = 16, PT = 12, PB = 28;
+  const cW = W - PL - PR, cH = H - PT - PB;
+  const maxV = metric === 'playoffs' ? 1 : Math.min(1, Math.max(0.1, Math.ceil(Math.max(...pts.flatMap(p => teams.map(t => val(p, t) || 0))) * 10) / 10));
+  const cx = i => PL + (i / (pts.length - 1)) * cW;
+  const cy = v => PT + cH - (v / maxV) * cH;
+
+  const pathFor = t => {
+    let d = '', pen = false;
+    pts.forEach((p, i) => {
+      const v = val(p, t);
+      if (v == null) { pen = false; return; }
+      d += `${pen ? 'L' : 'M'}${cx(i).toFixed(1)},${cy(v).toFixed(1)} `;
+      pen = true;
+    });
+    return d.trim();
+  };
+
+  const grid = [0, 0.25, 0.5, 0.75, 1].map(f => {
+    const v = f * maxV, y = cy(v).toFixed(1);
+    return `<line x1="${PL}" y1="${y}" x2="${W - PR}" y2="${y}" class="hist-grid"/>` +
+      `<text x="${PL - 6}" y="${(+y + 3).toFixed(1)}" text-anchor="end" class="sim-ch-label">${Math.round(v * 100)}%</text>`;
+  }).join('');
+
+  const labelIdx = new Set([0, pts.length - 1]);
+  if (pts.length >= 5) labelIdx.add(Math.floor((pts.length - 1) / 2));
+  const xLabels = [...labelIdx].map(i =>
+    `<text x="${cx(i).toFixed(1)}" y="${H - 6}" text-anchor="middle" class="sim-ch-label">${esc(humanDate(pts[i].date))}</text>`).join('');
+
+  const muted = ranked.slice(5).map(t =>
+    `<g class="hist-team" data-team="${esc(t)}"><path d="${pathFor(t)}" class="hist-line hist-line--muted"/><path d="${pathFor(t)}" class="hist-hit"/></g>`).join('');
+  const colored = top.map((t, i) =>
+    `<g class="hist-team" data-team="${esc(t)}"><path d="${pathFor(t)}" class="hist-line hist-c${i + 1}"/><path d="${pathFor(t)}" class="hist-hit"/></g>`).join('');
+
+  const legend = top.map((t, i) => `
+    <button type="button" class="hist-legend-item" data-team="${esc(t)}">
+      <span class="hist-swatch hist-c${i + 1}" aria-hidden="true"></span>
+      <span>${esc(t)}</span>
+      <span class="hist-legend-val">${fmtProb(val(pts[pts.length - 1], t))}</span>
+    </button>`).join('');
+
+  return `
+    <svg class="hist-svg" viewBox="0 0 ${W} ${H}" preserveAspectRatio="xMidYMid meet" role="img"
+         aria-label="${esc(HIST_LABELS[metric])} over time for all teams. Top 5: ${esc(top.map(t => `${t} ${fmtProb(val(pts[pts.length - 1], t))}`).join(', '))}">
+      ${grid}${muted}${colored}${xLabels}
+    </svg>
+    <div class="hist-readout" id="hist-readout" aria-live="polite"></div>
+    <div class="hist-legend">${legend}</div>`;
+}
+
+function initProjectionSections(root, data, history) {
+  root.querySelectorAll('.standings-card').forEach(card => {
+    card.addEventListener('click', e => {
+      const btn = e.target.closest('.seg-btn');
+      if (!btn) return;
+      const conf = card.dataset.conf;
+      standingsView[conf] = btn.dataset.view;
+      card.innerHTML = buildStandingsCard(data, conf);
+      const again = card.querySelector(`.seg-btn[data-view="${standingsView[conf]}"]`);
+      if (again) again.focus();
+    });
+  });
+
+  const oddsWrap = root.querySelector('#round-odds-wrap');
+  if (oddsWrap) {
+    oddsWrap.addEventListener('click', e => {
+      const btn = e.target.closest('.sort-btn');
+      if (!btn) return;
+      const k = btn.dataset.sort;
+      roundOddsSort = roundOddsSort.key === k
+        ? { key: k, dir: -roundOddsSort.dir }
+        : { key: k, dir: k === 'team' ? 1 : -1 };
+      oddsWrap.innerHTML = buildRoundOddsTable(data.round_odds);
+      const again = oddsWrap.querySelector(`.sort-btn[data-sort="${k}"]`);
+      if (again) again.focus();
+    });
+  }
+
+  const sel = root.querySelector('#hist-metric');
+  const histWrap = root.querySelector('#hist-wrap');
+  if (sel && histWrap) {
+    sel.addEventListener('change', () => {
+      historyMetric = sel.value;
+      histWrap.innerHTML = buildHistoryChart(history, historyMetric);
+    });
+
+    const highlight = team => {
+      const svg = histWrap.querySelector('.hist-svg');
+      const readout = histWrap.querySelector('#hist-readout');
+      if (!svg) return;
+      svg.classList.toggle('has-hl', !!team);
+      svg.querySelectorAll('.hist-team').forEach(g => g.classList.toggle('is-hl', g.dataset.team === team));
+      if (readout) {
+        if (team && Array.isArray(history) && history.length) {
+          const lastPt = history[history.length - 1];
+          const v = lastPt.teams && lastPt.teams[team] ? lastPt.teams[team][historyMetric] : null;
+          readout.textContent = `${team}: ${fmtProb(v)} (${HIST_LABELS[historyMetric]}, latest)`;
+        } else {
+          readout.textContent = '';
+        }
+      }
+    };
+    histWrap.addEventListener('mouseover', e => {
+      const el = e.target.closest('[data-team]');
+      highlight(el ? el.dataset.team : null);
+    });
+    histWrap.addEventListener('mouseleave', () => highlight(null));
+    histWrap.addEventListener('focusin', e => {
+      const el = e.target.closest('[data-team]');
+      if (el) highlight(el.dataset.team);
+    });
+    histWrap.addEventListener('focusout', () => highlight(null));
+  }
 }
 
 // ─── Bracket Accuracy ──────────────────────────────────────────────
@@ -916,6 +1479,12 @@ function renderDashboard(data) {
   const fd = h.feature_drift;
   const pa = h.prediction_audit;
   const rt = h.retraining;
+  const sm = h.season_simulation && h.season_simulation.generated_at ? h.season_simulation : null;
+  const smStatus = sm ? (
+    sm.passed === false
+      ? `<span class="db-fail-text">${sm.issues} issue${sm.issues !== 1 ? 's' : ''}</span>`
+      : `<span class="db-ok-text">${sm.warnings ? 'OK with warnings' : 'OK'}</span>`
+  ) + ` <span class="db-muted">(${Number(sm.sims || 0).toLocaleString('en-US')} sims · ${esc(sm.mode || '—')}${sm.runtime_seconds != null ? ` · ${sm.runtime_seconds}s` : ''})</span>` : '—';
 
   const healthSection = `
     <div class="db-section-title">System Health</div>
@@ -924,6 +1493,7 @@ function renderDashboard(data) {
       ${healthRow('Feature Drift', fd, fd ? (fd.issues === 0 ? `<span class="db-ok-text">No drift</span>` + (fd.warnings ? ` <span class="db-muted">(${fd.warnings} warnings)</span>` : '') : `<span class="db-fail-text">${fd.issues} issue${fd.issues !== 1 ? 's' : ''}</span>`) : '—')}
       ${healthRow('Prediction Audit', pa, pa ? `<span class="db-muted">${pa.predictions} prediction${pa.predictions !== 1 ? 's' : ''}:</span> ` + (pa.flags === 0 ? `<span class="db-ok-text">no flags</span>` : `<span class="db-fail-text">${pa.flags} flag${pa.flags !== 1 ? 's' : ''}</span>`) : '—')}
       ${healthRow('Retraining', rt, rt ? (rt.retrained ? `<span class="db-ok-text">Retrained</span> <span class="db-muted">(${pct(rt.test_accuracy)})</span>` : `<span class="db-muted">${esc(rt.reason || 'Not needed')}</span>`) : '—')}
+      ${sm ? healthRow('Season Simulation', sm, smStatus) : ''}
     </div>`;
 
   // ── Observations ───────────────────────────────────────────────────
@@ -935,7 +1505,7 @@ function renderDashboard(data) {
     const items = sorted.map(o => {
       const cls = { high: 'db-obs--high', medium: 'db-obs--med', low: 'db-obs--low' }[o.severity] || '';
       const badge = { high: 'Critical', medium: 'Warning', low: 'Info' }[o.severity] || o.severity;
-      const src = { prediction_audit: 'Prediction Audit', feature_drift: 'Feature Drift', data_quality: 'Data Quality', model_evaluator: 'Model' }[o.source] || o.source;
+      const src = { prediction_audit: 'Prediction Audit', feature_drift: 'Feature Drift', data_quality: 'Data Quality', model_evaluator: 'Model', season_simulation: 'Season Simulation' }[o.source] || o.source;
       return `
         <div class="db-obs ${cls}">
           <div class="db-obs-top">

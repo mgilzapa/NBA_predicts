@@ -36,6 +36,7 @@ ACCURACY_FLOOR  = 0.50   # retrain if 7-day accuracy drops below this
 TRAIN_FROM      = pd.Timestamp("2018-10-01")
 TEST_DAYS       = 60
 MIN_IMPROVEMENT = 0.005  # --optimize only saves if new acc > old acc + 0.5%
+PRESEASON_WEIGHT = 0.5   # Gewicht von Preseason-Spielen im Training
 
 EXCLUDE_COLS = [
     "home_off_rating", "away_off_rating", "off_rating_diff",
@@ -154,7 +155,11 @@ def _load_data():
     ].copy()
 
     days_old       = (test_start - train["gameDateTimeEst"]).dt.days.clip(lower=0)
-    sample_weights = (1 / (1 + days_old / 365)).values
+    sample_weights = 1 / (1 + days_old / 365)
+    # Preseason: echte Ergebnisse, aber Rotationen/Stars geschont -> halbes Gewicht
+    if "is_preseason" in train.columns:
+        sample_weights = sample_weights.where(train["is_preseason"] != 1, sample_weights * PRESEASON_WEIGHT)
+    sample_weights = sample_weights.values
 
     return feature_cols, train, test, sample_weights
 

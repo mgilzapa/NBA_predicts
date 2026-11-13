@@ -11,6 +11,14 @@
   --wrong:         oklch(62% 0.20 22);
   --warning:       oklch(82% 0.18 85);
 
+  /* Verlaufs-Chart (Bracket-Tab): Top 5 farbig, Rest grau */
+  --chart-1:       oklch(76% 0.24 48);
+  --chart-2:       oklch(74% 0.14 228);
+  --chart-3:       oklch(78% 0.17 145);
+  --chart-4:       oklch(86% 0.16 95);
+  --chart-5:       oklch(72% 0.19 330);
+  --chart-muted:   oklch(42% 0.018 60);
+
   --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
   --ease-out-quint: cubic-bezier(0.22, 1, 0.36, 1);
   --ease-out-expo:  cubic-bezier(0.16, 1, 0.3, 1);
@@ -2199,3 +2207,575 @@ td.td-odds { white-space: nowrap; }
   .sim-summary-item--sm { display: none; }
   .sim-capital-val { font-size: 1.1rem; }
 }
+
+/* ─── Season Projection (Bracket Tab) ─────────────────────────────── */
+
+.proj-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-left: 8px;
+  padding: 3px 10px 3px 3px;
+  border: 1px dashed color-mix(in oklch, var(--accent) 60%, var(--border));
+  border-radius: 999px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text);
+  vertical-align: middle;
+}
+
+.proj-badge-tag {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: var(--accent);
+  color: var(--bg);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.proj-badge--live .proj-badge-tag { background: var(--correct); }
+
+/* Play-In-Spalten links/rechts neben R1 */
+.bracket-outer.has-playin {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+
+.bracket-container.has-playin {
+  min-width: 1340px;
+  gap: 8px;
+}
+
+.bracket-container.has-playin .bracket-round { flex-basis: 142px; min-width: 0; }
+.bracket-container.has-playin .bracket-half,
+.bracket-container.has-playin .matchup-card,
+.bracket-container.has-playin .mc-teams { min-width: 0; }
+.bracket-container.has-playin .bracket-matchup { padding: 0 4px; }
+.bracket-container.has-playin .bracket-finals-col { flex-basis: 184px; padding: 0 6px; }
+
+.bracket-playin {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 124px;
+  padding: 4px 0;
+}
+
+.bracket-playin-list {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+.playin-card { padding: 6px 8px; }
+
+.pi-label {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.pi-seed {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.64rem;
+  color: var(--muted);
+  min-width: 14px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.mc-team-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mc-prob {
+  margin-left: auto;
+  padding-left: 6px;
+  flex-shrink: 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Prognose-Serien: gestrichelter Rahmen, gedaempfter Grund, klar als Prognose erkennbar */
+.matchup-card.status-projected {
+  border-style: dashed;
+  border-color: color-mix(in oklch, var(--accent) 40%, var(--border));
+  background: color-mix(in oklch, var(--surface) 65%, var(--bg));
+  cursor: help;
+}
+
+.matchup-card.status-projected:hover {
+  border-color: color-mix(in oklch, var(--accent) 70%, var(--border));
+}
+
+.matchup-card.status-projected:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.playin-card.status-projected { cursor: default; }
+
+.mc-team.pred-winner {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.mc-team.pred-winner .mc-prob {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.mc-dist-hint {
+  margin-left: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.56rem;
+  line-height: 12px;
+  text-align: center;
+}
+
+.finals-winner-odds {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text);
+}
+
+/* Tooltip mit Ergebnisverteilung (fixiert, damit nichts abgeschnitten wird) */
+.series-tip {
+  position: fixed;
+  z-index: 300;
+  width: 230px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  box-shadow: 0 12px 32px oklch(0% 0 0 / 0.5);
+  font-size: 0.74rem;
+  color: var(--text);
+  pointer-events: none;
+}
+
+.series-tip[hidden] { display: none; }
+
+.tip-title {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.tip-teams {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'JetBrains Mono', monospace;
+  margin: 4px 0 8px;
+}
+
+.tip-teams strong { color: var(--accent); }
+
+.tip-sub {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 4px;
+}
+
+.tip-row {
+  display: grid;
+  grid-template-columns: 62px 1fr 38px;
+  align-items: center;
+  gap: 6px;
+  padding: 1px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.7rem;
+}
+
+.tip-bar {
+  height: 6px;
+  border-radius: 3px;
+  background: color-mix(in oklch, var(--border) 70%, transparent);
+  overflow: hidden;
+}
+
+.tip-bar span {
+  display: block;
+  height: 100%;
+  background: var(--accent);
+}
+
+.tip-val { text-align: right; }
+
+.tip-foot {
+  margin-top: 6px;
+  font-size: 0.66rem;
+  color: var(--muted);
+}
+
+/* Standings / Rundenchancen / Verlauf */
+.bracket-extra {
+  margin-top: 44px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+
+.bracket-extra:empty { display: none; }
+
+.proj-title {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+
+.proj-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+.proj-note {
+  color: var(--muted);
+  font-size: 0.8rem;
+  margin: 4px 0 14px;
+}
+
+.standings-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+}
+
+.standings-card {
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 14px;
+}
+
+.standings-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+
+.standings-conf {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.seg-toggle {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.seg-btn {
+  background: none;
+  border: 0;
+  color: var(--text);
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  min-height: 32px;
+  cursor: pointer;
+}
+
+.seg-btn:hover { background: var(--surface-hover); }
+
+.seg-btn.active,
+.seg-btn.active:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.seg-btn:focus-visible,
+.sort-btn:focus-visible,
+.hist-legend-item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.table-scroll { overflow-x: auto; }
+
+.standings-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+}
+
+.standings-table th {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: left;
+  padding: 6px;
+  border-bottom: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.standings-table td {
+  padding: 5px 6px;
+  border-bottom: 1px solid color-mix(in oklch, var(--border) 45%, transparent);
+  white-space: nowrap;
+}
+
+.standings-table abbr[title] {
+  text-decoration: none;
+  cursor: help;
+}
+
+.standings-table .st-num {
+  text-align: right;
+  font-family: 'JetBrains Mono', monospace;
+  font-variant-numeric: tabular-nums;
+}
+
+.standings-table th.st-num { font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif; }
+
+.st-team-inner {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.st-team-inner img.mc-logo {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
+}
+
+.st-muted { color: var(--muted); }
+
+.standings-table .st-strong {
+  color: var(--accent);
+  font-weight: 700;
+}
+
+.standings-table .st-conf {
+  text-align: center;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+}
+
+/* Trennlinien nach Platz 6 (Playoffs) und Platz 10 (Play-In) */
+.standings-table tr.row-sep td {
+  border-bottom: 2px solid color-mix(in oklch, var(--accent) 55%, var(--border));
+}
+
+.standings-table tr.row-sep--playin td { border-bottom-style: dashed; }
+
+.rc-up   { color: var(--correct); }
+.rc-down { color: var(--wrong); }
+.rc-same { color: var(--muted); }
+
+.sort-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 0;
+  padding: 4px 0;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+
+.sort-btn:hover { color: var(--text); }
+
+.sort-arrow {
+  color: var(--accent);
+  font-size: 0.6rem;
+}
+
+.hist-metric-label { display: inline-flex; }
+
+.hist-wrap {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+}
+
+.hist-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.hist-grid {
+  stroke: color-mix(in oklch, var(--border) 70%, transparent);
+  stroke-width: 1;
+}
+
+.hist-line {
+  fill: none;
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  transition: opacity 150ms ease, stroke-width 150ms ease;
+}
+
+.hist-line--muted {
+  stroke: var(--chart-muted);
+  stroke-width: 1.25;
+}
+
+.hist-line.hist-c1 { stroke: var(--chart-1); }
+.hist-line.hist-c2 { stroke: var(--chart-2); }
+.hist-line.hist-c3 { stroke: var(--chart-3); }
+.hist-line.hist-c4 { stroke: var(--chart-4); }
+.hist-line.hist-c5 { stroke: var(--chart-5); }
+
+.hist-hit {
+  fill: none;
+  stroke: transparent;
+  stroke-width: 10;
+  pointer-events: stroke;
+}
+
+.hist-svg.has-hl .hist-line { opacity: 0.18; }
+.hist-svg.has-hl .hist-team.is-hl .hist-line { opacity: 1; stroke-width: 3; }
+.hist-svg.has-hl .hist-team.is-hl .hist-line--muted { stroke: var(--text); }
+
+.hist-readout {
+  min-height: 1.3em;
+  margin: 6px 0;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.74rem;
+  color: var(--text);
+}
+
+.hist-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 14px;
+}
+
+.hist-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 4px 6px;
+  color: var(--text);
+  font-size: 0.76rem;
+  cursor: pointer;
+}
+
+.hist-legend-item:hover { border-color: var(--border); }
+
+.hist-swatch {
+  width: 14px;
+  height: 3px;
+  border-radius: 2px;
+}
+
+.hist-swatch.hist-c1 { background: var(--chart-1); }
+.hist-swatch.hist-c2 { background: var(--chart-2); }
+.hist-swatch.hist-c3 { background: var(--chart-3); }
+.hist-swatch.hist-c4 { background: var(--chart-4); }
+.hist-swatch.hist-c5 { background: var(--chart-5); }
+
+.hist-legend-val {
+  font-family: 'JetBrains Mono', monospace;
+  color: var(--muted);
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Mobile: Play-In als eigener Block vor R1 */
+.bm-playin {
+  margin-bottom: 10px;
+  padding: 8px;
+  border: 1px dashed var(--border);
+  border-radius: 8px;
+}
+
+.bm-playin-label {
+  font-family: 'Oswald', 'Arial Narrow', Arial, sans-serif;
+  font-size: 0.64rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+
+@media (max-width: 900px) {
+  .standings-grid { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .proj-badge {
+    display: flex;
+    width: fit-content;
+    margin: 8px 0 0;
+  }
+  .standings-card { padding: 10px; }
+  .standings-table { font-size: 0.74rem; }
+}
+
+/* Teamnamen: volle Namen, in den schmalen Desktop-Spalten mit Play-In nur der Teamname */
+.tn-short { display: none; }
+.bracket-container.has-playin .tn-full  { display: none; }
+.bracket-container.has-playin .tn-short { display: inline; }
+.bracket-container.has-playin .mc-pred-row { white-space: nowrap; overflow: hidden; }
+
+/* Mobile Liste: Karten duerfen schrumpfen, nichts laeuft ueber den Rand */
+.bm-series-list { grid-template-columns: minmax(0, 1fr); }
+.bm-series-list .matchup-card { min-width: 0; }
+.proj-section { min-width: 0; }

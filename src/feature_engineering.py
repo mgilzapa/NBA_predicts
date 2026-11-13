@@ -4,6 +4,9 @@ import numpy as np
 from sklearn.model_selection import TimeSeriesSplit
 from xgboost import XGBClassifier
 
+from fetch_rosters import load_current_rosters
+from scrape_upcoming_games import current_nba_season
+
 base_dir = os.path.dirname(os.path.dirname(__file__))
 PLAYER_BOX = os.path.join(base_dir, "data", "player_boxscores.csv")
 base_games_path = os.path.join(base_dir, "data", "base_games.csv")
@@ -15,32 +18,54 @@ df["gameDateTimeEst"] = pd.to_datetime(df["gameDateTimeEst"])
 nba_api = pd.read_csv(nba_api_path, usecols=["GAME_ID", "season_type"])
 df = df.merge(nba_api.rename(columns={"GAME_ID": "gameId"}), on="gameId", how="left")
 df["is_playoff"] = (df["season_type"].fillna("") == "Playoffs").astype(int)
+df["is_preseason"] = (df["season_type"].fillna("") == "Pre Season").astype(int)
 df.drop(columns=["season_type"], inplace=True)
+
+# Umgang mit Preseason-Spielen (Vergleich der Varianten: src/backtest_preseason.py)
+#   keep          – Preseason zaehlt ueberall mit (ELO K=8, Form-Features, Trainingszeilen)
+#   exclude_form  – nur im ELO (K=8); Form-/Rolling-Features ohne Preseason, keine Trainingszeilen
+#   drop          – Preseason-Spiele komplett ignoriert
+PRESEASON_MODE = os.environ.get("PRESEASON_MODE", "keep")
+if PRESEASON_MODE not in ("keep", "exclude_form", "drop"):
+    raise ValueError(f"Unbekannter PRESEASON_MODE: {PRESEASON_MODE}")
+if PRESEASON_MODE == "drop":
+    df = df[df["is_preseason"] == 0].reset_index(drop=True)
+print(f"PRESEASON_MODE = {PRESEASON_MODE}")
+
+# Ausgabepfad ueberschreibbar, damit der Backtest das produktive model_data.csv nicht anfasst
+MODEL_DATA_PATH = os.environ.get("MODEL_DATA_PATH", os.path.join(base_dir, "data", "model_data.csv"))
+# Spiele, aus denen Form-/Rolling-Features berechnet werden
+df_form = df[df["is_preseason"] == 0] if PRESEASON_MODE == "exclude_form" else df
+
+
+def season_start_year(date):
+    # Saison beginnt mit der Preseason (Ende Sept./Anfang Okt.) – ab August neue Saison
+    return date.year if date.month >= 8 else date.year - 1
 
 # ─────────────────────────────────────────────────────────────
 # BASIS: Team-History (Heim + Auswärts zusammengeführt)
 # ─────────────────────────────────────────────────────────────
 home_games = pd.DataFrame({
-    "date":           df["gameDateTimeEst"],
-    "game_id":        df["gameId"],
-    "team":           df["hometeamName"],
-    "opponent":       df["awayteamName"],
-    "win":            (df["homeScore"] > df["awayScore"]).astype(int),
-    "points":         df["homeScore"],
-    "points_allowed": df["awayScore"],
+    "date":           df_form["gameDateTimeEst"],
+    "game_id":        df_form["gameId"],
+    "team":           df_form["hometeamName"],
+    "opponent":       df_form["awayteamName"],
+    "win":            (df_form["homeScore"] > df_form["awayScore"]).astype(int),
+    "points":         df_form["homeScore"],
+    "points_allowed": df_form["awayScore"],
     "is_home":        1,
-    "is_playoff":     df["is_playoff"],
+    "is_playoff":     df_form["is_playoff"],
 })
 away_games = pd.DataFrame({
-    "date":           df["gameDateTimeEst"],
-    "game_id":        df["gameId"],
-    "team":           df["awayteamName"],
-    "opponent":       df["hometeamName"],
-    "win":            (df["awayScore"] > df["homeScore"]).astype(int),
-    "points":         df["awayScore"],
-    "points_allowed": df["homeScore"],
+    "date":           df_form["gameDateTimeEst"],
+    "game_id":        df_form["gameId"],
+    "team":           df_form["awayteamName"],
+    "opponent":       df_form["hometeamName"],
+    "win":            (df_form["awayScore"] > df_form["homeScore"]).astype(int),
+    "points":         df_form["awayScore"],
+    "points_allowed": df_form["homeScore"],
     "is_home":        0,
-    "is_playoff":     df["is_playoff"],
+    "is_playoff":     df_form["is_playoff"],
 })
 
 team_history = (
@@ -52,21 +77,74 @@ team_history = (
 # ─────────────────────────────────────────────────────────────
 # ELO-RATING
 # ─────────────────────────────────────────────────────────────
-ELO_START = 1500
-ELO_K = 20
+from elo_config import ELO_START, ELO_K, ELO_K_PRESEASON, ELO_SCALE, HCA  # gemeinsame Konstanten
+ELO_CARRY_DEFAULT = 0.75     # Anteil des ELO-Vorsprungs, der in die neue Saison uebernommen wird
+ELO_CARRY_MIN = 0.55         # bei komplett neuem Kader
+ELO_CARRY_MAX = 0.90         # bei unveraendertem Kader
+
+CURRENT_SEASON_YEAR = int(current_nba_season()[:4])
 
 def expected_elo(r_a, r_b):
-    return 1 / (1 + 10 ** ((r_b - r_a) / 400))
+    return 1 / (1 + 10 ** ((r_b - r_a) / ELO_SCALE))
+
+
+def compute_roster_continuity(season_year):
+    """Anteil der Vorsaison-Minuten eines Teams, die von Spielern im aktuellen Kader stammen.
+
+    Nur fuer die aktuelle Saison berechenbar (braucht current_rosters.csv + Boxscores der Vorsaison).
+    """
+    rosters = load_current_rosters()
+    if rosters.empty or not os.path.exists(PLAYER_BOX):
+        return {}
+
+    box = pd.read_csv(PLAYER_BOX, usecols=["GAME_ID", "PLAYER_ID", "teamCity", "teamName", "minutes"])
+    gid = box["GAME_ID"].astype(str).str.replace(r"\.0$", "", regex=True).str.zfill(10)
+    prev_yy = f"{(season_year - 1) % 100:02d}"
+    # nur Regular Season (002) + Playoffs (004) der Vorsaison
+    box = box[gid.str[:3].isin(["002", "004"]) & (gid.str[3:5] == prev_yy)].copy()
+    if box.empty:
+        return {}
+
+    box["minutes"] = box["minutes"].apply(
+        lambda m: int(m.split(":")[0]) + int(m.split(":")[1]) / 60
+        if isinstance(m, str) and ":" in m else pd.to_numeric(m, errors="coerce")
+    ).fillna(0)
+    box["team"] = (box["teamCity"].str.strip() + " " + box["teamName"].str.strip()).replace(
+        {"Los Angeles Clippers": "LA Clippers"}
+    )
+    box["PLAYER_ID"] = box["PLAYER_ID"].astype(str).str.replace(r"\.0$", "", regex=True)
+
+    roster_pairs = set(zip(rosters["teamNameFull"], rosters["PLAYER_ID"]))
+    box["kept"] = [(t, p) in roster_pairs for t, p in zip(box["team"], box["PLAYER_ID"])]
+    totals = box.groupby("team")["minutes"].sum()
+    kept = box[box["kept"]].groupby("team")["minutes"].sum()
+    return (kept.reindex(totals.index).fillna(0) / totals).clip(0, 1).to_dict()
+
+
+roster_continuity = compute_roster_continuity(CURRENT_SEASON_YEAR)
+if roster_continuity:
+    print("Roster-Continuity (Anteil Vorsaison-Minuten im aktuellen Kader):")
+    for _team, _c in sorted(roster_continuity.items(), key=lambda kv: kv[1]):
+        print(f"  {_team:<26} {_c:5.1%}")
+
+
+def season_carry(team, season_year):
+    if season_year == CURRENT_SEASON_YEAR and team in roster_continuity:
+        return ELO_CARRY_MIN + (ELO_CARRY_MAX - ELO_CARRY_MIN) * roster_continuity[team]
+    return ELO_CARRY_DEFAULT
+
 
 # Alle Spiele chronologisch sortiert
 elo_games = (
-    df[["gameDateTimeEst", "gameId", "hometeamName", "awayteamName", "homeScore", "awayScore"]]
+    df[["gameDateTimeEst", "gameId", "hometeamName", "awayteamName", "homeScore", "awayScore",
+        "is_preseason"]]
     .sort_values("gameDateTimeEst")
     .reset_index(drop=True)
 )
 
 elo_ratings = {}  # team → aktuelles ELO
 elo_games_played = {}
+elo_team_season = {}  # team → Saison des letzten Spiels (fuer Regression zum Mittelwert)
 home_elo_before = []
 away_elo_before = []
 home_elo_games_played = []
@@ -75,6 +153,15 @@ away_elo_games_played = []
 for _, row in elo_games.iterrows():
     home = row["hometeamName"]
     away = row["awayteamName"]
+    game_season = season_start_year(row["gameDateTimeEst"])
+
+    # Neue Saison: ELO Richtung Mittelwert ziehen (Kaderwechsel, Draft, Free Agency)
+    for team in (home, away):
+        last_season = elo_team_season.get(team)
+        if last_season is not None and last_season != game_season and team in elo_ratings:
+            carry = season_carry(team, game_season)
+            elo_ratings[team] = ELO_START + carry * (elo_ratings[team] - ELO_START)
+        elo_team_season[team] = game_season
 
     r_home = elo_ratings.get(home, ELO_START)
     r_away = elo_ratings.get(away, ELO_START)
@@ -90,10 +177,31 @@ for _, row in elo_games.iterrows():
     exp_home = expected_elo(r_home, r_away)
 
     # Update
-    elo_ratings[home] = r_home + ELO_K * (home_won - exp_home)
-    elo_ratings[away] = r_away + ELO_K * ((1 - home_won) - (1 - exp_home))
+    k = ELO_K_PRESEASON if row["is_preseason"] == 1 else ELO_K
+    elo_ratings[home] = r_home + k * (home_won - exp_home)
+    elo_ratings[away] = r_away + k * ((1 - home_won) - (1 - exp_home))
     elo_games_played[home] = elo_games_played.get(home, 0) + 1  
     elo_games_played[away] = elo_games_played.get(away, 0) + 1  
+
+# Aktuelles ELO (nach allen Spielen) fuer predict.py exportieren.
+# Teams ohne Spiel in der aktuellen Saison bekommen die Saison-Regression schon jetzt.
+_elo_rows = []
+for team, rating in elo_ratings.items():
+    carry = 1.0
+    if elo_team_season.get(team) != CURRENT_SEASON_YEAR:
+        carry = season_carry(team, CURRENT_SEASON_YEAR)
+        rating = ELO_START + carry * (rating - ELO_START)
+    _elo_rows.append({
+        "team": team,
+        "elo": round(rating, 2),
+        "games_played": elo_games_played.get(team, 0),
+        "last_game_season": elo_team_season.get(team),
+        "roster_continuity": roster_continuity.get(team),
+        "pending_carry": carry,
+    })
+ELO_CURRENT_PATH = os.path.join(os.path.dirname(MODEL_DATA_PATH), "elo_current.csv")
+pd.DataFrame(_elo_rows).sort_values("elo", ascending=False).to_csv(ELO_CURRENT_PATH, index=False)
+print(f"Aktuelles ELO gespeichert: {ELO_CURRENT_PATH}")
 
 elo_games["home_elo"] = home_elo_before
 elo_games["away_elo"] = away_elo_before
@@ -113,9 +221,8 @@ mask = (df["home_elo_games_played"] < ELO_WARMUP) | (df["away_elo_games_played"]
 df.loc[mask, ["home_elo", "away_elo", "elo_diff"]] = np.nan
 
 # ELO-basierte Gewinnwahrscheinlichkeit mit Heimvorteil (+100 ELO ≈ 3-4 Punkte NBA-Heimvorteil)
-HCA = 100
 df["elo_expected_home_win"] = 1 / (
-    1 + 10 ** ((df["away_elo"] - df["home_elo"] - HCA) / 400)
+    1 + 10 ** ((df["away_elo"] - df["home_elo"] - HCA) / ELO_SCALE)
 )
 
 # ─────────────────────────────────────────────────────────────
@@ -256,9 +363,7 @@ team_history["away_winrate"] = team_history["away_winrate"].fillna(team_history[
 # FEATURE 6: Head-to-Head Record (letzte 2 Saisons)
 # ─────────────────────────────────────────────────────────────
 # NBA-Saison: Oktober–Dezember gehören zur neuen Saison, Januar–Juni zur alten
-team_history["season"] = team_history["date"].apply(
-    lambda d: d.year if d.month >= 10 else d.year - 1
-)
+team_history["season"] = team_history["date"].apply(season_start_year)
 current_season = team_history["season"].max()
 
 h2h = (
@@ -395,7 +500,8 @@ if os.path.exists(PLAYER_BOX):
             f"{prefix}minutes", f"{prefix}player_count",
         ]
         available = [c for c in needed if c in df.columns]
-        s = df[["gameDateTimeEst", name_col] + available].copy()
+        form_rows = df["is_preseason"] == 0 if PRESEASON_MODE == "exclude_form" else pd.Series(True, index=df.index)
+        s = df.loc[form_rows, ["gameDateTimeEst", name_col] + available].copy()
         s["rebounds"] = (
             s.get(f"{prefix}reboundsDefensive", 0) + s.get(f"{prefix}reboundsOffensive", 0)
         )
@@ -625,7 +731,7 @@ if "home_last5_min" in df.columns and "away_last5_min" in df.columns:
 # FEATURE: Season Progress  (0 = Saisonbeginn, 1 = Saisonende)
 # ─────────────────────────────────────────────────────────────
 def _season_progress(date):
-    year = date.year if date.month >= 10 else date.year - 1
+    year = season_start_year(date)
     start = pd.Timestamp(f"{year}-10-01")
     return float(np.clip((date - start).days / 270, 0.0, 1.0))
 
@@ -639,9 +745,7 @@ df["home_win"] = (df["homeScore"] > df["awayScore"]).astype(int)
 # ─────────────────────────────────────────────────────────────
 # FEATURE: Series Record (Playoff only; Regular Season = 0)
 # ─────────────────────────────────────────────────────────────
-df["season"] = df["gameDateTimeEst"].apply(
-    lambda d: d.year if d.month >= 10 else d.year - 1
-)
+df["season"] = df["gameDateTimeEst"].apply(season_start_year)
 
 playoffs_sr = df[df["is_playoff"] == 1].copy()
 if not playoffs_sr.empty:
@@ -705,7 +809,7 @@ feature_cols = [
     "home_home_winrate", "away_home_winrate",
     "home_away_winrate", "away_away_winrate",
     "home_last_game_close", "away_last_game_close",
-    "same_division", "is_playoff",
+    "same_division", "is_playoff", "is_preseason",
     "elo_diff",
     "home_consecutive_away", "away_consecutive_away",
     "home_games_last7", "away_games_last7",
@@ -771,7 +875,7 @@ print(f"\nModel-Datensatz: {len(df_model)} Spiele, {len(feature_cols)} Features"
 # ─────────────────────────────────────────────────────────────
 # SPEICHERN
 # ─────────────────────────────────────────────────────────────
-model_output_path = os.path.join(base_dir, "data", "model_data.csv")
+model_output_path = MODEL_DATA_PATH
 df.to_csv(model_output_path, index=False)
 print(f"\nGespeichert: {model_output_path}")
 

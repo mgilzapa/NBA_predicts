@@ -1,7 +1,20 @@
 {
-  "generated_at": "2026-06-11T05:52:33",
-  "predictions": 1,
-  "flags": [],
+  "generated_at": "2026-11-13T01:08:45",
+  "predictions": 9,
+  "flags": [
+    {
+      "game": "Utah Jazz @ Houston Rockets",
+      "type": "high_confidence",
+      "detail": "Confidence 91.7% > 85% — ggf. Feature-Anomalie",
+      "severity": "medium"
+    },
+    {
+      "game": "Oklahoma City Thunder @ LA Clippers",
+      "type": "elo_upset",
+      "detail": "Modell tippt LA Clippers (ELO 1506) gegen Oklahoma City Thunder (ELO 1681) — ELO-Diff: -175",
+      "severity": "low"
+    }
+  ],
   "warnings": [],
   "passed": true
 }

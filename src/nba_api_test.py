@@ -4,6 +4,7 @@ import time
 from nba_api.stats.endpoints import BoxScoreTraditionalV3, leaguegamelog
 
 from create_all_predictions import update_all_predictions
+from scrape_upcoming_games import NBA_TEAM_ID_PREFIX, current_nba_season
 
 def fetch_actual_winner(game_id):
     try:
@@ -79,84 +80,87 @@ def update_actual_winners_from_csv(target_file, nba_games_file):
     merged.to_excel(target_file, index=False)
     print(f" Actual Winners in {target_file} aktualisiert.")
 
+SEASON_TYPES = ["Pre Season", "Regular Season", "Playoffs"]
+ALL_SEASONS = [
+    "2016-17", "2017-18", "2018-19", "2019-20",
+    "2020-21", "2021-22", "2022-23", "2023-24",
+    "2024-25", "2025-26",
+]
+
+
+def fetch_season_games(season, season_type):
+    """Laedt alle abgeschlossenen Spiele einer Saison/eines Spieltyps als Heim/Auswaerts-Zeile."""
+    print(f"  -> Lade {season} {season_type}")
+    gamelog = leaguegamelog.LeagueGameLog(
+        season=season,
+        season_type_all_star=season_type,
+        timeout=60,
+    )
+    df = gamelog.get_data_frames()[0]
+    time.sleep(1)
+    if df.empty:
+        return pd.DataFrame()
+
+    df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
+    df["is_home"] = df["MATCHUP"].str.contains("vs.").astype(int)
+
+    # Preseason enthaelt Spiele gegen internationale Clubs -> nur Spiele NBA vs. NBA behalten
+    df["is_nba"] = df["TEAM_ID"].astype(str).str.startswith(NBA_TEAM_ID_PREFIX)
+    nba_only = df.groupby("GAME_ID")["is_nba"].transform("all") & (df.groupby("GAME_ID")["GAME_ID"].transform("size") == 2)
+    df = df[nba_only].copy()
+
+    home_df = df[df["is_home"] == 1].rename(columns={"TEAM_NAME": "hometeamName", "PTS": "homeScore"})
+    away_df = df[df["is_home"] == 0].rename(columns={"TEAM_NAME": "awayteamName", "PTS": "awayScore"})
+    home_df = home_df[["GAME_ID", "GAME_DATE", "hometeamName", "homeScore"]]
+    away_df = away_df[["GAME_ID", "awayteamName", "awayScore"]]
+
+    # inner merge: Preseason-Spiele gegen Nicht-NBA-Teams (nur eine Seite im Log) fallen raus
+    games = home_df.merge(away_df, on="GAME_ID", how="inner")
+    # API liefert "0012600009", die CSV speichert 12600009 -> einheitlich als int
+    games["GAME_ID"] = games["GAME_ID"].astype(int)
+    games["season_type"] = season_type
+    games["home_win"] = (games["homeScore"] > games["awayScore"]).astype(int)
+    games["season"] = season
+    return games
+
+
 def update_nba_games(csv_path="data/nba_api_games.csv"):
     """
-    Lädt neue NBA-Spiele von der API und hängt sie an die bestehende CSV an.
+    Laedt neue NBA-Spiele (Preseason, Regular Season, Playoffs) und haengt sie an die CSV an.
     Falls die CSV nicht existiert, wird sie komplett ab 2016 neu erstellt.
+    Fehlende Preseason-Daten frueherer Saisons werden einmalig nachgeladen.
     """
-    # Seasons, die noch nicht abgeschlossen sind (aktuell 2025-26)
-    current_season = "2025-26"
-    # Falls du auch vorherige Seasons nachladen willst, falls Lücken bestehen, kannst du das erweitern.
-    seasons_to_check = [current_season]
+    current_season = current_nba_season()
+    seasons = list(dict.fromkeys(ALL_SEASONS + [current_season]))
 
-    # Prüfen, ob CSV existiert
     if os.path.exists(csv_path):
         existing_df = pd.read_csv(csv_path)
         existing_df["GAME_DATE"] = pd.to_datetime(existing_df["GAME_DATE"])
-        last_date = existing_df["GAME_DATE"].max()
-        print(f"Letztes Spiel in CSV: {last_date.date()}")
-        seasons_to_check = [current_season]
+        existing_df["GAME_ID"] = existing_df["GAME_ID"].astype(int)
+        print(f"Letztes Spiel in CSV: {existing_df['GAME_DATE'].max().date()}")
+        have = set(zip(existing_df["season"], existing_df["season_type"]))
+        # aktuelle Saison immer neu pruefen, aeltere nur wenn der Spieltyp komplett fehlt
+        to_fetch = [
+            (season, season_type)
+            for season in seasons
+            for season_type in SEASON_TYPES
+            if season == current_season or (season, season_type) not in have
+        ]
     else:
         existing_df = pd.DataFrame()
-        last_date = None
-        seasons_to_check = [
-            "2016-17", "2017-18", "2018-19", "2019-20",
-            "2020-21", "2021-22", "2022-23", "2023-24",
-            "2024-25", "2025-26"
-        ]
+        to_fetch = [(season, season_type) for season in seasons for season_type in SEASON_TYPES]
         print("Keine vorhandene CSV gefunden – erstelle neue Datei mit allen Seasons.")
 
+    known_ids = set(existing_df["GAME_ID"]) if not existing_df.empty else set()
     all_new_games = []
-
-    for season in seasons_to_check:
-        print(f"Lade Saison {season}...")
-        
-        season_frames = []
-
-        for season_type in ["Regular Season", "Playoffs"]:
-            print(f"  -> Lade {season_type}")
-            gamelog = leaguegamelog.LeagueGameLog(
-                season=season,
-                season_type_all_star=season_type
-            )
-            df = gamelog.get_data_frames()[0]
-
-            if df.empty:
-                continue
-
-            df["GAME_DATE"] = pd.to_datetime(df["GAME_DATE"])
-            df["is_home"] = df["MATCHUP"].str.contains("vs.").astype(int)
-            df["season_type"] = season_type
-            season_frames.append(df)
-
-            time.sleep(1)
-
-        if not season_frames:
+    for season, season_type in to_fetch:
+        games = fetch_season_games(season, season_type)
+        if games.empty:
             continue
-
-        df = pd.concat(season_frames, ignore_index=True)
-
-        home_df = df[df["is_home"] == 1].copy()
-        away_df = df[df["is_home"] == 0].copy()
-
-        home_df = home_df.rename(columns={"TEAM_NAME": "hometeamName", "PTS": "homeScore"})
-        away_df = away_df.rename(columns={"TEAM_NAME": "awayteamName", "PTS": "awayScore"})
-
-        home_df = home_df[["GAME_ID", "GAME_DATE", "hometeamName", "homeScore", "season_type"]]
-        away_df = away_df[["GAME_ID", "awayteamName", "awayScore"]]
-
-        games = home_df.merge(away_df, on="GAME_ID", how="inner")
-        games["home_win"] = (games["homeScore"] > games["awayScore"]).astype(int)
-        games["season"] = season
-
-        if last_date is not None and season == current_season:
-            games = games[games["GAME_DATE"] > last_date].copy()
-            if len(games) == 0:
-                print(f"Keine neuen Spiele in Saison {season} seit {last_date.date()}.")
-            else:
-                print(f"{len(games)} neue Spiele in Saison {season} gefunden.")
-
-        all_new_games.append(games)
+        games = games[~games["GAME_ID"].isin(known_ids)]
+        if len(games):
+            print(f"     {len(games)} neue Spiele ({season} {season_type})")
+            all_new_games.append(games)
 
     if all_new_games:
         new_games_df = pd.concat(all_new_games, ignore_index=True)
@@ -178,8 +182,31 @@ def update_nba_games(csv_path="data/nba_api_games.csv"):
     else:
         print("Keine neuen Spiele zum Hinzufügen.")
 
+def update_playin_games(csv_path="data/nba_api_playin.csv"):
+    """
+    Laedt die Play-In-Spiele (GAME_ID-Praefix 005) der aktuellen Saison in eine eigene CSV.
+    Bewusst NICHT in nba_api_games.csv, damit Feature Engineering und Training unveraendert
+    bleiben. Wird von fetch_bracket.py fuer den Live-Modus des Brackets genutzt.
+    """
+    current_season = current_nba_season()
+    games = fetch_season_games(current_season, "PlayIn")
+    existing = pd.read_csv(csv_path) if os.path.exists(csv_path) else pd.DataFrame()
+    if games.empty:
+        print(f"Keine Play-In-Spiele fuer {current_season}.")
+        return
+    combined = pd.concat([existing, games], ignore_index=True) if not existing.empty else games
+    combined["GAME_ID"] = combined["GAME_ID"].astype(int)
+    combined = combined.drop_duplicates(subset=["GAME_ID"], keep="last").sort_values("GAME_DATE")
+    combined.to_csv(csv_path, index=False)
+    print(f"Play-In-Spiele gespeichert: {csv_path} ({len(combined)} Spiele)")
+
+
 if __name__ == "__main__":
     update_nba_games("data/nba_api_games.csv")
+    try:
+        update_playin_games("data/nba_api_playin.csv")
+    except Exception as e:  # Play-In ist optional, darf den Pipeline-Lauf nicht stoppen
+        print(f"WARNUNG: Play-In-Spiele konnten nicht geladen werden: {e}")
     base_dir = os.path.dirname(os.path.dirname(__file__))
     target_file = os.path.join(base_dir, "output", "all_predictions.xlsx")
     nba_games_file = os.path.join(base_dir, "data", "nba_api_games.csv")

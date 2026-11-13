@@ -1,0 +1,86 @@
+{
+  "generated_at": "2026-11-13T01:09:11",
+  "season": "2026-27",
+  "mode": "projected",
+  "sims": 50000,
+  "seed": 20261113,
+  "runtime_seconds": 20.9,
+  "status": "ok",
+  "passed": true,
+  "checks": [
+    {
+      "name": "games_per_team",
+      "passed": true,
+      "detail": "max. Abweichung erwartete W+L vs. Spiele: 0.000000"
+    },
+    {
+      "name": "tbd_games",
+      "passed": true,
+      "detail": "30 Teams mit < 82 Spielen (TBD-Cup-Spiele im Spielplan)"
+    },
+    {
+      "name": "league_wins_equal_losses",
+      "passed": true,
+      "detail": "Summe W 1199.000 vs. Summe L 1199.000"
+    },
+    {
+      "name": "probabilities_in_range",
+      "passed": true,
+      "detail": "alle Wahrscheinlichkeiten in [0, 1]"
+    },
+    {
+      "name": "east_pct_top_seed_sum",
+      "passed": true,
+      "detail": "Summe 1.0000 (Soll 1)"
+    },
+    {
+      "name": "east_pct_playoffs_sum",
+      "passed": true,
+      "detail": "Summe 6.0000 (Soll 6)"
+    },
+    {
+      "name": "east_pct_playin_sum",
+      "passed": true,
+      "detail": "Summe 4.0001 (Soll 4)"
+    },
+    {
+      "name": "west_pct_top_seed_sum",
+      "passed": true,
+      "detail": "Summe 1.0000 (Soll 1)"
+    },
+    {
+      "name": "west_pct_playoffs_sum",
+      "passed": true,
+      "detail": "Summe 6.0002 (Soll 6)"
+    },
+    {
+      "name": "west_pct_playin_sum",
+      "passed": true,
+      "detail": "Summe 3.9999 (Soll 4)"
+    },
+    {
+      "name": "champion_sum",
+      "passed": true,
+      "detail": "Summe 1.0000 (Soll 1)"
+    },
+    {
+      "name": "bracket_path_consistent",
+      "passed": true,
+      "detail": "keine Doppelbelegung, Pfad konsistent"
+    },
+    {
+      "name": "runtime",
+      "passed": true,
+      "detail": "20.9 s fuer 50000 Sims (Schwelle 180 s)"
+    }
+  ],
+  "issues": [],
+  "warnings": [],
+  "inputs": {
+    "played_games": 173,
+    "remaining_games": 1026,
+    "today_from_predictions": 9,
+    "xgboost_games": 52,
+    "elo_games": 965
+  }
+}

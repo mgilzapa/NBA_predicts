@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-06-11T05:52:08",
-  "expected_features": 75,
-  "effective_features": 75,
-  "available_columns": 130,
+  "generated_at": "2026-11-13T01:08:29",
+  "expected_features": 76,
+  "effective_features": 76,
+  "available_columns": 131,
   "missing_from_data": [],
   "potential_new_features": [
     "home_elo",

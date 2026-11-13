@@ -1,4 +1,1027 @@
 gameId,gameDateTimeEst,homeTeamId,awayTeamId,homeTeamCity,homeTeamName,awayTeamCity,awayTeamName,gameDay,arenaName,arenaCity,arenaState,gameLabel,gameSubLabel,gameSubtype,seriesGameNumber,weekNumber
-0042500405,2026-06-13 20:30:00,1610612759,1610612752,San Antonio,Spurs,New York,Knicks,Sat,Frost Bank Center,San Antonio,TX,NBA Finals,Game 5,,Game 5,34
-0042500406,2026-06-16 20:30:00,1610612752,1610612759,New York,Knicks,San Antonio,Spurs,Tue,Madison Square Garden,New York,NY,NBA Finals,Game 6,,Game 6,35
-0042500407,2026-06-19 20:30:00,1610612759,1610612752,San Antonio,Spurs,New York,Knicks,Fri,Frost Bank Center,San Antonio,TX,NBA Finals,Game 7,,Game 7,35
+0022600034,2026-11-13 19:00:00,1610612754,1610612752,Indiana,Pacers,New York,Knicks,Fri,Gainbridge Fieldhouse,Indianapolis,IN,Emirates NBA Cup,East Group B,in-season,,4
+0022600035,2026-11-13 19:00:00,1610612753,1610612749,Orlando,Magic,Milwaukee,Bucks,Fri,Kia Center,Orlando,FL,Emirates NBA Cup,East Group A,in-season,,4
+0022600036,2026-11-13 20:00:00,1610612748,1610612739,Miami,Heat,Cleveland,Cavaliers,Fri,Kaseya Center,Miami,FL,Emirates NBA Cup,East Group B,in-season,,4
+0022600037,2026-11-13 20:00:00,1610612741,1610612737,Chicago,Bulls,Atlanta,Hawks,Fri,United Center,Chicago,IL,Emirates NBA Cup,East Group C,in-season,,4
+0022600038,2026-11-13 20:00:00,1610612740,1610612763,New Orleans,Pelicans,Memphis,Grizzlies,Fri,Smoothie King Center,New Orleans,LA,Emirates NBA Cup,West Group B,in-season,,4
+0022600039,2026-11-13 20:30:00,1610612745,1610612762,Houston,Rockets,Utah,Jazz,Fri,Toyota Center,Houston,TX,Emirates NBA Cup,West Group A,in-season,,4
+0022600040,2026-11-13 21:30:00,1610612759,1610612744,San Antonio,Spurs,Golden State,Warriors,Fri,Frost Bank Center,San Antonio,TX,Emirates NBA Cup,West Group C,in-season,,4
+0022600041,2026-11-13 22:00:00,1610612758,1610612757,Sacramento,Kings,Portland,Trail Blazers,Fri,Golden 1 Center,Sacramento,CA,Emirates NBA Cup,West Group C,in-season,,4
+0022600042,2026-11-13 22:30:00,1610612746,1610612760,LA,Clippers,Oklahoma City,Thunder,Fri,Intuit Dome,Inglewood,CA,Emirates NBA Cup,West Group B,in-season,,4
+0022600231,2026-11-14 19:00:00,1610612740,1610612743,New Orleans,Pelicans,Denver,Nuggets,Sat,Smoothie King Center,New Orleans,LA,,,,,4
+0022600232,2026-11-14 19:30:00,1610612739,1610612742,Cleveland,Cavaliers,Dallas,Mavericks,Sat,Rocket Arena,Cleveland,OH,,,,,4
+0022600233,2026-11-14 20:00:00,1610612748,1610612765,Miami,Heat,Detroit,Pistons,Sat,Kaseya Center,Miami,FL,,,,,4
+0022600234,2026-11-14 20:00:00,1610612763,1610612751,Memphis,Grizzlies,Brooklyn,Nets,Sat,FedExForum,Memphis,TN,,,,,4
+0022600235,2026-11-14 20:00:00,1610612750,1610612741,Minnesota,Timberwolves,Chicago,Bulls,Sat,Target Center,Minneapolis,MN,,,,,4
+0022600236,2026-11-15 13:00:00,1610612755,1610612754,Philadelphia,76ers,Indiana,Pacers,Sun,Xfinity Mobile Arena,Philadelphia,PA,,,,,4
+0022600237,2026-11-15 16:00:00,1610612756,1610612747,Phoenix,Suns,Los Angeles,Lakers,Sun,Mortgage Matchup Center,Phoenix,AZ,,,,,4
+0022600238,2026-11-15 16:30:00,1610612746,1610612766,LA,Clippers,Charlotte,Hornets,Sun,Intuit Dome,Inglewood,CA,,,,,4
+0022600239,2026-11-15 17:00:00,1610612762,1610612759,Utah,Jazz,San Antonio,Spurs,Sun,Delta Center,Salt Lake City,UT,,,,,4
+0022600240,2026-11-15 18:00:00,1610612738,1610612742,Boston,Celtics,Dallas,Mavericks,Sun,TD Garden,Boston,MA,,,,,4
+0022600241,2026-11-15 18:00:00,1610612761,1610612752,Toronto,Raptors,New York,Knicks,Sun,Scotiabank Arena,Toronto,ON,,,,,4
+0022600242,2026-11-15 19:00:00,1610612764,1610612745,Washington,Wizards,Houston,Rockets,Sun,Capital One Arena,Washington,DC,,,,,4
+0022600243,2026-11-15 20:00:00,1610612749,1610612737,Milwaukee,Bucks,Atlanta,Hawks,Sun,Fiserv Forum,Milwaukee,WI,,,,,4
+0022600244,2026-11-15 21:00:00,1610612758,1610612760,Sacramento,Kings,Oklahoma City,Thunder,Sun,Golden 1 Center,Sacramento,CA,,,,,4
+0022600246,2026-11-16 19:00:00,1610612739,1610612741,Cleveland,Cavaliers,Chicago,Bulls,Mon,Rocket Arena,Cleveland,OH,,,,,5
+0022600247,2026-11-16 19:00:00,1610612764,1610612763,Washington,Wizards,Memphis,Grizzlies,Mon,Capital One Arena,Washington,DC,,,,,5
+0022600245,2026-11-16 19:00:00,1610612738,1610612753,Boston,Celtics,Orlando,Magic,Mon,TD Garden,Boston,MA,,,,,5
+0022600248,2026-11-16 19:30:00,1610612751,1610612755,Brooklyn,Nets,Philadelphia,76ers,Mon,Barclays Center,Brooklyn,NY,,,,,5
+0022600249,2026-11-16 19:30:00,1610612748,1610612745,Miami,Heat,Houston,Rockets,Mon,Kaseya Center,Miami,FL,,,,,5
+0022600250,2026-11-16 20:00:00,1610612750,1610612757,Minnesota,Timberwolves,Portland,Trail Blazers,Mon,Target Center,Minneapolis,MN,,,,,5
+0022600251,2026-11-16 20:00:00,1610612740,1610612744,New Orleans,Pelicans,Golden State,Warriors,Mon,Smoothie King Center,New Orleans,LA,,,,,5
+0022600252,2026-11-16 21:00:00,1610612743,1610612756,Denver,Nuggets,Phoenix,Suns,Mon,Ball Arena,Denver,CO,,,,,5
+0022600253,2026-11-17 19:30:00,1610612761,1610612752,Toronto,Raptors,New York,Knicks,Tue,Scotiabank Arena,Toronto,ON,,,,,5
+0022600255,2026-11-17 20:00:00,1610612759,1610612765,San Antonio,Spurs,Detroit,Pistons,Tue,Frost Bank Center,San Antonio,TX,,,,,5
+0022600254,2026-11-17 20:00:00,1610612750,1610612757,Minnesota,Timberwolves,Portland,Trail Blazers,Tue,Target Center,Minneapolis,MN,,,,,5
+0022600257,2026-11-17 22:30:00,1610612746,1610612762,LA,Clippers,Utah,Jazz,Tue,Intuit Dome,Inglewood,CA,,,,,5
+0022600256,2026-11-17 23:00:00,1610612747,1610612766,Los Angeles,Lakers,Charlotte,Hornets,Tue,Crypto.com Arena,Los Angeles,CA,,,,,5
+0022600258,2026-11-18 19:00:00,1610612739,1610612763,Cleveland,Cavaliers,Memphis,Grizzlies,Wed,Rocket Arena,Cleveland,OH,,,,,5
+0022600259,2026-11-18 19:00:00,1610612754,1610612745,Indiana,Pacers,Houston,Rockets,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,5
+0022600260,2026-11-18 19:00:00,1610612748,1610612749,Miami,Heat,Milwaukee,Bucks,Wed,Kaseya Center,Miami,FL,,,,,5
+0022600261,2026-11-18 19:00:00,1610612753,1610612755,Orlando,Magic,Philadelphia,76ers,Wed,Kia Center,Orlando,FL,,,,,5
+0022600262,2026-11-18 19:30:00,1610612751,1610612741,Brooklyn,Nets,Chicago,Bulls,Wed,Barclays Center,Brooklyn,NY,,,,,5
+0022600263,2026-11-18 19:30:00,1610612761,1610612764,Toronto,Raptors,Washington,Wizards,Wed,Scotiabank Arena,Toronto,ON,,,,,5
+0022600264,2026-11-18 20:00:00,1610612740,1610612765,New Orleans,Pelicans,Detroit,Pistons,Wed,Smoothie King Center,New Orleans,LA,,,,,5
+0022600265,2026-11-18 20:00:00,1610612760,1610612737,Oklahoma City,Thunder,Atlanta,Hawks,Wed,Paycom Center,Oklahoma City,OK,,,,,5
+0022600266,2026-11-18 21:00:00,1610612743,1610612738,Denver,Nuggets,Boston,Celtics,Wed,Ball Arena,Denver,CO,,,,,5
+0022600267,2026-11-18 21:30:00,1610612742,1610612744,Dallas,Mavericks,Golden State,Warriors,Wed,American Airlines Center,Dallas,TX,,,,,5
+0022600269,2026-11-18 22:00:00,1610612758,1610612756,Sacramento,Kings,Phoenix,Suns,Wed,Golden 1 Center,Sacramento,CA,,,,,5
+0022600268,2026-11-18 22:00:00,1610612747,1610612762,Los Angeles,Lakers,Utah,Jazz,Wed,Crypto.com Arena,Los Angeles,CA,,,,,5
+0022600270,2026-11-19 20:00:00,1610612763,1610612744,Memphis,Grizzlies,Golden State,Warriors,Thu,FedExForum,Memphis,TN,,,,,5
+0022600271,2026-11-19 20:00:00,1610612749,1610612757,Milwaukee,Bucks,Portland,Trail Blazers,Thu,Fiserv Forum,Milwaukee,WI,,,,,5
+0022600272,2026-11-19 20:00:00,1610612750,1610612752,Minnesota,Timberwolves,New York,Knicks,Thu,Target Center,Minneapolis,MN,,,,,5
+0022600273,2026-11-19 20:00:00,1610612759,1610612746,San Antonio,Spurs,LA,Clippers,Thu,Frost Bank Center,San Antonio,TX,,,,,5
+0022600043,2026-11-20 19:00:00,1610612737,1610612766,Atlanta,Hawks,Charlotte,Hornets,Fri,State Farm Arena,Atlanta,GA,Emirates NBA Cup,East Group C,in-season,,5
+0022600046,2026-11-20 19:30:00,1610612765,1610612761,Detroit,Pistons,Toronto,Raptors,Fri,Little Caesars Arena,Detroit,MI,Emirates NBA Cup,East Group A,in-season,,5
+0022600045,2026-11-20 19:30:00,1610612739,1610612754,Cleveland,Cavaliers,Indiana,Pacers,Fri,Rocket Arena,Cleveland,OH,Emirates NBA Cup,East Group B,in-season,,5
+0022600044,2026-11-20 19:30:00,1610612751,1610612753,Brooklyn,Nets,Orlando,Magic,Fri,Barclays Center,Brooklyn,NY,Emirates NBA Cup,East Group A,in-season,,5
+0022600047,2026-11-20 20:00:00,1610612741,1610612764,Chicago,Bulls,Washington,Wizards,Fri,United Center,Chicago,IL,Emirates NBA Cup,East Group C,in-season,,5
+0022600048,2026-11-20 20:00:00,1610612760,1610612740,Oklahoma City,Thunder,New Orleans,Pelicans,Fri,Paycom Center,Oklahoma City,OK,Emirates NBA Cup,West Group B,in-season,,5
+0022600049,2026-11-20 21:30:00,1610612762,1610612756,Utah,Jazz,Phoenix,Suns,Fri,Delta Center,Salt Lake City,UT,Emirates NBA Cup,West Group A,in-season,,5
+0022600050,2026-11-20 22:00:00,1610612743,1610612745,Denver,Nuggets,Houston,Rockets,Fri,Ball Arena,Denver,CO,Emirates NBA Cup,West Group A,in-season,,5
+0022600051,2026-11-20 22:00:00,1610612747,1610612758,Los Angeles,Lakers,Sacramento,Kings,Fri,Crypto.com Arena,Los Angeles,CA,Emirates NBA Cup,West Group C,in-season,,5
+0022600274,2026-11-21 13:00:00,1610612755,1610612749,Philadelphia,76ers,Milwaukee,Bucks,Sat,Xfinity Mobile Arena,Philadelphia,PA,,,,,5
+0022600275,2026-11-21 19:30:00,1610612752,1610612757,New York,Knicks,Portland,Trail Blazers,Sat,Madison Square Garden,New York,NY,,,,,5
+0022600278,2026-11-21 20:00:00,1610612759,1610612740,San Antonio,Spurs,New Orleans,Pelicans,Sat,Frost Bank Center,San Antonio,TX,,,,,5
+0022600277,2026-11-21 20:00:00,1610612750,1610612763,Minnesota,Timberwolves,Memphis,Grizzlies,Sat,Target Center,Minneapolis,MN,,,,,5
+0022600276,2026-11-21 20:00:00,1610612742,1610612746,Dallas,Mavericks,LA,Clippers,Sat,American Airlines Center,Dallas,TX,,,,,5
+0022600279,2026-11-21 22:00:00,1610612758,1610612738,Sacramento,Kings,Boston,Celtics,Sat,Golden 1 Center,Sacramento,CA,,,,,5
+0022600280,2026-11-22 15:30:00,1610612737,1610612765,Atlanta,Hawks,Detroit,Pistons,Sun,State Farm Arena,Atlanta,GA,,,,,5
+0022600281,2026-11-22 18:00:00,1610612748,1610612760,Miami,Heat,Oklahoma City,Thunder,Sun,Kaseya Center,Miami,FL,,,,,5
+0022600282,2026-11-22 19:00:00,1610612764,1610612753,Washington,Wizards,Orlando,Magic,Sun,Capital One Arena,Washington,DC,,,,,5
+0022600283,2026-11-22 19:00:00,1610612741,1610612743,Chicago,Bulls,Denver,Nuggets,Sun,United Center,Chicago,IL,,,,,5
+0022600284,2026-11-22 19:00:00,1610612762,1610612742,Utah,Jazz,Dallas,Mavericks,Sun,Delta Center,Salt Lake City,UT,,,,,5
+0022600285,2026-11-22 20:00:00,1610612752,1610612754,New York,Knicks,Indiana,Pacers,Sun,Madison Square Garden,New York,NY,,,,,5
+0022600286,2026-11-22 20:30:00,1610612744,1610612738,Golden State,Warriors,Boston,Celtics,Sun,Chase Center,San Francisco,CA,,,,,5
+0022600288,2026-11-23 19:00:00,1610612755,1610612757,Philadelphia,76ers,Portland,Trail Blazers,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,6
+0022600287,2026-11-23 19:00:00,1610612766,1610612763,Charlotte,Hornets,Memphis,Grizzlies,Mon,Spectrum Center,Charlotte,NC,,,,,6
+0022600290,2026-11-23 19:30:00,1610612761,1610612749,Toronto,Raptors,Milwaukee,Bucks,Mon,Scotiabank Arena,Toronto,ON,,,,,6
+0022600291,2026-11-23 19:30:00,1610612750,1610612751,Minnesota,Timberwolves,Brooklyn,Nets,Mon,Target Center,Minneapolis,MN,,,,,6
+0022600289,2026-11-23 19:30:00,1610612754,1610612760,Indiana,Pacers,Oklahoma City,Thunder,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,6
+0022600292,2026-11-23 20:00:00,1610612741,1610612739,Chicago,Bulls,Cleveland,Cavaliers,Mon,United Center,Chicago,IL,,,,,6
+0022600293,2026-11-23 20:00:00,1610612740,1610612756,New Orleans,Pelicans,Phoenix,Suns,Mon,Smoothie King Center,New Orleans,LA,,,,,6
+0022600294,2026-11-23 20:30:00,1610612745,1610612746,Houston,Rockets,LA,Clippers,Mon,Toyota Center,Houston,TX,,,,,6
+0022600295,2026-11-23 22:00:00,1610612747,1610612762,Los Angeles,Lakers,Utah,Jazz,Mon,Crypto.com Arena,Los Angeles,CA,,,,,6
+0022600296,2026-11-23 22:00:00,1610612758,1610612759,Sacramento,Kings,San Antonio,Spurs,Mon,Golden 1 Center,Sacramento,CA,,,,,6
+0022600052,2026-11-24 19:00:00,1610612753,1610612765,Orlando,Magic,Detroit,Pistons,Tue,Kia Center,Orlando,FL,Emirates NBA Cup,East Group A,in-season,,6
+0022600053,2026-11-24 20:00:00,1610612764,1610612738,Washington,Wizards,Boston,Celtics,Tue,Capital One Arena,Washington,DC,Emirates NBA Cup,East Group C,in-season,,6
+0022600054,2026-11-24 22:00:00,1610612743,1610612742,Denver,Nuggets,Dallas,Mavericks,Tue,Ball Arena,Denver,CO,Emirates NBA Cup,West Group A,in-season,,6
+0022600055,2026-11-25 17:00:00,1610612755,1610612748,Philadelphia,76ers,Miami,Heat,Wed,Xfinity Mobile Arena,Philadelphia,PA,Emirates NBA Cup,East Group B,in-season,,6
+0022600056,2026-11-25 19:00:00,1610612766,1610612741,Charlotte,Hornets,Chicago,Bulls,Wed,Spectrum Center,Charlotte,NC,Emirates NBA Cup,East Group C,in-season,,6
+0022600057,2026-11-25 19:30:00,1610612752,1610612739,New York,Knicks,Cleveland,Cavaliers,Wed,Madison Square Garden,New York,NY,Emirates NBA Cup,East Group B,in-season,,6
+0022600058,2026-11-25 19:30:00,1610612760,1610612750,Oklahoma City,Thunder,Minnesota,Timberwolves,Wed,Paycom Center,Oklahoma City,OK,Emirates NBA Cup,West Group B,in-season,,6
+0022600059,2026-11-25 20:00:00,1610612763,1610612746,Memphis,Grizzlies,LA,Clippers,Wed,FedExForum,Memphis,TN,Emirates NBA Cup,West Group B,in-season,,6
+0022600060,2026-11-25 20:00:00,1610612749,1610612751,Milwaukee,Bucks,Brooklyn,Nets,Wed,Fiserv Forum,Milwaukee,WI,Emirates NBA Cup,East Group A,in-season,,6
+0022600061,2026-11-25 20:30:00,1610612745,1610612756,Houston,Rockets,Phoenix,Suns,Wed,Toyota Center,Houston,TX,Emirates NBA Cup,West Group A,in-season,,6
+0022600062,2026-11-25 22:00:00,1610612744,1610612758,Golden State,Warriors,Sacramento,Kings,Wed,Chase Center,San Francisco,CA,Emirates NBA Cup,West Group C,in-season,,6
+0022600063,2026-11-25 22:00:00,1610612757,1610612759,Portland,Trail Blazers,San Antonio,Spurs,Wed,Moda Center,Portland,OR,Emirates NBA Cup,West Group C,in-season,,6
+0022600064,2026-11-27 19:00:00,1610612752,1610612748,New York,Knicks,Miami,Heat,Fri,Madison Square Garden,New York,NY,Emirates NBA Cup,East Group B,in-season,,6
+0022600065,2026-11-27 19:30:00,1610612765,1610612749,Detroit,Pistons,Milwaukee,Bucks,Fri,Little Caesars Arena,Detroit,MI,Emirates NBA Cup,East Group A,in-season,,6
+0022600066,2026-11-27 19:30:00,1610612754,1610612755,Indiana,Pacers,Philadelphia,76ers,Fri,Gainbridge Fieldhouse,Indianapolis,IN,Emirates NBA Cup,East Group B,in-season,,6
+0022600067,2026-11-27 19:30:00,1610612761,1610612751,Toronto,Raptors,Brooklyn,Nets,Fri,Scotiabank Arena,Toronto,ON,Emirates NBA Cup,East Group A,in-season,,6
+0022600068,2026-11-27 20:00:00,1610612738,1610612737,Boston,Celtics,Atlanta,Hawks,Fri,TD Garden,Boston,MA,Emirates NBA Cup,East Group C,in-season,,6
+0022600069,2026-11-27 20:30:00,1610612750,1610612763,Minnesota,Timberwolves,Memphis,Grizzlies,Fri,Target Center,Minneapolis,MN,Emirates NBA Cup,West Group B,in-season,,6
+0022600070,2026-11-27 21:00:00,1610612756,1610612742,Phoenix,Suns,Dallas,Mavericks,Fri,Mortgage Matchup Center,Phoenix,AZ,Emirates NBA Cup,West Group A,in-season,,6
+0022600074,2026-11-27 21:30:00,1610612757,1610612744,Portland,Trail Blazers,Golden State,Warriors,Fri,Moda Center,Portland,OR,Emirates NBA Cup,West Group C,in-season,,6
+0022600073,2026-11-27 21:30:00,1610612746,1610612740,LA,Clippers,New Orleans,Pelicans,Fri,Intuit Dome,Inglewood,CA,Emirates NBA Cup,West Group B,in-season,,6
+0022600072,2026-11-27 21:30:00,1610612762,1610612743,Utah,Jazz,Denver,Nuggets,Fri,Delta Center,Salt Lake City,UT,Emirates NBA Cup,West Group A,in-season,,6
+0022600071,2026-11-27 21:30:00,1610612759,1610612747,San Antonio,Spurs,Los Angeles,Lakers,Fri,Frost Bank Center,San Antonio,TX,Emirates NBA Cup,West Group C,in-season,,6
+0022600297,2026-11-28 17:00:00,1610612764,1610612753,Washington,Wizards,Orlando,Magic,Sat,Capital One Arena,Washington,DC,,,,,6
+0022600298,2026-11-28 18:00:00,1610612766,1610612751,Charlotte,Hornets,Brooklyn,Nets,Sat,Spectrum Center,Charlotte,NC,,,,,6
+0022600300,2026-11-28 20:00:00,1610612749,1610612760,Milwaukee,Bucks,Oklahoma City,Thunder,Sat,Fiserv Forum,Milwaukee,WI,,,,,6
+0022600299,2026-11-28 20:00:00,1610612741,1610612754,Chicago,Bulls,Indiana,Pacers,Sat,United Center,Chicago,IL,,,,,6
+0022600301,2026-11-28 20:30:00,1610612745,1610612755,Houston,Rockets,Philadelphia,76ers,Sat,Toyota Center,Houston,TX,,,,,6
+0022600302,2026-11-29 16:00:00,1610612763,1610612747,Memphis,Grizzlies,Los Angeles,Lakers,Sun,FedExForum,Memphis,TN,,,,,6
+0022600303,2026-11-29 16:00:00,1610612759,1610612738,San Antonio,Spurs,Boston,Celtics,Sun,Frost Bank Center,San Antonio,TX,,,,,6
+0022600304,2026-11-29 17:00:00,1610612762,1610612756,Utah,Jazz,Phoenix,Suns,Sun,Delta Center,Salt Lake City,UT,,,,,6
+0022600305,2026-11-29 18:00:00,1610612739,1610612748,Cleveland,Cavaliers,Miami,Heat,Sun,Rocket Arena,Cleveland,OH,,,,,6
+0022600306,2026-11-29 18:00:00,1610612765,1610612753,Detroit,Pistons,Orlando,Magic,Sun,Little Caesars Arena,Detroit,MI,,,,,6
+0022600307,2026-11-29 18:00:00,1610612752,1610612737,New York,Knicks,Atlanta,Hawks,Sun,Madison Square Garden,New York,NY,,,,,6
+0022600308,2026-11-29 18:00:00,1610612761,1610612743,Toronto,Raptors,Denver,Nuggets,Sun,Scotiabank Arena,Toronto,ON,,,,,6
+0022600309,2026-11-29 18:00:00,1610612757,1610612740,Portland,Trail Blazers,New Orleans,Pelicans,Sun,Moda Center,Portland,OR,,,,,6
+0022600310,2026-11-29 20:30:00,1610612744,1610612746,Golden State,Warriors,LA,Clippers,Sun,Chase Center,San Francisco,CA,,,,,6
+0022600311,2026-11-29 21:00:00,1610612758,1610612750,Sacramento,Kings,Minnesota,Timberwolves,Sun,Golden 1 Center,Sacramento,CA,,,,,6
+0022600312,2026-11-30 19:00:00,1610612766,1610612764,Charlotte,Hornets,Washington,Wizards,Mon,Spectrum Center,Charlotte,NC,,,,,7
+0022600313,2026-11-30 19:00:00,1610612765,1610612743,Detroit,Pistons,Denver,Nuggets,Mon,Little Caesars Arena,Detroit,MI,,,,,7
+0022600315,2026-11-30 19:30:00,1610612745,1610612747,Houston,Rockets,Los Angeles,Lakers,Mon,Toyota Center,Houston,TX,,,,,7
+0022600314,2026-11-30 19:30:00,1610612751,1610612760,Brooklyn,Nets,Oklahoma City,Thunder,Mon,Barclays Center,Brooklyn,NY,,,,,7
+0022600317,2026-11-30 20:00:00,1610612749,1610612759,Milwaukee,Bucks,San Antonio,Spurs,Mon,Fiserv Forum,Milwaukee,WI,,,,,7
+0022600316,2026-11-30 20:00:00,1610612742,1610612738,Dallas,Mavericks,Boston,Celtics,Mon,American Airlines Center,Dallas,TX,,,,,7
+0022600318,2026-11-30 22:00:00,1610612758,1610612740,Sacramento,Kings,New Orleans,Pelicans,Mon,Golden 1 Center,Sacramento,CA,,,,,7
+0022600319,2026-12-01 19:00:00,1610612739,1610612754,Cleveland,Cavaliers,Indiana,Pacers,Tue,Rocket Arena,Cleveland,OH,,,,,7
+0022600320,2026-12-01 19:00:00,1610612755,1610612763,Philadelphia,76ers,Memphis,Grizzlies,Tue,Xfinity Mobile Arena,Philadelphia,PA,,,,,7
+0022600321,2026-12-01 19:30:00,1610612748,1610612737,Miami,Heat,Atlanta,Hawks,Tue,Kaseya Center,Miami,FL,,,,,7
+0022600322,2026-12-01 20:00:00,1610612741,1610612752,Chicago,Bulls,New York,Knicks,Tue,United Center,Chicago,IL,,,,,7
+0022600323,2026-12-01 20:30:00,1610612745,1610612761,Houston,Rockets,Toronto,Raptors,Tue,Toyota Center,Houston,TX,,,,,7
+0022600324,2026-12-01 21:00:00,1610612756,1610612746,Phoenix,Suns,LA,Clippers,Tue,Mortgage Matchup Center,Phoenix,AZ,,,,,7
+0022600325,2026-12-01 22:00:00,1610612757,1610612750,Portland,Trail Blazers,Minnesota,Timberwolves,Tue,Moda Center,Portland,OR,,,,,7
+0022600326,2026-12-01 23:00:00,1610612744,1610612762,Golden State,Warriors,Utah,Jazz,Tue,Chase Center,San Francisco,CA,,,,,7
+0022600327,2026-12-02 19:00:00,1610612765,1610612763,Detroit,Pistons,Memphis,Grizzlies,Wed,Little Caesars Arena,Detroit,MI,,,,,7
+0022600328,2026-12-02 19:00:00,1610612755,1610612743,Philadelphia,76ers,Denver,Nuggets,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,7
+0022600329,2026-12-02 19:30:00,1610612738,1610612766,Boston,Celtics,Charlotte,Hornets,Wed,TD Garden,Boston,MA,,,,,7
+0022600333,2026-12-02 20:00:00,1610612760,1610612751,Oklahoma City,Thunder,Brooklyn,Nets,Wed,Paycom Center,Oklahoma City,OK,,,,,7
+0022600332,2026-12-02 20:00:00,1610612740,1610612747,New Orleans,Pelicans,Los Angeles,Lakers,Wed,Smoothie King Center,New Orleans,LA,,,,,7
+0022600330,2026-12-02 20:00:00,1610612742,1610612753,Dallas,Mavericks,Orlando,Magic,Wed,American Airlines Center,Dallas,TX,,,,,7
+0022600331,2026-12-02 20:00:00,1610612749,1610612752,Milwaukee,Bucks,New York,Knicks,Wed,Fiserv Forum,Milwaukee,WI,,,,,7
+0022600334,2026-12-02 21:00:00,1610612756,1610612758,Phoenix,Suns,Sacramento,Kings,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,7
+0022600335,2026-12-02 22:30:00,1610612746,1610612750,LA,Clippers,Minnesota,Timberwolves,Wed,Intuit Dome,Inglewood,CA,,,,,7
+0022600336,2026-12-03 19:00:00,1610612737,1610612754,Atlanta,Hawks,Indiana,Pacers,Thu,State Farm Arena,Atlanta,GA,,,,,7
+0022600337,2026-12-03 19:30:00,1610612748,1610612764,Miami,Heat,Washington,Wizards,Thu,Kaseya Center,Miami,FL,,,,,7
+0022600338,2026-12-03 20:00:00,1610612741,1610612739,Chicago,Bulls,Cleveland,Cavaliers,Thu,United Center,Chicago,IL,,,,,7
+0022600339,2026-12-03 20:00:00,1610612759,1610612761,San Antonio,Spurs,Toronto,Raptors,Thu,Frost Bank Center,San Antonio,TX,,,,,7
+0022600340,2026-12-03 22:00:00,1610612757,1610612762,Portland,Trail Blazers,Utah,Jazz,Thu,Moda Center,Portland,OR,,,,,7
+0022600341,2026-12-12 17:00:00,1610612763,1610612749,Memphis,Grizzlies,Milwaukee,Bucks,Sat,FedExForum,Memphis,TN,,,,,8
+0022600342,2026-12-12 19:00:00,1610612764,1610612766,Washington,Wizards,Charlotte,Hornets,Sat,Capital One Arena,Washington,DC,,,,,8
+0022600343,2026-12-12 19:30:00,1610612755,1610612753,Philadelphia,76ers,Orlando,Magic,Sat,Xfinity Mobile Arena,Philadelphia,PA,,,,,8
+0022600344,2026-12-12 20:00:00,1610612739,1610612744,Cleveland,Cavaliers,Golden State,Warriors,Sat,Rocket Arena,Cleveland,OH,,,,,8
+0022600345,2026-12-12 20:30:00,1610612748,1610612752,Miami,Heat,New York,Knicks,Sat,Kaseya Center,Miami,FL,,,,,8
+0022600346,2026-12-12 21:00:00,1610612756,1610612750,Phoenix,Suns,Minnesota,Timberwolves,Sat,Mortgage Matchup Center,Phoenix,AZ,,,,,8
+0022600347,2026-12-12 21:30:00,1610612762,1610612743,Utah,Jazz,Denver,Nuggets,Sat,Delta Center,Salt Lake City,UT,,,,,8
+0022600348,2026-12-12 22:00:00,1610612757,1610612737,Portland,Trail Blazers,Atlanta,Hawks,Sat,Moda Center,Portland,OR,,,,,8
+0022600349,2026-12-13 15:00:00,1610612751,1610612738,Brooklyn,Nets,Boston,Celtics,Sun,Barclays Center,Brooklyn,NY,,,,,8
+0022600350,2026-12-13 15:30:00,1610612760,1610612761,Oklahoma City,Thunder,Toronto,Raptors,Sun,Paycom Center,Oklahoma City,OK,,,,,8
+0022600351,2026-12-13 17:00:00,1610612754,1610612765,Indiana,Pacers,Detroit,Pistons,Sun,Gainbridge Fieldhouse,Indianapolis,IN,,,,,8
+0022600352,2026-12-13 18:00:00,1610612741,1610612745,Chicago,Bulls,Houston,Rockets,Sun,United Center,Chicago,IL,,,,,8
+0022600353,2026-12-13 19:00:00,1610612759,1610612746,San Antonio,Spurs,LA,Clippers,Sun,Frost Bank Center,San Antonio,TX,,,,,8
+0022600354,2026-12-13 21:00:00,1610612758,1610612740,Sacramento,Kings,New Orleans,Pelicans,Sun,Golden 1 Center,Sacramento,CA,,,,,8
+0022600355,2026-12-14 19:00:00,1610612766,1610612761,Charlotte,Hornets,Toronto,Raptors,Mon,Spectrum Center,Charlotte,NC,,,,,9
+0022600356,2026-12-14 19:00:00,1610612765,1610612751,Detroit,Pistons,Brooklyn,Nets,Mon,Little Caesars Arena,Detroit,MI,,,,,9
+0022600357,2026-12-14 19:00:00,1610612753,1610612755,Orlando,Magic,Philadelphia,76ers,Mon,Kia Center,Orlando,FL,,,,,9
+0022600358,2026-12-14 19:30:00,1610612738,1610612764,Boston,Celtics,Washington,Wizards,Mon,TD Garden,Boston,MA,,,,,9
+0022600359,2026-12-14 20:00:00,1610612741,1610612748,Chicago,Bulls,Miami,Heat,Mon,United Center,Chicago,IL,,,,,9
+0022600360,2026-12-14 20:00:00,1610612742,1610612749,Dallas,Mavericks,Milwaukee,Bucks,Mon,American Airlines Center,Dallas,TX,,,,,9
+0022600361,2026-12-14 20:00:00,1610612763,1610612744,Memphis,Grizzlies,Golden State,Warriors,Mon,FedExForum,Memphis,TN,,,,,9
+0022600362,2026-12-14 20:30:00,1610612745,1610612752,Houston,Rockets,New York,Knicks,Mon,Toyota Center,Houston,TX,,,,,9
+0022600363,2026-12-14 21:00:00,1610612756,1610612737,Phoenix,Suns,Atlanta,Hawks,Mon,Mortgage Matchup Center,Phoenix,AZ,,,,,9
+0022600364,2026-12-14 21:00:00,1610612762,1610612750,Utah,Jazz,Minnesota,Timberwolves,Mon,Delta Center,Salt Lake City,UT,,,,,9
+0022600365,2026-12-14 22:00:00,1610612747,1610612740,Los Angeles,Lakers,New Orleans,Pelicans,Mon,Crypto.com Arena,Los Angeles,CA,,,,,9
+0022600366,2026-12-15 20:00:00,1610612739,1610612759,Cleveland,Cavaliers,San Antonio,Spurs,Tue,Rocket Arena,Cleveland,OH,,,,,9
+0022600367,2026-12-15 23:00:00,1610612757,1610612743,Portland,Trail Blazers,Denver,Nuggets,Tue,Moda Center,Portland,OR,,,,,9
+0022600368,2026-12-16 19:00:00,1610612738,1610612764,Boston,Celtics,Washington,Wizards,Wed,TD Garden,Boston,MA,,,,,9
+0022600369,2026-12-16 19:00:00,1610612766,1610612746,Charlotte,Hornets,LA,Clippers,Wed,Spectrum Center,Charlotte,NC,,,,,9
+0022600370,2026-12-16 19:00:00,1610612765,1610612756,Detroit,Pistons,Phoenix,Suns,Wed,Little Caesars Arena,Detroit,MI,,,,,9
+0022600371,2026-12-16 19:00:00,1610612754,1610612744,Indiana,Pacers,Golden State,Warriors,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,9
+0022600372,2026-12-16 19:00:00,1610612753,1610612739,Orlando,Magic,Cleveland,Cavaliers,Wed,Kia Center,Orlando,FL,,,,,9
+0022600374,2026-12-16 19:30:00,1610612761,1610612759,Toronto,Raptors,San Antonio,Spurs,Wed,Scotiabank Arena,Toronto,ON,,,,,9
+0022600373,2026-12-16 19:30:00,1610612751,1610612742,Brooklyn,Nets,Dallas,Mavericks,Wed,Barclays Center,Brooklyn,NY,,,,,9
+0022600378,2026-12-16 20:00:00,1610612760,1610612758,Oklahoma City,Thunder,Sacramento,Kings,Wed,Paycom Center,Oklahoma City,OK,,,,,9
+0022600375,2026-12-16 20:00:00,1610612741,1610612762,Chicago,Bulls,Utah,Jazz,Wed,United Center,Chicago,IL,,,,,9
+0022600376,2026-12-16 20:00:00,1610612763,1610612748,Memphis,Grizzlies,Miami,Heat,Wed,FedExForum,Memphis,TN,,,,,9
+0022600377,2026-12-16 20:00:00,1610612740,1610612752,New Orleans,Pelicans,New York,Knicks,Wed,Smoothie King Center,New Orleans,LA,,,,,9
+0022600379,2026-12-16 20:30:00,1610612745,1610612749,Houston,Rockets,Milwaukee,Bucks,Wed,Toyota Center,Houston,TX,,,,,9
+0022600380,2026-12-16 21:30:00,1610612750,1610612747,Minnesota,Timberwolves,Los Angeles,Lakers,Wed,Target Center,Minneapolis,MN,,,,,9
+0022600381,2026-12-17 19:00:00,1610612754,1610612757,Indiana,Pacers,Portland,Trail Blazers,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,9
+0022600382,2026-12-17 19:00:00,1610612755,1610612742,Philadelphia,76ers,Dallas,Mavericks,Thu,Xfinity Mobile Arena,Philadelphia,PA,,,,,9
+0022600383,2026-12-17 21:00:00,1610612743,1610612737,Denver,Nuggets,Atlanta,Hawks,Thu,Ball Arena,Denver,CO,,,,,9
+0022600386,2026-12-18 19:00:00,1610612764,1610612752,Washington,Wizards,New York,Knicks,Fri,Capital One Arena,Washington,DC,,,,,9
+0022600384,2026-12-18 19:00:00,1610612766,1610612760,Charlotte,Hornets,Oklahoma City,Thunder,Fri,Spectrum Center,Charlotte,NC,,,,,9
+0022600385,2026-12-18 19:00:00,1610612748,1610612746,Miami,Heat,LA,Clippers,Fri,Kaseya Center,Miami,FL,,,,,9
+0022600387,2026-12-18 19:30:00,1610612738,1610612762,Boston,Celtics,Utah,Jazz,Fri,TD Garden,Boston,MA,,,,,9
+0022600388,2026-12-18 19:30:00,1610612751,1610612753,Brooklyn,Nets,Orlando,Magic,Fri,Barclays Center,Brooklyn,NY,,,,,9
+0022600389,2026-12-18 19:30:00,1610612765,1610612739,Detroit,Pistons,Cleveland,Cavaliers,Fri,Little Caesars Arena,Detroit,MI,,,,,9
+0022600390,2026-12-18 19:30:00,1610612761,1610612744,Toronto,Raptors,Golden State,Warriors,Fri,Scotiabank Arena,Toronto,ON,,,,,9
+0022600391,2026-12-18 20:00:00,1610612763,1610612745,Memphis,Grizzlies,Houston,Rockets,Fri,FedExForum,Memphis,TN,,,,,9
+0022600394,2026-12-18 20:00:00,1610612740,1610612758,New Orleans,Pelicans,Sacramento,Kings,Fri,Smoothie King Center,New Orleans,LA,,,,,9
+0022600392,2026-12-18 20:00:00,1610612749,1610612756,Milwaukee,Bucks,Phoenix,Suns,Fri,Fiserv Forum,Milwaukee,WI,,,,,9
+0022600395,2026-12-18 20:00:00,1610612759,1610612741,San Antonio,Spurs,Chicago,Bulls,Fri,Frost Bank Center,San Antonio,TX,,,,,9
+0022600393,2026-12-18 20:00:00,1610612750,1610612747,Minnesota,Timberwolves,Los Angeles,Lakers,Fri,Target Center,Minneapolis,MN,,,,,9
+0022600396,2026-12-19 18:00:00,1610612766,1610612757,Charlotte,Hornets,Portland,Trail Blazers,Sat,Spectrum Center,Charlotte,NC,,,,,9
+0022600397,2026-12-19 19:00:00,1610612737,1610612753,Atlanta,Hawks,Orlando,Magic,Sat,State Farm Arena,Atlanta,GA,,,,,9
+0022600398,2026-12-19 20:00:00,1610612742,1610612741,Dallas,Mavericks,Chicago,Bulls,Sat,American Airlines Center,Dallas,TX,,,,,9
+0022600399,2026-12-19 21:00:00,1610612743,1610612747,Denver,Nuggets,Los Angeles,Lakers,Sat,Ball Arena,Denver,CO,,,,,9
+0022600400,2026-12-20 15:00:00,1610612751,1610612764,Brooklyn,Nets,Washington,Wizards,Sun,Barclays Center,Brooklyn,NY,,,,,9
+0022600401,2026-12-20 15:30:00,1610612761,1610612745,Toronto,Raptors,Houston,Rockets,Sun,Scotiabank Arena,Toronto,ON,,,,,9
+0022600402,2026-12-20 16:00:00,1610612763,1610612756,Memphis,Grizzlies,Phoenix,Suns,Sun,FedExForum,Memphis,TN,,,,,9
+0022600404,2026-12-20 18:00:00,1610612748,1610612758,Miami,Heat,Sacramento,Kings,Sun,Kaseya Center,Miami,FL,,,,,9
+0022600403,2026-12-20 18:00:00,1610612739,1610612762,Cleveland,Cavaliers,Utah,Jazz,Sun,Rocket Arena,Cleveland,OH,,,,,9
+0022600405,2026-12-20 19:00:00,1610612737,1610612760,Atlanta,Hawks,Oklahoma City,Thunder,Sun,State Farm Arena,Atlanta,GA,,,,,9
+0022600406,2026-12-20 19:00:00,1610612740,1610612759,New Orleans,Pelicans,San Antonio,Spurs,Sun,Smoothie King Center,New Orleans,LA,,,,,9
+0022600407,2026-12-20 20:00:00,1610612738,1610612765,Boston,Celtics,Detroit,Pistons,Sun,TD Garden,Boston,MA,,,,,9
+0022600408,2026-12-20 20:00:00,1610612749,1610612744,Milwaukee,Bucks,Golden State,Warriors,Sun,Fiserv Forum,Milwaukee,WI,,,,,9
+0022600409,2026-12-20 22:00:00,1610612746,1610612754,LA,Clippers,Indiana,Pacers,Sun,Intuit Dome,Inglewood,CA,,,,,9
+0022600412,2026-12-21 19:00:00,1610612753,1610612758,Orlando,Magic,Sacramento,Kings,Mon,Kia Center,Orlando,FL,,,,,10
+0022600411,2026-12-21 19:00:00,1610612739,1610612752,Cleveland,Cavaliers,New York,Knicks,Mon,Rocket Arena,Cleveland,OH,,,,,10
+0022600410,2026-12-21 19:00:00,1610612766,1610612755,Charlotte,Hornets,Philadelphia,76ers,Mon,Spectrum Center,Charlotte,NC,,,,,10
+0022600414,2026-12-21 19:30:00,1610612748,1610612741,Miami,Heat,Chicago,Bulls,Mon,Kaseya Center,Miami,FL,,,,,10
+0022600413,2026-12-21 19:30:00,1610612751,1610612757,Brooklyn,Nets,Portland,Trail Blazers,Mon,Barclays Center,Brooklyn,NY,,,,,10
+0022600415,2026-12-21 20:00:00,1610612750,1610612756,Minnesota,Timberwolves,Phoenix,Suns,Mon,Target Center,Minneapolis,MN,,,,,10
+0022600416,2026-12-21 20:00:00,1610612740,1610612763,New Orleans,Pelicans,Memphis,Grizzlies,Mon,Smoothie King Center,New Orleans,LA,,,,,10
+0022600417,2026-12-21 20:00:00,1610612759,1610612749,San Antonio,Spurs,Milwaukee,Bucks,Mon,Frost Bank Center,San Antonio,TX,,,,,10
+0022600418,2026-12-21 22:00:00,1610612747,1610612754,Los Angeles,Lakers,Indiana,Pacers,Mon,Crypto.com Arena,Los Angeles,CA,,,,,10
+0022600419,2026-12-21 22:30:00,1610612746,1610612743,LA,Clippers,Denver,Nuggets,Mon,Intuit Dome,Inglewood,CA,,,,,10
+0022600420,2026-12-22 19:00:00,1610612764,1610612761,Washington,Wizards,Toronto,Raptors,Tue,Capital One Arena,Washington,DC,,,,,10
+0022600421,2026-12-22 20:00:00,1610612760,1610612765,Oklahoma City,Thunder,Detroit,Pistons,Tue,Paycom Center,Oklahoma City,OK,,,,,10
+0022600422,2026-12-22 22:30:00,1610612744,1610612742,Golden State,Warriors,Dallas,Mavericks,Tue,Chase Center,San Francisco,CA,,,,,10
+0022600425,2026-12-23 19:00:00,1610612764,1610612739,Washington,Wizards,Cleveland,Cavaliers,Wed,Capital One Arena,Washington,DC,,,,,10
+0022600423,2026-12-23 19:00:00,1610612737,1610612765,Atlanta,Hawks,Detroit,Pistons,Wed,State Farm Arena,Atlanta,GA,,,,,10
+0022600424,2026-12-23 19:00:00,1610612753,1610612766,Orlando,Magic,Charlotte,Hornets,Wed,Kia Center,Orlando,FL,,,,,10
+0022600430,2026-12-23 19:30:00,1610612755,1610612745,Philadelphia,76ers,Houston,Rockets,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,10
+0022600429,2026-12-23 19:30:00,1610612752,1610612762,New York,Knicks,Utah,Jazz,Wed,Madison Square Garden,New York,NY,,,,,10
+0022600427,2026-12-23 19:30:00,1610612751,1610612759,Brooklyn,Nets,San Antonio,Spurs,Wed,Barclays Center,Brooklyn,NY,,,,,10
+0022600426,2026-12-23 19:30:00,1610612738,1610612757,Boston,Celtics,Portland,Trail Blazers,Wed,TD Garden,Boston,MA,,,,,10
+0022600428,2026-12-23 19:30:00,1610612748,1610612741,Miami,Heat,Chicago,Bulls,Wed,Kaseya Center,Miami,FL,,,,,10
+0022600432,2026-12-23 20:00:00,1610612749,1610612750,Milwaukee,Bucks,Minnesota,Timberwolves,Wed,Fiserv Forum,Milwaukee,WI,,,,,10
+0022600433,2026-12-23 20:00:00,1610612740,1610612760,New Orleans,Pelicans,Oklahoma City,Thunder,Wed,Smoothie King Center,New Orleans,LA,,,,,10
+0022600431,2026-12-23 20:00:00,1610612763,1610612761,Memphis,Grizzlies,Toronto,Raptors,Wed,FedExForum,Memphis,TN,,,,,10
+0022600434,2026-12-23 21:00:00,1610612756,1610612754,Phoenix,Suns,Indiana,Pacers,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,10
+0022600435,2026-12-23 22:00:00,1610612747,1610612743,Los Angeles,Lakers,Denver,Nuggets,Wed,Crypto.com Arena,Los Angeles,CA,,,,,10
+0022600436,2026-12-23 22:00:00,1610612758,1610612742,Sacramento,Kings,Dallas,Mavericks,Wed,Golden 1 Center,Sacramento,CA,,,,,10
+0022600437,2026-12-23 22:30:00,1610612746,1610612744,LA,Clippers,Golden State,Warriors,Wed,Intuit Dome,Inglewood,CA,,,,,10
+0022600010,2026-12-25 12:00:00,1610612752,1610612759,New York,Knicks,San Antonio,Spurs,Fri,Madison Square Garden,New York,NY,,,,,10
+0022600011,2026-12-25 14:30:00,1610612738,1610612748,Boston,Celtics,Miami,Heat,Fri,TD Garden,Boston,MA,,,,,10
+0022600012,2026-12-25 17:00:00,1610612747,1610612755,Los Angeles,Lakers,Philadelphia,76ers,Fri,Crypto.com Arena,Los Angeles,CA,,,,,10
+0022600013,2026-12-25 20:00:00,1610612750,1610612760,Minnesota,Timberwolves,Oklahoma City,Thunder,Fri,Target Center,Minneapolis,MN,,,,,10
+0022600014,2026-12-25 22:30:00,1610612744,1610612743,Golden State,Warriors,Denver,Nuggets,Fri,Chase Center,San Francisco,CA,,,,,10
+0022600438,2026-12-26 13:00:00,1610612764,1610612757,Washington,Wizards,Portland,Trail Blazers,Sat,Capital One Arena,Washington,DC,,,,,10
+0022600439,2026-12-26 15:30:00,1610612737,1610612766,Atlanta,Hawks,Charlotte,Hornets,Sat,State Farm Arena,Atlanta,GA,,,,,10
+0022600440,2026-12-26 17:00:00,1610612762,1610612754,Utah,Jazz,Indiana,Pacers,Sat,Delta Center,Salt Lake City,UT,,,,,10
+0022600441,2026-12-26 18:00:00,1610612751,1610612740,Brooklyn,Nets,New Orleans,Pelicans,Sat,Barclays Center,Brooklyn,NY,,,,,10
+0022600442,2026-12-26 19:00:00,1610612753,1610612761,Orlando,Magic,Toronto,Raptors,Sat,Kia Center,Orlando,FL,,,,,10
+0022600443,2026-12-26 20:00:00,1610612741,1610612765,Chicago,Bulls,Detroit,Pistons,Sat,United Center,Chicago,IL,,,,,10
+0022600444,2026-12-26 20:00:00,1610612742,1610612756,Dallas,Mavericks,Phoenix,Suns,Sat,American Airlines Center,Dallas,TX,,,,,10
+0022600445,2026-12-26 22:30:00,1610612746,1610612763,LA,Clippers,Memphis,Grizzlies,Sat,Intuit Dome,Inglewood,CA,,,,,10
+0022600446,2026-12-27 15:30:00,1610612745,1610612760,Houston,Rockets,Oklahoma City,Thunder,Sun,Toyota Center,Houston,TX,,,,,10
+0022600451,2026-12-27 18:00:00,1610612758,1610612762,Sacramento,Kings,Utah,Jazz,Sun,Golden 1 Center,Sacramento,CA,,,,,10
+0022600450,2026-12-27 18:00:00,1610612753,1610612749,Orlando,Magic,Milwaukee,Bucks,Sun,Kia Center,Orlando,FL,,,,,10
+0022600448,2026-12-27 18:00:00,1610612748,1610612766,Miami,Heat,Charlotte,Hornets,Sun,Kaseya Center,Miami,FL,,,,,10
+0022600447,2026-12-27 18:00:00,1610612739,1610612764,Cleveland,Cavaliers,Washington,Wizards,Sun,Rocket Arena,Cleveland,OH,,,,,10
+0022600449,2026-12-27 18:00:00,1610612752,1610612751,New York,Knicks,Brooklyn,Nets,Sun,Madison Square Garden,New York,NY,,,,,10
+0022600452,2026-12-27 19:00:00,1610612765,1610612757,Detroit,Pistons,Portland,Trail Blazers,Sun,Little Caesars Arena,Detroit,MI,,,,,10
+0022600453,2026-12-27 19:00:00,1610612759,1610612737,San Antonio,Spurs,Atlanta,Hawks,Sun,Frost Bank Center,San Antonio,TX,,,,,10
+0022600454,2026-12-27 20:00:00,1610612743,1610612754,Denver,Nuggets,Indiana,Pacers,Sun,Ball Arena,Denver,CO,,,,,10
+0022600455,2026-12-27 20:30:00,1610612744,1610612750,Golden State,Warriors,Minnesota,Timberwolves,Sun,Chase Center,San Francisco,CA,,,,,10
+0022600457,2026-12-27 21:00:00,1610612747,1610612763,Los Angeles,Lakers,Memphis,Grizzlies,Sun,Crypto.com Arena,Los Angeles,CA,,,,,10
+0022600456,2026-12-27 21:00:00,1610612746,1610612755,LA,Clippers,Philadelphia,76ers,Sun,Intuit Dome,Inglewood,CA,,,,,10
+0022600458,2026-12-28 19:30:00,1610612761,1610612740,Toronto,Raptors,New Orleans,Pelicans,Mon,Scotiabank Arena,Toronto,ON,,,,,11
+0022600459,2026-12-28 20:00:00,1610612738,1610612739,Boston,Celtics,Cleveland,Cavaliers,Mon,TD Garden,Boston,MA,,,,,11
+0022600460,2026-12-28 21:00:00,1610612756,1610612744,Phoenix,Suns,Golden State,Warriors,Mon,Mortgage Matchup Center,Phoenix,AZ,,,,,11
+0022600461,2026-12-28 22:30:00,1610612743,1610612750,Denver,Nuggets,Minnesota,Timberwolves,Mon,Ball Arena,Denver,CO,,,,,11
+0022600462,2026-12-29 19:00:00,1610612737,1610612741,Atlanta,Hawks,Chicago,Bulls,Tue,State Farm Arena,Atlanta,GA,,,,,11
+0022600463,2026-12-29 19:00:00,1610612766,1610612753,Charlotte,Hornets,Orlando,Magic,Tue,Spectrum Center,Charlotte,NC,,,,,11
+0022600464,2026-12-29 19:00:00,1610612754,1610612746,Indiana,Pacers,LA,Clippers,Tue,Gainbridge Fieldhouse,Indianapolis,IN,,,,,11
+0022600465,2026-12-29 20:00:00,1610612742,1610612748,Dallas,Mavericks,Miami,Heat,Tue,American Airlines Center,Dallas,TX,,,,,11
+0022600466,2026-12-29 20:00:00,1610612763,1610612759,Memphis,Grizzlies,San Antonio,Spurs,Tue,FedExForum,Memphis,TN,,,,,11
+0022600467,2026-12-29 20:00:00,1610612760,1610612749,Oklahoma City,Thunder,Milwaukee,Bucks,Tue,Paycom Center,Oklahoma City,OK,,,,,11
+0022600469,2026-12-29 22:00:00,1610612758,1610612755,Sacramento,Kings,Philadelphia,76ers,Tue,Golden 1 Center,Sacramento,CA,,,,,11
+0022600468,2026-12-29 22:00:00,1610612757,1610612751,Portland,Trail Blazers,Brooklyn,Nets,Tue,Moda Center,Portland,OR,,,,,11
+0022600470,2026-12-29 22:30:00,1610612747,1610612745,Los Angeles,Lakers,Houston,Rockets,Tue,Crypto.com Arena,Los Angeles,CA,,,,,11
+0022600471,2026-12-30 19:00:00,1610612765,1610612740,Detroit,Pistons,New Orleans,Pelicans,Wed,Little Caesars Arena,Detroit,MI,,,,,11
+0022600472,2026-12-30 19:30:00,1610612761,1610612764,Toronto,Raptors,Washington,Wizards,Wed,Scotiabank Arena,Toronto,ON,,,,,11
+0022600473,2026-12-30 20:00:00,1610612741,1610612738,Chicago,Bulls,Boston,Celtics,Wed,United Center,Chicago,IL,,,,,11
+0022600474,2026-12-30 21:00:00,1610612756,1610612755,Phoenix,Suns,Philadelphia,76ers,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,11
+0022600475,2026-12-30 21:00:00,1610612762,1610612752,Utah,Jazz,New York,Knicks,Wed,Delta Center,Salt Lake City,UT,,,,,11
+0022600476,2026-12-30 22:00:00,1610612744,1610612745,Golden State,Warriors,Houston,Rockets,Wed,Chase Center,San Francisco,CA,,,,,11
+0022600477,2026-12-31 13:00:00,1610612766,1610612759,Charlotte,Hornets,San Antonio,Spurs,Thu,Spectrum Center,Charlotte,NC,,,,,11
+0022600480,2026-12-31 15:00:00,1610612754,1610612753,Indiana,Pacers,Orlando,Magic,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,11
+0022600478,2026-12-31 15:00:00,1610612737,1610612749,Atlanta,Hawks,Milwaukee,Bucks,Thu,State Farm Arena,Atlanta,GA,,,,,11
+0022600479,2026-12-31 15:00:00,1610612739,1610612746,Cleveland,Cavaliers,LA,Clippers,Thu,Rocket Arena,Cleveland,OH,,,,,11
+0022600481,2026-12-31 16:00:00,1610612750,1610612743,Minnesota,Timberwolves,Denver,Nuggets,Thu,Target Center,Minneapolis,MN,,,,,11
+0022600482,2026-12-31 18:00:00,1610612758,1610612751,Sacramento,Kings,Brooklyn,Nets,Thu,Golden 1 Center,Sacramento,CA,,,,,11
+0022600483,2026-12-31 20:00:00,1610612740,1610612747,New Orleans,Pelicans,Los Angeles,Lakers,Thu,Smoothie King Center,New Orleans,LA,,,,,11
+0022600484,2026-12-31 20:00:00,1610612760,1610612748,Oklahoma City,Thunder,Miami,Heat,Thu,Paycom Center,Oklahoma City,OK,,,,,11
+0022600485,2026-12-31 21:00:00,1610612756,1610612752,Phoenix,Suns,New York,Knicks,Thu,Mortgage Matchup Center,Phoenix,AZ,,,,,11
+0022600486,2027-01-01 17:00:00,1610612764,1610612759,Washington,Wizards,San Antonio,Spurs,Fri,Capital One Arena,Washington,DC,,,,,11
+0022600487,2027-01-01 19:30:00,1610612765,1610612753,Detroit,Pistons,Orlando,Magic,Fri,Little Caesars Arena,Detroit,MI,,,,,11
+0022600488,2027-01-01 19:30:00,1610612761,1610612746,Toronto,Raptors,LA,Clippers,Fri,Scotiabank Arena,Toronto,ON,,,,,11
+0022600489,2027-01-01 20:00:00,1610612749,1610612755,Milwaukee,Bucks,Philadelphia,76ers,Fri,Fiserv Forum,Milwaukee,WI,,,,,11
+0022600490,2027-01-01 20:30:00,1610612745,1610612742,Houston,Rockets,Dallas,Mavericks,Fri,Toyota Center,Houston,TX,,,,,11
+0022600491,2027-01-01 21:30:00,1610612762,1610612738,Utah,Jazz,Boston,Celtics,Fri,Delta Center,Salt Lake City,UT,,,,,11
+0022600492,2027-01-02 13:00:00,1610612766,1610612739,Charlotte,Hornets,Cleveland,Cavaliers,Sat,Spectrum Center,Charlotte,NC,,,,,11
+0022600493,2027-01-02 17:00:00,1610612743,1610612752,Denver,Nuggets,New York,Knicks,Sat,Ball Arena,Denver,CO,,,,,11
+0022600495,2027-01-02 19:00:00,1610612740,1610612748,New Orleans,Pelicans,Miami,Heat,Sat,Smoothie King Center,New Orleans,LA,,,,,11
+0022600494,2027-01-02 19:00:00,1610612754,1610612750,Indiana,Pacers,Minnesota,Timberwolves,Sat,Gainbridge Fieldhouse,Indianapolis,IN,,,,,11
+0022600496,2027-01-02 19:30:00,1610612737,1610612742,Atlanta,Hawks,Dallas,Mavericks,Sat,State Farm Arena,Atlanta,GA,,,,,11
+0022600498,2027-01-02 20:00:00,1610612760,1610612762,Oklahoma City,Thunder,Utah,Jazz,Sat,Paycom Center,Oklahoma City,OK,,,,,11
+0022600497,2027-01-02 20:00:00,1610612741,1610612747,Chicago,Bulls,Los Angeles,Lakers,Sat,United Center,Chicago,IL,,,,,11
+0022600499,2027-01-02 20:30:00,1610612744,1610612751,Golden State,Warriors,Brooklyn,Nets,Sat,Chase Center,San Francisco,CA,,,,,11
+0022600500,2027-01-02 21:00:00,1610612756,1610612758,Phoenix,Suns,Sacramento,Kings,Sat,Mortgage Matchup Center,Phoenix,AZ,,,,,11
+0022600501,2027-01-02 22:00:00,1610612757,1610612738,Portland,Trail Blazers,Boston,Celtics,Sat,Moda Center,Portland,OR,,,,,11
+0022600502,2027-01-03 17:00:00,1610612743,1610612765,Denver,Nuggets,Detroit,Pistons,Sun,Ball Arena,Denver,CO,,,,,11
+0022600503,2027-01-03 17:30:00,1610612749,1610612766,Milwaukee,Bucks,Charlotte,Hornets,Sun,Fiserv Forum,Milwaukee,WI,,,,,11
+0022600504,2027-01-03 18:00:00,1610612753,1610612763,Orlando,Magic,Memphis,Grizzlies,Sun,Kia Center,Orlando,FL,,,,,11
+0022600507,2027-01-03 19:00:00,1610612745,1610612739,Houston,Rockets,Cleveland,Cavaliers,Sun,Toyota Center,Houston,TX,,,,,11
+0022600508,2027-01-03 19:00:00,1610612750,1610612759,Minnesota,Timberwolves,San Antonio,Spurs,Sun,Target Center,Minneapolis,MN,,,,,11
+0022600505,2027-01-03 19:00:00,1610612761,1610612747,Toronto,Raptors,Los Angeles,Lakers,Sun,Scotiabank Arena,Toronto,ON,,,,,11
+0022600506,2027-01-03 19:00:00,1610612764,1610612746,Washington,Wizards,LA,Clippers,Sun,Capital One Arena,Washington,DC,,,,,11
+0022600509,2027-01-03 20:00:00,1610612760,1610612758,Oklahoma City,Thunder,Sacramento,Kings,Sun,Paycom Center,Oklahoma City,OK,,,,,11
+0022600510,2027-01-04 19:00:00,1610612754,1610612741,Indiana,Pacers,Chicago,Bulls,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,12
+0022600511,2027-01-04 19:00:00,1610612755,1610612737,Philadelphia,76ers,Atlanta,Hawks,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,12
+0022600512,2027-01-04 20:00:00,1610612740,1610612742,New Orleans,Pelicans,Dallas,Mavericks,Mon,Smoothie King Center,New Orleans,LA,,,,,12
+0022600513,2027-01-04 21:00:00,1610612756,1610612738,Phoenix,Suns,Boston,Celtics,Mon,Mortgage Matchup Center,Phoenix,AZ,,,,,12
+0022600514,2027-01-04 21:00:00,1610612762,1610612751,Utah,Jazz,Brooklyn,Nets,Mon,Delta Center,Salt Lake City,UT,,,,,12
+0022600515,2027-01-04 22:00:00,1610612757,1610612752,Portland,Trail Blazers,New York,Knicks,Mon,Moda Center,Portland,OR,,,,,12
+0022600519,2027-01-05 19:00:00,1610612764,1610612747,Washington,Wizards,Los Angeles,Lakers,Tue,Capital One Arena,Washington,DC,,,,,12
+0022600518,2027-01-05 19:00:00,1610612753,1610612746,Orlando,Magic,LA,Clippers,Tue,Kia Center,Orlando,FL,,,,,12
+0022600516,2027-01-05 19:00:00,1610612766,1610612737,Charlotte,Hornets,Atlanta,Hawks,Tue,Spectrum Center,Charlotte,NC,,,,,12
+0022600517,2027-01-05 19:00:00,1610612739,1610612761,Cleveland,Cavaliers,Toronto,Raptors,Tue,Rocket Arena,Cleveland,OH,,,,,12
+0022600520,2027-01-05 19:30:00,1610612748,1610612763,Miami,Heat,Memphis,Grizzlies,Tue,Kaseya Center,Miami,FL,,,,,12
+0022600521,2027-01-05 20:00:00,1610612741,1610612749,Chicago,Bulls,Milwaukee,Bucks,Tue,United Center,Chicago,IL,,,,,12
+0022600522,2027-01-05 20:00:00,1610612745,1610612750,Houston,Rockets,Minnesota,Timberwolves,Tue,Toyota Center,Houston,TX,,,,,12
+0022600523,2027-01-05 22:00:00,1610612743,1610612756,Denver,Nuggets,Phoenix,Suns,Tue,Ball Arena,Denver,CO,,,,,12
+0022600524,2027-01-05 22:00:00,1610612758,1610612765,Sacramento,Kings,Detroit,Pistons,Tue,Golden 1 Center,Sacramento,CA,,,,,12
+0022600525,2027-01-06 19:30:00,1610612751,1610612762,Brooklyn,Nets,Utah,Jazz,Wed,Barclays Center,Brooklyn,NY,,,,,12
+0022600526,2027-01-06 19:30:00,1610612755,1610612760,Philadelphia,76ers,Oklahoma City,Thunder,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,12
+0022600527,2027-01-06 20:00:00,1610612740,1610612757,New Orleans,Pelicans,Portland,Trail Blazers,Wed,Smoothie King Center,New Orleans,LA,,,,,12
+0022600528,2027-01-06 20:00:00,1610612759,1610612754,San Antonio,Spurs,Indiana,Pacers,Wed,Frost Bank Center,San Antonio,TX,,,,,12
+0022600529,2027-01-06 22:00:00,1610612744,1610612752,Golden State,Warriors,New York,Knicks,Wed,Chase Center,San Francisco,CA,,,,,12
+0022600532,2027-01-07 19:00:00,1610612753,1610612739,Orlando,Magic,Cleveland,Cavaliers,Thu,Kia Center,Orlando,FL,,,,,12
+0022600530,2027-01-07 19:00:00,1610612737,1610612754,Atlanta,Hawks,Indiana,Pacers,Thu,State Farm Arena,Atlanta,GA,,,,,12
+0022600531,2027-01-07 19:00:00,1610612766,1610612743,Charlotte,Hornets,Denver,Nuggets,Thu,Spectrum Center,Charlotte,NC,,,,,12
+0022600533,2027-01-07 19:00:00,1610612764,1610612760,Washington,Wizards,Oklahoma City,Thunder,Thu,Capital One Arena,Washington,DC,,,,,12
+0022600535,2027-01-07 19:30:00,1610612761,1610612750,Toronto,Raptors,Minnesota,Timberwolves,Thu,Scotiabank Arena,Toronto,ON,,,,,12
+0022600534,2027-01-07 19:30:00,1610612751,1610612748,Brooklyn,Nets,Miami,Heat,Thu,Barclays Center,Brooklyn,NY,,,,,12
+0022600537,2027-01-07 20:00:00,1610612749,1610612746,Milwaukee,Bucks,LA,Clippers,Thu,Fiserv Forum,Milwaukee,WI,,,,,12
+0022600536,2027-01-07 20:00:00,1610612742,1610612757,Dallas,Mavericks,Portland,Trail Blazers,Thu,American Airlines Center,Dallas,TX,,,,,12
+0022600538,2027-01-07 20:30:00,1610612745,1610612763,Houston,Rockets,Memphis,Grizzlies,Thu,Toyota Center,Houston,TX,,,,,12
+0022600539,2027-01-07 22:00:00,1610612744,1610612765,Golden State,Warriors,Detroit,Pistons,Thu,Chase Center,San Francisco,CA,,,,,12
+0022600540,2027-01-07 22:00:00,1610612747,1610612738,Los Angeles,Lakers,Boston,Celtics,Thu,Crypto.com Arena,Los Angeles,CA,,,,,12
+0022600541,2027-01-07 22:00:00,1610612758,1610612741,Sacramento,Kings,Chicago,Bulls,Thu,Golden 1 Center,Sacramento,CA,,,,,12
+0022600543,2027-01-08 19:00:00,1610612764,1610612750,Washington,Wizards,Minnesota,Timberwolves,Fri,Capital One Arena,Washington,DC,,,,,12
+0022600542,2027-01-08 19:00:00,1610612755,1610612748,Philadelphia,76ers,Miami,Heat,Fri,Xfinity Mobile Arena,Philadelphia,PA,,,,,12
+0022600544,2027-01-08 19:30:00,1610612761,1610612762,Toronto,Raptors,Utah,Jazz,Fri,Scotiabank Arena,Toronto,ON,,,,,12
+0022600545,2027-01-08 20:00:00,1610612740,1610612753,New Orleans,Pelicans,Orlando,Magic,Fri,Smoothie King Center,New Orleans,LA,,,,,12
+0022600546,2027-01-08 20:00:00,1610612759,1610612763,San Antonio,Spurs,Memphis,Grizzlies,Fri,Frost Bank Center,San Antonio,TX,,,,,12
+0022600547,2027-01-08 21:30:00,1610612742,1610612756,Dallas,Mavericks,Phoenix,Suns,Fri,American Airlines Center,Dallas,TX,,,,,12
+0022600548,2027-01-08 22:00:00,1610612747,1610612765,Los Angeles,Lakers,Detroit,Pistons,Fri,Crypto.com Arena,Los Angeles,CA,,,,,12
+0022600549,2027-01-08 22:00:00,1610612758,1610612752,Sacramento,Kings,New York,Knicks,Fri,Golden 1 Center,Sacramento,CA,,,,,12
+0022600550,2027-01-09 17:00:00,1610612739,1610612743,Cleveland,Cavaliers,Denver,Nuggets,Sat,Rocket Arena,Cleveland,OH,,,,,12
+0022600551,2027-01-09 18:00:00,1610612751,1610612745,Brooklyn,Nets,Houston,Rockets,Sat,Barclays Center,Brooklyn,NY,,,,,12
+0022600552,2027-01-09 19:00:00,1610612754,1610612749,Indiana,Pacers,Milwaukee,Bucks,Sat,Gainbridge Fieldhouse,Indianapolis,IN,,,,,12
+0022600553,2027-01-09 20:30:00,1610612744,1610612741,Golden State,Warriors,Chicago,Bulls,Sat,Chase Center,San Francisco,CA,,,,,12
+0022600554,2027-01-09 22:00:00,1610612757,1610612766,Portland,Trail Blazers,Charlotte,Hornets,Sat,Moda Center,Portland,OR,,,,,12
+0022600555,2027-01-09 22:30:00,1610612746,1610612738,LA,Clippers,Boston,Celtics,Sat,Intuit Dome,Inglewood,CA,,,,,12
+0022600556,2027-01-10 15:00:00,1610612737,1610612759,Atlanta,Hawks,San Antonio,Spurs,Sun,State Farm Arena,Atlanta,GA,,,,,12
+0022600557,2027-01-10 18:00:00,1610612765,1610612762,Detroit,Pistons,Utah,Jazz,Sun,Little Caesars Arena,Detroit,MI,,,,,12
+0022600558,2027-01-10 18:00:00,1610612748,1610612740,Miami,Heat,New Orleans,Pelicans,Sun,Kaseya Center,Miami,FL,,,,,12
+0022600559,2027-01-10 18:00:00,1610612753,1610612760,Orlando,Magic,Oklahoma City,Thunder,Sun,Kia Center,Orlando,FL,,,,,12
+0022600560,2027-01-10 18:00:00,1610612761,1610612755,Toronto,Raptors,Philadelphia,76ers,Sun,Scotiabank Arena,Toronto,ON,,,,,12
+0022600561,2027-01-10 18:00:00,1610612763,1610612742,Memphis,Grizzlies,Dallas,Mavericks,Sun,FedExForum,Memphis,TN,,,,,12
+0022600562,2027-01-10 19:00:00,1610612756,1610612741,Phoenix,Suns,Chicago,Bulls,Sun,Mortgage Matchup Center,Phoenix,AZ,,,,,12
+0022600563,2027-01-10 21:00:00,1610612758,1610612766,Sacramento,Kings,Charlotte,Hornets,Sun,Golden 1 Center,Sacramento,CA,,,,,12
+0022600564,2027-01-11 19:00:00,1610612754,1610612751,Indiana,Pacers,Brooklyn,Nets,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,13
+0022600565,2027-01-11 19:00:00,1610612764,1610612737,Washington,Wizards,Atlanta,Hawks,Mon,Capital One Arena,Washington,DC,,,,,13
+0022600567,2027-01-11 19:00:00,1610612752,1610612743,New York,Knicks,Denver,Nuggets,Mon,Madison Square Garden,New York,NY,,,,,13
+0022600566,2027-01-11 19:30:00,1610612738,1610612745,Boston,Celtics,Houston,Rockets,Mon,TD Garden,Boston,MA,,,,,13
+0022600568,2027-01-11 21:30:00,1610612750,1610612739,Minnesota,Timberwolves,Cleveland,Cavaliers,Mon,Target Center,Minneapolis,MN,,,,,13
+0022600569,2027-01-11 22:30:00,1610612746,1610612747,LA,Clippers,Los Angeles,Lakers,Mon,Intuit Dome,Inglewood,CA,,,,,13
+0022600570,2027-01-12 19:30:00,1610612748,1610612751,Miami,Heat,Brooklyn,Nets,Tue,Kaseya Center,Miami,FL,,,,,13
+0022600571,2027-01-12 19:30:00,1610612761,1610612765,Toronto,Raptors,Detroit,Pistons,Tue,Scotiabank Arena,Toronto,ON,,,,,13
+0022600573,2027-01-12 20:00:00,1610612763,1610612742,Memphis,Grizzlies,Dallas,Mavericks,Tue,FedExForum,Memphis,TN,,,,,13
+0022600572,2027-01-12 20:00:00,1610612755,1610612764,Philadelphia,76ers,Washington,Wizards,Tue,Xfinity Mobile Arena,Philadelphia,PA,,,,,13
+0022600574,2027-01-12 20:00:00,1610612749,1610612743,Milwaukee,Bucks,Denver,Nuggets,Tue,Fiserv Forum,Milwaukee,WI,,,,,13
+0022600575,2027-01-12 21:00:00,1610612762,1610612741,Utah,Jazz,Chicago,Bulls,Tue,Delta Center,Salt Lake City,UT,,,,,13
+0022600576,2027-01-12 22:00:00,1610612757,1610612753,Portland,Trail Blazers,Orlando,Magic,Tue,Moda Center,Portland,OR,,,,,13
+0022600577,2027-01-12 23:00:00,1610612744,1610612758,Golden State,Warriors,Sacramento,Kings,Tue,Chase Center,San Francisco,CA,,,,,13
+0022600578,2027-01-13 19:00:00,1610612737,1610612739,Atlanta,Hawks,Cleveland,Cavaliers,Wed,State Farm Arena,Atlanta,GA,,,,,13
+0022600579,2027-01-13 19:00:00,1610612738,1610612752,Boston,Celtics,New York,Knicks,Wed,TD Garden,Boston,MA,,,,,13
+0022600580,2027-01-13 19:00:00,1610612754,1610612749,Indiana,Pacers,Milwaukee,Bucks,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,13
+0022600581,2027-01-13 19:30:00,1610612761,1610612756,Toronto,Raptors,Phoenix,Suns,Wed,Scotiabank Arena,Toronto,ON,,,,,13
+0022600582,2027-01-13 21:30:00,1610612760,1610612745,Oklahoma City,Thunder,Houston,Rockets,Wed,Paycom Center,Oklahoma City,OK,,,,,13
+0022600584,2027-01-13 22:00:00,1610612757,1610612747,Portland,Trail Blazers,Los Angeles,Lakers,Wed,Moda Center,Portland,OR,,,,,13
+0022600583,2027-01-13 22:00:00,1610612744,1610612766,Golden State,Warriors,Charlotte,Hornets,Wed,Chase Center,San Francisco,CA,,,,,13
+0022600075,2027-01-14 14:00:00,1610612759,1610612740,San Antonio,Spurs,New Orleans,Pelicans,Thu,Accor Arena,Paris,FR,NBA Paris Game,,Global Games,,13
+0022600586,2027-01-14 19:00:00,1610612755,1610612751,Philadelphia,76ers,Brooklyn,Nets,Thu,Xfinity Mobile Arena,Philadelphia,PA,,,,,13
+0022600585,2027-01-14 19:00:00,1610612765,1610612742,Detroit,Pistons,Dallas,Mavericks,Thu,Little Caesars Arena,Detroit,MI,,,,,13
+0022600587,2027-01-14 19:30:00,1610612752,1610612748,New York,Knicks,Miami,Heat,Thu,Madison Square Garden,New York,NY,,,,,13
+0022600588,2027-01-14 20:00:00,1610612741,1610612750,Chicago,Bulls,Minnesota,Timberwolves,Thu,United Center,Chicago,IL,,,,,13
+0022600589,2027-01-14 21:00:00,1610612743,1610612763,Denver,Nuggets,Memphis,Grizzlies,Thu,Ball Arena,Denver,CO,,,,,13
+0022600590,2027-01-14 21:00:00,1610612762,1610612766,Utah,Jazz,Charlotte,Hornets,Thu,Delta Center,Salt Lake City,UT,,,,,13
+0022600591,2027-01-14 22:00:00,1610612747,1610612753,Los Angeles,Lakers,Orlando,Magic,Thu,Crypto.com Arena,Los Angeles,CA,,,,,13
+0022600592,2027-01-14 22:00:00,1610612758,1610612746,Sacramento,Kings,LA,Clippers,Thu,Golden 1 Center,Sacramento,CA,,,,,13
+0022600593,2027-01-15 19:00:00,1610612737,1610612744,Atlanta,Hawks,Golden State,Warriors,Fri,State Farm Arena,Atlanta,GA,,,,,13
+0022600594,2027-01-15 19:00:00,1610612754,1610612756,Indiana,Pacers,Phoenix,Suns,Fri,Gainbridge Fieldhouse,Indianapolis,IN,,,,,13
+0022600595,2027-01-15 19:30:00,1610612761,1610612748,Toronto,Raptors,Miami,Heat,Fri,Scotiabank Arena,Toronto,ON,,,,,13
+0022600597,2027-01-15 20:00:00,1610612760,1610612762,Oklahoma City,Thunder,Utah,Jazz,Fri,Paycom Center,Oklahoma City,OK,,,,,13
+0022600596,2027-01-15 20:00:00,1610612749,1610612739,Milwaukee,Bucks,Cleveland,Cavaliers,Fri,Fiserv Forum,Milwaukee,WI,,,,,13
+0022600598,2027-01-15 20:30:00,1610612745,1610612764,Houston,Rockets,Washington,Wizards,Fri,Toyota Center,Houston,TX,,,,,13
+0022600599,2027-01-15 22:00:00,1610612757,1610612758,Portland,Trail Blazers,Sacramento,Kings,Fri,Moda Center,Portland,OR,,,,,13
+0022600600,2027-01-15 22:30:00,1610612746,1610612753,LA,Clippers,Orlando,Magic,Fri,Intuit Dome,Inglewood,CA,,,,,13
+0022600601,2027-01-16 12:30:00,1610612755,1610612750,Philadelphia,76ers,Minnesota,Timberwolves,Sat,Xfinity Mobile Arena,Philadelphia,PA,,,,,13
+0022600602,2027-01-16 19:00:00,1610612738,1610612751,Boston,Celtics,Brooklyn,Nets,Sat,TD Garden,Boston,MA,,,,,13
+0022600603,2027-01-16 19:30:00,1610612752,1610612742,New York,Knicks,Dallas,Mavericks,Sat,Madison Square Garden,New York,NY,,,,,13
+0022600604,2027-01-16 20:00:00,1610612763,1610612739,Memphis,Grizzlies,Cleveland,Cavaliers,Sat,FedExForum,Memphis,TN,,,,,13
+0022600605,2027-01-16 20:30:00,1610612745,1610612765,Houston,Rockets,Detroit,Pistons,Sat,Toyota Center,Houston,TX,,,,,13
+0022600606,2027-01-16 21:00:00,1610612743,1610612766,Denver,Nuggets,Charlotte,Hornets,Sat,Ball Arena,Denver,CO,,,,,13
+0022600076,2027-01-17 10:30:00,1610612740,1610612759,New Orleans,Pelicans,San Antonio,Spurs,Sun,Co-op Live,Manchester,,NBA Manchester Game,,Global Games,,13
+0022600607,2027-01-17 13:00:00,1610612764,1610612754,Washington,Wizards,Indiana,Pacers,Sun,Capital One Arena,Washington,DC,,,,,13
+0022600608,2027-01-17 15:30:00,1610612741,1610612761,Chicago,Bulls,Toronto,Raptors,Sun,United Center,Chicago,IL,,,,,13
+0022600609,2027-01-17 15:30:00,1610612760,1610612757,Oklahoma City,Thunder,Portland,Trail Blazers,Sun,Paycom Center,Oklahoma City,OK,,,,,13
+0022600610,2027-01-17 17:00:00,1610612762,1610612758,Utah,Jazz,Sacramento,Kings,Sun,Delta Center,Salt Lake City,UT,,,,,13
+0022600611,2027-01-17 18:00:00,1610612748,1610612744,Miami,Heat,Golden State,Warriors,Sun,Kaseya Center,Miami,FL,,,,,13
+0022600612,2027-01-17 20:00:00,1610612743,1610612753,Denver,Nuggets,Orlando,Magic,Sun,Ball Arena,Denver,CO,,,,,13
+0022600613,2027-01-17 21:00:00,1610612747,1610612749,Los Angeles,Lakers,Milwaukee,Bucks,Sun,Crypto.com Arena,Los Angeles,CA,,,,,13
+0022600077,2027-01-18 12:00:00,1610612739,1610612765,Cleveland,Cavaliers,Detroit,Pistons,Mon,Rocket Arena,Cleveland,OH,,,,,14
+0022600078,2027-01-18 14:30:00,1610612737,1610612755,Atlanta,Hawks,Philadelphia,76ers,Mon,State Farm Arena,Atlanta,GA,,,,,14
+0022600614,2027-01-18 15:00:00,1610612764,1610612738,Washington,Wizards,Boston,Celtics,Mon,Capital One Arena,Washington,DC,,,,,14
+0022600079,2027-01-18 17:00:00,1610612752,1610612750,New York,Knicks,Minnesota,Timberwolves,Mon,Madison Square Garden,New York,NY,,,,,14
+0022600080,2027-01-18 19:30:00,1610612763,1610612745,Memphis,Grizzlies,Houston,Rockets,Mon,FedExForum,Memphis,TN,,,,,14
+0022600615,2027-01-18 20:00:00,1610612742,1610612760,Dallas,Mavericks,Oklahoma City,Thunder,Mon,American Airlines Center,Dallas,TX,,,,,14
+0022600616,2027-01-18 22:30:00,1610612746,1610612756,LA,Clippers,Phoenix,Suns,Mon,Intuit Dome,Inglewood,CA,,,,,14
+0022600617,2027-01-19 19:00:00,1610612753,1610612744,Orlando,Magic,Golden State,Warriors,Tue,Kia Center,Orlando,FL,,,,,14
+0022600618,2027-01-19 19:00:00,1610612755,1610612754,Philadelphia,76ers,Indiana,Pacers,Tue,Xfinity Mobile Arena,Philadelphia,PA,,,,,14
+0022600619,2027-01-19 19:00:00,1610612761,1610612741,Toronto,Raptors,Chicago,Bulls,Tue,Scotiabank Arena,Toronto,ON,,,,,14
+0022600620,2027-01-19 19:30:00,1610612748,1610612757,Miami,Heat,Portland,Trail Blazers,Tue,Kaseya Center,Miami,FL,,,,,14
+0022600621,2027-01-19 20:00:00,1610612742,1610612766,Dallas,Mavericks,Charlotte,Hornets,Tue,American Airlines Center,Dallas,TX,,,,,14
+0022600622,2027-01-19 22:00:00,1610612743,1610612762,Denver,Nuggets,Utah,Jazz,Tue,Ball Arena,Denver,CO,,,,,14
+0022600623,2027-01-19 22:00:00,1610612758,1610612747,Sacramento,Kings,Los Angeles,Lakers,Tue,Golden 1 Center,Sacramento,CA,,,,,14
+0022600624,2027-01-20 19:00:00,1610612737,1610612757,Atlanta,Hawks,Portland,Trail Blazers,Wed,State Farm Arena,Atlanta,GA,,,,,14
+0022600625,2027-01-20 19:00:00,1610612751,1610612741,Brooklyn,Nets,Chicago,Bulls,Wed,Barclays Center,Brooklyn,NY,,,,,14
+0022600627,2027-01-20 19:30:00,1610612752,1610612761,New York,Knicks,Toronto,Raptors,Wed,Madison Square Garden,New York,NY,,,,,14
+0022600626,2027-01-20 19:30:00,1610612738,1610612754,Boston,Celtics,Indiana,Pacers,Wed,TD Garden,Boston,MA,,,,,14
+0022600628,2027-01-20 20:00:00,1610612750,1610612745,Minnesota,Timberwolves,Houston,Rockets,Wed,Target Center,Minneapolis,MN,,,,,14
+0022600629,2027-01-20 20:00:00,1610612740,1610612760,New Orleans,Pelicans,Oklahoma City,Thunder,Wed,Smoothie King Center,New Orleans,LA,,,,,14
+0022600631,2027-01-20 21:00:00,1610612762,1610612746,Utah,Jazz,LA,Clippers,Wed,Delta Center,Salt Lake City,UT,,,,,14
+0022600630,2027-01-20 21:00:00,1610612756,1610612763,Phoenix,Suns,Memphis,Grizzlies,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,14
+0022600632,2027-01-20 21:30:00,1610612759,1610612748,San Antonio,Spurs,Miami,Heat,Wed,Frost Bank Center,San Antonio,TX,,,,,14
+0022600633,2027-01-20 22:00:00,1610612758,1610612749,Sacramento,Kings,Milwaukee,Bucks,Wed,Golden 1 Center,Sacramento,CA,,,,,14
+0022600634,2027-01-21 19:30:00,1610612738,1610612755,Boston,Celtics,Philadelphia,76ers,Thu,TD Garden,Boston,MA,,,,,14
+0022600635,2027-01-21 19:30:00,1610612751,1610612739,Brooklyn,Nets,Cleveland,Cavaliers,Thu,Barclays Center,Brooklyn,NY,,,,,14
+0022600636,2027-01-21 21:00:00,1610612743,1610612764,Denver,Nuggets,Washington,Wizards,Thu,Ball Arena,Denver,CO,,,,,14
+0022600637,2027-01-21 22:00:00,1610612744,1610612747,Golden State,Warriors,Los Angeles,Lakers,Thu,Chase Center,San Francisco,CA,,,,,14
+0022600639,2027-01-22 19:00:00,1610612766,1610612745,Charlotte,Hornets,Houston,Rockets,Fri,Spectrum Center,Charlotte,NC,,,,,14
+0022600640,2027-01-22 19:00:00,1610612753,1610612757,Orlando,Magic,Portland,Trail Blazers,Fri,Kia Center,Orlando,FL,,,,,14
+0022600638,2027-01-22 19:00:00,1610612737,1610612752,Atlanta,Hawks,New York,Knicks,Fri,State Farm Arena,Atlanta,GA,,,,,14
+0022600641,2027-01-22 19:30:00,1610612765,1610612754,Detroit,Pistons,Indiana,Pacers,Fri,Little Caesars Arena,Detroit,MI,,,,,14
+0022600643,2027-01-22 20:00:00,1610612760,1610612763,Oklahoma City,Thunder,Memphis,Grizzlies,Fri,Paycom Center,Oklahoma City,OK,,,,,14
+0022600642,2027-01-22 20:00:00,1610612740,1610612742,New Orleans,Pelicans,Dallas,Mavericks,Fri,Smoothie King Center,New Orleans,LA,,,,,14
+0022600644,2027-01-22 21:00:00,1610612756,1610612762,Phoenix,Suns,Utah,Jazz,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,14
+0022600645,2027-01-22 21:30:00,1610612759,1610612750,San Antonio,Spurs,Minnesota,Timberwolves,Fri,Frost Bank Center,San Antonio,TX,,,,,14
+0022600646,2027-01-22 22:00:00,1610612744,1610612749,Golden State,Warriors,Milwaukee,Bucks,Fri,Chase Center,San Francisco,CA,,,,,14
+0022600647,2027-01-22 22:00:00,1610612747,1610612758,Los Angeles,Lakers,Sacramento,Kings,Fri,Crypto.com Arena,Los Angeles,CA,,,,,14
+0022600648,2027-01-22 22:30:00,1610612746,1610612764,LA,Clippers,Washington,Wizards,Fri,Intuit Dome,Inglewood,CA,,,,,14
+0022600649,2027-01-23 17:00:00,1610612741,1610612755,Chicago,Bulls,Philadelphia,76ers,Sat,United Center,Chicago,IL,,,,,14
+0022600650,2027-01-23 18:00:00,1610612751,1610612761,Brooklyn,Nets,Toronto,Raptors,Sat,Barclays Center,Brooklyn,NY,,,,,14
+0022600651,2027-01-23 19:00:00,1610612738,1610612766,Boston,Celtics,Charlotte,Hornets,Sat,TD Garden,Boston,MA,,,,,14
+0022600652,2027-01-23 20:00:00,1610612748,1610612737,Miami,Heat,Atlanta,Hawks,Sat,Kaseya Center,Miami,FL,,,,,14
+0022600653,2027-01-23 20:00:00,1610612742,1610612739,Dallas,Mavericks,Cleveland,Cavaliers,Sat,American Airlines Center,Dallas,TX,,,,,14
+0022600654,2027-01-23 21:00:00,1610612743,1610612749,Denver,Nuggets,Milwaukee,Bucks,Sat,Ball Arena,Denver,CO,,,,,14
+0022600655,2027-01-24 15:30:00,1610612759,1610612757,San Antonio,Spurs,Portland,Trail Blazers,Sun,Frost Bank Center,San Antonio,TX,,,,,14
+0022600657,2027-01-24 16:00:00,1610612747,1610612764,Los Angeles,Lakers,Washington,Wizards,Sun,Crypto.com Arena,Los Angeles,CA,,,,,14
+0022600656,2027-01-24 16:00:00,1610612756,1610612762,Phoenix,Suns,Utah,Jazz,Sun,Mortgage Matchup Center,Phoenix,AZ,,,,,14
+0022600659,2027-01-24 18:00:00,1610612753,1610612745,Orlando,Magic,Houston,Rockets,Sun,Kia Center,Orlando,FL,,,,,14
+0022600658,2027-01-24 18:00:00,1610612765,1610612750,Detroit,Pistons,Minnesota,Timberwolves,Sun,Little Caesars Arena,Detroit,MI,,,,,14
+0022600660,2027-01-24 19:00:00,1610612752,1610612746,New York,Knicks,LA,Clippers,Sun,Madison Square Garden,New York,NY,,,,,14
+0022600661,2027-01-24 20:30:00,1610612744,1610612760,Golden State,Warriors,Oklahoma City,Thunder,Sun,Chase Center,San Francisco,CA,,,,,14
+0022600662,2027-01-25 19:00:00,1610612738,1610612761,Boston,Celtics,Toronto,Raptors,Mon,TD Garden,Boston,MA,,,,,15
+0022600663,2027-01-25 19:00:00,1610612766,1610612753,Charlotte,Hornets,Orlando,Magic,Mon,Spectrum Center,Charlotte,NC,,,,,15
+0022600664,2027-01-25 19:00:00,1610612755,1610612746,Philadelphia,76ers,LA,Clippers,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,15
+0022600665,2027-01-25 19:30:00,1610612751,1610612748,Brooklyn,Nets,Miami,Heat,Mon,Barclays Center,Brooklyn,NY,,,,,15
+0022600667,2027-01-25 20:00:00,1610612763,1610612750,Memphis,Grizzlies,Minnesota,Timberwolves,Mon,FedExForum,Memphis,TN,,,,,15
+0022600668,2027-01-25 20:00:00,1610612740,1610612739,New Orleans,Pelicans,Cleveland,Cavaliers,Mon,Smoothie King Center,New Orleans,LA,,,,,15
+0022600666,2027-01-25 20:00:00,1610612741,1610612742,Chicago,Bulls,Dallas,Mavericks,Mon,United Center,Chicago,IL,,,,,15
+0022600669,2027-01-25 21:30:00,1610612743,1610612758,Denver,Nuggets,Sacramento,Kings,Mon,Ball Arena,Denver,CO,,,,,15
+0022600670,2027-01-26 19:00:00,1610612765,1610612737,Detroit,Pistons,Atlanta,Hawks,Tue,Little Caesars Arena,Detroit,MI,,,,,15
+0022600671,2027-01-26 19:00:00,1610612754,1610612741,Indiana,Pacers,Chicago,Bulls,Tue,Gainbridge Fieldhouse,Indianapolis,IN,,,,,15
+0022600672,2027-01-26 19:30:00,1610612752,1610612756,New York,Knicks,Phoenix,Suns,Tue,Madison Square Garden,New York,NY,,,,,15
+0022600673,2027-01-26 20:00:00,1610612759,1610612745,San Antonio,Spurs,Houston,Rockets,Tue,Frost Bank Center,San Antonio,TX,AWS NBA Rivals Week,,,,15
+0022600674,2027-01-26 21:00:00,1610612762,1610612749,Utah,Jazz,Milwaukee,Bucks,Tue,Delta Center,Salt Lake City,UT,,,,,15
+0022600675,2027-01-26 22:00:00,1610612757,1610612764,Portland,Trail Blazers,Washington,Wizards,Tue,Moda Center,Portland,OR,,,,,15
+0022600676,2027-01-26 23:00:00,1610612747,1610612760,Los Angeles,Lakers,Oklahoma City,Thunder,Tue,Crypto.com Arena,Los Angeles,CA,AWS NBA Rivals Week,,,,15
+0022600678,2027-01-27 19:00:00,1610612755,1610612758,Philadelphia,76ers,Sacramento,Kings,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,15
+0022600677,2027-01-27 19:00:00,1610612739,1610612765,Cleveland,Cavaliers,Detroit,Pistons,Wed,Rocket Arena,Cleveland,OH,AWS NBA Rivals Week,,,,15
+0022600679,2027-01-27 19:30:00,1610612738,1610612746,Boston,Celtics,LA,Clippers,Wed,TD Garden,Boston,MA,,,,,15
+0022600680,2027-01-27 19:30:00,1610612751,1610612756,Brooklyn,Nets,Phoenix,Suns,Wed,Barclays Center,Brooklyn,NY,,,,,15
+0022600681,2027-01-27 19:30:00,1610612761,1610612742,Toronto,Raptors,Dallas,Mavericks,Wed,Scotiabank Arena,Toronto,ON,,,,,15
+0022600682,2027-01-27 20:00:00,1610612759,1610612766,San Antonio,Spurs,Charlotte,Hornets,Wed,Frost Bank Center,San Antonio,TX,,,,,15
+0022600683,2027-01-27 20:30:00,1610612745,1610612740,Houston,Rockets,New Orleans,Pelicans,Wed,Toyota Center,Houston,TX,,,,,15
+0022600684,2027-01-27 21:30:00,1610612750,1610612743,Minnesota,Timberwolves,Denver,Nuggets,Wed,Target Center,Minneapolis,MN,AWS NBA Rivals Week,,,,15
+0022600685,2027-01-27 22:00:00,1610612757,1610612744,Portland,Trail Blazers,Golden State,Warriors,Wed,Moda Center,Portland,OR,,,,,15
+0022600688,2027-01-28 19:00:00,1610612753,1610612741,Orlando,Magic,Chicago,Bulls,Thu,Kia Center,Orlando,FL,,,,,15
+0022600689,2027-01-28 19:00:00,1610612764,1610612758,Washington,Wizards,Sacramento,Kings,Thu,Capital One Arena,Washington,DC,,,,,15
+0022600686,2027-01-28 19:00:00,1610612754,1610612747,Indiana,Pacers,Los Angeles,Lakers,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,15
+0022600687,2027-01-28 19:00:00,1610612752,1610612737,New York,Knicks,Atlanta,Hawks,Thu,Madison Square Garden,New York,NY,AWS NBA Rivals Week,,,,15
+0022600691,2027-01-28 20:00:00,1610612760,1610612763,Oklahoma City,Thunder,Memphis,Grizzlies,Thu,Paycom Center,Oklahoma City,OK,,,,,15
+0022600690,2027-01-28 20:00:00,1610612740,1610612755,New Orleans,Pelicans,Philadelphia,76ers,Thu,Smoothie King Center,New Orleans,LA,,,,,15
+0022600692,2027-01-28 21:00:00,1610612762,1610612744,Utah,Jazz,Golden State,Warriors,Thu,Delta Center,Salt Lake City,UT,,,,,15
+0022600693,2027-01-28 21:30:00,1610612749,1610612748,Milwaukee,Bucks,Miami,Heat,Thu,Fiserv Forum,Milwaukee,WI,AWS NBA Rivals Week,,,,15
+0022600694,2027-01-29 19:00:00,1610612761,1610612739,Toronto,Raptors,Cleveland,Cavaliers,Fri,Scotiabank Arena,Toronto,ON,AWS NBA Rivals Week,,,,15
+0022600695,2027-01-29 19:30:00,1610612738,1610612756,Boston,Celtics,Phoenix,Suns,Fri,TD Garden,Boston,MA,,,,,15
+0022600696,2027-01-29 19:30:00,1610612751,1610612746,Brooklyn,Nets,LA,Clippers,Fri,Barclays Center,Brooklyn,NY,,,,,15
+0022600697,2027-01-29 20:00:00,1610612742,1610612765,Dallas,Mavericks,Detroit,Pistons,Fri,American Airlines Center,Dallas,TX,,,,,15
+0022600698,2027-01-29 20:30:00,1610612745,1610612753,Houston,Rockets,Orlando,Magic,Fri,Toyota Center,Houston,TX,,,,,15
+0022600699,2027-01-29 21:30:00,1610612750,1610612766,Minnesota,Timberwolves,Charlotte,Hornets,Fri,Target Center,Minneapolis,MN,AWS NBA Rivals Week,,,,15
+0022600700,2027-01-30 12:30:00,1610612748,1610612755,Miami,Heat,Philadelphia,76ers,Sat,Kaseya Center,Miami,FL,AWS NBA Rivals Week,,,,15
+0022600701,2027-01-30 15:00:00,1610612760,1610612743,Oklahoma City,Thunder,Denver,Nuggets,Sat,Paycom Center,Oklahoma City,OK,AWS NBA Rivals Week,,,,15
+0022600702,2027-01-30 17:30:00,1610612744,1610612759,Golden State,Warriors,San Antonio,Spurs,Sat,Chase Center,San Francisco,CA,AWS NBA Rivals Week,,,,15
+0022600703,2027-01-30 19:00:00,1610612754,1610612764,Indiana,Pacers,Washington,Wizards,Sat,Gainbridge Fieldhouse,Indianapolis,IN,,,,,15
+0022600704,2027-01-30 19:30:00,1610612739,1610612740,Cleveland,Cavaliers,New Orleans,Pelicans,Sat,Rocket Arena,Cleveland,OH,,,,,15
+0022600705,2027-01-30 20:00:00,1610612749,1610612737,Milwaukee,Bucks,Atlanta,Hawks,Sat,Fiserv Forum,Milwaukee,WI,,,,,15
+0022600706,2027-01-30 20:30:00,1610612752,1610612747,New York,Knicks,Los Angeles,Lakers,Sat,Madison Square Garden,New York,NY,AWS NBA Rivals Week,,,,15
+0022600707,2027-01-30 21:30:00,1610612762,1610612763,Utah,Jazz,Memphis,Grizzlies,Sat,Delta Center,Salt Lake City,UT,,,,,15
+0022600708,2027-01-31 15:00:00,1610612765,1610612758,Detroit,Pistons,Sacramento,Kings,Sun,Little Caesars Arena,Detroit,MI,,,,,15
+0022600709,2027-01-31 18:00:00,1610612753,1610612751,Orlando,Magic,Brooklyn,Nets,Sun,Kia Center,Orlando,FL,,,,,15
+0022600710,2027-01-31 18:00:00,1610612761,1610612738,Toronto,Raptors,Boston,Celtics,Sun,Scotiabank Arena,Toronto,ON,,,,,15
+0022600711,2027-01-31 18:00:00,1610612750,1610612756,Minnesota,Timberwolves,Phoenix,Suns,Sun,Target Center,Minneapolis,MN,,,,,15
+0022600712,2027-01-31 18:00:00,1610612760,1610612741,Oklahoma City,Thunder,Chicago,Bulls,Sun,Paycom Center,Oklahoma City,OK,,,,,15
+0022600713,2027-01-31 19:00:00,1610612766,1610612747,Charlotte,Hornets,Los Angeles,Lakers,Sun,Spectrum Center,Charlotte,NC,,,,,15
+0022600714,2027-01-31 20:00:00,1610612743,1610612757,Denver,Nuggets,Portland,Trail Blazers,Sun,Ball Arena,Denver,CO,,,,,15
+0022600715,2027-01-31 20:30:00,1610612742,1610612745,Dallas,Mavericks,Houston,Rockets,Sun,American Airlines Center,Dallas,TX,,,,,15
+0022600716,2027-02-01 19:00:00,1610612737,1610612764,Atlanta,Hawks,Washington,Wizards,Mon,State Farm Arena,Atlanta,GA,,,,,16
+0022600717,2027-02-01 19:00:00,1610612755,1610612740,Philadelphia,76ers,New Orleans,Pelicans,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,16
+0022600719,2027-02-01 19:30:00,1610612754,1610612748,Indiana,Pacers,Miami,Heat,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,16
+0022600718,2027-02-01 19:30:00,1610612751,1610612752,Brooklyn,Nets,New York,Knicks,Mon,Barclays Center,Brooklyn,NY,,,,,16
+0022600720,2027-02-01 20:00:00,1610612749,1610612763,Milwaukee,Bucks,Memphis,Grizzlies,Mon,Fiserv Forum,Milwaukee,WI,,,,,16
+0022600721,2027-02-01 21:00:00,1610612762,1610612739,Utah,Jazz,Cleveland,Cavaliers,Mon,Delta Center,Salt Lake City,UT,,,,,16
+0022600722,2027-02-01 22:00:00,1610612744,1610612759,Golden State,Warriors,San Antonio,Spurs,Mon,Chase Center,San Francisco,CA,,,,,16
+0022600723,2027-02-02 19:00:00,1610612765,1610612741,Detroit,Pistons,Chicago,Bulls,Tue,Little Caesars Arena,Detroit,MI,,,,,16
+0022600724,2027-02-02 19:00:00,1610612753,1610612740,Orlando,Magic,New Orleans,Pelicans,Tue,Kia Center,Orlando,FL,,,,,16
+0022600725,2027-02-02 19:30:00,1610612748,1610612766,Miami,Heat,Charlotte,Hornets,Tue,Kaseya Center,Miami,FL,,,,,16
+0022600726,2027-02-02 20:00:00,1610612738,1610612747,Boston,Celtics,Los Angeles,Lakers,Tue,TD Garden,Boston,MA,,,,,16
+0022600727,2027-02-02 20:00:00,1610612742,1610612761,Dallas,Mavericks,Toronto,Raptors,Tue,American Airlines Center,Dallas,TX,,,,,16
+0022600728,2027-02-02 21:00:00,1610612743,1610612760,Denver,Nuggets,Oklahoma City,Thunder,Tue,Ball Arena,Denver,CO,,,,,16
+0022600729,2027-02-02 22:30:00,1610612746,1610612759,LA,Clippers,San Antonio,Spurs,Tue,Intuit Dome,Inglewood,CA,,,,,16
+0022600730,2027-02-02 23:00:00,1610612757,1610612750,Portland,Trail Blazers,Minnesota,Timberwolves,Tue,Moda Center,Portland,OR,,,,,16
+0022600731,2027-02-03 19:00:00,1610612765,1610612752,Detroit,Pistons,New York,Knicks,Wed,Little Caesars Arena,Detroit,MI,NBA Pioneers Classic,,,,16
+0022600732,2027-02-03 19:00:00,1610612754,1610612737,Indiana,Pacers,Atlanta,Hawks,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,16
+0022600733,2027-02-03 20:00:00,1610612763,1610612755,Memphis,Grizzlies,Philadelphia,76ers,Wed,FedExForum,Memphis,TN,,,,,16
+0022600734,2027-02-03 21:00:00,1610612756,1610612739,Phoenix,Suns,Cleveland,Cavaliers,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,16
+0022600735,2027-02-03 21:30:00,1610612745,1610612762,Houston,Rockets,Utah,Jazz,Wed,Toyota Center,Houston,TX,,,,,16
+0022600736,2027-02-03 22:30:00,1610612746,1610612744,LA,Clippers,Golden State,Warriors,Wed,Intuit Dome,Inglewood,CA,,,,,16
+0022600737,2027-02-04 19:00:00,1610612764,1610612740,Washington,Wizards,New Orleans,Pelicans,Thu,Capital One Arena,Washington,DC,,,,,16
+0022600741,2027-02-04 19:30:00,1610612752,1610612761,New York,Knicks,Toronto,Raptors,Thu,Madison Square Garden,New York,NY,,,,,16
+0022600740,2027-02-04 19:30:00,1610612748,1610612749,Miami,Heat,Milwaukee,Bucks,Thu,Kaseya Center,Miami,FL,,,,,16
+0022600738,2027-02-04 19:30:00,1610612751,1610612747,Brooklyn,Nets,Los Angeles,Lakers,Thu,Barclays Center,Brooklyn,NY,,,,,16
+0022600739,2027-02-04 19:30:00,1610612766,1610612738,Charlotte,Hornets,Boston,Celtics,Thu,Spectrum Center,Charlotte,NC,,,,,16
+0022600742,2027-02-04 20:00:00,1610612741,1610612760,Chicago,Bulls,Oklahoma City,Thunder,Thu,United Center,Chicago,IL,,,,,16
+0022600743,2027-02-04 20:00:00,1610612759,1610612753,San Antonio,Spurs,Orlando,Magic,Thu,Frost Bank Center,San Antonio,TX,,,,,16
+0022600746,2027-02-04 22:00:00,1610612758,1610612750,Sacramento,Kings,Minnesota,Timberwolves,Thu,Golden 1 Center,Sacramento,CA,,,,,16
+0022600744,2027-02-04 22:00:00,1610612743,1610612742,Denver,Nuggets,Dallas,Mavericks,Thu,Ball Arena,Denver,CO,,,,,16
+0022600745,2027-02-04 22:00:00,1610612757,1610612739,Portland,Trail Blazers,Cleveland,Cavaliers,Thu,Moda Center,Portland,OR,,,,,16
+0022600749,2027-02-05 19:00:00,1610612755,1610612765,Philadelphia,76ers,Detroit,Pistons,Fri,Xfinity Mobile Arena,Philadelphia,PA,,,,,16
+0022600748,2027-02-05 19:00:00,1610612766,1610612744,Charlotte,Hornets,Golden State,Warriors,Fri,Spectrum Center,Charlotte,NC,,,,,16
+0022600747,2027-02-05 19:00:00,1610612737,1610612738,Atlanta,Hawks,Boston,Celtics,Fri,State Farm Arena,Atlanta,GA,,,,,16
+0022600750,2027-02-05 21:00:00,1610612743,1610612746,Denver,Nuggets,LA,Clippers,Fri,Ball Arena,Denver,CO,,,,,16
+0022600751,2027-02-05 21:00:00,1610612756,1610612745,Phoenix,Suns,Houston,Rockets,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,16
+0022600752,2027-02-05 21:30:00,1610612760,1610612754,Oklahoma City,Thunder,Indiana,Pacers,Fri,Paycom Center,Oklahoma City,OK,,,,,16
+0022600754,2027-02-06 15:00:00,1610612750,1610612748,Minnesota,Timberwolves,Miami,Heat,Sat,Target Center,Minneapolis,MN,,,,,16
+0022600753,2027-02-06 15:00:00,1610612742,1610612762,Dallas,Mavericks,Utah,Jazz,Sat,American Airlines Center,Dallas,TX,,,,,16
+0022600755,2027-02-06 17:30:00,1610612763,1610612757,Memphis,Grizzlies,Portland,Trail Blazers,Sat,FedExForum,Memphis,TN,,,,,16
+0022600756,2027-02-06 18:00:00,1610612751,1610612764,Brooklyn,Nets,Washington,Wizards,Sat,Barclays Center,Brooklyn,NY,,,,,16
+0022600758,2027-02-06 19:30:00,1610612761,1610612749,Toronto,Raptors,Milwaukee,Bucks,Sat,Scotiabank Arena,Toronto,ON,,,,,16
+0022600757,2027-02-06 19:30:00,1610612739,1610612753,Cleveland,Cavaliers,Orlando,Magic,Sat,Rocket Arena,Cleveland,OH,,,,,16
+0022600759,2027-02-06 20:00:00,1610612741,1610612740,Chicago,Bulls,New Orleans,Pelicans,Sat,United Center,Chicago,IL,,,,,16
+0022600760,2027-02-06 20:30:00,1610612759,1610612747,San Antonio,Spurs,Los Angeles,Lakers,Sat,Frost Bank Center,San Antonio,TX,,,,,16
+0022600761,2027-02-06 22:00:00,1610612758,1610612756,Sacramento,Kings,Phoenix,Suns,Sat,Golden 1 Center,Sacramento,CA,,,,,16
+0022600762,2027-02-07 15:00:00,1610612737,1610612743,Atlanta,Hawks,Denver,Nuggets,Sun,State Farm Arena,Atlanta,GA,,,,,16
+0022600763,2027-02-07 15:00:00,1610612765,1610612744,Detroit,Pistons,Golden State,Warriors,Sun,Little Caesars Arena,Detroit,MI,,,,,16
+0022600764,2027-02-07 15:30:00,1610612750,1610612762,Minnesota,Timberwolves,Utah,Jazz,Sun,Target Center,Minneapolis,MN,,,,,16
+0022600765,2027-02-07 16:30:00,1610612742,1610612746,Dallas,Mavericks,LA,Clippers,Sun,American Airlines Center,Dallas,TX,,,,,16
+0022600766,2027-02-07 18:00:00,1610612761,1610612766,Toronto,Raptors,Charlotte,Hornets,Sun,Scotiabank Arena,Toronto,ON,,,,,16
+0022600767,2027-02-07 19:00:00,1610612755,1610612738,Philadelphia,76ers,Boston,Celtics,Sun,Xfinity Mobile Arena,Philadelphia,PA,,,,,16
+0022600768,2027-02-07 21:30:00,1610612760,1610612752,Oklahoma City,Thunder,New York,Knicks,Sun,Paycom Center,Oklahoma City,OK,,,,,16
+0022600769,2027-02-07 22:30:00,1610612758,1610612745,Sacramento,Kings,Houston,Rockets,Sun,Golden 1 Center,Sacramento,CA,,,,,16
+0022600770,2027-02-08 19:00:00,1610612737,1610612748,Atlanta,Hawks,Miami,Heat,Mon,State Farm Arena,Atlanta,GA,,,,,17
+0022600771,2027-02-08 19:00:00,1610612754,1610612740,Indiana,Pacers,New Orleans,Pelicans,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,17
+0022600772,2027-02-08 19:00:00,1610612755,1610612751,Philadelphia,76ers,Brooklyn,Nets,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,17
+0022600773,2027-02-08 19:00:00,1610612764,1610612741,Washington,Wizards,Chicago,Bulls,Mon,Capital One Arena,Washington,DC,,,,,17
+0022600774,2027-02-08 20:00:00,1610612763,1610612757,Memphis,Grizzlies,Portland,Trail Blazers,Mon,FedExForum,Memphis,TN,,,,,17
+0022600775,2027-02-08 20:00:00,1610612749,1610612753,Milwaukee,Bucks,Orlando,Magic,Mon,Fiserv Forum,Milwaukee,WI,,,,,17
+0022600776,2027-02-08 21:30:00,1610612756,1610612747,Phoenix,Suns,Los Angeles,Lakers,Mon,Mortgage Matchup Center,Phoenix,AZ,,,,,17
+0022600777,2027-02-09 19:00:00,1610612739,1610612761,Cleveland,Cavaliers,Toronto,Raptors,Tue,Rocket Arena,Cleveland,OH,,,,,17
+0022600780,2027-02-09 19:30:00,1610612752,1610612766,New York,Knicks,Charlotte,Hornets,Tue,Madison Square Garden,New York,NY,,,,,17
+0022600778,2027-02-09 19:30:00,1610612738,1610612743,Boston,Celtics,Denver,Nuggets,Tue,TD Garden,Boston,MA,,,,,17
+0022600779,2027-02-09 19:30:00,1610612751,1610612750,Brooklyn,Nets,Minnesota,Timberwolves,Tue,Barclays Center,Brooklyn,NY,,,,,17
+0022600781,2027-02-09 20:00:00,1610612741,1610612744,Chicago,Bulls,Golden State,Warriors,Tue,United Center,Chicago,IL,,,,,17
+0022600782,2027-02-09 20:00:00,1610612742,1610612759,Dallas,Mavericks,San Antonio,Spurs,Tue,American Airlines Center,Dallas,TX,,,,,17
+0022600783,2027-02-09 20:00:00,1610612749,1610612758,Milwaukee,Bucks,Sacramento,Kings,Tue,Fiserv Forum,Milwaukee,WI,,,,,17
+0022600784,2027-02-09 20:00:00,1610612760,1610612757,Oklahoma City,Thunder,Portland,Trail Blazers,Tue,Paycom Center,Oklahoma City,OK,,,,,17
+0022600785,2027-02-09 22:00:00,1610612762,1610612745,Utah,Jazz,Houston,Rockets,Tue,Delta Center,Salt Lake City,UT,,,,,17
+0022600786,2027-02-09 22:30:00,1610612746,1610612765,LA,Clippers,Detroit,Pistons,Tue,Intuit Dome,Inglewood,CA,,,,,17
+0022600789,2027-02-10 19:00:00,1610612764,1610612748,Washington,Wizards,Miami,Heat,Wed,Capital One Arena,Washington,DC,,,,,17
+0022600788,2027-02-10 19:00:00,1610612754,1610612739,Indiana,Pacers,Cleveland,Cavaliers,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,17
+0022600787,2027-02-10 19:00:00,1610612737,1610612740,Atlanta,Hawks,New Orleans,Pelicans,Wed,State Farm Arena,Atlanta,GA,,,,,17
+0022600790,2027-02-10 19:30:00,1610612738,1610612744,Boston,Celtics,Golden State,Warriors,Wed,TD Garden,Boston,MA,,,,,17
+0022600791,2027-02-10 20:00:00,1610612763,1610612753,Memphis,Grizzlies,Orlando,Magic,Wed,FedExForum,Memphis,TN,,,,,17
+0022600792,2027-02-10 21:00:00,1610612756,1610612765,Phoenix,Suns,Detroit,Pistons,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,17
+0022600793,2027-02-10 22:00:00,1610612747,1610612746,Los Angeles,Lakers,LA,Clippers,Wed,Crypto.com Arena,Los Angeles,CA,,,,,17
+0022600794,2027-02-11 19:00:00,1610612766,1610612749,Charlotte,Hornets,Milwaukee,Bucks,Thu,Spectrum Center,Charlotte,NC,,,,,17
+0022600795,2027-02-11 19:00:00,1610612754,1610612762,Indiana,Pacers,Utah,Jazz,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,17
+0022600796,2027-02-11 19:00:00,1610612755,1610612752,Philadelphia,76ers,New York,Knicks,Thu,Xfinity Mobile Arena,Philadelphia,PA,,,,,17
+0022600797,2027-02-11 20:00:00,1610612742,1610612757,Dallas,Mavericks,Portland,Trail Blazers,Thu,American Airlines Center,Dallas,TX,,,,,17
+0022600798,2027-02-11 20:30:00,1610612745,1610612758,Houston,Rockets,Sacramento,Kings,Thu,Toyota Center,Houston,TX,,,,,17
+0022600799,2027-02-11 21:00:00,1610612743,1610612741,Denver,Nuggets,Chicago,Bulls,Thu,Ball Arena,Denver,CO,,,,,17
+0022600800,2027-02-11 21:30:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Thu,Paycom Center,Oklahoma City,OK,,,,,17
+0022600801,2027-02-12 19:00:00,1610612737,1610612756,Atlanta,Hawks,Phoenix,Suns,Fri,State Farm Arena,Atlanta,GA,,,,,17
+0022600802,2027-02-12 19:00:00,1610612753,1610612748,Orlando,Magic,Miami,Heat,Fri,Kia Center,Orlando,FL,,,,,17
+0022600803,2027-02-12 19:00:00,1610612764,1610612751,Washington,Wizards,Brooklyn,Nets,Fri,Capital One Arena,Washington,DC,,,,,17
+0022600804,2027-02-12 19:30:00,1610612761,1610612739,Toronto,Raptors,Cleveland,Cavaliers,Fri,Scotiabank Arena,Toronto,ON,,,,,17
+0022600805,2027-02-12 20:00:00,1610612738,1610612750,Boston,Celtics,Minnesota,Timberwolves,Fri,TD Garden,Boston,MA,,,,,17
+0022600806,2027-02-12 20:00:00,1610612763,1610612746,Memphis,Grizzlies,LA,Clippers,Fri,FedExForum,Memphis,TN,,,,,17
+0022600807,2027-02-12 20:00:00,1610612740,1610612745,New Orleans,Pelicans,Houston,Rockets,Fri,Smoothie King Center,New Orleans,LA,,,,,17
+0022600808,2027-02-12 22:30:00,1610612747,1610612743,Los Angeles,Lakers,Denver,Nuggets,Fri,Crypto.com Arena,Los Angeles,CA,,,,,17
+0022600809,2027-02-13 14:00:00,1610612754,1610612758,Indiana,Pacers,Sacramento,Kings,Sat,Gainbridge Fieldhouse,Indianapolis,IN,,,,,17
+0022600810,2027-02-13 15:00:00,1610612766,1610612742,Charlotte,Hornets,Dallas,Mavericks,Sat,Spectrum Center,Charlotte,NC,,,,,17
+0022600811,2027-02-13 15:30:00,1610612757,1610612765,Portland,Trail Blazers,Detroit,Pistons,Sat,Moda Center,Portland,OR,,,,,17
+0022600812,2027-02-13 17:30:00,1610612760,1610612755,Oklahoma City,Thunder,Philadelphia,76ers,Sat,Paycom Center,Oklahoma City,OK,,,,,17
+0022600813,2027-02-13 19:00:00,1610612753,1610612759,Orlando,Magic,San Antonio,Spurs,Sat,Kia Center,Orlando,FL,,,,,17
+0022600814,2027-02-13 19:00:00,1610612764,1610612749,Washington,Wizards,Milwaukee,Bucks,Sat,Capital One Arena,Washington,DC,,,,,17
+0022600815,2027-02-13 20:30:00,1610612752,1610612744,New York,Knicks,Golden State,Warriors,Sat,Madison Square Garden,New York,NY,,,,,17
+0022600817,2027-02-14 13:00:00,1610612738,1610612761,Boston,Celtics,Toronto,Raptors,Sun,TD Garden,Boston,MA,,,,,17
+0022600816,2027-02-14 13:00:00,1610612737,1610612758,Atlanta,Hawks,Sacramento,Kings,Sun,State Farm Arena,Atlanta,GA,,,,,17
+0022600818,2027-02-14 13:00:00,1610612739,1610612756,Cleveland,Cavaliers,Phoenix,Suns,Sun,Rocket Arena,Cleveland,OH,,,,,17
+0022600819,2027-02-14 13:00:00,1610612748,1610612751,Miami,Heat,Brooklyn,Nets,Sun,Kaseya Center,Miami,FL,,,,,17
+0022600820,2027-02-14 14:00:00,1610612745,1610612743,Houston,Rockets,Denver,Nuggets,Sun,Toyota Center,Houston,TX,,,,,17
+0022600821,2027-02-14 14:00:00,1610612740,1610612746,New Orleans,Pelicans,LA,Clippers,Sun,Smoothie King Center,New Orleans,LA,,,,,17
+0022600822,2027-02-14 15:30:00,1610612757,1610612741,Portland,Trail Blazers,Chicago,Bulls,Sun,Moda Center,Portland,OR,,,,,17
+0022600081,2027-02-15 12:00:00,1610612766,1610612750,Charlotte,Hornets,Minnesota,Timberwolves,Mon,Spectrum Center,Charlotte,NC,,,,,18
+0022600082,2027-02-15 14:30:00,1610612742,1610612755,Dallas,Mavericks,Philadelphia,76ers,Mon,American Airlines Center,Dallas,TX,,,,,18
+0022600083,2027-02-15 17:00:00,1610612748,1610612759,Miami,Heat,San Antonio,Spurs,Mon,Kaseya Center,Miami,FL,,,,,18
+0022600823,2027-02-15 19:00:00,1610612764,1610612756,Washington,Wizards,Phoenix,Suns,Mon,Capital One Arena,Washington,DC,,,,,18
+0022600084,2027-02-15 19:30:00,1610612744,1610612754,Golden State,Warriors,Indiana,Pacers,Mon,Chase Center,San Francisco,CA,,,,,18
+0022600825,2027-02-15 20:00:00,1610612760,1610612753,Oklahoma City,Thunder,Orlando,Magic,Mon,Paycom Center,Oklahoma City,OK,,,,,18
+0022600824,2027-02-15 20:00:00,1610612763,1610612752,Memphis,Grizzlies,New York,Knicks,Mon,FedExForum,Memphis,TN,,,,,18
+0022600826,2027-02-15 21:00:00,1610612762,1610612765,Utah,Jazz,Detroit,Pistons,Mon,Delta Center,Salt Lake City,UT,,,,,18
+0022600827,2027-02-16 19:00:00,1610612739,1610612749,Cleveland,Cavaliers,Milwaukee,Bucks,Tue,Rocket Arena,Cleveland,OH,,,,,18
+0022600828,2027-02-16 20:00:00,1610612737,1610612761,Atlanta,Hawks,Toronto,Raptors,Tue,State Farm Arena,Atlanta,GA,,,,,18
+0022600830,2027-02-16 22:00:00,1610612757,1610612740,Portland,Trail Blazers,New Orleans,Pelicans,Tue,Moda Center,Portland,OR,,,,,18
+0022600829,2027-02-16 22:00:00,1610612747,1610612741,Los Angeles,Lakers,Chicago,Bulls,Tue,Crypto.com Arena,Los Angeles,CA,,,,,18
+0022600831,2027-02-16 23:00:00,1610612746,1610612745,LA,Clippers,Houston,Rockets,Tue,Intuit Dome,Inglewood,CA,,,,,18
+0022600837,2027-02-17 19:00:00,1610612764,1610612748,Washington,Wizards,Miami,Heat,Wed,Capital One Arena,Washington,DC,,,,,18
+0022600836,2027-02-17 19:00:00,1610612755,1610612756,Philadelphia,76ers,Phoenix,Suns,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,18
+0022600835,2027-02-17 19:00:00,1610612753,1610612742,Orlando,Magic,Dallas,Mavericks,Wed,Kia Center,Orlando,FL,,,,,18
+0022600834,2027-02-17 19:00:00,1610612765,1610612752,Detroit,Pistons,New York,Knicks,Wed,Little Caesars Arena,Detroit,MI,,,,,18
+0022600833,2027-02-17 19:00:00,1610612739,1610612749,Cleveland,Cavaliers,Milwaukee,Bucks,Wed,Rocket Arena,Cleveland,OH,,,,,18
+0022600832,2027-02-17 19:00:00,1610612766,1610612761,Charlotte,Hornets,Toronto,Raptors,Wed,Spectrum Center,Charlotte,NC,,,,,18
+0022600838,2027-02-17 19:30:00,1610612751,1610612737,Brooklyn,Nets,Atlanta,Hawks,Wed,Barclays Center,Brooklyn,NY,,,,,18
+0022600839,2027-02-17 20:00:00,1610612763,1610612759,Memphis,Grizzlies,San Antonio,Spurs,Wed,FedExForum,Memphis,TN,,,,,18
+0022600840,2027-02-17 21:00:00,1610612743,1610612762,Denver,Nuggets,Utah,Jazz,Wed,Ball Arena,Denver,CO,,,,,18
+0022600841,2027-02-17 21:30:00,1610612760,1610612738,Oklahoma City,Thunder,Boston,Celtics,Wed,Paycom Center,Oklahoma City,OK,,,,,18
+0022600842,2027-02-17 22:00:00,1610612744,1610612740,Golden State,Warriors,New Orleans,Pelicans,Wed,Chase Center,San Francisco,CA,,,,,18
+0022600843,2027-02-17 22:00:00,1610612758,1610612754,Sacramento,Kings,Indiana,Pacers,Wed,Golden 1 Center,Sacramento,CA,,,,,18
+0022600844,2027-02-17 22:30:00,1610612746,1610612741,LA,Clippers,Chicago,Bulls,Wed,Intuit Dome,Inglewood,CA,,,,,18
+0022600845,2027-02-18 19:30:00,1610612750,1610612759,Minnesota,Timberwolves,San Antonio,Spurs,Thu,Target Center,Minneapolis,MN,,,,,18
+0022600846,2027-02-18 20:00:00,1610612763,1610612738,Memphis,Grizzlies,Boston,Celtics,Thu,FedExForum,Memphis,TN,,,,,18
+0022600847,2027-02-18 22:00:00,1610612747,1610612745,Los Angeles,Lakers,Houston,Rockets,Thu,Crypto.com Arena,Los Angeles,CA,,,,,18
+0022600848,2027-02-18 22:00:00,1610612757,1610612754,Portland,Trail Blazers,Indiana,Pacers,Thu,Moda Center,Portland,OR,,,,,18
+0022600849,2027-02-25 19:00:00,1610612739,1610612758,Cleveland,Cavaliers,Sacramento,Kings,Thu,Rocket Arena,Cleveland,OH,,,,,19
+0022600850,2027-02-25 19:00:00,1610612765,1610612748,Detroit,Pistons,Miami,Heat,Thu,Little Caesars Arena,Detroit,MI,,,,,19
+0022600851,2027-02-25 19:00:00,1610612753,1610612766,Orlando,Magic,Charlotte,Hornets,Thu,Kia Center,Orlando,FL,,,,,19
+0022600852,2027-02-25 19:30:00,1610612751,1610612755,Brooklyn,Nets,Philadelphia,76ers,Thu,Barclays Center,Brooklyn,NY,,,,,19
+0022600853,2027-02-25 19:30:00,1610612752,1610612760,New York,Knicks,Oklahoma City,Thunder,Thu,Madison Square Garden,New York,NY,,,,,19
+0022600856,2027-02-25 20:00:00,1610612740,1610612756,New Orleans,Pelicans,Phoenix,Suns,Thu,Smoothie King Center,New Orleans,LA,,,,,19
+0022600854,2027-02-25 20:00:00,1610612741,1610612737,Chicago,Bulls,Atlanta,Hawks,Thu,United Center,Chicago,IL,,,,,19
+0022600855,2027-02-25 20:00:00,1610612749,1610612764,Milwaukee,Bucks,Washington,Wizards,Thu,Fiserv Forum,Milwaukee,WI,,,,,19
+0022600857,2027-02-25 22:00:00,1610612744,1610612742,Golden State,Warriors,Dallas,Mavericks,Thu,Chase Center,San Francisco,CA,,,,,19
+0022600858,2027-02-25 22:30:00,1610612746,1610612762,LA,Clippers,Utah,Jazz,Thu,Intuit Dome,Inglewood,CA,,,,,19
+0022600860,2027-02-26 19:30:00,1610612761,1610612737,Toronto,Raptors,Atlanta,Hawks,Fri,Scotiabank Arena,Toronto,ON,,,,,19
+0022600859,2027-02-26 19:30:00,1610612738,1610612739,Boston,Celtics,Cleveland,Cavaliers,Fri,TD Garden,Boston,MA,,,,,19
+0022600861,2027-02-26 20:00:00,1610612750,1610612754,Minnesota,Timberwolves,Indiana,Pacers,Fri,Target Center,Minneapolis,MN,,,,,19
+0022600862,2027-02-26 20:00:00,1610612759,1610612763,San Antonio,Spurs,Memphis,Grizzlies,Fri,Moody Center,Austin,TX,,,,,19
+0022600863,2027-02-26 20:30:00,1610612745,1610612766,Houston,Rockets,Charlotte,Hornets,Fri,Toyota Center,Houston,TX,,,,,19
+0022600865,2027-02-26 22:00:00,1610612757,1610612742,Portland,Trail Blazers,Dallas,Mavericks,Fri,Moda Center,Portland,OR,,,,,19
+0022600864,2027-02-26 22:00:00,1610612743,1610612747,Denver,Nuggets,Los Angeles,Lakers,Fri,Ball Arena,Denver,CO,,,,,19
+0022600866,2027-02-27 15:00:00,1610612762,1610612764,Utah,Jazz,Washington,Wizards,Sat,Delta Center,Salt Lake City,UT,,,,,19
+0022600867,2027-02-27 17:30:00,1610612765,1610612760,Detroit,Pistons,Oklahoma City,Thunder,Sat,Little Caesars Arena,Detroit,MI,,,,,19
+0022600868,2027-02-27 20:00:00,1610612741,1610612751,Chicago,Bulls,Brooklyn,Nets,Sat,United Center,Chicago,IL,,,,,19
+0022600869,2027-02-27 20:00:00,1610612763,1610612758,Memphis,Grizzlies,Sacramento,Kings,Sat,FedExForum,Memphis,TN,,,,,19
+0022600870,2027-02-27 20:30:00,1610612752,1610612755,New York,Knicks,Philadelphia,76ers,Sat,Madison Square Garden,New York,NY,,,,,19
+0022600871,2027-02-27 21:00:00,1610612756,1610612740,Phoenix,Suns,New Orleans,Pelicans,Sat,Mortgage Matchup Center,Phoenix,AZ,,,,,19
+0022600872,2027-02-28 13:00:00,1610612759,1610612743,San Antonio,Spurs,Denver,Nuggets,Sun,Moody Center,Austin,TX,,,,,19
+0022600873,2027-02-28 15:30:00,1610612742,1610612747,Dallas,Mavericks,Los Angeles,Lakers,Sun,American Airlines Center,Dallas,TX,,,,,19
+0022600874,2027-02-28 16:00:00,1610612754,1610612761,Indiana,Pacers,Toronto,Raptors,Sun,Gainbridge Fieldhouse,Indianapolis,IN,,,,,19
+0022600875,2027-02-28 16:30:00,1610612753,1610612737,Orlando,Magic,Atlanta,Hawks,Sun,Kia Center,Orlando,FL,,,,,19
+0022600877,2027-02-28 19:00:00,1610612750,1610612738,Minnesota,Timberwolves,Boston,Celtics,Sun,Target Center,Minneapolis,MN,,,,,19
+0022600876,2027-02-28 19:00:00,1610612766,1610612758,Charlotte,Hornets,Sacramento,Kings,Sun,Spectrum Center,Charlotte,NC,,,,,19
+0022600878,2027-02-28 19:30:00,1610612752,1610612749,New York,Knicks,Milwaukee,Bucks,Sun,Madison Square Garden,New York,NY,,,,,19
+0022600879,2027-02-28 21:30:00,1610612745,1610612748,Houston,Rockets,Miami,Heat,Sun,Toyota Center,Houston,TX,,,,,19
+0022600880,2027-02-28 22:30:00,1610612746,1610612757,LA,Clippers,Portland,Trail Blazers,Sun,Intuit Dome,Inglewood,CA,,,,,19
+0022600881,2027-03-01 19:00:00,1610612739,1610612755,Cleveland,Cavaliers,Philadelphia,76ers,Mon,Rocket Arena,Cleveland,OH,,,,,20
+0022600882,2027-03-01 19:00:00,1610612765,1610612741,Detroit,Pistons,Chicago,Bulls,Mon,Little Caesars Arena,Detroit,MI,,,,,20
+0022600883,2027-03-01 20:00:00,1610612740,1610612762,New Orleans,Pelicans,Utah,Jazz,Mon,Smoothie King Center,New Orleans,LA,,,,,20
+0022600884,2027-03-01 20:30:00,1610612745,1610612744,Houston,Rockets,Golden State,Warriors,Mon,Toyota Center,Houston,TX,,,,,20
+0022600885,2027-03-01 21:00:00,1610612743,1610612751,Denver,Nuggets,Brooklyn,Nets,Mon,Ball Arena,Denver,CO,,,,,20
+0022600886,2027-03-01 21:30:00,1610612756,1610612764,Phoenix,Suns,Washington,Wizards,Mon,Mortgage Matchup Center,Phoenix,AZ,,,,,20
+0022600887,2027-03-02 19:00:00,1610612754,1610612738,Indiana,Pacers,Boston,Celtics,Tue,Gainbridge Fieldhouse,Indianapolis,IN,,,,,20
+0022600888,2027-03-02 19:00:00,1610612753,1610612747,Orlando,Magic,Los Angeles,Lakers,Tue,Kia Center,Orlando,FL,,,,,20
+0022600889,2027-03-02 19:30:00,1610612748,1610612761,Miami,Heat,Toronto,Raptors,Tue,Kaseya Center,Miami,FL,,,,,20
+0022600890,2027-03-02 19:30:00,1610612752,1610612763,New York,Knicks,Memphis,Grizzlies,Tue,Madison Square Garden,New York,NY,,,,,20
+0022600893,2027-03-02 20:00:00,1610612760,1610612750,Oklahoma City,Thunder,Minnesota,Timberwolves,Tue,Paycom Center,Oklahoma City,OK,,,,,20
+0022600892,2027-03-02 20:00:00,1610612749,1610612765,Milwaukee,Bucks,Detroit,Pistons,Tue,Fiserv Forum,Milwaukee,WI,,,,,20
+0022600891,2027-03-02 20:00:00,1610612742,1610612744,Dallas,Mavericks,Golden State,Warriors,Tue,American Airlines Center,Dallas,TX,,,,,20
+0022600894,2027-03-02 22:00:00,1610612758,1610612764,Sacramento,Kings,Washington,Wizards,Tue,Golden 1 Center,Sacramento,CA,,,,,20
+0022600895,2027-03-02 23:00:00,1610612757,1610612746,Portland,Trail Blazers,LA,Clippers,Tue,Moda Center,Portland,OR,,,,,20
+0022600896,2027-03-03 19:00:00,1610612737,1610612741,Atlanta,Hawks,Chicago,Bulls,Wed,State Farm Arena,Atlanta,GA,,,,,20
+0022600897,2027-03-03 19:00:00,1610612755,1610612766,Philadelphia,76ers,Charlotte,Hornets,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,20
+0022600898,2027-03-03 19:30:00,1610612748,1610612761,Miami,Heat,Toronto,Raptors,Wed,Kaseya Center,Miami,FL,,,,,20
+0022600899,2027-03-03 20:00:00,1610612749,1610612762,Milwaukee,Bucks,Utah,Jazz,Wed,Fiserv Forum,Milwaukee,WI,,,,,20
+0022600900,2027-03-03 20:30:00,1610612745,1610612740,Houston,Rockets,New Orleans,Pelicans,Wed,Toyota Center,Houston,TX,,,,,20
+0022600901,2027-03-03 21:00:00,1610612756,1610612751,Phoenix,Suns,Brooklyn,Nets,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,20
+0022600902,2027-03-03 22:00:00,1610612743,1610612759,Denver,Nuggets,San Antonio,Spurs,Wed,Ball Arena,Denver,CO,,,,,20
+0022600905,2027-03-04 19:00:00,1610612755,1610612747,Philadelphia,76ers,Los Angeles,Lakers,Thu,Xfinity Mobile Arena,Philadelphia,PA,,,,,20
+0022600904,2027-03-04 19:00:00,1610612753,1610612754,Orlando,Magic,Indiana,Pacers,Thu,Kia Center,Orlando,FL,,,,,20
+0022600903,2027-03-04 19:00:00,1610612739,1610612757,Cleveland,Cavaliers,Portland,Trail Blazers,Thu,Rocket Arena,Cleveland,OH,,,,,20
+0022600906,2027-03-04 19:30:00,1610612737,1610612763,Atlanta,Hawks,Memphis,Grizzlies,Thu,State Farm Arena,Atlanta,GA,,,,,20
+0022600907,2027-03-04 21:30:00,1610612742,1610612752,Dallas,Mavericks,New York,Knicks,Thu,American Airlines Center,Dallas,TX,,,,,20
+0022600909,2027-03-04 22:00:00,1610612758,1610612760,Sacramento,Kings,Oklahoma City,Thunder,Thu,Golden 1 Center,Sacramento,CA,,,,,20
+0022600908,2027-03-04 22:00:00,1610612744,1610612764,Golden State,Warriors,Washington,Wizards,Thu,Chase Center,San Francisco,CA,,,,,20
+0022600910,2027-03-04 22:30:00,1610612746,1610612751,LA,Clippers,Brooklyn,Nets,Thu,Intuit Dome,Inglewood,CA,,,,,20
+0022600911,2027-03-05 19:00:00,1610612765,1610612738,Detroit,Pistons,Boston,Celtics,Fri,Little Caesars Arena,Detroit,MI,,,,,20
+0022600912,2027-03-05 19:00:00,1610612753,1610612762,Orlando,Magic,Utah,Jazz,Fri,Kia Center,Orlando,FL,,,,,20
+0022600913,2027-03-05 19:30:00,1610612761,1610612757,Toronto,Raptors,Portland,Trail Blazers,Fri,Scotiabank Arena,Toronto,ON,,,,,20
+0022600914,2027-03-05 20:00:00,1610612740,1610612749,New Orleans,Pelicans,Milwaukee,Bucks,Fri,Smoothie King Center,New Orleans,LA,,,,,20
+0022600915,2027-03-05 21:00:00,1610612756,1610612750,Phoenix,Suns,Minnesota,Timberwolves,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,20
+0022600916,2027-03-05 21:30:00,1610612745,1610612759,Houston,Rockets,San Antonio,Spurs,Fri,Toyota Center,Houston,TX,,,,,20
+0022600917,2027-03-06 15:00:00,1610612748,1610612754,Miami,Heat,Indiana,Pacers,Sat,Kaseya Center,Miami,FL,,,,,20
+0022600918,2027-03-06 17:00:00,1610612741,1610612766,Chicago,Bulls,Charlotte,Hornets,Sat,United Center,Chicago,IL,,,,,20
+0022600919,2027-03-06 17:30:00,1610612739,1610612737,Cleveland,Cavaliers,Atlanta,Hawks,Sat,Rocket Arena,Cleveland,OH,,,,,20
+0022600920,2027-03-06 19:00:00,1610612764,1610612762,Washington,Wizards,Utah,Jazz,Sat,Capital One Arena,Washington,DC,,,,,20
+0022600921,2027-03-06 20:00:00,1610612763,1610612740,Memphis,Grizzlies,New Orleans,Pelicans,Sat,FedExForum,Memphis,TN,,,,,20
+0022600922,2027-03-06 20:30:00,1610612747,1610612760,Los Angeles,Lakers,Oklahoma City,Thunder,Sat,Crypto.com Arena,Los Angeles,CA,,,,,20
+0022600923,2027-03-06 22:00:00,1610612758,1610612746,Sacramento,Kings,LA,Clippers,Sat,Golden 1 Center,Sacramento,CA,,,,,20
+0022600924,2027-03-07 13:00:00,1610612738,1610612755,Boston,Celtics,Philadelphia,76ers,Sun,TD Garden,Boston,MA,,,,,20
+0022600925,2027-03-07 15:30:00,1610612743,1610612750,Denver,Nuggets,Minnesota,Timberwolves,Sun,Ball Arena,Denver,CO,,,,,20
+0022600926,2027-03-07 17:00:00,1610612741,1610612757,Chicago,Bulls,Portland,Trail Blazers,Sun,United Center,Chicago,IL,,,,,20
+0022600927,2027-03-07 19:30:00,1610612759,1610612752,San Antonio,Spurs,New York,Knicks,Sun,Frost Bank Center,San Antonio,TX,,,,,20
+0022600928,2027-03-07 22:00:00,1610612744,1610612745,Golden State,Warriors,Houston,Rockets,Sun,Chase Center,San Francisco,CA,,,,,20
+0022600929,2027-03-07 22:30:00,1610612747,1610612751,Los Angeles,Lakers,Brooklyn,Nets,Sun,Crypto.com Arena,Los Angeles,CA,,,,,20
+0022600930,2027-03-08 19:00:00,1610612754,1610612766,Indiana,Pacers,Charlotte,Hornets,Mon,Gainbridge Fieldhouse,Indianapolis,IN,,,,,21
+0022600931,2027-03-08 19:00:00,1610612755,1610612762,Philadelphia,76ers,Utah,Jazz,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,21
+0022600932,2027-03-08 19:30:00,1610612748,1610612756,Miami,Heat,Phoenix,Suns,Mon,Kaseya Center,Miami,FL,,,,,21
+0022600934,2027-03-08 20:00:00,1610612750,1610612740,Minnesota,Timberwolves,New Orleans,Pelicans,Mon,Target Center,Minneapolis,MN,,,,,21
+0022600933,2027-03-08 20:00:00,1610612763,1610612737,Memphis,Grizzlies,Atlanta,Hawks,Mon,FedExForum,Memphis,TN,,,,,21
+0022600935,2027-03-08 21:30:00,1610612760,1610612742,Oklahoma City,Thunder,Dallas,Mavericks,Mon,Paycom Center,Oklahoma City,OK,,,,,21
+0022600936,2027-03-08 22:00:00,1610612758,1610612743,Sacramento,Kings,Denver,Nuggets,Mon,Golden 1 Center,Sacramento,CA,,,,,21
+0022600937,2027-03-08 22:30:00,1610612746,1610612745,LA,Clippers,Houston,Rockets,Mon,Intuit Dome,Inglewood,CA,,,,,21
+0022600938,2027-03-09 19:00:00,1610612753,1610612756,Orlando,Magic,Phoenix,Suns,Tue,Kia Center,Orlando,FL,,,,,21
+0022600939,2027-03-09 19:30:00,1610612751,1610612749,Brooklyn,Nets,Milwaukee,Bucks,Tue,Barclays Center,Brooklyn,NY,,,,,21
+0022600943,2027-03-09 20:00:00,1610612759,1610612764,San Antonio,Spurs,Washington,Wizards,Tue,Frost Bank Center,San Antonio,TX,,,,,21
+0022600941,2027-03-09 20:00:00,1610612741,1610612738,Chicago,Bulls,Boston,Celtics,Tue,United Center,Chicago,IL,,,,,21
+0022600940,2027-03-09 20:00:00,1610612765,1610612739,Detroit,Pistons,Cleveland,Cavaliers,Tue,Little Caesars Arena,Detroit,MI,,,,,21
+0022600942,2027-03-09 20:00:00,1610612742,1610612763,Dallas,Mavericks,Memphis,Grizzlies,Tue,American Airlines Center,Dallas,TX,,,,,21
+0022600944,2027-03-09 23:00:00,1610612744,1610612757,Golden State,Warriors,Portland,Trail Blazers,Tue,Chase Center,San Francisco,CA,,,,,21
+0022600945,2027-03-10 19:00:00,1610612766,1610612740,Charlotte,Hornets,New Orleans,Pelicans,Wed,Spectrum Center,Charlotte,NC,,,,,21
+0022600946,2027-03-10 19:00:00,1610612748,1610612753,Miami,Heat,Orlando,Magic,Wed,Kaseya Center,Miami,FL,,,,,21
+0022600947,2027-03-10 19:30:00,1610612761,1610612760,Toronto,Raptors,Oklahoma City,Thunder,Wed,Scotiabank Arena,Toronto,ON,,,,,21
+0022600948,2027-03-10 21:00:00,1610612762,1610612745,Utah,Jazz,Houston,Rockets,Wed,Delta Center,Salt Lake City,UT,,,,,21
+0022600949,2027-03-10 21:30:00,1610612750,1610612737,Minnesota,Timberwolves,Atlanta,Hawks,Wed,Target Center,Minneapolis,MN,,,,,21
+0022600950,2027-03-10 22:00:00,1610612757,1610612743,Portland,Trail Blazers,Denver,Nuggets,Wed,Moda Center,Portland,OR,,,,,21
+0022600951,2027-03-10 22:00:00,1610612758,1610612744,Sacramento,Kings,Golden State,Warriors,Wed,Golden 1 Center,Sacramento,CA,,,,,21
+0022600952,2027-03-10 22:30:00,1610612746,1610612752,LA,Clippers,New York,Knicks,Wed,Intuit Dome,Inglewood,CA,,,,,21
+0022600954,2027-03-11 19:00:00,1610612765,1610612749,Detroit,Pistons,Milwaukee,Bucks,Thu,Little Caesars Arena,Detroit,MI,,,,,21
+0022600953,2027-03-11 19:00:00,1610612766,1610612754,Charlotte,Hornets,Indiana,Pacers,Thu,Spectrum Center,Charlotte,NC,,,,,21
+0022600955,2027-03-11 19:30:00,1610612738,1610612763,Boston,Celtics,Memphis,Grizzlies,Thu,TD Garden,Boston,MA,,,,,21
+0022600956,2027-03-11 19:30:00,1610612759,1610612755,San Antonio,Spurs,Philadelphia,76ers,Thu,Frost Bank Center,San Antonio,TX,,,,,21
+0022600959,2027-03-11 20:00:00,1610612742,1610612764,Dallas,Mavericks,Washington,Wizards,Thu,American Airlines Center,Dallas,TX,,,,,21
+0022600957,2027-03-11 20:00:00,1610612737,1610612751,Atlanta,Hawks,Brooklyn,Nets,Thu,State Farm Arena,Atlanta,GA,,,,,21
+0022600958,2027-03-11 20:00:00,1610612741,1610612756,Chicago,Bulls,Phoenix,Suns,Thu,United Center,Chicago,IL,,,,,21
+0022600960,2027-03-11 22:00:00,1610612747,1610612752,Los Angeles,Lakers,New York,Knicks,Thu,Crypto.com Arena,Los Angeles,CA,,,,,21
+0022600961,2027-03-11 22:30:00,1610612746,1610612739,LA,Clippers,Cleveland,Cavaliers,Thu,Intuit Dome,Inglewood,CA,,,,,21
+0022600962,2027-03-12 19:30:00,1610612738,1610612760,Boston,Celtics,Oklahoma City,Thunder,Fri,TD Garden,Boston,MA,,,,,21
+0022600964,2027-03-12 20:00:00,1610612740,1610612761,New Orleans,Pelicans,Toronto,Raptors,Fri,Smoothie King Center,New Orleans,LA,,,,,21
+0022600963,2027-03-12 20:00:00,1610612749,1610612748,Milwaukee,Bucks,Miami,Heat,Fri,Fiserv Forum,Milwaukee,WI,,,,,21
+0022600965,2027-03-12 21:30:00,1610612762,1610612758,Utah,Jazz,Sacramento,Kings,Fri,Delta Center,Salt Lake City,UT,,,,,21
+0022600966,2027-03-12 22:00:00,1610612743,1610612744,Denver,Nuggets,Golden State,Warriors,Fri,Ball Arena,Denver,CO,,,,,21
+0022600967,2027-03-12 22:00:00,1610612747,1610612739,Los Angeles,Lakers,Cleveland,Cavaliers,Fri,Crypto.com Arena,Los Angeles,CA,,,,,21
+0022600968,2027-03-13 15:00:00,1610612737,1610612753,Atlanta,Hawks,Orlando,Magic,Sat,State Farm Arena,Atlanta,GA,,,,,21
+0022600969,2027-03-13 15:00:00,1610612765,1610612751,Detroit,Pistons,Brooklyn,Nets,Sat,Little Caesars Arena,Detroit,MI,,,,,21
+0022600970,2027-03-13 17:30:00,1610612745,1610612754,Houston,Rockets,Indiana,Pacers,Sat,Toyota Center,Houston,TX,,,,,21
+0022600971,2027-03-13 18:00:00,1610612766,1610612756,Charlotte,Hornets,Phoenix,Suns,Sat,Spectrum Center,Charlotte,NC,,,,,21
+0022600973,2027-03-13 20:00:00,1610612742,1610612740,Dallas,Mavericks,New Orleans,Pelicans,Sat,American Airlines Center,Dallas,TX,,,,,21
+0022600972,2027-03-13 20:00:00,1610612741,1610612763,Chicago,Bulls,Memphis,Grizzlies,Sat,United Center,Chicago,IL,,,,,21
+0022600974,2027-03-13 20:30:00,1610612750,1610612755,Minnesota,Timberwolves,Philadelphia,76ers,Sat,Target Center,Minneapolis,MN,,,,,21
+0022600975,2027-03-13 22:30:00,1610612757,1610612746,Portland,Trail Blazers,LA,Clippers,Sat,Moda Center,Portland,OR,,,,,21
+0022600976,2027-03-14 12:00:00,1610612752,1610612738,New York,Knicks,Boston,Celtics,Sun,Madison Square Garden,New York,NY,,,,,21
+0022600977,2027-03-14 14:30:00,1610612760,1610612759,Oklahoma City,Thunder,San Antonio,Spurs,Sun,Paycom Center,Oklahoma City,OK,,,,,21
+0022600978,2027-03-14 17:00:00,1610612761,1610612765,Toronto,Raptors,Detroit,Pistons,Sun,Scotiabank Arena,Toronto,ON,,,,,21
+0022600979,2027-03-14 18:00:00,1610612758,1610612739,Sacramento,Kings,Cleveland,Cavaliers,Sun,Golden 1 Center,Sacramento,CA,,,,,21
+0022600980,2027-03-14 19:30:00,1610612743,1610612748,Denver,Nuggets,Miami,Heat,Sun,Ball Arena,Denver,CO,,,,,21
+0022600981,2027-03-14 20:00:00,1610612750,1610612764,Minnesota,Timberwolves,Washington,Wizards,Sun,Target Center,Minneapolis,MN,,,,,21
+0022600982,2027-03-14 22:00:00,1610612747,1610612744,Los Angeles,Lakers,Golden State,Warriors,Sun,Crypto.com Arena,Los Angeles,CA,,,,,21
+0022600983,2027-03-15 19:00:00,1610612755,1610612761,Philadelphia,76ers,Toronto,Raptors,Mon,Xfinity Mobile Arena,Philadelphia,PA,,,,,22
+0022600984,2027-03-15 19:30:00,1610612751,1610612754,Brooklyn,Nets,Indiana,Pacers,Mon,Barclays Center,Brooklyn,NY,,,,,22
+0022600985,2027-03-15 20:00:00,1610612741,1610612753,Chicago,Bulls,Orlando,Magic,Mon,United Center,Chicago,IL,,,,,22
+0022600986,2027-03-15 20:00:00,1610612763,1610612756,Memphis,Grizzlies,Phoenix,Suns,Mon,FedExForum,Memphis,TN,,,,,22
+0022600987,2027-03-15 21:30:00,1610612742,1610612737,Dallas,Mavericks,Atlanta,Hawks,Mon,American Airlines Center,Dallas,TX,,,,,22
+0022600988,2027-03-16 19:00:00,1610612764,1610612752,Washington,Wizards,New York,Knicks,Tue,Capital One Arena,Washington,DC,,,,,22
+0022600989,2027-03-16 19:30:00,1610612738,1610612758,Boston,Celtics,Sacramento,Kings,Tue,TD Garden,Boston,MA,,,,,22
+0022600990,2027-03-16 20:00:00,1610612754,1610612765,Indiana,Pacers,Detroit,Pistons,Tue,Gainbridge Fieldhouse,Indianapolis,IN,,,,,22
+0022600991,2027-03-16 20:00:00,1610612749,1610612753,Milwaukee,Bucks,Orlando,Magic,Tue,Fiserv Forum,Milwaukee,WI,,,,,22
+0022600992,2027-03-16 20:00:00,1610612740,1610612750,New Orleans,Pelicans,Minnesota,Timberwolves,Tue,Smoothie King Center,New Orleans,LA,,,,,22
+0022600993,2027-03-16 20:00:00,1610612760,1610612766,Oklahoma City,Thunder,Charlotte,Hornets,Tue,Paycom Center,Oklahoma City,OK,,,,,22
+0022600994,2027-03-16 20:30:00,1610612745,1610612759,Houston,Rockets,San Antonio,Spurs,Tue,Toyota Center,Houston,TX,,,,,22
+0022600995,2027-03-16 22:00:00,1610612744,1610612739,Golden State,Warriors,Cleveland,Cavaliers,Tue,Chase Center,San Francisco,CA,,,,,22
+0022600996,2027-03-16 22:00:00,1610612757,1610612747,Portland,Trail Blazers,Los Angeles,Lakers,Tue,Moda Center,Portland,OR,,,,,22
+0022600997,2027-03-16 23:00:00,1610612746,1610612743,LA,Clippers,Denver,Nuggets,Tue,Intuit Dome,Inglewood,CA,,,,,22
+0022600998,2027-03-17 19:00:00,1610612755,1610612741,Philadelphia,76ers,Chicago,Bulls,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,22
+0022600999,2027-03-17 19:30:00,1610612752,1610612758,New York,Knicks,Sacramento,Kings,Wed,Madison Square Garden,New York,NY,,,,,22
+0022601000,2027-03-17 19:30:00,1610612760,1610612742,Oklahoma City,Thunder,Dallas,Mavericks,Wed,Paycom Center,Oklahoma City,OK,,,,,22
+0022601001,2027-03-17 20:30:00,1610612745,1610612751,Houston,Rockets,Brooklyn,Nets,Wed,Toyota Center,Houston,TX,,,,,22
+0022601002,2027-03-17 21:00:00,1610612762,1610612737,Utah,Jazz,Atlanta,Hawks,Wed,Delta Center,Salt Lake City,UT,,,,,22
+0022601003,2027-03-17 22:00:00,1610612744,1610612763,Golden State,Warriors,Memphis,Grizzlies,Wed,Chase Center,San Francisco,CA,,,,,22
+0022601004,2027-03-17 22:00:00,1610612747,1610612756,Los Angeles,Lakers,Phoenix,Suns,Wed,Crypto.com Arena,Los Angeles,CA,,,,,22
+0022601005,2027-03-17 22:00:00,1610612757,1610612748,Portland,Trail Blazers,Miami,Heat,Wed,Moda Center,Portland,OR,,,,,22
+0022601006,2027-03-18 19:00:00,1610612754,1610612761,Indiana,Pacers,Toronto,Raptors,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,22
+0022601007,2027-03-18 19:00:00,1610612764,1610612755,Washington,Wizards,Philadelphia,76ers,Thu,Capital One Arena,Washington,DC,,,,,22
+0022601008,2027-03-18 19:30:00,1610612738,1610612753,Boston,Celtics,Orlando,Magic,Thu,TD Garden,Boston,MA,,,,,22
+0022601009,2027-03-18 20:00:00,1610612749,1610612765,Milwaukee,Bucks,Detroit,Pistons,Thu,Fiserv Forum,Milwaukee,WI,,,,,22
+0022601010,2027-03-18 20:00:00,1610612740,1610612766,New Orleans,Pelicans,Charlotte,Hornets,Thu,Smoothie King Center,New Orleans,LA,,,,,22
+0022601011,2027-03-18 20:00:00,1610612759,1610612751,San Antonio,Spurs,Brooklyn,Nets,Thu,Frost Bank Center,San Antonio,TX,,,,,22
+0022601013,2027-03-18 21:00:00,1610612762,1610612750,Utah,Jazz,Minnesota,Timberwolves,Thu,Delta Center,Salt Lake City,UT,,,,,22
+0022601012,2027-03-18 21:00:00,1610612743,1610612739,Denver,Nuggets,Cleveland,Cavaliers,Thu,Ball Arena,Denver,CO,,,,,22
+0022601014,2027-03-18 22:30:00,1610612746,1610612763,LA,Clippers,Memphis,Grizzlies,Thu,Intuit Dome,Inglewood,CA,,,,,22
+0022601015,2027-03-19 19:30:00,1610612761,1610612758,Toronto,Raptors,Sacramento,Kings,Fri,Scotiabank Arena,Toronto,ON,,,,,22
+0022601016,2027-03-19 20:00:00,1610612740,1610612745,New Orleans,Pelicans,Houston,Rockets,Fri,Smoothie King Center,New Orleans,LA,,,,,22
+0022601017,2027-03-19 20:00:00,1610612759,1610612742,San Antonio,Spurs,Dallas,Mavericks,Fri,Frost Bank Center,San Antonio,TX,,,,,22
+0022601018,2027-03-19 22:00:00,1610612744,1610612757,Golden State,Warriors,Portland,Trail Blazers,Fri,Chase Center,San Francisco,CA,,,,,22
+0022601019,2027-03-19 22:00:00,1610612747,1610612737,Los Angeles,Lakers,Atlanta,Hawks,Fri,Crypto.com Arena,Los Angeles,CA,,,,,22
+0022601020,2027-03-19 22:30:00,1610612756,1610612748,Phoenix,Suns,Miami,Heat,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,22
+0022601021,2027-03-20 13:00:00,1610612752,1610612764,New York,Knicks,Washington,Wizards,Sat,Madison Square Garden,New York,NY,,,,,22
+0022601022,2027-03-20 19:00:00,1610612753,1610612743,Orlando,Magic,Denver,Nuggets,Sat,Kia Center,Orlando,FL,,,,,22
+0022601023,2027-03-20 19:30:00,1610612739,1610612741,Cleveland,Cavaliers,Chicago,Bulls,Sat,Rocket Arena,Cleveland,OH,,,,,22
+0022601024,2027-03-20 20:00:00,1610612765,1610612766,Detroit,Pistons,Charlotte,Hornets,Sat,Little Caesars Arena,Detroit,MI,,,,,22
+0022601025,2027-03-20 20:00:00,1610612763,1610612760,Memphis,Grizzlies,Oklahoma City,Thunder,Sat,FedExForum,Memphis,TN,,,,,22
+0022601026,2027-03-20 20:00:00,1610612749,1610612754,Milwaukee,Bucks,Indiana,Pacers,Sat,Fiserv Forum,Milwaukee,WI,,,,,22
+0022601027,2027-03-20 22:30:00,1610612746,1610612737,LA,Clippers,Atlanta,Hawks,Sat,Intuit Dome,Inglewood,CA,,,,,22
+0022601028,2027-03-21 15:00:00,1610612738,1610612740,Boston,Celtics,New Orleans,Pelicans,Sun,TD Garden,Boston,MA,,,,,22
+0022601029,2027-03-21 15:00:00,1610612751,1610612758,Brooklyn,Nets,Sacramento,Kings,Sun,Barclays Center,Brooklyn,NY,,,,,22
+0022601030,2027-03-21 17:00:00,1610612762,1610612761,Utah,Jazz,Toronto,Raptors,Sun,Delta Center,Salt Lake City,UT,,,,,22
+0022601031,2027-03-21 17:00:00,1610612756,1610612757,Phoenix,Suns,Portland,Trail Blazers,Sun,Mortgage Matchup Center,Phoenix,AZ,,,,,22
+0022601032,2027-03-21 18:00:00,1610612748,1610612743,Miami,Heat,Denver,Nuggets,Sun,Kaseya Center,Miami,FL,,,,,22
+0022601033,2027-03-21 19:30:00,1610612755,1610612759,Philadelphia,76ers,San Antonio,Spurs,Sun,Xfinity Mobile Arena,Philadelphia,PA,,,,,22
+0022601034,2027-03-21 22:00:00,1610612747,1610612742,Los Angeles,Lakers,Dallas,Mavericks,Sun,Crypto.com Arena,Los Angeles,CA,,,,,22
+0022601036,2027-03-22 19:00:00,1610612753,1610612754,Orlando,Magic,Indiana,Pacers,Mon,Kia Center,Orlando,FL,,,,,23
+0022601035,2027-03-22 19:00:00,1610612739,1610612745,Cleveland,Cavaliers,Houston,Rockets,Mon,Rocket Arena,Cleveland,OH,,,,,23
+0022601037,2027-03-22 20:00:00,1610612741,1610612758,Chicago,Bulls,Sacramento,Kings,Mon,United Center,Chicago,IL,,,,,23
+0022601038,2027-03-22 20:00:00,1610612763,1610612766,Memphis,Grizzlies,Charlotte,Hornets,Mon,FedExForum,Memphis,TN,,,,,23
+0022601039,2027-03-22 20:00:00,1610612749,1610612764,Milwaukee,Bucks,Washington,Wizards,Mon,Fiserv Forum,Milwaukee,WI,,,,,23
+0022601040,2027-03-22 21:30:00,1610612750,1610612765,Minnesota,Timberwolves,Detroit,Pistons,Mon,Target Center,Minneapolis,MN,,,,,23
+0022601041,2027-03-22 22:00:00,1610612744,1610612737,Golden State,Warriors,Atlanta,Hawks,Mon,Chase Center,San Francisco,CA,,,,,23
+0022601042,2027-03-22 22:30:00,1610612746,1610612742,LA,Clippers,Dallas,Mavericks,Mon,Intuit Dome,Inglewood,CA,,,,,23
+0022601043,2027-03-23 19:30:00,1610612751,1610612738,Brooklyn,Nets,Boston,Celtics,Tue,Barclays Center,Brooklyn,NY,,,,,23
+0022601044,2027-03-23 19:30:00,1610612752,1610612740,New York,Knicks,New Orleans,Pelicans,Tue,Madison Square Garden,New York,NY,,,,,23
+0022601045,2027-03-23 20:00:00,1610612748,1610612747,Miami,Heat,Los Angeles,Lakers,Tue,Kaseya Center,Miami,FL,,,,,23
+0022601046,2027-03-23 21:00:00,1610612762,1610612755,Utah,Jazz,Philadelphia,76ers,Tue,Delta Center,Salt Lake City,UT,,,,,23
+0022601047,2027-03-23 22:00:00,1610612757,1610612761,Portland,Trail Blazers,Toronto,Raptors,Tue,Moda Center,Portland,OR,,,,,23
+0022601048,2027-03-23 23:00:00,1610612756,1610612760,Phoenix,Suns,Oklahoma City,Thunder,Tue,Mortgage Matchup Center,Phoenix,AZ,,,,,23
+0022601051,2027-03-24 19:00:00,1610612764,1610612743,Washington,Wizards,Denver,Nuggets,Wed,Capital One Arena,Washington,DC,,,,,23
+0022601049,2027-03-24 19:00:00,1610612766,1610612765,Charlotte,Hornets,Detroit,Pistons,Wed,Spectrum Center,Charlotte,NC,,,,,23
+0022601050,2027-03-24 19:00:00,1610612754,1610612763,Indiana,Pacers,Memphis,Grizzlies,Wed,Gainbridge Fieldhouse,Indianapolis,IN,,,,,23
+0022601052,2027-03-24 19:30:00,1610612738,1610612759,Boston,Celtics,San Antonio,Spurs,Wed,TD Garden,Boston,MA,,,,,23
+0022601053,2027-03-24 19:30:00,1610612752,1610612745,New York,Knicks,Houston,Rockets,Wed,Madison Square Garden,New York,NY,,,,,23
+0022601054,2027-03-24 20:00:00,1610612741,1610612753,Chicago,Bulls,Orlando,Magic,Wed,United Center,Chicago,IL,,,,,23
+0022601055,2027-03-24 20:00:00,1610612750,1610612742,Minnesota,Timberwolves,Dallas,Mavericks,Wed,Target Center,Minneapolis,MN,,,,,23
+0022601056,2027-03-24 22:00:00,1610612744,1610612755,Golden State,Warriors,Philadelphia,76ers,Wed,Chase Center,San Francisco,CA,,,,,23
+0022601057,2027-03-24 22:00:00,1610612756,1610612760,Phoenix,Suns,Oklahoma City,Thunder,Wed,Mortgage Matchup Center,Phoenix,AZ,,,,,23
+0022601058,2027-03-24 22:00:00,1610612758,1610612737,Sacramento,Kings,Atlanta,Hawks,Wed,Golden 1 Center,Sacramento,CA,,,,,23
+0022601059,2027-03-24 22:30:00,1610612746,1610612749,LA,Clippers,Milwaukee,Bucks,Wed,Intuit Dome,Inglewood,CA,,,,,23
+0022601062,2027-03-25 19:00:00,1610612754,1610612759,Indiana,Pacers,San Antonio,Spurs,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,23
+0022601061,2027-03-25 19:00:00,1610612765,1610612745,Detroit,Pistons,Houston,Rockets,Thu,Little Caesars Arena,Detroit,MI,,,,,23
+0022601060,2027-03-25 19:00:00,1610612739,1610612747,Cleveland,Cavaliers,Los Angeles,Lakers,Thu,Rocket Arena,Cleveland,OH,,,,,23
+0022601063,2027-03-25 19:30:00,1610612751,1610612743,Brooklyn,Nets,Denver,Nuggets,Thu,Barclays Center,Brooklyn,NY,,,,,23
+0022601064,2027-03-25 19:30:00,1610612748,1610612762,Miami,Heat,Utah,Jazz,Thu,Kaseya Center,Miami,FL,,,,,23
+0022601065,2027-03-25 20:00:00,1610612763,1610612741,Memphis,Grizzlies,Chicago,Bulls,Thu,FedExForum,Memphis,TN,,,,,23
+0022601066,2027-03-25 22:00:00,1610612744,1610612761,Golden State,Warriors,Toronto,Raptors,Thu,Chase Center,San Francisco,CA,,,,,23
+0022601067,2027-03-26 19:00:00,1610612766,1610612752,Charlotte,Hornets,New York,Knicks,Fri,Spectrum Center,Charlotte,NC,,,,,23
+0022601070,2027-03-26 20:00:00,1610612760,1610612746,Oklahoma City,Thunder,LA,Clippers,Fri,Paycom Center,Oklahoma City,OK,,,,,23
+0022601069,2027-03-26 20:00:00,1610612750,1610612753,Minnesota,Timberwolves,Orlando,Magic,Fri,Target Center,Minneapolis,MN,,,,,23
+0022601068,2027-03-26 20:00:00,1610612742,1610612740,Dallas,Mavericks,New Orleans,Pelicans,Fri,American Airlines Center,Dallas,TX,,,,,23
+0022601072,2027-03-26 22:00:00,1610612757,1610612755,Portland,Trail Blazers,Philadelphia,76ers,Fri,Moda Center,Portland,OR,,,,,23
+0022601071,2027-03-26 22:00:00,1610612756,1610612749,Phoenix,Suns,Milwaukee,Bucks,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,23
+0022601073,2027-03-27 15:00:00,1610612765,1610612759,Detroit,Pistons,San Antonio,Spurs,Sat,Little Caesars Arena,Detroit,MI,,,,,23
+0022601074,2027-03-27 19:00:00,1610612737,1610612762,Atlanta,Hawks,Utah,Jazz,Sat,State Farm Arena,Atlanta,GA,,,,,23
+0022601075,2027-03-27 19:00:00,1610612764,1610612744,Washington,Wizards,Golden State,Warriors,Sat,Capital One Arena,Washington,DC,,,,,23
+0022601076,2027-03-27 20:00:00,1610612748,1610612738,Miami,Heat,Boston,Celtics,Sat,Kaseya Center,Miami,FL,,,,,23
+0022601077,2027-03-27 20:00:00,1610612741,1610612746,Chicago,Bulls,LA,Clippers,Sat,United Center,Chicago,IL,,,,,23
+0022601078,2027-03-27 22:00:00,1610612757,1610612749,Portland,Trail Blazers,Milwaukee,Bucks,Sat,Moda Center,Portland,OR,,,,,23
+0022601079,2027-03-27 22:00:00,1610612758,1610612761,Sacramento,Kings,Toronto,Raptors,Sat,Golden 1 Center,Sacramento,CA,,,,,23
+0022601080,2027-03-28 12:30:00,1610612753,1610612752,Orlando,Magic,New York,Knicks,Sun,Kia Center,Orlando,FL,,,,,23
+0022601082,2027-03-28 15:00:00,1610612745,1610612747,Houston,Rockets,Los Angeles,Lakers,Sun,Toyota Center,Houston,TX,,,,,23
+0022601081,2027-03-28 15:00:00,1610612751,1610612763,Brooklyn,Nets,Memphis,Grizzlies,Sun,Barclays Center,Brooklyn,NY,,,,,23
+0022601084,2027-03-28 18:00:00,1610612764,1610612742,Washington,Wizards,Dallas,Mavericks,Sun,Capital One Arena,Washington,DC,,,,,23
+0022601083,2027-03-28 18:00:00,1610612766,1610612762,Charlotte,Hornets,Utah,Jazz,Sun,Spectrum Center,Charlotte,NC,,,,,23
+0022601085,2027-03-28 19:00:00,1610612740,1610612738,New Orleans,Pelicans,Boston,Celtics,Sun,Smoothie King Center,New Orleans,LA,,,,,23
+0022601086,2027-03-28 19:30:00,1610612750,1610612760,Minnesota,Timberwolves,Oklahoma City,Thunder,Sun,Target Center,Minneapolis,MN,,,,,23
+0022601087,2027-03-28 21:00:00,1610612756,1610612761,Phoenix,Suns,Toronto,Raptors,Sun,Mortgage Matchup Center,Phoenix,AZ,,,,,23
+0022601088,2027-03-28 22:00:00,1610612743,1610612755,Denver,Nuggets,Philadelphia,76ers,Sun,Ball Arena,Denver,CO,,,,,23
+0022601090,2027-03-29 19:00:00,1610612739,1610612748,Cleveland,Cavaliers,Miami,Heat,Mon,Rocket Arena,Cleveland,OH,,,,,24
+0022601091,2027-03-29 19:00:00,1610612765,1610612746,Detroit,Pistons,LA,Clippers,Mon,Little Caesars Arena,Detroit,MI,,,,,24
+0022601089,2027-03-29 19:00:00,1610612737,1610612750,Atlanta,Hawks,Minnesota,Timberwolves,Mon,State Farm Arena,Atlanta,GA,,,,,24
+0022601092,2027-03-29 19:30:00,1610612751,1610612744,Brooklyn,Nets,Golden State,Warriors,Mon,Barclays Center,Brooklyn,NY,,,,,24
+0022601093,2027-03-29 20:00:00,1610612741,1610612754,Chicago,Bulls,Indiana,Pacers,Mon,United Center,Chicago,IL,,,,,24
+0022601094,2027-03-29 20:00:00,1610612749,1610612742,Milwaukee,Bucks,Dallas,Mavericks,Mon,Fiserv Forum,Milwaukee,WI,,,,,24
+0022601095,2027-03-29 21:30:00,1610612759,1610612756,San Antonio,Spurs,Phoenix,Suns,Mon,Frost Bank Center,San Antonio,TX,,,,,24
+0022601096,2027-03-29 22:00:00,1610612758,1610612743,Sacramento,Kings,Denver,Nuggets,Mon,Golden 1 Center,Sacramento,CA,,,,,24
+0022601097,2027-03-30 19:00:00,1610612766,1610612748,Charlotte,Hornets,Miami,Heat,Tue,Spectrum Center,Charlotte,NC,,,,,24
+0022601098,2027-03-30 20:00:00,1610612754,1610612738,Indiana,Pacers,Boston,Celtics,Tue,Gainbridge Fieldhouse,Indianapolis,IN,,,,,24
+0022601100,2027-03-30 20:00:00,1610612763,1610612747,Memphis,Grizzlies,Los Angeles,Lakers,Tue,FedExForum,Memphis,TN,,,,,24
+0022601099,2027-03-30 20:00:00,1610612753,1610612752,Orlando,Magic,New York,Knicks,Tue,Kia Center,Orlando,FL,,,,,24
+0022601101,2027-03-30 21:00:00,1610612762,1610612760,Utah,Jazz,Oklahoma City,Thunder,Tue,Delta Center,Salt Lake City,UT,,,,,24
+0022601102,2027-03-30 23:00:00,1610612757,1610612745,Portland,Trail Blazers,Houston,Rockets,Tue,Moda Center,Portland,OR,,,,,24
+0022601103,2027-03-31 19:00:00,1610612737,1610612746,Atlanta,Hawks,LA,Clippers,Wed,State Farm Arena,Atlanta,GA,,,,,24
+0022601104,2027-03-31 19:00:00,1610612765,1610612761,Detroit,Pistons,Toronto,Raptors,Wed,Little Caesars Arena,Detroit,MI,,,,,24
+0022601105,2027-03-31 19:00:00,1610612755,1610612744,Philadelphia,76ers,Golden State,Warriors,Wed,Xfinity Mobile Arena,Philadelphia,PA,,,,,24
+0022601106,2027-03-31 19:00:00,1610612764,1610612741,Washington,Wizards,Chicago,Bulls,Wed,Capital One Arena,Washington,DC,,,,,24
+0022601107,2027-03-31 19:30:00,1610612751,1610612739,Brooklyn,Nets,Cleveland,Cavaliers,Wed,Barclays Center,Brooklyn,NY,,,,,24
+0022601109,2027-03-31 20:00:00,1610612750,1610612758,Minnesota,Timberwolves,Sacramento,Kings,Wed,Target Center,Minneapolis,MN,,,,,24
+0022601110,2027-03-31 20:00:00,1610612759,1610612756,San Antonio,Spurs,Phoenix,Suns,Wed,Frost Bank Center,San Antonio,TX,,,,,24
+0022601108,2027-03-31 20:00:00,1610612749,1610612740,Milwaukee,Bucks,New Orleans,Pelicans,Wed,Fiserv Forum,Milwaukee,WI,,,,,24
+0022601111,2027-03-31 21:30:00,1610612742,1610612743,Dallas,Mavericks,Denver,Nuggets,Wed,American Airlines Center,Dallas,TX,,,,,24
+0022601112,2027-03-31 22:00:00,1610612757,1610612745,Portland,Trail Blazers,Houston,Rockets,Wed,Moda Center,Portland,OR,,,,,24
+0022601114,2027-04-01 19:00:00,1610612754,1610612753,Indiana,Pacers,Orlando,Magic,Thu,Gainbridge Fieldhouse,Indianapolis,IN,,,,,24
+0022601113,2027-04-01 19:00:00,1610612739,1610612738,Cleveland,Cavaliers,Boston,Celtics,Thu,Rocket Arena,Cleveland,OH,,,,,24
+0022601115,2027-04-01 19:30:00,1610612752,1610612766,New York,Knicks,Charlotte,Hornets,Thu,Madison Square Garden,New York,NY,,,,,24
+0022601116,2027-04-01 21:30:00,1610612760,1610612747,Oklahoma City,Thunder,Los Angeles,Lakers,Thu,Paycom Center,Oklahoma City,OK,,,,,24
+0022601117,2027-04-02 19:00:00,1610612764,1610612755,Washington,Wizards,Philadelphia,76ers,Fri,Capital One Arena,Washington,DC,,,,,24
+0022601119,2027-04-02 19:30:00,1610612751,1610612752,Brooklyn,Nets,New York,Knicks,Fri,Barclays Center,Brooklyn,NY,,,,,24
+0022601120,2027-04-02 19:30:00,1610612750,1610612744,Minnesota,Timberwolves,Golden State,Warriors,Fri,Target Center,Minneapolis,MN,,,,,24
+0022601118,2027-04-02 19:30:00,1610612738,1610612748,Boston,Celtics,Miami,Heat,Fri,TD Garden,Boston,MA,,,,,24
+0022601123,2027-04-02 20:00:00,1610612749,1610612766,Milwaukee,Bucks,Charlotte,Hornets,Fri,Fiserv Forum,Milwaukee,WI,,,,,24
+0022601121,2027-04-02 20:00:00,1610612741,1610612765,Chicago,Bulls,Detroit,Pistons,Fri,United Center,Chicago,IL,,,,,24
+0022601122,2027-04-02 20:00:00,1610612742,1610612758,Dallas,Mavericks,Sacramento,Kings,Fri,American Airlines Center,Dallas,TX,,,,,24
+0022601124,2027-04-02 20:30:00,1610612761,1610612737,Toronto,Raptors,Atlanta,Hawks,Fri,Scotiabank Arena,Toronto,ON,,,,,24
+0022601125,2027-04-02 20:30:00,1610612745,1610612763,Houston,Rockets,Memphis,Grizzlies,Fri,Toyota Center,Houston,TX,,,,,24
+0022601126,2027-04-02 22:00:00,1610612756,1610612743,Phoenix,Suns,Denver,Nuggets,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,24
+0022601127,2027-04-02 22:00:00,1610612757,1610612762,Portland,Trail Blazers,Utah,Jazz,Fri,Moda Center,Portland,OR,,,,,24
+0022601128,2027-04-02 22:30:00,1610612746,1610612759,LA,Clippers,San Antonio,Spurs,Fri,Intuit Dome,Inglewood,CA,,,,,24
+0022601129,2027-04-03 17:00:00,1610612760,1610612740,Oklahoma City,Thunder,New Orleans,Pelicans,Sat,Paycom Center,Oklahoma City,OK,,,,,24
+0022601130,2027-04-03 19:00:00,1610612753,1610612764,Orlando,Magic,Washington,Wizards,Sat,Kia Center,Orlando,FL,,,,,24
+0022601131,2027-04-04 13:00:00,1610612755,1610612737,Philadelphia,76ers,Atlanta,Hawks,Sun,Xfinity Mobile Arena,Philadelphia,PA,,,,,24
+0022601132,2027-04-04 14:00:00,1610612749,1610612751,Milwaukee,Bucks,Brooklyn,Nets,Sun,Fiserv Forum,Milwaukee,WI,,,,,24
+0022601133,2027-04-04 15:00:00,1610612739,1610612766,Cleveland,Cavaliers,Charlotte,Hornets,Sun,Rocket Arena,Cleveland,OH,,,,,24
+0022601134,2027-04-04 15:00:00,1610612765,1610612748,Detroit,Pistons,Miami,Heat,Sun,Little Caesars Arena,Detroit,MI,,,,,24
+0022601135,2027-04-04 15:00:00,1610612742,1610612750,Dallas,Mavericks,Minnesota,Timberwolves,Sun,American Airlines Center,Dallas,TX,,,,,24
+0022601136,2027-04-04 15:30:00,1610612761,1610612754,Toronto,Raptors,Indiana,Pacers,Sun,Scotiabank Arena,Toronto,ON,,,,,24
+0022601137,2027-04-04 16:00:00,1610612745,1610612741,Houston,Rockets,Chicago,Bulls,Sun,Toyota Center,Houston,TX,,,,,24
+0022601138,2027-04-04 16:30:00,1610612746,1610612756,LA,Clippers,Phoenix,Suns,Sun,Intuit Dome,Inglewood,CA,,,,,24
+0022601139,2027-04-04 17:00:00,1610612743,1610612763,Denver,Nuggets,Memphis,Grizzlies,Sun,Ball Arena,Denver,CO,,,,,24
+0022601140,2027-04-04 17:00:00,1610612762,1610612757,Utah,Jazz,Portland,Trail Blazers,Sun,Delta Center,Salt Lake City,UT,,,,,24
+0022601141,2027-04-04 18:00:00,1610612758,1610612744,Sacramento,Kings,Golden State,Warriors,Sun,Golden 1 Center,Sacramento,CA,,,,,24
+0022601142,2027-04-04 19:30:00,1610612752,1610612738,New York,Knicks,Boston,Celtics,Sun,Madison Square Garden,New York,NY,,,,,24
+0022601143,2027-04-04 22:00:00,1610612747,1610612759,Los Angeles,Lakers,San Antonio,Spurs,Sun,Crypto.com Arena,Los Angeles,CA,,,,,24
+0022601144,2027-04-05 19:00:00,1610612739,1610612751,Cleveland,Cavaliers,Brooklyn,Nets,Mon,Rocket Arena,Cleveland,OH,,,,,25
+0022601145,2027-04-05 19:00:00,1610612753,1610612748,Orlando,Magic,Miami,Heat,Mon,Kia Center,Orlando,FL,,,,,25
+0022601146,2027-04-05 20:00:00,1610612740,1610612764,New Orleans,Pelicans,Washington,Wizards,Mon,Smoothie King Center,New Orleans,LA,,,,,25
+0022601147,2027-04-06 19:00:00,1610612766,1610612754,Charlotte,Hornets,Indiana,Pacers,Tue,Spectrum Center,Charlotte,NC,,,,,25
+0022601148,2027-04-06 19:30:00,1610612761,1610612755,Toronto,Raptors,Philadelphia,76ers,Tue,Scotiabank Arena,Toronto,ON,,,,,25
+0022601152,2027-04-06 20:00:00,1610612759,1610612758,San Antonio,Spurs,Sacramento,Kings,Tue,Frost Bank Center,San Antonio,TX,,,,,25
+0022601151,2027-04-06 20:00:00,1610612749,1610612741,Milwaukee,Bucks,Chicago,Bulls,Tue,Fiserv Forum,Milwaukee,WI,,,,,25
+0022601150,2027-04-06 20:00:00,1610612763,1610612765,Memphis,Grizzlies,Detroit,Pistons,Tue,FedExForum,Memphis,TN,,,,,25
+0022601149,2027-04-06 20:00:00,1610612737,1610612752,Atlanta,Hawks,New York,Knicks,Tue,State Farm Arena,Atlanta,GA,,,,,25
+0022601153,2027-04-06 21:00:00,1610612743,1610612740,Denver,Nuggets,New Orleans,Pelicans,Tue,Ball Arena,Denver,CO,,,,,25
+0022601154,2027-04-06 21:00:00,1610612762,1610612760,Utah,Jazz,Oklahoma City,Thunder,Tue,Delta Center,Salt Lake City,UT,,,,,25
+0022601155,2027-04-06 22:00:00,1610612747,1610612742,Los Angeles,Lakers,Dallas,Mavericks,Tue,Crypto.com Arena,Los Angeles,CA,,,,,25
+0022601156,2027-04-06 22:30:00,1610612746,1610612750,LA,Clippers,Minnesota,Timberwolves,Tue,Intuit Dome,Inglewood,CA,,,,,25
+0022601157,2027-04-06 23:00:00,1610612744,1610612756,Golden State,Warriors,Phoenix,Suns,Tue,Chase Center,San Francisco,CA,,,,,25
+0022601158,2027-04-07 19:00:00,1610612765,1610612754,Detroit,Pistons,Indiana,Pacers,Wed,Little Caesars Arena,Detroit,MI,,,,,25
+0022601159,2027-04-07 19:00:00,1610612753,1610612738,Orlando,Magic,Boston,Celtics,Wed,Kia Center,Orlando,FL,,,,,25
+0022601161,2027-04-07 19:30:00,1610612759,1610612739,San Antonio,Spurs,Cleveland,Cavaliers,Wed,Frost Bank Center,San Antonio,TX,,,,,25
+0022601160,2027-04-07 19:30:00,1610612761,1610612751,Toronto,Raptors,Brooklyn,Nets,Wed,Scotiabank Arena,Toronto,ON,,,,,25
+0022601162,2027-04-07 20:00:00,1610612741,1610612766,Chicago,Bulls,Charlotte,Hornets,Wed,United Center,Chicago,IL,,,,,25
+0022601163,2027-04-07 20:00:00,1610612763,1610612764,Memphis,Grizzlies,Washington,Wizards,Wed,FedExForum,Memphis,TN,,,,,25
+0022601164,2027-04-07 20:30:00,1610612745,1610612758,Houston,Rockets,Sacramento,Kings,Wed,Toyota Center,Houston,TX,,,,,25
+0022601165,2027-04-07 22:00:00,1610612747,1610612750,Los Angeles,Lakers,Minnesota,Timberwolves,Wed,Crypto.com Arena,Los Angeles,CA,,,,,25
+0022601166,2027-04-07 22:00:00,1610612757,1610612742,Portland,Trail Blazers,Dallas,Mavericks,Wed,Moda Center,Portland,OR,,,,,25
+0022601167,2027-04-08 19:00:00,1610612748,1610612755,Miami,Heat,Philadelphia,76ers,Thu,Kaseya Center,Miami,FL,,,,,25
+0022601168,2027-04-08 20:00:00,1610612749,1610612752,Milwaukee,Bucks,New York,Knicks,Thu,Fiserv Forum,Milwaukee,WI,,,,,25
+0022601170,2027-04-08 21:00:00,1610612762,1610612740,Utah,Jazz,New Orleans,Pelicans,Thu,Delta Center,Salt Lake City,UT,,,,,25
+0022601169,2027-04-08 21:00:00,1610612743,1610612746,Denver,Nuggets,LA,Clippers,Thu,Ball Arena,Denver,CO,,,,,25
+0022601171,2027-04-08 21:30:00,1610612760,1610612744,Oklahoma City,Thunder,Golden State,Warriors,Thu,Paycom Center,Oklahoma City,OK,,,,,25
+0022601172,2027-04-09 19:00:00,1610612737,1610612738,Atlanta,Hawks,Boston,Celtics,Fri,State Farm Arena,Atlanta,GA,,,,,25
+0022601173,2027-04-09 19:00:00,1610612766,1610612751,Charlotte,Hornets,Brooklyn,Nets,Fri,Spectrum Center,Charlotte,NC,,,,,25
+0022601174,2027-04-09 19:00:00,1610612754,1610612739,Indiana,Pacers,Cleveland,Cavaliers,Fri,Gainbridge Fieldhouse,Indianapolis,IN,,,,,25
+0022601175,2027-04-09 19:00:00,1610612752,1610612765,New York,Knicks,Detroit,Pistons,Fri,Madison Square Garden,New York,NY,,,,,25
+0022601176,2027-04-09 19:00:00,1610612753,1610612761,Orlando,Magic,Toronto,Raptors,Fri,Kia Center,Orlando,FL,,,,,25
+0022601179,2027-04-09 20:00:00,1610612760,1610612744,Oklahoma City,Thunder,Golden State,Warriors,Fri,Paycom Center,Oklahoma City,OK,,,,,25
+0022601178,2027-04-09 20:00:00,1610612741,1610612749,Chicago,Bulls,Milwaukee,Bucks,Fri,United Center,Chicago,IL,,,,,25
+0022601177,2027-04-09 20:00:00,1610612748,1610612764,Miami,Heat,Washington,Wizards,Fri,Kaseya Center,Miami,FL,,,,,25
+0022601180,2027-04-09 20:30:00,1610612745,1610612757,Houston,Rockets,Portland,Trail Blazers,Fri,Toyota Center,Houston,TX,,,,,25
+0022601181,2027-04-09 21:30:00,1610612759,1610612743,San Antonio,Spurs,Denver,Nuggets,Fri,Frost Bank Center,San Antonio,TX,,,,,25
+0022601182,2027-04-09 21:30:00,1610612762,1610612746,Utah,Jazz,LA,Clippers,Fri,Delta Center,Salt Lake City,UT,,,,,25
+0022601183,2027-04-09 22:00:00,1610612747,1610612750,Los Angeles,Lakers,Minnesota,Timberwolves,Fri,Crypto.com Arena,Los Angeles,CA,,,,,25
+0022601184,2027-04-09 22:00:00,1610612756,1610612763,Phoenix,Suns,Memphis,Grizzlies,Fri,Mortgage Matchup Center,Phoenix,AZ,,,,,25
+0022601185,2027-04-09 22:00:00,1610612758,1610612742,Sacramento,Kings,Dallas,Mavericks,Fri,Golden 1 Center,Sacramento,CA,,,,,25
+0022601186,2027-04-11 18:00:00,1610612738,1610612749,Boston,Celtics,Milwaukee,Bucks,Sun,TD Garden,Boston,MA,,,,,25
+0022601187,2027-04-11 18:00:00,1610612751,1610612761,Brooklyn,Nets,Toronto,Raptors,Sun,Barclays Center,Brooklyn,NY,,,,,25
+0022601188,2027-04-11 18:00:00,1610612739,1610612737,Cleveland,Cavaliers,Atlanta,Hawks,Sun,Rocket Arena,Cleveland,OH,,,,,25
+0022601189,2027-04-11 18:00:00,1610612748,1610612753,Miami,Heat,Orlando,Magic,Sun,Kaseya Center,Miami,FL,,,,,25
+0022601190,2027-04-11 18:00:00,1610612752,1610612754,New York,Knicks,Indiana,Pacers,Sun,Madison Square Garden,New York,NY,,,,,25
+0022601191,2027-04-11 18:00:00,1610612755,1610612766,Philadelphia,76ers,Charlotte,Hornets,Sun,Xfinity Mobile Arena,Philadelphia,PA,,,,,25
+0022601192,2027-04-11 18:00:00,1610612764,1610612765,Washington,Wizards,Detroit,Pistons,Sun,Capital One Arena,Washington,DC,,,,,25
+0022601193,2027-04-11 18:00:00,1610612740,1610612741,New Orleans,Pelicans,Chicago,Bulls,Sun,Smoothie King Center,New Orleans,LA,,,,,25
+0022601194,2027-04-11 20:30:00,1610612742,1610612763,Dallas,Mavericks,Memphis,Grizzlies,Sun,American Airlines Center,Dallas,TX,,,,,25
+0022601195,2027-04-11 20:30:00,1610612750,1610612745,Minnesota,Timberwolves,Houston,Rockets,Sun,Target Center,Minneapolis,MN,,,,,25
+0022601196,2027-04-11 20:30:00,1610612759,1610612757,San Antonio,Spurs,Portland,Trail Blazers,Sun,Frost Bank Center,San Antonio,TX,,,,,25
+0022601197,2027-04-11 20:30:00,1610612743,1610612760,Denver,Nuggets,Oklahoma City,Thunder,Sun,Ball Arena,Denver,CO,,,,,25
+0022601198,2027-04-11 20:30:00,1610612744,1610612762,Golden State,Warriors,Utah,Jazz,Sun,Chase Center,San Francisco,CA,,,,,25
+0022601199,2027-04-11 20:30:00,1610612746,1610612758,LA,Clippers,Sacramento,Kings,Sun,Intuit Dome,Inglewood,CA,,,,,25
+0022601200,2027-04-11 20:30:00,1610612747,1610612756,Los Angeles,Lakers,Phoenix,Suns,Sun,Crypto.com Arena,Los Angeles,CA,,,,,25

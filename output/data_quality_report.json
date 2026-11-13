@@ -1,110 +1,115 @@
 {
-  "generated_at": "2026-06-11T05:52:04",
-  "total_rows": 12801,
-  "features_checked": 75,
-  "latest_game_date": "2026-06-10",
+  "generated_at": "2026-11-13T01:08:26",
+  "total_rows": 13740,
+  "features_checked": 76,
+  "latest_game_date": "2026-11-12",
   "issues": [],
   "warnings": [
-    "'home_rest_days': 307 Ausreißer außerhalb [-3.0, 7.0]",
-    "'away_rest_days': 296 Ausreißer außerhalb [-3.0, 7.0]"
+    "'home_rest_days': 345 Ausreißer außerhalb [-3.0, 7.0]",
+    "'away_rest_days': 331 Ausreißer außerhalb [-3.0, 7.0]"
   ],
   "passed": true,
   "by_season": {
     "2016": {
-      "games": 1309,
-      "home_win_rate": 0.5829,
+      "games": 1405,
+      "home_win_rate": 0.5808,
       "alert": false
     },
     "2017": {
-      "games": 1312,
-      "home_win_rate": 0.5869,
+      "games": 1382,
+      "home_win_rate": 0.5825,
       "alert": false
     },
     "2018": {
-      "games": 1312,
-      "home_win_rate": 0.5907,
+      "games": 1378,
+      "home_win_rate": 0.5878,
       "alert": false
     },
     "2019": {
-      "games": 1137,
-      "home_win_rate": 0.5471,
+      "games": 1077,
+      "home_win_rate": 0.5385,
       "alert": false
     },
     "2020": {
-      "games": 1170,
-      "home_win_rate": 0.5444,
+      "games": 1377,
+      "home_win_rate": 0.5403,
       "alert": false
     },
     "2021": {
-      "games": 1317,
-      "home_win_rate": 0.5475,
+      "games": 1383,
+      "home_win_rate": 0.5524,
       "alert": false
     },
     "2022": {
-      "games": 1314,
-      "home_win_rate": 0.5814,
+      "games": 1379,
+      "home_win_rate": 0.5743,
       "alert": false
     },
     "2023": {
-      "games": 1312,
-      "home_win_rate": 0.5457,
+      "games": 1376,
+      "home_win_rate": 0.548,
       "alert": false
     },
     "2024": {
-      "games": 1309,
-      "home_win_rate": 0.5462,
+      "games": 1375,
+      "home_win_rate": 0.5491,
       "alert": false
     },
     "2025": {
-      "games": 1309,
-      "home_win_rate": 0.5546,
+      "games": 1371,
+      "home_win_rate": 0.5522,
+      "alert": false
+    },
+    "2026": {
+      "games": 237,
+      "home_win_rate": 0.5316,
       "alert": false
     }
   },
   "outlier_flags": {
     "home_elo": {
       "n_outliers": 0,
-      "low_bound": 695.78,
-      "high_bound": 2326.12
+      "low_bound": 784.45,
+      "high_bound": 2233.52
     },
     "away_elo": {
       "n_outliers": 0,
-      "low_bound": 692.76,
-      "high_bound": 2331.88
+      "low_bound": 782.69,
+      "high_bound": 2238.79
     },
     "elo_diff": {
       "n_outliers": 0,
-      "low_bound": -1087.95,
-      "high_bound": 1085.69
+      "low_bound": -962.81,
+      "high_bound": 960.79
     },
     "home_rest_days": {
-      "n_outliers": 307,
+      "n_outliers": 345,
       "low_bound": -3.0,
       "high_bound": 7.0
     },
     "away_rest_days": {
-      "n_outliers": 296,
+      "n_outliers": 331,
       "low_bound": -3.0,
       "high_bound": 7.0
     },
     "home_last5_avg_points": {
       "n_outliers": 0,
-      "low_bound": 53.0,
-      "high_bound": 169.6
+      "low_bound": 54.0,
+      "high_bound": 168.4
     },
     "away_last5_avg_points": {
       "n_outliers": 0,
-      "low_bound": 55.4,
-      "high_bound": 167.6
+      "low_bound": 55.2,
+      "high_bound": 167.4
     }
   },
   "coverage_by_season": {
     "2016": {
-      "home_last5_pts": 0.964,
+      "home_last5_pts": 0.969,
       "away_last5_pts": 0.967,
-      "home_last5_rebounds": 0.964,
-      "home_last5_ast": 0.964,
-      "home_last5_player_count": 0.964
+      "home_last5_rebounds": 0.969,
+      "home_last5_ast": 0.969,
+      "home_last5_player_count": 0.969
     },
     "2017": {
       "home_last5_pts": 1.0,
@@ -163,6 +168,13 @@
       "home_last5_player_count": 1.0
     },
     "2025": {
+      "home_last5_pts": 1.0,
+      "away_last5_pts": 1.0,
+      "home_last5_rebounds": 1.0,
+      "home_last5_ast": 1.0,
+      "home_last5_player_count": 1.0
+    },
+    "2026": {
       "home_last5_pts": 1.0,
       "away_last5_pts": 1.0,
       "home_last5_rebounds": 1.0,

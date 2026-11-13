@@ -1,0 +1,160 @@
+{
+  "test_seasons": [
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "early_days": 21,
+  "results": {
+    "keep": {
+      "all": {
+        "games": 6562,
+        "accuracy": 0.6554,
+        "log_loss": 0.6274
+      },
+      "season_start": {
+        "games": 769,
+        "accuracy": 0.6593,
+        "log_loss": 0.6334
+      },
+      "rest_of_season": {
+        "games": 5371,
+        "accuracy": 0.6556,
+        "log_loss": 0.625
+      },
+      "playoffs": {
+        "games": 422,
+        "accuracy": 0.6469,
+        "log_loss": 0.6468
+      },
+      "per_season_start": {
+        "2021": {
+          "games": 154,
+          "accuracy": 0.6429,
+          "log_loss": 0.6641
+        },
+        "2022": {
+          "games": 158,
+          "accuracy": 0.6456,
+          "log_loss": 0.6536
+        },
+        "2023": {
+          "games": 147,
+          "accuracy": 0.6395,
+          "log_loss": 0.6427
+        },
+        "2024": {
+          "games": 155,
+          "accuracy": 0.6645,
+          "log_loss": 0.6162
+        },
+        "2025": {
+          "games": 155,
+          "accuracy": 0.7032,
+          "log_loss": 0.5905
+        }
+      }
+    },
+    "exclude_form": {
+      "all": {
+        "games": 6562,
+        "accuracy": 0.6495,
+        "log_loss": 0.6284
+      },
+      "season_start": {
+        "games": 769,
+        "accuracy": 0.645,
+        "log_loss": 0.6346
+      },
+      "rest_of_season": {
+        "games": 5371,
+        "accuracy": 0.6509,
+        "log_loss": 0.6253
+      },
+      "playoffs": {
+        "games": 422,
+        "accuracy": 0.6398,
+        "log_loss": 0.6569
+      },
+      "per_season_start": {
+        "2021": {
+          "games": 154,
+          "accuracy": 0.6558,
+          "log_loss": 0.6697
+        },
+        "2022": {
+          "games": 158,
+          "accuracy": 0.6139,
+          "log_loss": 0.6646
+        },
+        "2023": {
+          "games": 147,
+          "accuracy": 0.6327,
+          "log_loss": 0.6214
+        },
+        "2024": {
+          "games": 155,
+          "accuracy": 0.6258,
+          "log_loss": 0.6123
+        },
+        "2025": {
+          "games": 155,
+          "accuracy": 0.6968,
+          "log_loss": 0.604
+        }
+      }
+    },
+    "drop": {
+      "all": {
+        "games": 6562,
+        "accuracy": 0.648,
+        "log_loss": 0.6302
+      },
+      "season_start": {
+        "games": 769,
+        "accuracy": 0.6359,
+        "log_loss": 0.6365
+      },
+      "rest_of_season": {
+        "games": 5371,
+        "accuracy": 0.6502,
+        "log_loss": 0.6277
+      },
+      "playoffs": {
+        "games": 422,
+        "accuracy": 0.6422,
+        "log_loss": 0.6506
+      },
+      "per_season_start": {
+        "2021": {
+          "games": 154,
+          "accuracy": 0.6429,
+          "log_loss": 0.6718
+        },
+        "2022": {
+          "games": 158,
+          "accuracy": 0.5886,
+          "log_loss": 0.6664
+        },
+        "2023": {
+          "games": 147,
+          "accuracy": 0.619,
+          "log_loss": 0.6235
+        },
+        "2024": {
+          "games": 155,
+          "accuracy": 0.6516,
+          "log_loss": 0.6119
+        },
+        "2025": {
+          "games": 155,
+          "accuracy": 0.6774,
+          "log_loss": 0.6079
+        }
+      }
+    }
+  },
+  "generated_at": "2026-10-23T10:20:29"
+}

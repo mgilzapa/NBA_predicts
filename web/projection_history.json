@@ -1,0 +1,312 @@
+[
+ {
+  "date": "2026-11-12",
+  "teams": {
+   "Boston Celtics": {
+    "playoffs": 0.9936,
+    "conf_finals": 0.4985,
+    "champion": 0.1494
+   },
+   "San Antonio Spurs": {
+    "playoffs": 0.9778,
+    "conf_finals": 0.4197,
+    "champion": 0.1412
+   },
+   "Oklahoma City Thunder": {
+    "playoffs": 0.9722,
+    "conf_finals": 0.3999,
+    "champion": 0.1364
+   },
+   "Detroit Pistons": {
+    "playoffs": 0.9795,
+    "conf_finals": 0.3798,
+    "champion": 0.0932
+   },
+   "New York Knicks": {
+    "playoffs": 0.9518,
+    "conf_finals": 0.3374,
+    "champion": 0.0844
+   },
+   "Los Angeles Lakers": {
+    "playoffs": 0.9385,
+    "conf_finals": 0.2663,
+    "champion": 0.0687
+   },
+   "Houston Rockets": {
+    "playoffs": 0.9366,
+    "conf_finals": 0.2545,
+    "champion": 0.0642
+   },
+   "Minnesota Timberwolves": {
+    "playoffs": 0.8563,
+    "conf_finals": 0.193,
+    "champion": 0.0478
+   },
+   "Philadelphia 76ers": {
+    "playoffs": 0.9405,
+    "conf_finals": 0.2181,
+    "champion": 0.0391
+   },
+   "Denver Nuggets": {
+    "playoffs": 0.805,
+    "conf_finals": 0.1603,
+    "champion": 0.036
+   },
+   "Portland Trail Blazers": {
+    "playoffs": 0.8222,
+    "conf_finals": 0.1499,
+    "champion": 0.031
+   },
+   "Atlanta Hawks": {
+    "playoffs": 0.8635,
+    "conf_finals": 0.163,
+    "champion": 0.0273
+   },
+   "Cleveland Cavaliers": {
+    "playoffs": 0.8158,
+    "conf_finals": 0.1403,
+    "champion": 0.0239
+   },
+   "Golden State Warriors": {
+    "playoffs": 0.6331,
+    "conf_finals": 0.07,
+    "champion": 0.0119
+   },
+   "Toronto Raptors": {
+    "playoffs": 0.6496,
+    "conf_finals": 0.0795,
+    "champion": 0.0105
+   },
+   "Orlando Magic": {
+    "playoffs": 0.5876,
+    "conf_finals": 0.0737,
+    "champion": 0.0097
+   },
+   "Charlotte Hornets": {
+    "playoffs": 0.546,
+    "conf_finals": 0.0595,
+    "champion": 0.0074
+   },
+   "LA Clippers": {
+    "playoffs": 0.3145,
+    "conf_finals": 0.0326,
+    "champion": 0.0055
+   },
+   "Miami Heat": {
+    "playoffs": 0.4301,
+    "conf_finals": 0.0383,
+    "champion": 0.0042
+   },
+   "Phoenix Suns": {
+    "playoffs": 0.2919,
+    "conf_finals": 0.0249,
+    "champion": 0.0035
+   },
+   "Dallas Mavericks": {
+    "playoffs": 0.2203,
+    "conf_finals": 0.0144,
+    "champion": 0.002
+   },
+   "Memphis Grizzlies": {
+    "playoffs": 0.2011,
+    "conf_finals": 0.0128,
+    "champion": 0.0016
+   },
+   "Chicago Bulls": {
+    "playoffs": 0.0632,
+    "conf_finals": 0.0035,
+    "champion": 0.0003
+   },
+   "Indiana Pacers": {
+    "playoffs": 0.0628,
+    "conf_finals": 0.0028,
+    "champion": 0.0002
+   },
+   "Brooklyn Nets": {
+    "playoffs": 0.0536,
+    "conf_finals": 0.0025,
+    "champion": 0.0002
+   },
+   "Milwaukee Bucks": {
+    "playoffs": 0.0358,
+    "conf_finals": 0.002,
+    "champion": 0.0002
+   },
+   "New Orleans Pelicans": {
+    "playoffs": 0.0225,
+    "conf_finals": 0.0013,
+    "champion": 0.0001
+   },
+   "Washington Wizards": {
+    "playoffs": 0.0265,
+    "conf_finals": 0.0011,
+    "champion": 0.0001
+   },
+   "Sacramento Kings": {
+    "playoffs": 0.006,
+    "conf_finals": 0.0003,
+    "champion": 0.0
+   },
+   "Utah Jazz": {
+    "playoffs": 0.0018,
+    "conf_finals": 0.0001,
+    "champion": 0.0
+   }
+  }
+ },
+ {
+  "date": "2026-11-13",
+  "teams": {
+   "Boston Celtics": {
+    "playoffs": 0.9945,
+    "conf_finals": 0.491,
+    "champion": 0.1453
+   },
+   "San Antonio Spurs": {
+    "playoffs": 0.979,
+    "conf_finals": 0.4233,
+    "champion": 0.1437
+   },
+   "Oklahoma City Thunder": {
+    "playoffs": 0.9673,
+    "conf_finals": 0.3921,
+    "champion": 0.1285
+   },
+   "Detroit Pistons": {
+    "playoffs": 0.9846,
+    "conf_finals": 0.3921,
+    "champion": 0.0956
+   },
+   "New York Knicks": {
+    "playoffs": 0.9587,
+    "conf_finals": 0.3396,
+    "champion": 0.086
+   },
+   "Los Angeles Lakers": {
+    "playoffs": 0.9305,
+    "conf_finals": 0.2601,
+    "champion": 0.0674
+   },
+   "Houston Rockets": {
+    "playoffs": 0.9391,
+    "conf_finals": 0.2616,
+    "champion": 0.0673
+   },
+   "Minnesota Timberwolves": {
+    "playoffs": 0.8724,
+    "conf_finals": 0.2096,
+    "champion": 0.052
+   },
+   "Philadelphia 76ers": {
+    "playoffs": 0.9552,
+    "conf_finals": 0.2323,
+    "champion": 0.0422
+   },
+   "Denver Nuggets": {
+    "playoffs": 0.78,
+    "conf_finals": 0.1498,
+    "champion": 0.0358
+   },
+   "Portland Trail Blazers": {
+    "playoffs": 0.816,
+    "conf_finals": 0.1442,
+    "champion": 0.0307
+   },
+   "Atlanta Hawks": {
+    "playoffs": 0.855,
+    "conf_finals": 0.1508,
+    "champion": 0.0254
+   },
+   "Cleveland Cavaliers": {
+    "playoffs": 0.8171,
+    "conf_finals": 0.139,
+    "champion": 0.0229
+   },
+   "Golden State Warriors": {
+    "playoffs": 0.6129,
+    "conf_finals": 0.0648,
+    "champion": 0.0114
+   },
+   "Orlando Magic": {
+    "playoffs": 0.5964,
+    "conf_finals": 0.0763,
+    "champion": 0.0106
+   },
+   "Toronto Raptors": {
+    "playoffs": 0.6189,
+    "conf_finals": 0.0709,
+    "champion": 0.0094
+   },
+   "Charlotte Hornets": {
+    "playoffs": 0.5179,
+    "conf_finals": 0.0546,
+    "champion": 0.0067
+   },
+   "LA Clippers": {
+    "playoffs": 0.3132,
+    "conf_finals": 0.0346,
+    "champion": 0.006
+   },
+   "Phoenix Suns": {
+    "playoffs": 0.3756,
+    "conf_finals": 0.0342,
+    "champion": 0.0054
+   },
+   "Miami Heat": {
+    "playoffs": 0.4445,
+    "conf_finals": 0.0408,
+    "champion": 0.0036
+   },
+   "Dallas Mavericks": {
+    "playoffs": 0.1919,
+    "conf_finals": 0.0124,
+    "champion": 0.0015
+   },
+   "Memphis Grizzlies": {
+    "playoffs": 0.1904,
+    "conf_finals": 0.0116,
+    "champion": 0.0014
+   },
+   "Chicago Bulls": {
+    "playoffs": 0.0668,
+    "conf_finals": 0.0034,
+    "champion": 0.0004
+   },
+   "Indiana Pacers": {
+    "playoffs": 0.0682,
+    "conf_finals": 0.0031,
+    "champion": 0.0003
+   },
+   "New Orleans Pelicans": {
+    "playoffs": 0.0251,
+    "conf_finals": 0.0015,
+    "champion": 0.0003
+   },
+   "Brooklyn Nets": {
+    "playoffs": 0.0576,
+    "conf_finals": 0.0028,
+    "champion": 0.0002
+   },
+   "Milwaukee Bucks": {
+    "playoffs": 0.0377,
+    "conf_finals": 0.0023,
+    "champion": 0.0001
+   },
+   "Washington Wizards": {
+    "playoffs": 0.0267,
+    "conf_finals": 0.0011,
+    "champion": 0.0
+   },
+   "Sacramento Kings": {
+    "playoffs": 0.0053,
+    "conf_finals": 0.0003,
+    "champion": 0.0
+   },
+   "Utah Jazz": {
+    "playoffs": 0.0014,
+    "conf_finals": 0.0,
+    "champion": 0.0
+   }
+  }
+ }
+]

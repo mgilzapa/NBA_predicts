@@ -41,8 +41,9 @@ python -m pytest tests/test_fetch_bracket.py
 
 `run_all.py` executes these scripts in sequence — each step depends on output from the previous:
 
-1. `src/nba_api_test.py` → `data/nba_api_games.csv` (raw game results from nba_api)
-2. `src/scrape_upcoming_games.py` → `data/schedule_round_1.csv` (upcoming games)
+1. `src/nba_api_test.py` → `data/nba_api_games.csv` (raw game results from nba_api) + `data/nba_api_playin.csv` (play-in games of the current season, kept separate so features/training are unaffected)
+2. `src/scrape_upcoming_games.py` → `data/schedule_round_1.csv` (upcoming games, incl. preseason)
+2b. `src/fetch_rosters.py` → `data/current_rosters.csv` (current roster of all 30 teams; players count for their new team in injury features, roster continuity drives ELO season regression)
 3. `src/injury_reports.py` → `data/current_injuries.csv` (scrapes covers.com)
 4. `src/fetch_player_stats.py` → `data/player_boxscores.csv`
 5. `src/tabelle.py` → `data/base_games.csv` (cleaned game table)
@@ -52,7 +53,17 @@ python -m pytest tests/test_fetch_bracket.py
 9. `src/create_excel.py` → `output/all_predictions.xlsx` (cumulative history with actuals)
 10. `src/fetch_odds.py` → `web/odds.json` (the-odds-api.com, needs `ODDS_API_KEY`)
 11. `src/export_json.py` → `web/predictions.json` (today/yesterday/all as JSON)
-12. `src/fetch_bracket.py` → `web/bracket.json` (playoff bracket with series predictions)
+12. `src/fetch_bracket.py` → `web/bracket.json` (season projection + playoff bracket), `web/projection_history.json`, `output/season_sim_report.json`. Calls `src/season_simulator.py` (no separate pipeline step).
+
+## Season projection (`src/season_simulator.py`, called by `fetch_bracket.py`)
+
+- **Modes** (auto-detected): `projected` (regular season running → simulate rest of season, play-in, playoffs), `post_season_pending` (table final, only play-in + playoffs simulated), `live` (real play-in/playoff games exist → real series with the existing XGBoost logic, later rounds + round odds via ELO simulation).
+- **Monte Carlo**: 50,000 sims, fixed seed per day (`YYYYMMDD`). Game probabilities: today from `output/predictions.xlsx`, days 1–7 XGBoost on the frozen team snapshot (`build_feature_row(..., context=...)` with rest/b2b/fatigue from the schedule), after that ELO with home advantage. ELO updated with K=20 after every simulated game. Constants live in `src/elo_config.py` (shared with `feature_engineering.py`).
+- **Official NBA tiebreakers** (2-team and 3+-team, restart with 2 teams) for both the current table (real point diff as last step) and the simulation (random last step). Cup final (`006`) excluded, TBD schedule games skipped.
+- **Bracket path**: R1 slots 1v8, 2v7, 3v6, 4v5 picked as most frequent pairing conditioned on earlier slots; series stats from sims with exactly that pairing, analytic ELO fallback below 500 matching sims.
+- **bracket.json** stays backward compatible and adds `mode`, `sims`, `projection_date`, `standings{east,west}{current,projected}`, `play_in`, `round_odds`; series get `prediction.team_probabilities` and `projected`. Projected series have `status: "projected"`.
+- Old season's `bracket.json` is copied once to `data/archive/bracket_<season>.json`.
+- Simulator errors never stop the pipeline: the legacy bracket is still written and the report says `critical`. `dashboard_exporter.py` shows it as "Season Simulation" under System Health.
 
 The `data/` and `output/` directories are gitignored.
 
@@ -61,6 +72,8 @@ The `data/` and `output/` directories are gitignored.
 - **Model**: XGBoost binary classifier (`home_win` target), saved as `models/best_xgb_model.pkl`
 - **Feature list**: `models/feature_cols.csv` (read at prediction time — do not hardcode feature lists)
 - **Features**: rolling last-5-game stats (win rate, points, rebounds, assists), ELO ratings, rest days, back-to-back flags, home/away win rates, player availability metrics derived from injury reports
+- **Season types**: `nba_api_games.csv` holds Pre Season, Regular Season and Playoffs (NBA vs. NBA only; current season derived from date). `is_preseason` is a model feature; preseason games use ELO K=8 (vs. 20) and half sample weight in training. Seasons start in August (`season_start_year`).
+- **ELO season regression**: at each team's first game of a new season, ELO is pulled toward 1500 (carry 0.75; for the current season 0.55–0.90 depending on roster continuity). `data/elo_current.csv` holds post-game ELO used by `predict.py` and `export_json.py`.
 - **Training**: `src/feature_engineering.py` uses `TimeSeriesSplit` for cross-validation and saves the best model; `src/predict.py` loads the saved model and applies it to upcoming games
 - `src/train.py` is a standalone analysis/comparison script (LR vs XGB), not part of the daily pipeline
 
@@ -68,7 +81,8 @@ The `data/` and `output/` directories are gitignored.
 
 Static files in `web/` — no build step, no framework:
 - `web/index.html` + `web/style.css` + `web/app.js`
-- Data is fetched from `web/predictions.json`, `web/odds.json`, `web/bracket.json`
+- Data is fetched from `web/predictions.json`, `web/odds.json`, `web/bracket.json`, `web/projection_history.json`
+- Bracket tab: play-in columns beside R1, series win % per team, outcome distribution as tooltip (hover/focus), projection badge, East/West standings with Current/Projected toggle, sortable round-odds table, odds-history chart (% Playoffs / % Conf Finals / % Title)
 - Four tabs: Today, Yesterday, All Predictions, Bracket
 - Deployed to Vercel; `vercel.json` sets `web/` as the output directory
 

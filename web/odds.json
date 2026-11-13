@@ -1,57 +1,790 @@
 {
-  "generated_at": "2026-06-11T09:52:27Z",
+  "generated_at": "2026-11-13T06:08:42Z",
   "games": {
-    "2026-06-04|oklahoma city thunder|new york knicks": {
-      "home_team": "Oklahoma City Thunder",
-      "away_team": "New York Knicks",
-      "date": "2026-06-04",
+    "2026-10-30|washington wizards|charlotte hornets": {
+      "home_team": "Washington Wizards",
+      "away_team": "Charlotte Hornets",
+      "date": "2026-10-30",
       "bookmakers": [
         {
-          "name": "FanDuel",
-          "home": 1.44,
-          "away": 2.88
-        },
-        {
           "name": "DraftKings",
-          "home": 1.4,
-          "away": 3.05
-        }
-      ]
-    },
-    "2026-06-04|san antonio spurs|new york knicks": {
-      "home_team": "San Antonio Spurs",
-      "away_team": "New York Knicks",
-      "date": "2026-06-04",
-      "bookmakers": [
-        {
-          "name": "FanDuel",
-          "home": 1.49,
-          "away": 2.72
-        },
-        {
-          "name": "DraftKings",
-          "home": 1.51,
-          "away": 2.64
-        },
-        {
-          "name": "BetOnline.ag",
-          "home": 1.47,
-          "away": 2.81
-        },
-        {
-          "name": "LowVig.ag",
-          "home": 1.47,
-          "away": 2.83
+          "home": 1.87,
+          "away": 1.95
         },
         {
           "name": "BetRivers",
-          "home": 1.53,
-          "away": 2.5
+          "home": 1.76,
+          "away": 2.08
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.85,
+          "away": 1.98
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.83,
+          "away": 2.04
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.82,
+          "away": 2.02
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.83,
+          "away": 2.02
+        },
+        {
+          "name": "Bovada",
+          "home": 1.83,
+          "away": 2.0
+        },
+        {
+          "name": "BetUS",
+          "home": 1.83,
+          "away": 2.0
         },
         {
           "name": "MyBookie.ag",
-          "home": 1.5,
-          "away": 2.62
+          "home": 1.8,
+          "away": 1.91
+        }
+      ]
+    },
+    "2026-10-30|boston celtics|chicago bulls": {
+      "home_team": "Boston Celtics",
+      "away_team": "Chicago Bulls",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.12,
+          "away": 6.75
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.15,
+          "away": 5.5
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.11,
+          "away": 7.0
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.13,
+          "away": 6.76
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.12,
+          "away": 6.61
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.11,
+          "away": 7.1
+        },
+        {
+          "name": "Bovada",
+          "home": 1.11,
+          "away": 6.75
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.08,
+          "away": 6.4
+        },
+        {
+          "name": "BetUS",
+          "home": 1.1,
+          "away": 7.8
+        }
+      ]
+    },
+    "2026-10-30|brooklyn nets|detroit pistons": {
+      "home_team": "Brooklyn Nets",
+      "away_team": "Detroit Pistons",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 3.3,
+          "away": 1.35
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.6,
+          "away": 1.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.3,
+          "away": 1.34
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.37,
+          "away": 1.35
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.34,
+          "away": 1.35
+        },
+        {
+          "name": "FanDuel",
+          "home": 3.4,
+          "away": 1.34
+        },
+        {
+          "name": "Bovada",
+          "home": 3.5,
+          "away": 1.33
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.14,
+          "away": 1.31
+        },
+        {
+          "name": "BetUS",
+          "home": 3.38,
+          "away": 1.35
+        }
+      ]
+    },
+    "2026-10-30|philadelphia 76ers|new york knicks": {
+      "home_team": "Philadelphia 76ers",
+      "away_team": "New York Knicks",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.02,
+          "away": 1.82
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.08,
+          "away": 1.79
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.14,
+          "away": 1.73
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.05,
+          "away": 1.8
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.12,
+          "away": 1.78
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.1,
+          "away": 1.77
+        },
+        {
+          "name": "Bovada",
+          "home": 2.05,
+          "away": 1.8
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.98,
+          "away": 1.74
+        },
+        {
+          "name": "BetUS",
+          "home": 2.1,
+          "away": 1.77
+        }
+      ]
+    },
+    "2026-10-31|dallas mavericks|houston rockets": {
+      "home_team": "Dallas Mavericks",
+      "away_team": "Houston Rockets",
+      "date": "2026-10-31",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.8,
+          "away": 1.46
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.8,
+          "away": 1.44
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.8,
+          "away": 1.45
+        },
+        {
+          "name": "Bovada",
+          "home": 2.95,
+          "away": 1.43
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.8,
+          "away": 1.47
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.65,
+          "away": 1.42
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.85,
+          "away": 1.47
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.83,
+          "away": 1.47
+        },
+        {
+          "name": "BetUS",
+          "home": 2.83,
+          "away": 1.47
+        }
+      ]
+    },
+    "2026-10-31|miami heat|indiana pacers": {
+      "home_team": "Miami Heat",
+      "away_team": "Indiana Pacers",
+      "date": "2026-10-31",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.36,
+          "away": 3.25
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.27,
+          "away": 3.8
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.33,
+          "away": 3.4
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.35,
+          "away": 3.37
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.35,
+          "away": 3.34
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.33,
+          "away": 3.45
+        },
+        {
+          "name": "Bovada",
+          "home": 1.31,
+          "away": 3.6
+        },
+        {
+          "name": "BetUS",
+          "home": 1.35,
+          "away": 3.38
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.3,
+          "away": 3.2
+        }
+      ]
+    },
+    "2026-10-31|phoenix suns|denver nuggets": {
+      "home_team": "Phoenix Suns",
+      "away_team": "Denver Nuggets",
+      "date": "2026-10-31",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.42,
+          "away": 1.59
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.4,
+          "away": 1.57
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.5,
+          "away": 1.54
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.54,
+          "away": 1.57
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.53,
+          "away": 1.57
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.54,
+          "away": 1.54
+        },
+        {
+          "name": "Bovada",
+          "home": 2.5,
+          "away": 1.57
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.35,
+          "away": 1.53
+        },
+        {
+          "name": "BetUS",
+          "home": 2.5,
+          "away": 1.57
+        }
+      ]
+    },
+    "2026-10-31|golden state warriors|los angeles lakers": {
+      "home_team": "Golden State Warriors",
+      "away_team": "Los Angeles Lakers",
+      "date": "2026-10-31",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.1,
+          "away": 1.77
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.16,
+          "away": 1.74
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.07,
+          "away": 1.77
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.15,
+          "away": 1.71
+        },
+        {
+          "name": "Bovada",
+          "home": 2.2,
+          "away": 1.71
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.17,
+          "away": 1.75
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.06,
+          "away": 1.68
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.15,
+          "away": 1.74
+        },
+        {
+          "name": "BetUS",
+          "home": 2.15,
+          "away": 1.74
+        }
+      ]
+    },
+    "2026-11-07|cleveland cavaliers|philadelphia 76ers": {
+      "home_team": "Cleveland Cavaliers",
+      "away_team": "Philadelphia 76ers",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.24,
+          "away": 1.68
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.25,
+          "away": 1.69
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.27,
+          "away": 1.69
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.3,
+          "away": 1.65
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.17,
+          "away": 1.71
+        },
+        {
+          "name": "Bovada",
+          "home": 2.25,
+          "away": 1.69
+        },
+        {
+          "name": "BetUS",
+          "home": 2.25,
+          "away": 1.69
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.13,
+          "away": 1.69
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.25,
+          "away": 1.65
+        }
+      ]
+    },
+    "2026-11-07|los angeles lakers|portland trail blazers": {
+      "home_team": "Los Angeles Lakers",
+      "away_team": "Portland Trail Blazers",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.68,
+          "away": 2.24
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.69,
+          "away": 2.27
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.69,
+          "away": 2.25
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.65,
+          "away": 2.3
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.67,
+          "away": 2.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.67,
+          "away": 2.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.67,
+          "away": 2.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.69,
+          "away": 2.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.67,
+          "away": 2.16
+        }
+      ]
+    },
+    "2026-11-14|indiana pacers|new york knicks": {
+      "home_team": "Indiana Pacers",
+      "away_team": "New York Knicks",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 3.2,
+          "away": 1.37
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.29,
+          "away": 1.37
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.26,
+          "away": 1.36
+        },
+        {
+          "name": "FanDuel",
+          "home": 3.2,
+          "away": 1.37
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.1,
+          "away": 1.38
+        },
+        {
+          "name": "Bovada",
+          "home": 3.15,
+          "away": 1.38
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.1,
+          "away": 1.38
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.25,
+          "away": 1.35
+        }
+      ]
+    },
+    "2026-11-14|san antonio spurs|golden state warriors": {
+      "home_team": "San Antonio Spurs",
+      "away_team": "Golden State Warriors",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.13,
+          "away": 6.3
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.14,
+          "away": 6.28
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.14,
+          "away": 6.41
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.14,
+          "away": 6.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.13,
+          "away": 6.0
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.15,
+          "away": 5.5
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.13,
+          "away": 6.25
+        }
+      ]
+    },
+    "2026-11-21|denver nuggets|houston rockets": {
+      "home_team": "Denver Nuggets",
+      "away_team": "Houston Rockets",
+      "date": "2026-11-21",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.68,
+          "away": 2.24
+        }
+      ]
+    },
+    "2026-11-25|washington wizards|boston celtics": {
+      "home_team": "Washington Wizards",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-25",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.54,
+          "away": 1.54
+        }
+      ]
+    },
+    "2026-11-25|denver nuggets|dallas mavericks": {
+      "home_team": "Denver Nuggets",
+      "away_team": "Dallas Mavericks",
+      "date": "2026-11-25",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.29,
+          "away": 3.75
+        }
+      ]
+    },
+    "2026-11-25|philadelphia 76ers|miami heat": {
+      "home_team": "Philadelphia 76ers",
+      "away_team": "Miami Heat",
+      "date": "2026-11-25",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.65,
+          "away": 2.3
+        }
+      ]
+    },
+    "2026-11-26|oklahoma city thunder|minnesota timberwolves": {
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "Minnesota Timberwolves",
+      "date": "2026-11-26",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.27,
+          "away": 3.95
+        }
+      ]
+    },
+    "2026-11-26|portland trail blazers|san antonio spurs": {
+      "home_team": "Portland Trail Blazers",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-11-26",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.36,
+          "away": 1.62
+        }
+      ]
+    },
+    "2026-11-28|new york knicks|miami heat": {
+      "home_team": "New York Knicks",
+      "away_team": "Miami Heat",
+      "date": "2026-11-28",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.54,
+          "away": 2.54
+        }
+      ]
+    },
+    "2026-11-28|san antonio spurs|los angeles lakers": {
+      "home_team": "San Antonio Spurs",
+      "away_team": "Los Angeles Lakers",
+      "date": "2026-11-28",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.41,
+          "away": 3.0
+        }
+      ]
+    },
+    "2026-12-25|new york knicks|san antonio spurs": {
+      "home_team": "New York Knicks",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-12-25",
+      "bookmakers": [
+        {
+          "name": "BetRivers",
+          "home": 1.91,
+          "away": 1.91
+        }
+      ]
+    },
+    "2026-12-25|boston celtics|miami heat": {
+      "home_team": "Boston Celtics",
+      "away_team": "Miami Heat",
+      "date": "2026-12-25",
+      "bookmakers": [
+        {
+          "name": "BetRivers",
+          "home": 1.53,
+          "away": 2.55
+        }
+      ]
+    },
+    "2026-12-25|los angeles lakers|philadelphia 76ers": {
+      "home_team": "Los Angeles Lakers",
+      "away_team": "Philadelphia 76ers",
+      "date": "2026-12-25",
+      "bookmakers": [
+        {
+          "name": "BetRivers",
+          "home": 1.87,
+          "away": 1.95
+        }
+      ]
+    },
+    "2026-12-26|minnesota timberwolves|oklahoma city thunder": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-12-26",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.31,
+          "away": 1.64
+        }
+      ]
+    },
+    "2026-12-26|golden state warriors|denver nuggets": {
+      "home_team": "Golden State Warriors",
+      "away_team": "Denver Nuggets",
+      "date": "2026-12-26",
+      "bookmakers": [
+        {
+          "name": "BetRivers",
+          "home": 2.05,
+          "away": 1.79
+        }
+      ]
+    },
+    "2026-10-30|toronto raptors|orlando magic": {
+      "home_team": "Toronto Raptors",
+      "away_team": "Orlando Magic",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.49,
+          "away": 2.7
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.45,
+          "away": 2.84
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.47,
+          "away": 2.75
         },
         {
           "name": "BetMGM",
@@ -59,140 +792,14 @@
           "away": 2.8
         },
         {
-          "name": "Bovada",
-          "home": 1.5,
-          "away": 2.7
-        }
-      ]
-    },
-    "2026-05-29|san antonio spurs|oklahoma city thunder": {
-      "home_team": "San Antonio Spurs",
-      "away_team": "Oklahoma City Thunder",
-      "date": "2026-05-29",
-      "bookmakers": [
-        {
-          "name": "FanDuel",
-          "home": 1.66,
-          "away": 2.28
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.62,
-          "away": 2.3
-        },
-        {
-          "name": "DraftKings",
-          "home": 1.62,
-          "away": 2.36
-        },
-        {
-          "name": "BetMGM",
-          "home": 1.61,
-          "away": 2.35
+          "name": "LowVig.ag",
+          "home": 1.48,
+          "away": 2.82
         },
         {
           "name": "BetOnline.ag",
-          "home": 1.62,
-          "away": 2.4
-        },
-        {
-          "name": "LowVig.ag",
-          "home": 1.62,
-          "away": 2.41
-        },
-        {
-          "name": "MyBookie.ag",
-          "home": 1.62,
-          "away": 2.31
-        },
-        {
-          "name": "Bovada",
-          "home": 1.62,
-          "away": 2.35
-        }
-      ]
-    },
-    "2026-05-31|oklahoma city thunder|san antonio spurs": {
-      "home_team": "Oklahoma City Thunder",
-      "away_team": "San Antonio Spurs",
-      "date": "2026-05-31",
-      "bookmakers": [
-        {
-          "name": "DraftKings",
-          "home": 1.65,
-          "away": 2.3
-        },
-        {
-          "name": "FanDuel",
-          "home": 1.64,
-          "away": 2.32
-        },
-        {
-          "name": "BetOnline.ag",
-          "home": 1.67,
-          "away": 2.3
-        },
-        {
-          "name": "LowVig.ag",
-          "home": 1.67,
-          "away": 2.32
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.62,
-          "away": 2.3
-        },
-        {
-          "name": "BetMGM",
-          "home": 1.65,
-          "away": 2.25
-        },
-        {
-          "name": "Bovada",
-          "home": 1.62,
-          "away": 2.35
-        },
-        {
-          "name": "MyBookie.ag",
-          "home": 1.63,
-          "away": 2.29
-        }
-      ]
-    },
-    "2026-06-06|san antonio spurs|new york knicks": {
-      "home_team": "San Antonio Spurs",
-      "away_team": "New York Knicks",
-      "date": "2026-06-06",
-      "bookmakers": [
-        {
-          "name": "FanDuel",
-          "home": 1.43,
-          "away": 2.9
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.41,
-          "away": 2.9
-        },
-        {
-          "name": "DraftKings",
-          "home": 1.43,
-          "away": 2.9
-        },
-        {
-          "name": "BetMGM",
-          "home": 1.43,
-          "away": 2.9
-        },
-        {
-          "name": "LowVig.ag",
-          "home": 1.44,
-          "away": 2.95
-        },
-        {
-          "name": "BetOnline.ag",
-          "home": 1.43,
-          "away": 2.92
+          "home": 1.48,
+          "away": 2.8
         },
         {
           "name": "Bovada",
@@ -201,124 +808,604 @@
         },
         {
           "name": "MyBookie.ag",
+          "home": 1.43,
+          "away": 2.61
+        },
+        {
+          "name": "BetUS",
+          "home": 1.48,
+          "away": 2.8
+        }
+      ]
+    },
+    "2026-10-31|minnesota timberwolves|los angeles clippers": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "Los Angeles Clippers",
+      "date": "2026-10-31",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.38,
+          "away": 3.15
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.43,
+          "away": 2.88
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.36,
+          "away": 3.2
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.37,
+          "away": 3.29
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.36,
+          "away": 3.26
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.37,
+          "away": 3.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.37,
+          "away": 3.2
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.35,
+          "away": 2.95
+        },
+        {
+          "name": "BetUS",
+          "home": 1.36,
+          "away": 3.3
+        }
+      ]
+    },
+    "2026-11-21|detroit pistons|toronto raptors": {
+      "home_team": "Detroit Pistons",
+      "away_team": "Toronto Raptors",
+      "date": "2026-11-21",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.89,
+          "away": 1.93
+        }
+      ]
+    },
+    "2026-10-30|atlanta hawks|cleveland cavaliers": {
+      "home_team": "Atlanta Hawks",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.87,
+          "away": 1.95
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.89,
+          "away": 1.96
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.88,
+          "away": 1.94
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.87,
+          "away": 1.93
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.87,
+          "away": 1.95
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.91,
+          "away": 1.91
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.93,
+          "away": 1.93
+        },
+        {
+          "name": "Bovada",
+          "home": 1.87,
+          "away": 1.95
+        },
+        {
+          "name": "BetUS",
+          "home": 1.87,
+          "away": 1.95
+        }
+      ]
+    },
+    "2026-10-30|new orleans pelicans|sacramento kings": {
+      "home_team": "New Orleans Pelicans",
+      "away_team": "Sacramento Kings",
+      "date": "2026-10-30",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.44,
+          "away": 2.88
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.44,
+          "away": 2.93
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.44,
+          "away": 2.91
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.43,
+          "away": 2.85
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.43,
+          "away": 2.9
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.43,
+          "away": 2.9
+        },
+        {
+          "name": "BetRivers",
           "home": 1.45,
-          "away": 2.78
-        }
-      ]
-    },
-    "2026-06-09|new york knicks|san antonio spurs": {
-      "home_team": "New York Knicks",
-      "away_team": "San Antonio Spurs",
-      "date": "2026-06-09",
-      "bookmakers": [
-        {
-          "name": "FanDuel",
-          "home": 1.76,
-          "away": 2.12
-        },
-        {
-          "name": "DraftKings",
-          "home": 1.74,
-          "away": 2.14
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.74,
-          "away": 2.1
-        },
-        {
-          "name": "BetOnline.ag",
-          "home": 1.77,
-          "away": 2.1
-        },
-        {
-          "name": "BetMGM",
-          "home": 1.74,
-          "away": 2.1
-        },
-        {
-          "name": "LowVig.ag",
-          "home": 1.78,
-          "away": 2.12
-        },
-        {
-          "name": "MyBookie.ag",
-          "home": 1.75,
-          "away": 2.09
+          "away": 2.75
         },
         {
           "name": "Bovada",
-          "home": 1.77,
-          "away": 2.1
+          "home": 1.43,
+          "away": 2.9
+        },
+        {
+          "name": "BetUS",
+          "home": 1.43,
+          "away": 2.95
         }
       ]
     },
-    "2026-06-11|new york knicks|san antonio spurs": {
-      "home_team": "New York Knicks",
-      "away_team": "San Antonio Spurs",
-      "date": "2026-06-11",
+    "2026-10-30|portland trail blazers|memphis grizzlies": {
+      "home_team": "Portland Trail Blazers",
+      "away_team": "Memphis Grizzlies",
+      "date": "2026-10-30",
       "bookmakers": [
         {
           "name": "FanDuel",
-          "home": 1.79,
-          "away": 2.08
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.77,
-          "away": 2.05
-        },
-        {
-          "name": "DraftKings",
-          "home": 1.8,
-          "away": 2.05
+          "home": 1.34,
+          "away": 3.35
         },
         {
           "name": "BetOnline.ag",
-          "home": 1.79,
-          "away": 2.07
+          "home": 1.37,
+          "away": 3.22
         },
         {
           "name": "LowVig.ag",
-          "home": 1.8,
-          "away": 2.09
+          "home": 1.37,
+          "away": 3.25
         },
         {
-          "name": "MyBookie.ag",
-          "home": 1.76,
-          "away": 2.07
+          "name": "DraftKings",
+          "home": 1.36,
+          "away": 3.25
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.34,
+          "away": 3.3
         },
         {
           "name": "BetMGM",
-          "home": 1.8,
-          "away": 2.05
+          "home": 1.35,
+          "away": 3.3
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.35,
+          "away": 3.24
+        },
+        {
+          "name": "BetUS",
+          "home": 1.37,
+          "away": 3.25
         },
         {
           "name": "Bovada",
-          "home": 1.8,
-          "away": 2.05
+          "home": 1.35,
+          "away": 3.35
         }
       ]
     },
-    "2026-06-14|san antonio spurs|new york knicks": {
-      "home_team": "San Antonio Spurs",
-      "away_team": "New York Knicks",
-      "date": "2026-06-14",
+    "2026-11-03|cleveland cavaliers|oklahoma city thunder": {
+      "home_team": "Cleveland Cavaliers",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-11-03",
       "bookmakers": [
         {
           "name": "FanDuel",
-          "home": 1.5,
-          "away": 2.68
+          "home": 1.57,
+          "away": 2.48
         },
+        {
+          "name": "LowVig.ag",
+          "home": 1.61,
+          "away": 2.46
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.61,
+          "away": 2.45
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.56,
+          "away": 2.5
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.55,
+          "away": 2.41
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.57,
+          "away": 2.43
+        },
+        {
+          "name": "BetUS",
+          "home": 1.59,
+          "away": 2.46
+        },
+        {
+          "name": "Bovada",
+          "home": 1.61,
+          "away": 2.4
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.56,
+          "away": 2.45
+        }
+      ]
+    },
+    "2026-11-03|indiana pacers|atlanta hawks": {
+      "home_team": "Indiana Pacers",
+      "away_team": "Atlanta Hawks",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 4.2,
+          "away": 1.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.95,
+          "away": 1.24
+        },
+        {
+          "name": "FanDuel",
+          "home": 4.5,
+          "away": 1.22
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.75,
+          "away": 1.28
+        },
+        {
+          "name": "BetMGM",
+          "home": 4.33,
+          "away": 1.22
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 4.27,
+          "away": 1.24
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 4.32,
+          "away": 1.24
+        },
+        {
+          "name": "BetUS",
+          "home": 4.25,
+          "away": 1.25
+        }
+      ]
+    },
+    "2026-11-03|new york knicks|brooklyn nets": {
+      "home_team": "New York Knicks",
+      "away_team": "Brooklyn Nets",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.1,
+          "away": 7.7
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.1,
+          "away": 7.61
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.1,
+          "away": 7.83
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.1,
+          "away": 7.6
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.1,
+          "away": 7.0
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.1,
+          "away": 6.7
+        },
+        {
+          "name": "BetUS",
+          "home": 1.11,
+          "away": 7.0
+        },
+        {
+          "name": "Bovada",
+          "home": 1.09,
+          "away": 7.5
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.09,
+          "away": 7.75
+        }
+      ]
+    },
+    "2026-11-03|charlotte hornets|detroit pistons": {
+      "home_team": "Charlotte Hornets",
+      "away_team": "Detroit Pistons",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.82,
+          "away": 1.46
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.88,
+          "away": 1.44
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.88,
+          "away": 1.46
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.86,
+          "away": 1.45
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.75,
+          "away": 1.47
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.75,
+          "away": 1.43
+        },
+        {
+          "name": "BetUS",
+          "home": 2.83,
+          "away": 1.47
+        },
+        {
+          "name": "Bovada",
+          "home": 2.8,
+          "away": 1.45
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.8,
+          "away": 1.45
+        }
+      ]
+    },
+    "2026-11-03|philadelphia 76ers|chicago bulls": {
+      "home_team": "Philadelphia 76ers",
+      "away_team": "Chicago Bulls",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.19,
+          "away": 5.06
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.2,
+          "away": 4.9
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.2,
+          "away": 4.98
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.21,
+          "away": 4.7
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.2,
+          "away": 4.75
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.18,
+          "away": 4.6
+        },
+        {
+          "name": "BetUS",
+          "home": 1.2,
+          "away": 4.95
+        },
+        {
+          "name": "Bovada",
+          "home": 1.17,
+          "away": 5.0
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.2,
+          "away": 4.75
+        }
+      ]
+    },
+    "2026-11-03|orlando magic|washington wizards": {
+      "home_team": "Orlando Magic",
+      "away_team": "Washington Wizards",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.65,
+          "away": 2.31
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.65,
+          "away": 2.35
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.65,
+          "away": 2.36
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.6,
+          "away": 2.35
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.69,
+          "away": 2.22
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.62,
+          "away": 2.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.65,
+          "away": 2.34
+        },
+        {
+          "name": "Bovada",
+          "home": 1.67,
+          "away": 2.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.65,
+          "away": 2.25
+        }
+      ]
+    },
+    "2026-11-03|dallas mavericks|sacramento kings": {
+      "home_team": "Dallas Mavericks",
+      "away_team": "Sacramento Kings",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.25,
+          "away": 4.2
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.25,
+          "away": 4.1
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.27,
+          "away": 3.96
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.28,
+          "away": 3.89
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.28,
+          "away": 3.93
+        },
+        {
+          "name": "BetUS",
+          "home": 1.22,
+          "away": 4.55
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.24,
+          "away": 4.2
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.23,
+          "away": 4.1
+        },
+        {
+          "name": "Bovada",
+          "home": 1.21,
+          "away": 4.5
+        }
+      ]
+    },
+    "2026-11-03|memphis grizzlies|new orleans pelicans": {
+      "home_team": "Memphis Grizzlies",
+      "away_team": "New Orleans Pelicans",
+      "date": "2026-11-03",
+      "bookmakers": [
         {
           "name": "DraftKings",
           "home": 1.51,
           "away": 2.64
-        },
-        {
-          "name": "BetRivers",
-          "home": 1.48,
-          "away": 2.65
         },
         {
           "name": "BetOnline.ag",
@@ -331,19 +1418,3431 @@
           "away": 2.71
         },
         {
-          "name": "MyBookie.ag",
-          "home": 1.5,
-          "away": 2.6
+          "name": "FanDuel",
+          "home": 1.47,
+          "away": 2.8
         },
         {
-          "name": "BetMGM",
-          "home": 1.5,
-          "away": 2.65
+          "name": "BetRivers",
+          "home": 1.43,
+          "away": 2.85
+        },
+        {
+          "name": "BetUS",
+          "home": 1.51,
+          "away": 2.67
         },
         {
           "name": "Bovada",
           "home": 1.48,
           "away": 2.75
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.48,
+          "away": 2.7
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.53,
+          "away": 2.46
+        }
+      ]
+    },
+    "2026-11-03|minnesota timberwolves|milwaukee bucks": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "Milwaukee Bucks",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.19,
+          "away": 4.94
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.2,
+          "away": 4.8
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.2,
+          "away": 4.87
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.19,
+          "away": 5.0
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.19,
+          "away": 4.9
+        },
+        {
+          "name": "BetUS",
+          "home": 1.2,
+          "away": 4.87
+        },
+        {
+          "name": "Bovada",
+          "home": 1.19,
+          "away": 4.75
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.2,
+          "away": 4.75
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.19,
+          "away": 4.5
+        }
+      ]
+    },
+    "2026-11-03|houston rockets|boston celtics": {
+      "home_team": "Houston Rockets",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.51,
+          "away": 2.64
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.53,
+          "away": 2.66
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.53,
+          "away": 2.65
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.51,
+          "away": 2.64
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.53,
+          "away": 2.55
+        },
+        {
+          "name": "Bovada",
+          "home": 1.51,
+          "away": 2.65
+        },
+        {
+          "name": "BetUS",
+          "home": 1.51,
+          "away": 2.67
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.48,
+          "away": 2.7
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.51,
+          "away": 2.52
+        }
+      ]
+    },
+    "2026-11-03|san antonio spurs|utah jazz": {
+      "home_team": "San Antonio Spurs",
+      "away_team": "Utah Jazz",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.08,
+          "away": 8.4
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.09,
+          "away": 8.32
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.09,
+          "away": 8.57
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.1,
+          "away": 7.6
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.08,
+          "away": 8.0
+        },
+        {
+          "name": "Bovada",
+          "home": 1.09,
+          "away": 7.5
+        },
+        {
+          "name": "BetUS",
+          "home": 1.09,
+          "away": 8.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.08,
+          "away": 8.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.08,
+          "away": 7.3
+        }
+      ]
+    },
+    "2026-11-03|denver nuggets|portland trail blazers": {
+      "home_team": "Denver Nuggets",
+      "away_team": "Portland Trail Blazers",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.57,
+          "away": 2.46
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.59,
+          "away": 2.49
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.59,
+          "away": 2.5
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.56,
+          "away": 2.38
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.6,
+          "away": 2.42
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.6,
+          "away": 2.38
+        },
+        {
+          "name": "Bovada",
+          "home": 1.59,
+          "away": 2.45
+        },
+        {
+          "name": "BetUS",
+          "home": 1.59,
+          "away": 2.46
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.57,
+          "away": 2.45
+        }
+      ]
+    },
+    "2026-11-03|golden state warriors|phoenix suns": {
+      "home_team": "Golden State Warriors",
+      "away_team": "Phoenix Suns",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.7,
+          "away": 2.2
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.68,
+          "away": 2.26
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.69,
+          "away": 2.28
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.68,
+          "away": 2.23
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.67,
+          "away": 2.25
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.67,
+          "away": 2.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.66,
+          "away": 2.18
+        },
+        {
+          "name": "Bovada",
+          "home": 1.69,
+          "away": 2.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.69,
+          "away": 2.25
+        }
+      ]
+    },
+    "2026-11-03|los angeles clippers|toronto raptors": {
+      "home_team": "Los Angeles Clippers",
+      "away_team": "Toronto Raptors",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.66,
+          "away": 1.51
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.8,
+          "away": 1.46
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.68,
+          "away": 1.45
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.7,
+          "away": 1.48
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.65,
+          "away": 1.49
+        },
+        {
+          "name": "Bovada",
+          "home": 2.75,
+          "away": 1.48
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.77,
+          "away": 1.49
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.79,
+          "away": 1.49
+        },
+        {
+          "name": "BetUS",
+          "home": 2.75,
+          "away": 1.49
+        }
+      ]
+    },
+    "2026-11-03|los angeles lakers|miami heat": {
+      "home_team": "Los Angeles Lakers",
+      "away_team": "Miami Heat",
+      "date": "2026-11-03",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.8,
+          "away": 2.06
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.77,
+          "away": 2.1
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.81,
+          "away": 1.96
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.82,
+          "away": 2.02
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.8,
+          "away": 2.05
+        },
+        {
+          "name": "Bovada",
+          "home": 1.77,
+          "away": 2.1
+        },
+        {
+          "name": "BetUS",
+          "home": 1.8,
+          "away": 2.05
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.81,
+          "away": 2.07
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.8,
+          "away": 2.05
+        }
+      ]
+    },
+    "2026-11-05|detroit pistons|philadelphia 76ers": {
+      "home_team": "Detroit Pistons",
+      "away_team": "Philadelphia 76ers",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.79,
+          "away": 2.08
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.76,
+          "away": 2.08
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.8,
+          "away": 2.06
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.77,
+          "away": 2.05
+        },
+        {
+          "name": "Bovada",
+          "home": 1.8,
+          "away": 2.05
+        }
+      ]
+    },
+    "2026-11-05|brooklyn nets|charlotte hornets": {
+      "home_team": "Brooklyn Nets",
+      "away_team": "Charlotte Hornets",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.18,
+          "away": 1.72
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.15,
+          "away": 1.74
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.18,
+          "away": 1.7
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.15,
+          "away": 1.71
+        },
+        {
+          "name": "Bovada",
+          "home": 2.2,
+          "away": 1.71
+        }
+      ]
+    },
+    "2026-11-05|oklahoma city thunder|cleveland cavaliers": {
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.69,
+          "away": 2.22
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.72,
+          "away": 2.17
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.68,
+          "away": 2.2
+        }
+      ]
+    },
+    "2026-11-05|houston rockets|minnesota timberwolves": {
+      "home_team": "Houston Rockets",
+      "away_team": "Minnesota Timberwolves",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.28,
+          "away": 3.85
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.29,
+          "away": 3.76
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.28,
+          "away": 3.8
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.29,
+          "away": 3.75
+        },
+        {
+          "name": "Bovada",
+          "home": 1.25,
+          "away": 4.0
+        }
+      ]
+    },
+    "2026-11-05|san antonio spurs|dallas mavericks": {
+      "home_team": "San Antonio Spurs",
+      "away_team": "Dallas Mavericks",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.15,
+          "away": 5.8
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.14,
+          "away": 5.75
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.15,
+          "away": 5.74
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.15,
+          "away": 5.75
+        },
+        {
+          "name": "Bovada",
+          "home": 1.13,
+          "away": 6.0
+        }
+      ]
+    },
+    "2026-11-05|los angeles clippers|miami heat": {
+      "home_team": "Los Angeles Clippers",
+      "away_team": "Miami Heat",
+      "date": "2026-11-05",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.11,
+          "away": 6.2
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.14,
+          "away": 5.75
+        },
+        {
+          "name": "Bovada",
+          "home": 1.32,
+          "away": 3.25
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.4,
+          "away": 1.56
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.85,
+          "away": 1.9
+        }
+      ]
+    },
+    "2026-11-06|phoenix suns|orlando magic": {
+      "home_team": "Phoenix Suns",
+      "away_team": "Orlando Magic",
+      "date": "2026-11-06",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.79,
+          "away": 2.08
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.84,
+          "away": 2.01
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.76,
+          "away": 1.96
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.73,
+          "away": 2.12
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.8,
+          "away": 2.05
+        }
+      ]
+    },
+    "2026-11-06|golden state warriors|miami heat": {
+      "home_team": "Golden State Warriors",
+      "away_team": "Miami Heat",
+      "date": "2026-11-06",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.43,
+          "away": 2.94
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.39,
+          "away": 3.1
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.4,
+          "away": 3.0
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.4,
+          "away": 3.0
+        }
+      ]
+    },
+    "2026-11-07|atlanta hawks|washington wizards": {
+      "home_team": "Atlanta Hawks",
+      "away_team": "Washington Wizards",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.37,
+          "away": 3.2
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.38,
+          "away": 3.0
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.39,
+          "away": 3.11
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.38,
+          "away": 3.05
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.4,
+          "away": 3.07
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.4,
+          "away": 3.1
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.36,
+          "away": 3.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.38,
+          "away": 3.15
+        }
+      ]
+    },
+    "2026-11-07|charlotte hornets|boston celtics": {
+      "home_team": "Charlotte Hornets",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.75,
+          "away": 1.29
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.5,
+          "away": 1.29
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.6,
+          "away": 1.29
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.76,
+          "away": 1.29
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.78,
+          "away": 1.29
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.82,
+          "away": 1.29
+        },
+        {
+          "name": "Bovada",
+          "home": 3.6,
+          "away": 1.31
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.6,
+          "away": 1.31
+        },
+        {
+          "name": "BetUS",
+          "home": 3.78,
+          "away": 1.29
+        }
+      ]
+    },
+    "2026-11-07|dallas mavericks|utah jazz": {
+      "home_team": "Dallas Mavericks",
+      "away_team": "Utah Jazz",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.36,
+          "away": 3.27
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.36,
+          "away": 3.26
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.37,
+          "away": 3.29
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.37,
+          "away": 3.2
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.35,
+          "away": 3.25
+        },
+        {
+          "name": "Bovada",
+          "home": 1.36,
+          "away": 3.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.36,
+          "away": 3.3
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.34,
+          "away": 3.16
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.36,
+          "away": 3.2
+        }
+      ]
+    },
+    "2026-11-07|memphis grizzlies|oklahoma city thunder": {
+      "home_team": "Memphis Grizzlies",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.3,
+          "away": 1.65
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.38,
+          "away": 1.64
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.37,
+          "away": 1.64
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.3,
+          "away": 1.65
+        },
+        {
+          "name": "Bovada",
+          "home": 2.3,
+          "away": 1.67
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.12,
+          "away": 1.74
+        },
+        {
+          "name": "BetUS",
+          "home": 2.34,
+          "away": 1.65
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.3,
+          "away": 1.6
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.25,
+          "away": 1.65
+        }
+      ]
+    },
+    "2026-11-07|milwaukee bucks|toronto raptors": {
+      "home_team": "Milwaukee Bucks",
+      "away_team": "Toronto Raptors",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 3.06,
+          "away": 1.4
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.1,
+          "away": 1.4
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.07,
+          "away": 1.4
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.0,
+          "away": 1.4
+        },
+        {
+          "name": "FanDuel",
+          "home": 3.15,
+          "away": 1.38
+        },
+        {
+          "name": "Bovada",
+          "home": 3.15,
+          "away": 1.38
+        },
+        {
+          "name": "BetUS",
+          "home": 3.1,
+          "away": 1.4
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.02,
+          "away": 1.37
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.0,
+          "away": 1.4
+        }
+      ]
+    },
+    "2026-11-07|new orleans pelicans|minnesota timberwolves": {
+      "home_team": "New Orleans Pelicans",
+      "away_team": "Minnesota Timberwolves",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 2.54,
+          "away": 1.54
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.56,
+          "away": 1.56
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.55,
+          "away": 1.56
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.3,
+          "away": 1.62
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.52,
+          "away": 1.56
+        },
+        {
+          "name": "Bovada",
+          "home": 2.5,
+          "away": 1.57
+        },
+        {
+          "name": "BetUS",
+          "home": 2.5,
+          "away": 1.57
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.45,
+          "away": 1.53
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.5,
+          "away": 1.54
+        }
+      ]
+    },
+    "2026-11-07|sacramento kings|san antonio spurs": {
+      "home_team": "Sacramento Kings",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 7.5,
+          "away": 1.1
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 7.83,
+          "away": 1.1
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 7.61,
+          "away": 1.1
+        },
+        {
+          "name": "BetRivers",
+          "home": 7.0,
+          "away": 1.1
+        },
+        {
+          "name": "FanDuel",
+          "home": 8.5,
+          "away": 1.08
+        },
+        {
+          "name": "Bovada",
+          "home": 7.25,
+          "away": 1.1
+        },
+        {
+          "name": "BetMGM",
+          "home": 7.75,
+          "away": 1.09
+        },
+        {
+          "name": "BetUS",
+          "home": 7.5,
+          "away": 1.1
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 7.1,
+          "away": 1.09
+        }
+      ]
+    },
+    "2026-11-07|indiana pacers|denver nuggets": {
+      "home_team": "Indiana Pacers",
+      "away_team": "Denver Nuggets",
+      "date": "2026-11-07",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.6,
+          "away": 1.31
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.35,
+          "away": 1.34
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.61,
+          "away": 1.31
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.52,
+          "away": 1.32
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.56,
+          "away": 1.33
+        },
+        {
+          "name": "BetUS",
+          "home": 3.65,
+          "away": 1.31
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.34,
+          "away": 1.31
+        },
+        {
+          "name": "Bovada",
+          "home": 3.65,
+          "away": 1.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.6,
+          "away": 1.31
+        }
+      ]
+    },
+    "2026-11-08|atlanta hawks|brooklyn nets": {
+      "home_team": "Atlanta Hawks",
+      "away_team": "Brooklyn Nets",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.34,
+          "away": 3.35
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.3,
+          "away": 3.4
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.33,
+          "away": 3.56
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.32,
+          "away": 3.52
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.36,
+          "away": 3.2
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.32,
+          "away": 3.49
+        },
+        {
+          "name": "Bovada",
+          "home": 1.34,
+          "away": 3.4
+        },
+        {
+          "name": "BetUS",
+          "home": 1.32,
+          "away": 3.55
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.33,
+          "away": 3.4
+        }
+      ]
+    },
+    "2026-11-08|cleveland cavaliers|new york knicks": {
+      "home_team": "Cleveland Cavaliers",
+      "away_team": "New York Knicks",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.8,
+          "away": 1.47
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.58,
+          "away": 1.49
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.69,
+          "away": 1.52
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.68,
+          "away": 1.52
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.7,
+          "away": 1.49
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.8,
+          "away": 1.44
+        },
+        {
+          "name": "Bovada",
+          "home": 2.7,
+          "away": 1.5
+        },
+        {
+          "name": "BetUS",
+          "home": 2.67,
+          "away": 1.51
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.7,
+          "away": 1.48
+        }
+      ]
+    },
+    "2026-11-08|oklahoma city thunder|washington wizards": {
+      "home_team": "Oklahoma City Thunder",
+      "away_team": "Washington Wizards",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.2,
+          "away": 4.9
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.17,
+          "away": 4.8
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.18,
+          "away": 5.0
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.17,
+          "away": 5.43
+        },
+        {
+          "name": "Bovada",
+          "home": 1.16,
+          "away": 5.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.17,
+          "away": 5.25
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.17,
+          "away": 5.31
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.18,
+          "away": 5.4
+        },
+        {
+          "name": "BetUS",
+          "home": 1.17,
+          "away": 5.4
+        }
+      ]
+    },
+    "2026-11-08|golden state warriors|orlando magic": {
+      "home_team": "Golden State Warriors",
+      "away_team": "Orlando Magic",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.45,
+          "away": 2.84
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.47,
+          "away": 2.83
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.47,
+          "away": 2.85
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.46,
+          "away": 2.67
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.49,
+          "away": 2.65
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.46,
+          "away": 2.8
+        },
+        {
+          "name": "BetUS",
+          "home": 1.45,
+          "away": 2.85
+        },
+        {
+          "name": "Bovada",
+          "home": 1.44,
+          "away": 2.85
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.45,
+          "away": 2.8
+        }
+      ]
+    },
+    "2026-11-08|phoenix suns|houston rockets": {
+      "home_team": "Phoenix Suns",
+      "away_team": "Houston Rockets",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.2,
+          "away": 1.37
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.25,
+          "away": 1.37
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.22,
+          "away": 1.37
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.7,
+          "away": 1.48
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.21,
+          "away": 1.37
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.02,
+          "away": 1.37
+        },
+        {
+          "name": "BetUS",
+          "home": 3.25,
+          "away": 1.37
+        },
+        {
+          "name": "Bovada",
+          "home": 3.2,
+          "away": 1.37
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.25,
+          "away": 1.35
+        }
+      ]
+    },
+    "2026-11-08|portland trail blazers|san antonio spurs": {
+      "home_team": "Portland Trail Blazers",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.84,
+          "away": 1.45
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.74,
+          "away": 1.5
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.75,
+          "away": 1.5
+        },
+        {
+          "name": "BetUS",
+          "home": 2.75,
+          "away": 1.49
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.71,
+          "away": 1.49
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.7,
+          "away": 1.48
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.65,
+          "away": 1.47
+        },
+        {
+          "name": "Bovada",
+          "home": 2.65,
+          "away": 1.51
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.7,
+          "away": 1.48
+        }
+      ]
+    },
+    "2026-11-08|chicago bulls|philadelphia 76ers": {
+      "home_team": "Chicago Bulls",
+      "away_team": "Philadelphia 76ers",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 4.3,
+          "away": 1.24
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 4.16,
+          "away": 1.25
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 4.21,
+          "away": 1.25
+        },
+        {
+          "name": "DraftKings",
+          "home": 4.12,
+          "away": 1.25
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.95,
+          "away": 1.26
+        },
+        {
+          "name": "Bovada",
+          "home": 4.15,
+          "away": 1.24
+        },
+        {
+          "name": "BetMGM",
+          "home": 4.2,
+          "away": 1.24
+        },
+        {
+          "name": "BetUS",
+          "home": 4.2,
+          "away": 1.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 4.0,
+          "away": 1.23
+        }
+      ]
+    },
+    "2026-11-08|detroit pistons|los angeles lakers": {
+      "home_team": "Detroit Pistons",
+      "away_team": "Los Angeles Lakers",
+      "date": "2026-11-08",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.54,
+          "away": 2.56
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.55,
+          "away": 2.58
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.55,
+          "away": 2.59
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.54,
+          "away": 2.55
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.56,
+          "away": 2.45
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.53,
+          "away": 2.54
+        },
+        {
+          "name": "BetUS",
+          "home": 1.56,
+          "away": 2.55
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.53,
+          "away": 2.46
+        },
+        {
+          "name": "Bovada",
+          "home": 1.54,
+          "away": 2.6
+        }
+      ]
+    },
+    "2026-11-09|minnesota timberwolves|utah jazz": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "Utah Jazz",
+      "date": "2026-11-09",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.18,
+          "away": 5.2
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.17,
+          "away": 5.49
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.17,
+          "away": 5.4
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.17,
+          "away": 5.43
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.14,
+          "away": 5.6
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.17,
+          "away": 5.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.17,
+          "away": 5.45
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.15,
+          "away": 5.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.17,
+          "away": 5.25
+        }
+      ]
+    },
+    "2026-11-09|dallas mavericks|brooklyn nets": {
+      "home_team": "Dallas Mavericks",
+      "away_team": "Brooklyn Nets",
+      "date": "2026-11-09",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.28,
+          "away": 3.9
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.25,
+          "away": 4.29
+        },
+        {
+          "name": "BetUS",
+          "home": 1.24,
+          "away": 4.25
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.24,
+          "away": 4.24
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.24,
+          "away": 4.31
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.24,
+          "away": 4.25
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.23,
+          "away": 4.2
+        },
+        {
+          "name": "Bovada",
+          "home": 1.22,
+          "away": 4.35
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.23,
+          "away": 4.1
+        }
+      ]
+    },
+    "2026-11-09|milwaukee bucks|boston celtics": {
+      "home_team": "Milwaukee Bucks",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-09",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 6.6,
+          "away": 1.12
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 6.76,
+          "away": 1.13
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 6.61,
+          "away": 1.12
+        },
+        {
+          "name": "DraftKings",
+          "home": 6.53,
+          "away": 1.13
+        },
+        {
+          "name": "BetRivers",
+          "home": 5.5,
+          "away": 1.15
+        },
+        {
+          "name": "BetUS",
+          "home": 6.5,
+          "away": 1.12
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 5.6,
+          "away": 1.13
+        },
+        {
+          "name": "Bovada",
+          "home": 6.25,
+          "away": 1.12
+        },
+        {
+          "name": "BetMGM",
+          "home": 6.5,
+          "away": 1.12
+        }
+      ]
+    },
+    "2026-11-09|los angeles clippers|new orleans pelicans": {
+      "home_team": "Los Angeles Clippers",
+      "away_team": "New Orleans Pelicans",
+      "date": "2026-11-09",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.0,
+          "away": 1.85
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.02,
+          "away": 1.85
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.0,
+          "away": 1.84
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.97,
+          "away": 1.83
+        },
+        {
+          "name": "Bovada",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "BetUS",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.98,
+          "away": 1.8
+        }
+      ]
+    },
+    "2026-11-09|sacramento kings|miami heat": {
+      "home_team": "Sacramento Kings",
+      "away_team": "Miami Heat",
+      "date": "2026-11-09",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.7,
+          "away": 1.3
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.85,
+          "away": 1.28
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.89,
+          "away": 1.28
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.81,
+          "away": 1.28
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.65,
+          "away": 1.29
+        },
+        {
+          "name": "Bovada",
+          "home": 3.75,
+          "away": 1.29
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.75,
+          "away": 1.29
+        },
+        {
+          "name": "BetUS",
+          "home": 3.85,
+          "away": 1.28
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.6,
+          "away": 1.28
+        }
+      ]
+    },
+    "2026-11-10|atlanta hawks|los angeles lakers": {
+      "home_team": "Atlanta Hawks",
+      "away_team": "Los Angeles Lakers",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.75,
+          "away": 2.14
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.83,
+          "away": 2.01
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.75,
+          "away": 2.05
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.75,
+          "away": 2.1
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.8,
+          "away": 2.05
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.79,
+          "away": 2.07
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.8,
+          "away": 2.09
+        },
+        {
+          "name": "Bovada",
+          "home": 1.8,
+          "away": 2.05
+        },
+        {
+          "name": "BetUS",
+          "home": 1.77,
+          "away": 2.1
+        }
+      ]
+    },
+    "2026-11-10|charlotte hornets|cleveland cavaliers": {
+      "home_team": "Charlotte Hornets",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.9,
+          "away": 1.28
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.7,
+          "away": 1.3
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.74,
+          "away": 1.3
+        },
+        {
+          "name": "Bovada",
+          "home": 3.8,
+          "away": 1.28
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.5,
+          "away": 1.29
+        },
+        {
+          "name": "BetUS",
+          "home": 3.7,
+          "away": 1.3
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.7,
+          "away": 1.3
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.55,
+          "away": 1.3
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.75,
+          "away": 1.29
+        }
+      ]
+    },
+    "2026-11-10|detroit pistons|washington wizards": {
+      "home_team": "Detroit Pistons",
+      "away_team": "Washington Wizards",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.22,
+          "away": 4.5
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.2,
+          "away": 4.9
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.2,
+          "away": 4.98
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.2,
+          "away": 4.6
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.19,
+          "away": 4.94
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.18,
+          "away": 4.7
+        },
+        {
+          "name": "Bovada",
+          "home": 1.19,
+          "away": 4.75
+        },
+        {
+          "name": "BetUS",
+          "home": 1.2,
+          "away": 4.9
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.2,
+          "away": 4.75
+        }
+      ]
+    },
+    "2026-11-10|toronto raptors|memphis grizzlies": {
+      "home_team": "Toronto Raptors",
+      "away_team": "Memphis Grizzlies",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.7,
+          "away": 2.2
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.72,
+          "away": 2.22
+        },
+        {
+          "name": "Bovada",
+          "home": 1.69,
+          "away": 2.25
+        },
+        {
+          "name": "BetUS",
+          "home": 1.69,
+          "away": 2.25
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.69,
+          "away": 2.18
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.69,
+          "away": 2.14
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.71,
+          "away": 2.2
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.7,
+          "away": 2.2
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.68,
+          "away": 2.23
+        }
+      ]
+    },
+    "2026-11-10|dallas mavericks|indiana pacers": {
+      "home_team": "Dallas Mavericks",
+      "away_team": "Indiana Pacers",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.61,
+          "away": 2.38
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.57,
+          "away": 2.4
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.59,
+          "away": 2.43
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.61,
+          "away": 2.45
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.61,
+          "away": 2.46
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.59,
+          "away": 2.4
+        },
+        {
+          "name": "Bovada",
+          "home": 1.57,
+          "away": 2.5
+        },
+        {
+          "name": "BetUS",
+          "home": 1.61,
+          "away": 2.42
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.57,
+          "away": 2.36
+        }
+      ]
+    },
+    "2026-11-10|houston rockets|denver nuggets": {
+      "home_team": "Houston Rockets",
+      "away_team": "Denver Nuggets",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.54,
+          "away": 2.54
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.58,
+          "away": 2.52
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.58,
+          "away": 2.51
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.58,
+          "away": 2.46
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.53,
+          "away": 2.55
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.56,
+          "away": 2.39
+        },
+        {
+          "name": "Bovada",
+          "home": 1.59,
+          "away": 2.45
+        },
+        {
+          "name": "BetUS",
+          "home": 1.56,
+          "away": 2.53
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.54,
+          "away": 2.5
+        }
+      ]
+    },
+    "2026-11-10|phoenix suns|san antonio spurs": {
+      "home_team": "Phoenix Suns",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 3.96,
+          "away": 1.27
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.97,
+          "away": 1.28
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.92,
+          "away": 1.27
+        },
+        {
+          "name": "FanDuel",
+          "home": 3.95,
+          "away": 1.27
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.7,
+          "away": 1.29
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.65,
+          "away": 1.27
+        },
+        {
+          "name": "Bovada",
+          "home": 3.8,
+          "away": 1.28
+        },
+        {
+          "name": "BetUS",
+          "home": 3.93,
+          "away": 1.27
+        },
+        {
+          "name": "BetMGM",
+          "home": 4.0,
+          "away": 1.27
+        }
+      ]
+    },
+    "2026-11-10|golden state warriors|new orleans pelicans": {
+      "home_team": "Golden State Warriors",
+      "away_team": "New Orleans Pelicans",
+      "date": "2026-11-10",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.27,
+          "away": 3.95
+        },
+        {
+          "name": "BetUS",
+          "home": 1.26,
+          "away": 4.05
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.26,
+          "away": 4.03
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.27,
+          "away": 4.08
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.25,
+          "away": 3.85
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.26,
+          "away": 4.03
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.25,
+          "away": 4.1
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.29,
+          "away": 3.65
+        },
+        {
+          "name": "Bovada",
+          "home": 1.25,
+          "away": 4.0
+        }
+      ]
+    },
+    "2026-11-11|philadelphia 76ers|boston celtics": {
+      "home_team": "Philadelphia 76ers",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.98,
+          "away": 1.86
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.91,
+          "away": 1.93
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.06,
+          "away": 1.79
+        },
+        {
+          "name": "Bovada",
+          "home": 1.95,
+          "away": 1.87
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.95,
+          "away": 1.87
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.91,
+          "away": 1.94
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.89,
+          "away": 1.93
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.96,
+          "away": 1.85
+        }
+      ]
+    },
+    "2026-11-11|new york knicks|milwaukee bucks": {
+      "home_team": "New York Knicks",
+      "away_team": "Milwaukee Bucks",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.07,
+          "away": 9.7
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.1,
+          "away": 8.08
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.1,
+          "away": 7.86
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.09,
+          "away": 8.0
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.08,
+          "away": 7.5
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.08,
+          "away": 8.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.08,
+          "away": 7.47
+        },
+        {
+          "name": "Bovada",
+          "home": 1.09,
+          "away": 7.5
+        }
+      ]
+    },
+    "2026-11-11|phoenix suns|los angeles clippers": {
+      "home_team": "Phoenix Suns",
+      "away_team": "Los Angeles Clippers",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.61,
+          "away": 2.38
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.59,
+          "away": 2.43
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.64,
+          "away": 2.28
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.6,
+          "away": 2.35
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.59,
+          "away": 2.4
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.61,
+          "away": 2.45
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.61,
+          "away": 2.46
+        },
+        {
+          "name": "Bovada",
+          "home": 1.61,
+          "away": 2.4
+        }
+      ]
+    },
+    "2026-11-11|utah jazz|miami heat": {
+      "home_team": "Utah Jazz",
+      "away_team": "Miami Heat",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 4.5,
+          "away": 1.22
+        },
+        {
+          "name": "DraftKings",
+          "home": 4.21,
+          "away": 1.25
+        },
+        {
+          "name": "BetRivers",
+          "home": 4.1,
+          "away": 1.24
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 4.16,
+          "away": 1.25
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 4.21,
+          "away": 1.25
+        },
+        {
+          "name": "BetMGM",
+          "home": 4.2,
+          "away": 1.24
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.95,
+          "away": 1.26
+        },
+        {
+          "name": "Bovada",
+          "home": 3.75,
+          "away": 1.29
+        }
+      ]
+    },
+    "2026-11-11|sacramento kings|orlando magic": {
+      "home_team": "Sacramento Kings",
+      "away_team": "Orlando Magic",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.9,
+          "away": 1.43
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.96,
+          "away": 1.42
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.75,
+          "away": 1.44
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.95,
+          "away": 1.43
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.98,
+          "away": 1.43
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.95,
+          "away": 1.43
+        },
+        {
+          "name": "Bovada",
+          "home": 2.85,
+          "away": 1.44
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.81,
+          "away": 1.44
+        }
+      ]
+    },
+    "2026-11-11|portland trail blazers|oklahoma city thunder": {
+      "home_team": "Portland Trail Blazers",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-11-11",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.12,
+          "away": 1.76
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.17,
+          "away": 1.73
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.19,
+          "away": 1.74
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.19,
+          "away": 1.71
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.15,
+          "away": 1.71
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.23,
+          "away": 1.67
+        },
+        {
+          "name": "Bovada",
+          "home": 2.2,
+          "away": 1.71
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.13,
+          "away": 1.72
+        }
+      ]
+    },
+    "2026-11-12|toronto raptors|boston celtics": {
+      "home_team": "Toronto Raptors",
+      "away_team": "Boston Celtics",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.35,
+          "away": 1.34
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.24,
+          "away": 1.35
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.28,
+          "away": 1.36
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.25,
+          "away": 1.34
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.25,
+          "away": 1.36
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.35,
+          "away": 1.35
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.38,
+          "away": 1.35
+        },
+        {
+          "name": "Bovada",
+          "home": 3.3,
+          "away": 1.36
+        }
+      ]
+    },
+    "2026-11-12|new york knicks|cleveland cavaliers": {
+      "home_team": "New York Knicks",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.6,
+          "away": 2.42
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.61,
+          "away": 2.45
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.61,
+          "away": 2.44
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.58,
+          "away": 2.39
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.6,
+          "away": 2.4
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.59,
+          "away": 2.4
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.57,
+          "away": 2.43
+        },
+        {
+          "name": "Bovada",
+          "home": 1.57,
+          "away": 2.5
+        }
+      ]
+    },
+    "2026-11-12|indiana pacers|washington wizards": {
+      "home_team": "Indiana Pacers",
+      "away_team": "Washington Wizards",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.65,
+          "away": 2.31
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.65,
+          "away": 2.34
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.65,
+          "away": 2.35
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.61,
+          "away": 2.38
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.61,
+          "away": 2.34
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.61,
+          "away": 2.35
+        },
+        {
+          "name": "Bovada",
+          "home": 1.67,
+          "away": 2.3
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.63,
+          "away": 2.28
+        }
+      ]
+    },
+    "2026-11-12|new orleans pelicans|brooklyn nets": {
+      "home_team": "New Orleans Pelicans",
+      "away_team": "Brooklyn Nets",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.54,
+          "away": 2.56
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.56,
+          "away": 2.57
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.56,
+          "away": 2.58
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.56,
+          "away": 2.52
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.53,
+          "away": 2.55
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.53,
+          "away": 2.52
+        },
+        {
+          "name": "Bovada",
+          "home": 1.54,
+          "away": 2.6
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.53,
+          "away": 2.5
+        }
+      ]
+    },
+    "2026-11-12|chicago bulls|san antonio spurs": {
+      "home_team": "Chicago Bulls",
+      "away_team": "San Antonio Spurs",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 8.5,
+          "away": 1.08
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 8.54,
+          "away": 1.08
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 8.81,
+          "away": 1.09
+        },
+        {
+          "name": "FanDuel",
+          "home": 8.5,
+          "away": 1.08
+        },
+        {
+          "name": "BetMGM",
+          "home": 8.25,
+          "away": 1.08
+        },
+        {
+          "name": "Bovada",
+          "home": 8.0,
+          "away": 1.08
+        },
+        {
+          "name": "BetRivers",
+          "home": 8.0,
+          "away": 1.08
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 8.3,
+          "away": 1.08
+        }
+      ]
+    },
+    "2026-11-12|memphis grizzlies|denver nuggets": {
+      "home_team": "Memphis Grizzlies",
+      "away_team": "Denver Nuggets",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.4,
+          "away": 1.6
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.46,
+          "away": 1.57
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.45,
+          "away": 1.57
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.4,
+          "away": 1.57
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.41,
+          "away": 1.57
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.5,
+          "away": 1.59
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.49,
+          "away": 1.59
+        },
+        {
+          "name": "Bovada",
+          "home": 2.45,
+          "away": 1.59
+        }
+      ]
+    },
+    "2026-11-12|milwaukee bucks|los angeles lakers": {
+      "home_team": "Milwaukee Bucks",
+      "away_team": "Los Angeles Lakers",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 6.2,
+          "away": 1.14
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 5.5,
+          "away": 1.15
+        },
+        {
+          "name": "DraftKings",
+          "home": 5.31,
+          "away": 1.17
+        },
+        {
+          "name": "BetRivers",
+          "home": 5.5,
+          "away": 1.15
+        },
+        {
+          "name": "BetMGM",
+          "home": 5.75,
+          "away": 1.15
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 5.71,
+          "away": 1.16
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 5.61,
+          "away": 1.16
+        },
+        {
+          "name": "Bovada",
+          "home": 5.3,
+          "away": 1.16
+        }
+      ]
+    },
+    "2026-11-12|utah jazz|orlando magic": {
+      "home_team": "Utah Jazz",
+      "away_team": "Orlando Magic",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.48,
+          "away": 1.57
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.48,
+          "away": 1.54
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.5,
+          "away": 1.58
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.51,
+          "away": 1.58
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.4,
+          "away": 1.6
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.55,
+          "away": 1.51
+        },
+        {
+          "name": "Bovada",
+          "home": 2.55,
+          "away": 1.56
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.5,
+          "away": 1.54
+        }
+      ]
+    },
+    "2026-11-12|houston rockets|golden state warriors": {
+      "home_team": "Houston Rockets",
+      "away_team": "Golden State Warriors",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.42,
+          "away": 2.96
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.42,
+          "away": 2.96
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.43,
+          "away": 2.99
+        },
+        {
+          "name": "FanDuel",
+          "home": 1.47,
+          "away": 2.8
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.43,
+          "away": 2.9
+        },
+        {
+          "name": "Bovada",
+          "home": 1.43,
+          "away": 2.9
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.41,
+          "away": 2.95
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.43,
+          "away": 2.83
+        }
+      ]
+    },
+    "2026-11-12|portland trail blazers|oklahoma city thunder": {
+      "home_team": "Portland Trail Blazers",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-11-12",
+      "bookmakers": [
+        {
+          "name": "DraftKings",
+          "home": 1.98,
+          "away": 1.86
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.02,
+          "away": 1.85
+        },
+        {
+          "name": "FanDuel",
+          "home": 2.02,
+          "away": 1.83
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.02,
+          "away": 1.79
+        },
+        {
+          "name": "Bovada",
+          "home": 2.0,
+          "away": 1.83
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.98,
+          "away": 1.83
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.0,
+          "away": 1.83
+        }
+      ]
+    },
+    "2026-11-13|washington wizards|detroit pistons": {
+      "home_team": "Washington Wizards",
+      "away_team": "Detroit Pistons",
+      "date": "2026-11-13",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 4.2,
+          "away": 1.25
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 4.1,
+          "away": 1.24
+        },
+        {
+          "name": "BetRivers",
+          "home": 4.1,
+          "away": 1.25
+        },
+        {
+          "name": "DraftKings",
+          "home": 4.31,
+          "away": 1.24
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 4.44,
+          "away": 1.23
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 4.5,
+          "away": 1.23
+        },
+        {
+          "name": "BetMGM",
+          "home": 4.4,
+          "away": 1.22
+        },
+        {
+          "name": "Bovada",
+          "home": 4.25,
+          "away": 1.23
+        },
+        {
+          "name": "BetUS",
+          "home": 4.45,
+          "away": 1.23
+        }
+      ]
+    },
+    "2026-11-13|philadelphia 76ers|toronto raptors": {
+      "home_team": "Philadelphia 76ers",
+      "away_team": "Toronto Raptors",
+      "date": "2026-11-13",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.22,
+          "away": 4.6
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.24,
+          "away": 4.22
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.24,
+          "away": 4.1
+        },
+        {
+          "name": "Bovada",
+          "home": 1.24,
+          "away": 4.05
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.23,
+          "away": 4.4
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.23,
+          "away": 4.46
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.22,
+          "away": 4.5
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.23,
+          "away": 4.2
+        },
+        {
+          "name": "BetUS",
+          "home": 1.24,
+          "away": 4.3
+        }
+      ]
+    },
+    "2026-11-13|minnesota timberwolves|dallas mavericks": {
+      "home_team": "Minnesota Timberwolves",
+      "away_team": "Dallas Mavericks",
+      "date": "2026-11-13",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.48,
+          "away": 2.76
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.46,
+          "away": 2.88
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.45,
+          "away": 2.86
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.45,
+          "away": 2.84
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.45,
+          "away": 2.7
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.45,
+          "away": 2.8
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.43,
+          "away": 2.85
+        },
+        {
+          "name": "BetUS",
+          "home": 1.51,
+          "away": 2.67
+        },
+        {
+          "name": "Bovada",
+          "home": 1.45,
+          "away": 2.8
+        }
+      ]
+    },
+    "2026-11-13|phoenix suns|charlotte hornets": {
+      "home_team": "Phoenix Suns",
+      "away_team": "Charlotte Hornets",
+      "date": "2026-11-13",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.4,
+          "away": 3.05
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.41,
+          "away": 3.01
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.41,
+          "away": 3.06
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.41,
+          "away": 3.03
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.41,
+          "away": 2.95
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.4,
+          "away": 3.0
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.4,
+          "away": 2.98
+        },
+        {
+          "name": "BetUS",
+          "home": 1.41,
+          "away": 3.05
+        },
+        {
+          "name": "Bovada",
+          "home": 1.43,
+          "away": 2.95
+        }
+      ]
+    },
+    "2026-11-14|orlando magic|milwaukee bucks": {
+      "home_team": "Orlando Magic",
+      "away_team": "Milwaukee Bucks",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.24,
+          "away": 4.3
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.26,
+          "away": 4.03
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.27,
+          "away": 4.08
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.26,
+          "away": 3.9
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.26,
+          "away": 4.0
+        },
+        {
+          "name": "Bovada",
+          "home": 1.26,
+          "away": 3.9
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.26,
+          "away": 3.9
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.27,
+          "away": 4.0
+        }
+      ]
+    },
+    "2026-11-14|chicago bulls|atlanta hawks": {
+      "home_team": "Chicago Bulls",
+      "away_team": "Atlanta Hawks",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.15,
+          "away": 1.38
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.3,
+          "away": 1.36
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.33,
+          "away": 1.36
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.27,
+          "away": 1.36
+        },
+        {
+          "name": "Bovada",
+          "home": 3.15,
+          "away": 1.38
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.05,
+          "away": 1.38
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.1,
+          "away": 1.37
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.2,
+          "away": 1.36
+        }
+      ]
+    },
+    "2026-11-14|miami heat|cleveland cavaliers": {
+      "home_team": "Miami Heat",
+      "away_team": "Cleveland Cavaliers",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.75,
+          "away": 2.14
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.74,
+          "away": 2.15
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.75,
+          "away": 2.17
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.74,
+          "away": 2.14
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.75,
+          "away": 2.1
+        },
+        {
+          "name": "Bovada",
+          "home": 1.71,
+          "away": 2.2
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.72,
+          "away": 2.13
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.71,
+          "away": 2.15
+        }
+      ]
+    },
+    "2026-11-14|new orleans pelicans|memphis grizzlies": {
+      "home_team": "New Orleans Pelicans",
+      "away_team": "Memphis Grizzlies",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 2.32,
+          "away": 1.65
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 2.42,
+          "away": 1.62
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 2.43,
+          "away": 1.62
+        },
+        {
+          "name": "BetRivers",
+          "home": 2.32,
+          "away": 1.61
+        },
+        {
+          "name": "DraftKings",
+          "home": 2.33,
+          "away": 1.63
+        },
+        {
+          "name": "Bovada",
+          "home": 2.4,
+          "away": 1.61
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 2.34,
+          "away": 1.61
+        },
+        {
+          "name": "BetMGM",
+          "home": 2.35,
+          "away": 1.62
+        }
+      ]
+    },
+    "2026-11-14|houston rockets|utah jazz": {
+      "home_team": "Houston Rockets",
+      "away_team": "Utah Jazz",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 1.06,
+          "away": 10.0
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 1.07,
+          "away": 9.74
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 1.07,
+          "away": 10.1
+        },
+        {
+          "name": "BetRivers",
+          "home": 1.05,
+          "away": 10.0
+        },
+        {
+          "name": "DraftKings",
+          "home": 1.06,
+          "away": 10.0
+        },
+        {
+          "name": "Bovada",
+          "home": 1.06,
+          "away": 9.0
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 1.07,
+          "away": 9.0
+        },
+        {
+          "name": "BetMGM",
+          "home": 1.06,
+          "away": 10.0
+        }
+      ]
+    },
+    "2026-11-14|sacramento kings|portland trail blazers": {
+      "home_team": "Sacramento Kings",
+      "away_team": "Portland Trail Blazers",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 5.5,
+          "away": 1.17
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 5.17,
+          "away": 1.19
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 5.09,
+          "away": 1.19
+        },
+        {
+          "name": "DraftKings",
+          "home": 5.11,
+          "away": 1.18
+        },
+        {
+          "name": "Bovada",
+          "home": 4.7,
+          "away": 1.2
+        },
+        {
+          "name": "BetRivers",
+          "home": 4.7,
+          "away": 1.19
+        },
+        {
+          "name": "BetMGM",
+          "home": 5.0,
+          "away": 1.18
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 4.8,
+          "away": 1.18
+        }
+      ]
+    },
+    "2026-11-14|los angeles clippers|oklahoma city thunder": {
+      "home_team": "Los Angeles Clippers",
+      "away_team": "Oklahoma City Thunder",
+      "date": "2026-11-14",
+      "bookmakers": [
+        {
+          "name": "FanDuel",
+          "home": 3.35,
+          "away": 1.34
+        },
+        {
+          "name": "BetOnline.ag",
+          "home": 3.3,
+          "away": 1.36
+        },
+        {
+          "name": "LowVig.ag",
+          "home": 3.33,
+          "away": 1.36
+        },
+        {
+          "name": "DraftKings",
+          "home": 3.31,
+          "away": 1.35
+        },
+        {
+          "name": "Bovada",
+          "home": 3.25,
+          "away": 1.36
+        },
+        {
+          "name": "BetRivers",
+          "home": 3.3,
+          "away": 1.33
+        },
+        {
+          "name": "BetMGM",
+          "home": 3.3,
+          "away": 1.35
+        },
+        {
+          "name": "MyBookie.ag",
+          "home": 3.08,
+          "away": 1.38
         }
       ]
     }

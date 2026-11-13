@@ -31,6 +31,7 @@ away_away_winrate
 home_last_game_close
 away_last_game_close
 is_playoff
+is_preseason
 elo_diff
 home_consecutive_away
 away_consecutive_away
